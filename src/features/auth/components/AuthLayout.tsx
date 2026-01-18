@@ -25,7 +25,7 @@ export const AuthLayout = ({ children }: { children: React.ReactNode }) => {
                             <path d="M17.5 21L14.5 9"></path>
                         </svg>
                     </div>
-                    FlowForge
+                    Flowgent
                 </a>
                 {children}
             </div>
