@@ -13,10 +13,13 @@ export default function HomePage() {
       queryClient.invalidateQueries(trpc.getWorkflows.queryOptions())
     }
   }))
+  const testAi = useMutation(trpc.testAi.mutationOptions())
   return (
-    <div className="min-h-screen min-w-screen flex items-center justify-center">
+    <div className="min-h-screen min-w-screen flex items-center justify-center flex flex-col gap-4">
       {JSON.stringify(data, null, 2)}
       <Button disabled={create.isPending} onClick={() => create.mutate()}>Create Workflow</Button>
+      <p>{testAi.data?.message}</p>
+      <Button disabled={testAi.isPending} onClick={() => testAi.mutate()}>Test AI</Button>
     </div>
   );
 }
