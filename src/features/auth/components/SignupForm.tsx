@@ -87,21 +87,21 @@ export function SignupForm() {
   };
 
   return (
-    <Card className="w-full max-w-md mx-auto shadow-xl border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-sm">
-      <CardHeader className="space-y-1">
-        <CardTitle className="text-2xl font-bold tracking-tight text-center">
+    <Card className="w-full max-w-md mx-auto shadow-2xl border-white/20 dark:border-white/10 glass backdrop-blur-xl">
+      <CardHeader className="space-y-2 pb-6">
+        <CardTitle className="text-2xl font-bold tracking-tight text-center bg-clip-text text-transparent bg-gradient-to-br from-foreground to-muted-foreground">
           Create an account
         </CardTitle>
-        <CardDescription className="text-center">
+        <CardDescription className="text-center text-base">
           Enter your details below to create your account
         </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-6">
         <div className="grid grid-cols-2 gap-4">
           <Button
             variant="outline"
             disabled={isLoading}
-            className="w-full relative"
+            className="w-full relative h-11 hover:bg-primary/5 hover:text-primary hover:border-primary/20 transition-all duration-300"
           >
             <Github className="mr-2 h-4 w-4" />
             Github
@@ -109,7 +109,7 @@ export function SignupForm() {
           <Button
             variant="outline"
             disabled={isLoading}
-            className="w-full relative"
+            className="w-full relative h-11 hover:bg-primary/5 hover:text-primary hover:border-primary/20 transition-all duration-300"
           >
             <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
               <path
@@ -134,10 +134,10 @@ export function SignupForm() {
         </div>
         <div className="relative">
           <div className="absolute inset-0 flex items-center">
-            <span className="w-full border-t border-zinc-200 dark:border-zinc-800" />
+            <span className="w-full border-t border-border/50" />
           </div>
           <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-white dark:bg-zinc-950 px-2 text-muted-foreground">
+            <span className="bg-background/50 backdrop-blur-sm px-3 py-0.5 rounded-full text-muted-foreground border border-border/50">
               Or continue with email
             </span>
           </div>
@@ -155,7 +155,7 @@ export function SignupForm() {
                     <Input
                       placeholder="John Doe"
                       {...field}
-                      className="bg-zinc-50 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800"
+                      className="bg-background/50 border-input/50 focus:bg-background focus:border-primary/50 transition-all h-11"
                     />
                   </FormControl>
                   <FormMessage />
@@ -172,7 +172,7 @@ export function SignupForm() {
                     <Input
                       placeholder="name@example.com"
                       {...field}
-                      className="bg-zinc-50 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800"
+                      className="bg-background/50 border-input/50 focus:bg-background focus:border-primary/50 transition-all h-11"
                     />
                   </FormControl>
                   <FormMessage />
@@ -190,7 +190,7 @@ export function SignupForm() {
                       type="password"
                       placeholder="********"
                       {...field}
-                      className="bg-zinc-50 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800"
+                      className="bg-background/50 border-input/50 focus:bg-background focus:border-primary/50 transition-all h-11"
                     />
                   </FormControl>
                   <FormMessage />
@@ -208,7 +208,7 @@ export function SignupForm() {
                       type="password"
                       placeholder="********"
                       {...field}
-                      className="bg-zinc-50 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800"
+                      className="bg-background/50 border-input/50 focus:bg-background focus:border-primary/50 transition-all h-11"
                     />
                   </FormControl>
                   <FormMessage />
@@ -217,7 +217,7 @@ export function SignupForm() {
             />
             <Button
               type="submit"
-              className="w-full font-semibold"
+              className="w-full font-semibold h-11 text-base shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-all duration-300"
               disabled={isLoading}
             >
               {isLoading ? "Creating account..." : "Create account"}
@@ -225,7 +225,7 @@ export function SignupForm() {
           </form>
         </Form>
       </CardContent>
-      <CardFooter className="flex justify-center border-t border-zinc-200 dark:border-zinc-800 p-6 bg-zinc-50/50 dark:bg-zinc-900/50">
+      <CardFooter className="flex justify-center border-t border-border/40 p-6 bg-muted/20">
         <p className="text-sm text-muted-foreground">
           Already have an account?{" "}
           <Link

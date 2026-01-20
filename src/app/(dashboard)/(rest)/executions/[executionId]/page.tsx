@@ -1,10 +1,12 @@
 import { requireAuth } from "@/lib/auth-utils";
+import { ExecutionDetailClient } from "@/features/executions/components/ExecutionDetailClient";
 
 interface PageProps {
   params: Promise<{ executionId: string }>;
 }
-export default async function ExecutionPage({ params }: PageProps) {
+
+export default async function ExecutionDetailPage({ params }: PageProps) {
+  await requireAuth();
   const { executionId } = await params;
-  await requireAuth()
-  return <div>Execution {executionId}</div>;
+  return <ExecutionDetailClient executionId={executionId} />;
 }

@@ -1,8 +1,5 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+// FlowForge - Workflow Automation Platform
+// Complete database schema for workflows, executions, and credentials
 
 generator client {
   provider   = "prisma-client"
@@ -14,28 +11,32 @@ datasource db {
   provider = "postgresql"
 }
 
+// ============================================
+// USER & AUTHENTICATION
+// ============================================
+
 model User {
-  id            String    @id @default(cuid())
-  email         String    @unique
+  id            String   @id @default(cuid())
+  email         String   @unique
   name          String?
-  posts         Post[]
-  emailVerified Boolean   @default(false)
+  emailVerified Boolean  @default(false)
   image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  sessions      Session[]
-  accounts      Account[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Auth relations
+  sessions Session[]
+  accounts Account[]
+
+  // FlowForge relations
+  workflows        Workflow[]
+  credentials      Credential[]
+  executions       Execution[]
+  teamMembers      TeamMember[]
+  workflowVersions WorkflowVersion[]
+  auditLogs        AuditLog[]
 
   @@map("user")
-}
-
-model Post {
-  id        Int     @id @default(autoincrement())
-  title     String
-  content   String?
-  published Boolean @default(false)
-  authorId  String
-  author    User    @relation(fields: [authorId], references: [id])
 }
 
 model Session {
@@ -86,9 +87,285 @@ model Verification {
   @@map("verification")
 }
 
-model Workflow {
-  id   String @id @default(cuid())
-  name String
+// ============================================
+// WORKFLOW AUTOMATION
+// ============================================
 
+model Workflow {
+  id          String  @id @default(cuid())
+  name        String
+  description String?
+
+  // Workflow definition (stored as JSON)
+  nodes    Json  @default("[]") // Array of node objects
+  edges    Json  @default("[]") // Array of edge/connection objects
+  viewport Json? // Canvas viewport state (zoom, position)
+  settings Json? // Workflow settings (timezone, error handling, etc.)
+
+  // Organization
+  folder     String? // Folder path for organizing workflows
+  tags       String[] @default([]) // Tags for filtering
+  isFavorite Boolean  @default(false)
+
+  // Error Alert Settings
+  errorAlertEmail   String? // Email to notify on failure
+  errorAlertSlack   String? // Slack webhook URL for alerts
+  errorAlertEnabled Boolean @default(false)
+
+  // Status
+  isActive Boolean @default(false)
+  version  Int     @default(1)
+
+  // Owner
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Related entities
+  executions Execution[]
+  schedules  Schedule[]
+  webhooks   WebhookEndpoint[]
+
+  // Metadata
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  lastExecutedAt   DateTime?
+  team             Team?             @relation("TeamWorkflows", fields: [teamId], references: [id])
+  teamId           String?
+  workflowVersions WorkflowVersion[]
+
+  @@index([userId])
+  @@index([isActive])
   @@map("workflow")
+}
+
+model Execution {
+  id     String          @id @default(cuid())
+  status ExecutionStatus @default(PENDING)
+  mode   ExecutionMode   @default(MANUAL)
+
+  // Timing
+  startedAt  DateTime  @default(now())
+  finishedAt DateTime?
+  duration   Int? // Duration in milliseconds
+
+  // Data
+  inputData   Json? // Input data that triggered the execution
+  outputData  Json? // Final output data
+  nodeResults Json? // Results from each node { nodeId: { data, error, duration } }
+  error       Json? // Error details if failed
+
+  // Relationships
+  workflowId String
+  workflow   Workflow @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+  userId     String? // User who triggered (null for scheduled/webhook)
+  user       User?    @relation(fields: [userId], references: [id])
+
+  // Retry tracking
+  retryOf    String?
+  retryCount Int     @default(0)
+
+  @@index([workflowId])
+  @@index([userId])
+  @@index([status])
+  @@index([startedAt])
+  @@map("execution")
+}
+
+model AuditLog {
+  id        String  @id @default(cuid())
+  action    String // CREATE, UPDATE, DELETE, EXECUTE, LOGIN, etc.
+  entity    String // workflow, credential, team, etc.
+  entityId  String? // ID of the affected entity
+  details   Json? // Additional details about the action
+  ipAddress String? // Client IP address
+  userAgent String? // Browser/client user agent
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([entity])
+  @@index([createdAt])
+  @@map("audit_log")
+}
+
+model Credential {
+  id       String @id @default(cuid())
+  name     String
+  type     String // oauth2, apiKey, basic, bearer, etc.
+  provider String // slack, github, google, custom, etc.
+
+  // Encrypted credential data (JSON string encrypted with AES-256)
+  data String
+
+  // OAuth specific fields
+  expiresAt    DateTime?
+  refreshToken String?
+  scope        String?
+  metadata     Json? // Store extra provider-specific info
+
+  // Owner
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Metadata
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  lastUsedAt DateTime?
+
+  @@unique([userId, name])
+  @@index([userId])
+  @@index([provider])
+  @@map("credential")
+}
+
+model Schedule {
+  id             String  @id @default(cuid())
+  cronExpression String // Cron expression for scheduling
+  timezone       String  @default("UTC")
+  isActive       Boolean @default(true)
+
+  // Workflow relation
+  workflowId String   @unique
+  workflow   Workflow @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+
+  // Tracking
+  nextRunAt DateTime?
+  lastRunAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("schedule")
+}
+
+model WebhookEndpoint {
+  id       String     @id @default(cuid())
+  path     String     @unique // Unique webhook path
+  method   HttpMethod @default(POST)
+  isActive Boolean    @default(true)
+
+  // Security
+  secretHash  String? // HMAC secret for signature verification
+  ipAllowlist String[] // Allowed IP addresses (empty = all allowed)
+
+  // Workflow relation
+  workflowId String
+  workflow   Workflow @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+
+  // Stats
+  createdAt    DateTime  @default(now())
+  lastCalledAt DateTime?
+  callCount    Int       @default(0)
+
+  @@index([workflowId])
+  @@map("webhook_endpoint")
+}
+
+// ============================================
+// ENUMS
+// ============================================
+
+enum ExecutionStatus {
+  PENDING
+  RUNNING
+  SUCCESS
+  ERROR
+  CANCELLED
+  WAITING
+}
+
+enum ExecutionMode {
+  MANUAL
+  SCHEDULED
+  WEBHOOK
+  TRIGGER
+  SUBWORKFLOW
+}
+
+enum HttpMethod {
+  GET
+  POST
+  PUT
+  PATCH
+  DELETE
+}
+
+enum TeamRole {
+  OWNER
+  ADMIN
+  MEMBER
+  VIEWER
+}
+
+// ============================================
+// TEAMS & COLLABORATION
+// ============================================
+
+model Team {
+  id          String  @id @default(cuid())
+  name        String
+  slug        String  @unique
+  description String?
+  image       String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  members   TeamMember[]
+  workflows Workflow[]   @relation("TeamWorkflows")
+
+  @@map("team")
+}
+
+model TeamMember {
+  id   String   @id @default(cuid())
+  role TeamRole @default(MEMBER)
+
+  teamId String
+  team   Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([teamId, userId])
+  @@index([teamId])
+  @@index([userId])
+  @@map("team_member")
+}
+
+// ============================================
+// WORKFLOW VERSIONING
+// ============================================
+
+model WorkflowVersion {
+  id         String @id @default(cuid())
+  versionNum Int
+
+  // Snapshot of workflow at this version
+  nodes    Json
+  edges    Json
+  viewport Json?
+  settings Json?
+
+  // Change tracking
+  changeMessage String?
+
+  // Relation to workflow
+  workflowId String
+  workflow   Workflow @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+
+  // Who made this version
+  createdById String?
+  createdBy   User?   @relation(fields: [createdById], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@unique([workflowId, versionNum])
+  @@index([workflowId])
+  @@map("workflow_version")
 }

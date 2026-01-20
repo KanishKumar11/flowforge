@@ -1,0 +1,128 @@
+"use client";
+
+import { useTRPC } from "@/trpc/client";
+import { useQuery } from "@tanstack/react-query";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Search, X, Workflow, Clock, Tag } from "lucide-react";
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
+
+export function WorkflowSearch() {
+  const trpc = useTRPC();
+  const [query, setQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+
+  // Debounce search query
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedQuery(query);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [query]);
+
+  const { data: results, isLoading } = useQuery({
+    ...trpc.workflows.search.queryOptions({ query: debouncedQuery }),
+    enabled: debouncedQuery.length >= 1,
+  });
+
+  const handleClear = () => {
+    setQuery("");
+    setIsOpen(false);
+  };
+
+  return (
+    <div className="relative w-full max-w-md">
+      <div className="relative">
+        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+        <Input
+          type="text"
+          placeholder="Search workflows..."
+          value={query}
+          onChange={(e) => {
+            setQuery(e.target.value);
+            setIsOpen(true);
+          }}
+          onFocus={() => query && setIsOpen(true)}
+          className="pl-10 pr-8"
+        />
+        {query && (
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute right-1 top-1/2 transform -translate-y-1/2 h-6 w-6"
+            onClick={handleClear}
+          >
+            <X className="h-3 w-3" />
+          </Button>
+        )}
+      </div>
+
+      {/* Results Dropdown */}
+      {isOpen && debouncedQuery && (
+        <Card className="absolute top-full mt-2 w-full z-50 max-h-80 overflow-auto shadow-lg">
+          <CardContent className="p-2">
+            {isLoading ? (
+              <div className="p-4 text-center text-muted-foreground">
+                Searching...
+              </div>
+            ) : results && results.length > 0 ? (
+              <div className="space-y-1">
+                {results.map((workflow) => (
+                  <Link
+                    key={workflow.id}
+                    href={`/workflows/${workflow.id}`}
+                    onClick={() => setIsOpen(false)}
+                    className="flex items-start gap-3 p-2 rounded-md hover:bg-accent transition-colors"
+                  >
+                    <Workflow className="h-5 w-5 text-muted-foreground mt-0.5" />
+                    <div className="flex-1 min-w-0">
+                      <p className="font-medium truncate">{workflow.name}</p>
+                      {workflow.description && (
+                        <p className="text-sm text-muted-foreground truncate">
+                          {workflow.description}
+                        </p>
+                      )}
+                      <div className="flex items-center gap-2 mt-1">
+                        {workflow.folder && (
+                          <Badge variant="outline" className="text-xs">
+                            {workflow.folder}
+                          </Badge>
+                        )}
+                        {workflow.tags?.slice(0, 2).map((tag) => (
+                          <Badge key={tag} variant="secondary" className="text-xs">
+                            <Tag className="h-2 w-2 mr-1" />
+                            {tag}
+                          </Badge>
+                        ))}
+                        <span className="text-xs text-muted-foreground flex items-center gap-1">
+                          <Clock className="h-3 w-3" />
+                          {workflow._count.executions} runs
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            ) : (
+              <div className="p-4 text-center text-muted-foreground">
+                No workflows found for &quot;{debouncedQuery}&quot;
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Click outside to close */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-40"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
+    </div>
+  );
+}
