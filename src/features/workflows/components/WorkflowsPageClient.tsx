@@ -5,11 +5,10 @@ import { WorkflowCard } from "./WorkflowCard";
 import { CreateWorkflowModal } from "./CreateWorkflowModal";
 import { EmptyWorkflows } from "./EmptyWorkflows";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useTRPC } from "@/trpc/client";
+import { useTRPC, useVanillaClient } from "@/trpc/client";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { Plus, Search, Workflow } from "lucide-react";
+import { Plus, Workflow } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -22,22 +21,26 @@ export function WorkflowsPageClient() {
   const [showCreateModal, setShowCreateModal] = useState(false);
 
   const trpc = useTRPC();
+  const client = useVanillaClient();
   const { data: workflows, isLoading, refetch } = useQuery(trpc.workflows.list.queryOptions());
 
-  const createWorkflow = useMutation(trpc.workflows.create.mutationOptions({
+  const createWorkflow = useMutation({
+    mutationFn: (data: { name: string; description?: string }) =>
+      client.workflows.create.mutate(data),
     onSuccess: (workflow) => {
       refetch();
       toast.success("Workflow created successfully");
       router.push(`/workflows/${workflow.id}`);
     },
-    onError: (error) => {
+    onError: (error: Error) => {
       toast.error("Failed to create workflow", {
         description: error.message,
       });
     },
-  }));
+  });
 
-  const toggleWorkflow = useMutation(trpc.workflows.toggleActive.mutationOptions({
+  const toggleWorkflow = useMutation({
+    mutationFn: (data: { id: string }) => client.workflows.toggleActive.mutate(data),
     onSuccess: () => {
       refetch();
       toast.success("Workflow status updated");
@@ -45,9 +48,10 @@ export function WorkflowsPageClient() {
     onError: () => {
       toast.error("Failed to update workflow");
     },
-  }));
+  });
 
-  const duplicateWorkflow = useMutation(trpc.workflows.duplicate.mutationOptions({
+  const duplicateWorkflow = useMutation({
+    mutationFn: (data: { id: string }) => client.workflows.duplicate.mutate(data),
     onSuccess: () => {
       refetch();
       toast.success("Workflow duplicated");
@@ -55,9 +59,10 @@ export function WorkflowsPageClient() {
     onError: () => {
       toast.error("Failed to duplicate workflow");
     },
-  }));
+  });
 
-  const deleteWorkflow = useMutation(trpc.workflows.delete.mutationOptions({
+  const deleteWorkflow = useMutation({
+    mutationFn: (data: { id: string }) => client.workflows.delete.mutate(data),
     onSuccess: () => {
       refetch();
       toast.success("Workflow deleted");
@@ -65,7 +70,7 @@ export function WorkflowsPageClient() {
     onError: () => {
       toast.error("Failed to delete workflow");
     },
-  }));
+  });
 
   const filteredWorkflows = workflows?.filter((w) =>
     w.name.toLowerCase().includes(search.toLowerCase())

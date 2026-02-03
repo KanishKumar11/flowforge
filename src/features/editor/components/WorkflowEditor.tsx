@@ -25,7 +25,7 @@ import { NodeConfigPanel } from "./NodeConfigPanel";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Play, Redo2, Save, Undo2 } from "lucide-react";
 import Link from "next/link";
-import { useTRPC } from "@/trpc/client";
+import { useTRPC, useVanillaClient } from "@/trpc/client";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 
@@ -46,6 +46,7 @@ interface HistoryState {
 
 function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
   const trpc = useTRPC();
+  const client = useVanillaClient();
   const reactFlowWrapper = useRef<HTMLDivElement>(null);
   const { screenToFlowPosition } = useReactFlow();
   const [isSaving, setIsSaving] = useState(false);
@@ -60,7 +61,9 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
     trpc.workflows.get.queryOptions({ id: workflowId })
   );
 
-  const updateWorkflow = useMutation(trpc.workflows.update.mutationOptions({
+  const updateWorkflow = useMutation({
+    mutationFn: (data: { id: string; nodes?: unknown; edges?: unknown; name?: string; description?: string }) =>
+      client.workflows.update.mutate(data),
     onSuccess: () => {
       refetch();
       toast.success("Workflow saved");
@@ -70,9 +73,11 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
       toast.error("Failed to save workflow");
       setIsSaving(false);
     },
-  }));
+  });
 
-  const executeWorkflow = useMutation(trpc.workflows.execute.mutationOptions({
+  const executeWorkflow = useMutation({
+    mutationFn: (data: { id: string; inputData?: Record<string, unknown> }) =>
+      client.workflows.execute.mutate(data),
     onSuccess: (data) => {
       toast.success("Workflow execution started", {
         description: `Execution ID: ${data.executionId}`,
@@ -82,10 +87,10 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
         },
       });
     },
-    onError: (error) => {
+    onError: (error: Error) => {
       toast.error("Failed to start execution", { description: error.message });
     },
-  }));
+  });
 
   const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);

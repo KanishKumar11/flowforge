@@ -20,8 +20,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useTRPC } from "@/trpc/client";
-import { formatDistanceToNow } from "date-fns";
+import { useTRPC, useVanillaClient } from "@/trpc/client";
 import {
   Loader2,
   Plus,
@@ -39,19 +38,22 @@ export function TeamsPageClient() {
   const [newTeam, setNewTeam] = useState({ name: "", description: "" });
 
   const trpc = useTRPC();
+  const client = useVanillaClient();
   const { data: teams, isLoading, refetch } = useQuery(trpc.teams.list.queryOptions());
 
-  const createTeam = useMutation(trpc.teams.create.mutationOptions({
+  const createTeam = useMutation({
+    mutationFn: (data: { name: string; description?: string }) =>
+      client.teams.create.mutate(data),
     onSuccess: () => {
       refetch();
       setShowCreateModal(false);
       setNewTeam({ name: "", description: "" });
       toast.success("Team created successfully");
     },
-    onError: (error) => {
+    onError: (error: Error) => {
       toast.error("Failed to create team", { description: error.message });
     },
-  }));
+  });
 
   const handleCreate = async () => {
     if (!newTeam.name.trim()) return;
@@ -113,7 +115,7 @@ export function TeamsPageClient() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {teams.map((team) => (
               <Card key={team.id} className="glass border-white/20 dark:border-white/10 shadow-lg backdrop-blur-xl hover-lift group overflow-hidden relative">
-                <div className="absolute top-0 right-0 p-20 bg-gradient-to-bl from-primary/5 to-transparent rounded-bl-full -mr-10 -mt-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                <div className="absolute top-0 right-0 p-20 bg-linear-to-bl from-primary/5 to-transparent rounded-bl-full -mr-10 -mt-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                 <CardHeader className="relative z-10 pb-4">
                   <div className="flex items-start justify-between">
                     <CardTitle className="text-xl font-bold group-hover:text-primary transition-colors">

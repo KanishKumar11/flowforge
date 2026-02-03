@@ -1,6 +1,6 @@
 "use client";
 
-import { useTRPC } from "@/trpc/client";
+import { useTRPC, useVanillaClient } from "@/trpc/client";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -28,6 +28,7 @@ const categoryIcons: Record<string, React.ReactNode> = {
 
 export function TemplateBrowser() {
   const trpc = useTRPC();
+  const client = useVanillaClient();
   const router = useRouter();
   const queryClient = useQueryClient();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -37,19 +38,19 @@ export function TemplateBrowser() {
 
   const { data, isLoading } = useQuery(trpc.workflows.templates.queryOptions());
 
-  const createFromTemplate = useMutation(
-    trpc.workflows.createFromTemplate.mutationOptions({
-      onSuccess: (workflow) => {
-        queryClient.invalidateQueries({ queryKey: ["workflows"] });
-        toast.success("Workflow created from template!");
-        setIsOpen(false);
-        router.push(`/workflows/${workflow.id}`);
-      },
-      onError: (error) => {
-        toast.error(error.message);
-      },
-    })
-  );
+  const createFromTemplate = useMutation({
+    mutationFn: (data: { templateId: string; name: string }) =>
+      client.workflows.createFromTemplate.mutate(data),
+    onSuccess: (workflow) => {
+      queryClient.invalidateQueries({ queryKey: ["workflows"] });
+      toast.success("Workflow created from template!");
+      setIsOpen(false);
+      router.push(`/workflows/${workflow.id}`);
+    },
+    onError: (error: Error) => {
+      toast.error(error.message);
+    },
+  });
 
   if (isLoading) {
     return <div className="animate-pulse">Loading templates...</div>;

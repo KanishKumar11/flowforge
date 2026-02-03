@@ -18,7 +18,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useTRPC } from "@/trpc/client";
+import { useTRPC, useVanillaClient } from "@/trpc/client";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { formatDistanceToNow, formatDuration, intervalToDuration } from "date-fns";
 import {
@@ -59,6 +59,7 @@ export function ExecutionsPageClient() {
   const [statusFilter, setStatusFilter] = useState<string>("all");
 
   const trpc = useTRPC();
+  const client = useVanillaClient();
   const { data: executionsData, isLoading, refetch } = useQuery(
     trpc.executions.list.queryOptions({
       status: statusFilter !== "all" ? (statusFilter as ExecutionStatus) : undefined,
@@ -67,7 +68,8 @@ export function ExecutionsPageClient() {
   );
   const { data: stats } = useQuery(trpc.executions.stats.queryOptions({ days: 7 }));
 
-  const retryExecution = useMutation(trpc.executions.retry.mutationOptions({
+  const retryExecution = useMutation({
+    mutationFn: (data: { id: string }) => client.executions.retry.mutate(data),
     onSuccess: () => {
       refetch();
       toast.success("Execution queued for retry");
@@ -75,9 +77,10 @@ export function ExecutionsPageClient() {
     onError: () => {
       toast.error("Failed to retry execution");
     },
-  }));
+  });
 
-  const deleteExecution = useMutation(trpc.executions.delete.mutationOptions({
+  const deleteExecution = useMutation({
+    mutationFn: (data: { id: string }) => client.executions.delete.mutate(data),
     onSuccess: () => {
       refetch();
       toast.success("Execution deleted");
@@ -85,7 +88,7 @@ export function ExecutionsPageClient() {
     onError: () => {
       toast.error("Failed to delete execution");
     },
-  }));
+  });
 
   const executions = executionsData?.items || [];
 

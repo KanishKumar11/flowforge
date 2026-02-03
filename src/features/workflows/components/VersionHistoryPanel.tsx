@@ -1,6 +1,6 @@
 "use client";
 
-import { useTRPC } from "@/trpc/client";
+import { useTRPC, useVanillaClient } from "@/trpc/client";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -14,25 +14,41 @@ interface VersionHistoryPanelProps {
   currentVersion: number;
 }
 
+// Define explicit types to avoid deep type inference issues
+interface VersionUser {
+  id: string;
+  name: string | null;
+  email: string;
+}
+
+interface WorkflowVersion {
+  id: string;
+  versionNum: number;
+  createdAt: string | Date;
+  changeMessage: string | null;
+  createdBy: VersionUser | null;
+}
+
 export function VersionHistoryPanel({ workflowId, currentVersion }: VersionHistoryPanelProps) {
   const trpc = useTRPC();
+  const client = useVanillaClient();
   const queryClient = useQueryClient();
 
   const { data: versions, isLoading } = useQuery(
     trpc.workflows.listVersions.queryOptions({ workflowId })
   );
 
-  const rollback = useMutation(
-    trpc.workflows.rollback.mutationOptions({
-      onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ["workflows"] });
-        toast.success("Rolled back to selected version");
-      },
-      onError: (error) => {
-        toast.error(error.message);
-      },
-    })
-  );
+  const rollback = useMutation({
+    mutationFn: (data: { workflowId: string; versionNum: number }) =>
+      client.workflows.rollback.mutate(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["workflows"] });
+      toast.success("Rolled back to selected version");
+    },
+    onError: (error: Error) => {
+      toast.error(error.message);
+    },
+  });
 
   if (isLoading) {
     return (
@@ -43,6 +59,9 @@ export function VersionHistoryPanel({ workflowId, currentVersion }: VersionHisto
       </Card>
     );
   }
+
+  // Cast to our explicit type to avoid deep inference
+  const typedVersions = versions as WorkflowVersion[] | undefined;
 
   return (
     <Card>
@@ -57,14 +76,14 @@ export function VersionHistoryPanel({ workflowId, currentVersion }: VersionHisto
       </CardHeader>
       <CardContent>
         <ScrollArea className="h-64">
-          {versions && versions.length > 0 ? (
+          {typedVersions && typedVersions.length > 0 ? (
             <div className="space-y-2">
-              {versions.map((version) => (
+              {typedVersions.map((version) => (
                 <div
                   key={version.id}
                   className={`flex items-center justify-between p-3 rounded-lg border ${version.versionNum === currentVersion
-                      ? "border-primary bg-primary/5"
-                      : "hover:bg-accent"
+                    ? "border-primary bg-primary/5"
+                    : "hover:bg-accent"
                     }`}
                 >
                   <div className="space-y-1">
@@ -88,9 +107,9 @@ export function VersionHistoryPanel({ workflowId, currentVersion }: VersionHisto
                         </span>
                       )}
                     </div>
-                    {version.changeDescription && (
+                    {version.changeMessage && (
                       <p className="text-xs text-muted-foreground">
-                        {version.changeDescription}
+                        {version.changeMessage}
                       </p>
                     )}
                   </div>

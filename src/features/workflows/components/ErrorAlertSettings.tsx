@@ -1,6 +1,6 @@
 "use client";
 
-import { useTRPC } from "@/trpc/client";
+import { useVanillaClient } from "@/trpc/client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -24,7 +24,7 @@ export function ErrorAlertSettings({
   initialEmail,
   initialSlack,
 }: ErrorAlertSettingsProps) {
-  const trpc = useTRPC();
+  const client = useVanillaClient();
   const queryClient = useQueryClient();
 
   const [enabled, setEnabled] = useState(initialEnabled);
@@ -40,18 +40,22 @@ export function ErrorAlertSettings({
     setHasChanges(changed);
   }, [enabled, email, slackWebhook, initialEnabled, initialEmail, initialSlack]);
 
-  const updateAlerts = useMutation(
-    trpc.workflows.updateErrorAlerts.mutationOptions({
-      onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ["workflows"] });
-        toast.success("Alert settings saved");
-        setHasChanges(false);
-      },
-      onError: (error) => {
-        toast.error(error.message);
-      },
-    })
-  );
+  const updateAlerts = useMutation({
+    mutationFn: (data: {
+      id: string;
+      errorAlertEnabled: boolean;
+      errorAlertEmail: string | null;
+      errorAlertSlack: string | null;
+    }) => client.workflows.updateErrorAlerts.mutate(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["workflows"] });
+      toast.success("Alert settings saved");
+      setHasChanges(false);
+    },
+    onError: (error: Error) => {
+      toast.error(error.message);
+    },
+  });
 
   const handleSave = () => {
     updateAlerts.mutate({

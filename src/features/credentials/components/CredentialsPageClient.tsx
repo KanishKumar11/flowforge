@@ -33,7 +33,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useTRPC } from "@/trpc/client";
+import { useTRPC, useVanillaClient } from "@/trpc/client";
 import { formatDistanceToNow } from "date-fns";
 import {
   Github,
@@ -78,9 +78,16 @@ export function CredentialsPageClient() {
   });
 
   const trpc = useTRPC();
+  const client = useVanillaClient();
   const { data: credentials, isLoading, refetch } = useQuery(trpc.credentials.list.queryOptions());
 
-  const createCredential = useMutation(trpc.credentials.create.mutationOptions({
+  const createCredential = useMutation({
+    mutationFn: (data: {
+      name: string;
+      type: "apiKey" | "oauth2" | "basic" | "bearer" | "custom";
+      provider: string;
+      data: Record<string, unknown>;
+    }) => client.credentials.create.mutate(data),
     onSuccess: () => {
       refetch();
       setShowCreateModal(false);
@@ -88,12 +95,14 @@ export function CredentialsPageClient() {
       setNewCredential({ name: "", type: "apiKey", provider: "custom", apiKey: "" });
       toast.success("Credential created successfully");
     },
-    onError: (error) => {
+    onError: (error: Error) => {
       toast.error("Failed to create credential", { description: error.message });
     },
-  }));
+  });
 
-  const updateCredential = useMutation(trpc.credentials.update.mutationOptions({
+  const updateCredential = useMutation({
+    mutationFn: (data: { id: string; name?: string; data?: Record<string, unknown> }) =>
+      client.credentials.update.mutate(data),
     onSuccess: () => {
       refetch();
       setShowCreateModal(false);
@@ -101,12 +110,13 @@ export function CredentialsPageClient() {
       setNewCredential({ name: "", type: "apiKey", provider: "custom", apiKey: "" });
       toast.success("Credential updated successfully");
     },
-    onError: (error) => {
+    onError: (error: Error) => {
       toast.error("Failed to update credential", { description: error.message });
     },
-  }));
+  });
 
-  const deleteCredential = useMutation(trpc.credentials.delete.mutationOptions({
+  const deleteCredential = useMutation({
+    mutationFn: (data: { id: string }) => client.credentials.delete.mutate(data),
     onSuccess: () => {
       refetch();
       toast.success("Credential deleted");
@@ -114,7 +124,7 @@ export function CredentialsPageClient() {
     onError: () => {
       toast.error("Failed to delete credential");
     },
-  }));
+  });
 
   const filteredCredentials = credentials?.filter((c) =>
     c.name.toLowerCase().includes(search.toLowerCase())

@@ -7,10 +7,14 @@ import { createTRPCContext } from "@trpc/tanstack-react-query";
 import { useState } from "react";
 import { makeQueryClient } from "./query-client";
 import type { AppRouter } from "./routers/_app";
+
 export const { TRPCProvider, useTRPC } = createTRPCContext<AppRouter>();
+
 // Alias for convenience - used throughout components
 export const trpc = useTRPC;
+
 let browserQueryClient: QueryClient;
+
 function getQueryClient() {
   if (typeof window === "undefined") {
     // Server: always make a new query client
@@ -23,6 +27,7 @@ function getQueryClient() {
   if (!browserQueryClient) browserQueryClient = makeQueryClient();
   return browserQueryClient;
 }
+
 function getUrl() {
   const base = (() => {
     if (typeof window !== "undefined") return "";
@@ -31,6 +36,32 @@ function getUrl() {
   })();
   return `${base}/api/trpc`;
 }
+
+// Vanilla tRPC client for direct mutations (avoids type recursion issues)
+let vanillaClient: ReturnType<typeof createTRPCClient<AppRouter>> | null = null;
+
+export function getVanillaClient() {
+  if (typeof window === "undefined") {
+    // Server-side: always create fresh
+    return createTRPCClient<AppRouter>({
+      links: [httpBatchLink({ url: getUrl() })],
+    });
+  }
+  // Browser: reuse singleton
+  if (!vanillaClient) {
+    vanillaClient = createTRPCClient<AppRouter>({
+      links: [httpBatchLink({ url: getUrl() })],
+    });
+  }
+  return vanillaClient;
+}
+
+// Hook to get the vanilla client (for use in components)
+export function useVanillaClient() {
+  const [client] = useState(() => getVanillaClient());
+  return client;
+}
+
 export function TRPCReactProvider(
   props: Readonly<{
     children: React.ReactNode;

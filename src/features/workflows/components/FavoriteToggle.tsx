@@ -1,6 +1,6 @@
 "use client";
 
-import { useTRPC } from "@/trpc/client";
+import { useVanillaClient } from "@/trpc/client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Star } from "lucide-react";
@@ -14,20 +14,19 @@ interface FavoriteToggleProps {
 }
 
 export function FavoriteToggle({ workflowId, isFavorite, size = "icon" }: FavoriteToggleProps) {
-  const trpc = useTRPC();
+  const client = useVanillaClient();
   const queryClient = useQueryClient();
 
-  const toggleFavorite = useMutation(
-    trpc.workflows.toggleFavorite.mutationOptions({
-      onSuccess: (workflow) => {
-        queryClient.invalidateQueries({ queryKey: ["workflows"] });
-        toast.success(workflow.isFavorite ? "Added to favorites" : "Removed from favorites");
-      },
-      onError: (error) => {
-        toast.error(error.message);
-      },
-    })
-  );
+  const toggleFavorite = useMutation({
+    mutationFn: (data: { id: string }) => client.workflows.toggleFavorite.mutate(data),
+    onSuccess: (workflow) => {
+      queryClient.invalidateQueries({ queryKey: ["workflows"] });
+      toast.success(workflow.isFavorite ? "Added to favorites" : "Removed from favorites");
+    },
+    onError: (error: Error) => {
+      toast.error(error.message);
+    },
+  });
 
   return (
     <Button
