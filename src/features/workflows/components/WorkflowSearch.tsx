@@ -10,6 +10,18 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 
+// Explicit types to avoid deep type inference
+interface WorkflowSearchResult {
+  id: string;
+  name: string;
+  description: string | null;
+  folder: string | null;
+  tags: string[];
+  _count: {
+    executions: number;
+  };
+}
+
 export function WorkflowSearch() {
   const trpc = useTRPC();
   const [query, setQuery] = useState("");
@@ -28,6 +40,9 @@ export function WorkflowSearch() {
     ...trpc.workflows.search.queryOptions({ query: debouncedQuery }),
     enabled: debouncedQuery.length >= 1,
   });
+
+  // Cast to explicit type to avoid deep type inference
+  const typedResults = results as WorkflowSearchResult[] | undefined;
 
   const handleClear = () => {
     setQuery("");
@@ -69,9 +84,9 @@ export function WorkflowSearch() {
               <div className="p-4 text-center text-muted-foreground">
                 Searching...
               </div>
-            ) : results && results.length > 0 ? (
+            ) : typedResults && typedResults.length > 0 ? (
               <div className="space-y-1">
-                {results.map((workflow) => (
+                {typedResults.map((workflow) => (
                   <Link
                     key={workflow.id}
                     href={`/workflows/${workflow.id}`}

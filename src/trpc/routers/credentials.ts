@@ -55,7 +55,7 @@ export const credentialsRouter = createTRPCRouter({
         name: z.string().min(1).max(100),
         type: z.enum(["oauth2", "apiKey", "basic", "bearer", "custom"]),
         provider: z.string().min(1).max(50),
-        data: z.record(z.any()), // The credential data to encrypt
+        data: z.record(z.string(), z.any()), // The credential data to encrypt
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -87,7 +87,7 @@ export const credentialsRouter = createTRPCRouter({
       z.object({
         id: z.string(),
         name: z.string().min(1).max(100).optional(),
-        data: z.record(z.any()).optional(),
+        data: z.record(z.string(), z.any()).optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {

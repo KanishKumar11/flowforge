@@ -15,6 +15,23 @@ import { toast } from "sonner";
 import { TemplateBrowser } from "@/features/workflows/components/TemplateBrowser";
 import { WorkflowSearch } from "@/features/workflows/components/WorkflowSearch";
 
+// Explicit type to avoid deep type inference
+interface WorkflowItem {
+  id: string;
+  name: string;
+  description: string | null;
+  isActive: boolean;
+  folder: string | null;
+  tags: string[];
+  isFavorite: boolean;
+  createdAt: Date | string;
+  updatedAt: Date | string;
+  lastExecutedAt: Date | string | null;
+  _count: {
+    executions: number;
+  };
+}
+
 export function WorkflowsPageClient() {
   const router = useRouter();
   const [search, setSearch] = useState("");
@@ -22,7 +39,10 @@ export function WorkflowsPageClient() {
 
   const trpc = useTRPC();
   const client = useVanillaClient();
-  const { data: workflows, isLoading, refetch } = useQuery(trpc.workflows.list.queryOptions());
+  const { data: workflowsData, isLoading, refetch } = useQuery(trpc.workflows.list.queryOptions());
+
+  // Cast to explicit type to avoid deep type inference
+  const workflows = workflowsData as WorkflowItem[] | undefined;
 
   const createWorkflow = useMutation({
     mutationFn: (data: { name: string; description?: string }) =>
