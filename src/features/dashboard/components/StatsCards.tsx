@@ -31,14 +31,14 @@ export function StatsCards({
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <Card className="bg-(--arch-bg-secondary) border-(--arch-border) text-(--arch-fg) shadow-none rounded-none">
           <CardHeader className="pb-2">
-            <CardDescription className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-[var(--arch-muted)]">
+            <CardDescription className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-(--arch-muted)">
               <Workflow className="h-4 w-4 text-(--arch-accent)" />
               Total_Flows
             </CardDescription>
           </CardHeader>
           <CardContent>
             {workflowsLoading ? (
-              <Skeleton className="h-8 w-20 bg-[var(--arch-border)]" />
+              <Skeleton className="h-8 w-20 bg-(--arch-border)" />
             ) : (
               <p className="text-4xl font-bold tracking-tight text-(--arch-fg) font-mono">
                 {totalWorkflows}
@@ -49,14 +49,14 @@ export function StatsCards({
 
         <Card className="bg-(--arch-bg-secondary) border-(--arch-border) text-(--arch-fg) shadow-none rounded-none">
           <CardHeader className="pb-2">
-            <CardDescription className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-[var(--arch-muted)]">
+            <CardDescription className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-(--arch-muted)">
               <Play className="h-4 w-4 text-(--arch-accent)" />
               Active_Flows
             </CardDescription>
           </CardHeader>
           <CardContent>
             {workflowsLoading ? (
-              <Skeleton className="h-8 w-20 bg-[var(--arch-border)]" />
+              <Skeleton className="h-8 w-20 bg-(--arch-border)" />
             ) : (
               <p className="text-4xl font-bold tracking-tight text-(--arch-fg) font-mono">
                 {activeWorkflows}
@@ -67,14 +67,14 @@ export function StatsCards({
 
         <Card className="bg-(--arch-bg-secondary) border-(--arch-border) text-(--arch-fg) shadow-none rounded-none">
           <CardHeader className="pb-2">
-            <CardDescription className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-[var(--arch-muted)]">
+            <CardDescription className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-(--arch-muted)">
               <Zap className="h-4 w-4 text-(--arch-accent)" />
               Executions_7d
             </CardDescription>
           </CardHeader>
           <CardContent>
             {statsLoading ? (
-              <Skeleton className="h-8 w-20 bg-[var(--arch-border)]" />
+              <Skeleton className="h-8 w-20 bg-(--arch-border)" />
             ) : (
               <p className="text-4xl font-bold tracking-tight text-(--arch-fg) font-mono">
                 {stats?.total || 0}
@@ -85,14 +85,14 @@ export function StatsCards({
 
         <Card className="bg-(--arch-bg-secondary) border-(--arch-border) text-(--arch-fg) shadow-none rounded-none">
           <CardHeader className="pb-2">
-            <CardDescription className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-[var(--arch-muted)]">
+            <CardDescription className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-(--arch-muted)">
               <CheckCircle2 className="h-4 w-4 text-(--arch-accent)" />
               Success_Rate
             </CardDescription>
           </CardHeader>
           <CardContent>
             {statsLoading ? (
-              <Skeleton className="h-8 w-20 bg-[var(--arch-border)]" />
+              <Skeleton className="h-8 w-20 bg-(--arch-border)" />
             ) : (
               <div className="flex items-baseline gap-1">
                 <p className="text-4xl font-bold tracking-tight text-(--arch-fg) font-mono">

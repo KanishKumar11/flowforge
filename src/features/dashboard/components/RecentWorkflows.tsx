@@ -52,11 +52,10 @@ export function RecentWorkflows({
               >
                 <div className="flex items-center gap-4">
                   <div
-                    className={`p-2 transition-colors border ${
-                      workflow.isActive
-                        ? "bg-(--arch-fg) text-(--arch-bg) border-(--arch-fg)"
-                        : "bg-(--arch-bg) text-(--arch-muted) border-(--arch-border)"
-                    }`}
+                    className={`p-2 transition-colors border ${workflow.isActive
+                      ? "bg-(--arch-fg) text-(--arch-bg) border-(--arch-fg)"
+                      : "bg-(--arch-bg) text-(--arch-muted) border-(--arch-border)"
+                      }`}
                   >
                     <Workflow className="h-4 w-4" />
                   </div>
@@ -66,11 +65,10 @@ export function RecentWorkflows({
                     </p>
                     <div className="flex items-center gap-2 mt-0.5">
                       <span
-                        className={`text-[10px] font-mono uppercase tracking-widest ${
-                          workflow.isActive
-                            ? "text-(--arch-accent)"
-                            : "text-(--arch-muted)"
-                        }`}
+                        className={`text-[10px] font-mono uppercase tracking-widest ${workflow.isActive
+                          ? "text-(--arch-accent)"
+                          : "text-(--arch-muted)"
+                          }`}
                       >
                         {workflow.isActive ? "STS:ACTIVE" : "STS:DRAFT"}
                       </span>
@@ -84,7 +82,7 @@ export function RecentWorkflows({
         ) : (
           <div className="text-center py-8">
             <div className="w-16 h-16 border border-(--arch-border) flex items-center justify-center mx-auto mb-4 bg-(--arch-bg)">
-              <Workflow className="h-8 w-8 text-[var(--arch-muted)]" />
+              <Workflow className="h-8 w-8 text-(--arch-muted)" />
             </div>
             <p className="text-(--arch-muted) font-mono text-xs mb-4">
               NO_DATA_FOUND

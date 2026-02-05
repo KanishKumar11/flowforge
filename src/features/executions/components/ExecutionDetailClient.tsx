@@ -1,17 +1,11 @@
 "use client";
 
-import { DashboardHeader } from "@/components/DashboardHeader";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
-import { useTRPC, useVanillaClient } from "@/trpc/client";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import {
+  format,
   formatDistanceToNow,
   formatDuration,
   intervalToDuration,
-  format,
 } from "date-fns";
 import {
   AlertCircle,
@@ -27,6 +21,12 @@ import {
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { DashboardHeader } from "@/components/DashboardHeader";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useTRPC, useVanillaClient } from "@/trpc/client";
 
 type ExecutionStatus =
   | "PENDING"
@@ -206,34 +206,44 @@ export function ExecutionDetailClient({
           </Button>
 
           {/* Status Overview */}
-          <Card className="glass border-white/20 dark:border-white/10 shadow-lg backdrop-blur-xl">
+          <Card className="bg-(--arch-bg) border-(--arch-border) shadow-none rounded-none">
             <CardHeader>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-6">
                   <div
-                    className={`p-4 rounded-2xl ${status.bg} ring-1 ring-inset ring-white/10 shadow-inner`}
+                    className={`p-4 rounded-none border ${
+                      execution.status === "SUCCESS"
+                        ? "bg-(--arch-fg)/10 text-(--arch-fg) border-(--arch-fg)"
+                        : execution.status === "ERROR"
+                          ? "bg-(--arch-fg)/10 text-(--arch-fg) border-(--arch-fg)"
+                          : execution.status === "RUNNING"
+                            ? "bg-(--arch-fg)/10 text-(--arch-fg) border-(--arch-fg)"
+                            : "bg-(--arch-muted)/10 text-(--arch-muted) border-(--arch-muted)"
+                    }`}
                   >
                     <StatusIcon
-                      className={`h-8 w-8 ${status.color} ${execution.status === "RUNNING" ? "animate-spin" : ""}`}
+                      className={`h-8 w-8 ${execution.status === "RUNNING" ? "animate-spin" : ""}`}
                     />
                   </div>
                   <div>
-                    <CardTitle className="text-2xl font-bold tracking-tight">
+                    <CardTitle className="text-2xl font-bold tracking-tight font-mono uppercase text-(--arch-fg)">
                       {execution.workflow.name}
                     </CardTitle>
                     <div className="flex items-center gap-2 mt-2">
-                      <p className="text-sm text-muted-foreground font-medium">
-                        Started{" "}
-                        {formatDistanceToNow(new Date(execution.startedAt), {
-                          addSuffix: true,
-                        })}
+                      <p className="text-xs text-(--arch-muted) font-mono">
+                        STARTED:{" "}
+                        <span className="text-(--arch-fg)">
+                          {formatDistanceToNow(new Date(execution.startedAt), {
+                            addSuffix: true,
+                          }).toUpperCase()}
+                        </span>
                       </p>
                     </div>
                   </div>
                 </div>
                 <Badge
                   variant="outline"
-                  className={`${status.color} border-current px-4 py-1.5 text-sm font-semibold rounded-full`}
+                  className={`border-(--arch-border) text-(--arch-fg) px-4 py-1.5 text-xs font-mono uppercase rounded-none`}
                 >
                   {status.label}
                 </Badge>
@@ -243,89 +253,103 @@ export function ExecutionDetailClient({
 
           {/* Details Grid */}
           <div className="grid md:grid-cols-2 gap-6">
-            <Card className="glass border-white/20 dark:border-white/10 shadow-lg backdrop-blur-xl">
+            <Card className="bg-(--arch-bg) border-(--arch-border) shadow-none rounded-none">
               <CardHeader>
-                <CardTitle className="text-lg font-semibold flex items-center gap-2">
-                  <Clock className="w-4 h-4 text-primary" />
+                <CardTitle className="text-sm font-mono uppercase tracking-wider text-(--arch-fg) flex items-center gap-2">
+                  <Clock className="w-4 h-4" />
                   Execution Info
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="flex justify-between items-center p-3 rounded-lg bg-background/30 border border-border/30">
-                  <span className="text-muted-foreground text-sm font-medium">
+                <div className="flex justify-between items-center p-3 border border-(--arch-border) bg-(--arch-bg)">
+                  <span className="text-(--arch-muted) text-xs font-mono uppercase">
                     Execution ID
                   </span>
-                  <code className="text-xs bg-background/50 px-2.5 py-1 rounded-md border border-border/50 font-mono text-primary">
+                  <code className="text-xs text-(--arch-fg) font-mono">
                     {execution.id}
                   </code>
                 </div>
-                <div className="flex justify-between items-center p-3 rounded-lg bg-background/30 border border-border/30">
-                  <span className="text-muted-foreground text-sm font-medium">
+                <div className="flex justify-between items-center p-3 border border-(--arch-border) bg-(--arch-bg)">
+                  <span className="text-(--arch-muted) text-xs font-mono uppercase">
                     Mode
                   </span>
-                  <Badge variant="secondary" className="font-mono text-xs">
+                  <Badge
+                    variant="secondary"
+                    className="font-mono text-[10px] uppercase rounded-none bg-(--arch-fg)/10 text-(--arch-fg)"
+                  >
                     {execution.mode}
                   </Badge>
                 </div>
-                <div className="flex justify-between items-center p-3 rounded-lg bg-background/30 border border-border/30">
-                  <span className="text-muted-foreground text-sm font-medium">
+                <div className="flex justify-between items-center p-3 border border-(--arch-border) bg-(--arch-bg)">
+                  <span className="text-(--arch-muted) text-xs font-mono uppercase">
                     Started
                   </span>
-                  <span className="text-sm font-mono">
-                    {format(new Date(execution.startedAt), "PPpp")}
+                  <span className="text-xs font-mono text-(--arch-fg)">
+                    {format(
+                      new Date(execution.startedAt),
+                      "yyyy-MM-dd HH:mm:ss",
+                    )}
                   </span>
                 </div>
                 {execution.finishedAt && (
-                  <div className="flex justify-between items-center p-3 rounded-lg bg-background/30 border border-border/30">
-                    <span className="text-muted-foreground text-sm font-medium">
+                  <div className="flex justify-between items-center p-3 border border-(--arch-border) bg-(--arch-bg)">
+                    <span className="text-(--arch-muted) text-xs font-mono uppercase">
                       Finished
                     </span>
-                    <span className="text-sm font-mono">
-                      {format(new Date(execution.finishedAt), "PPpp")}
+                    <span className="text-xs font-mono text-(--arch-fg)">
+                      {format(
+                        new Date(execution.finishedAt),
+                        "yyyy-MM-dd HH:mm:ss",
+                      )}
                     </span>
                   </div>
                 )}
-                <div className="flex justify-between items-center p-3 rounded-lg bg-background/30 border border-border/30">
-                  <span className="text-muted-foreground text-sm font-medium">
+                <div className="flex justify-between items-center p-3 border border-(--arch-border) bg-(--arch-bg)">
+                  <span className="text-(--arch-muted) text-xs font-mono uppercase">
                     Duration
                   </span>
-                  <span className="text-sm font-mono font-bold text-foreground">
+                  <span className="text-xs font-mono text-(--arch-fg)">
                     {formatDurationMs(execution.duration)}
                   </span>
                 </div>
                 {execution.retryCount > 0 && (
-                  <div className="flex justify-between items-center p-3 rounded-lg bg-background/30 border border-border/30">
-                    <span className="text-muted-foreground text-sm font-medium">
+                  <div className="flex justify-between items-center p-3 border border-(--arch-border) bg-(--arch-bg)">
+                    <span className="text-(--arch-muted) text-xs font-mono uppercase">
                       Retry Count
                     </span>
-                    <Badge variant="outline">{execution.retryCount}</Badge>
+                    <Badge
+                      variant="outline"
+                      className="rounded-none border-(--arch-border) text-(--arch-fg)"
+                    >
+                      {execution.retryCount}
+                    </Badge>
                   </div>
                 )}
               </CardContent>
             </Card>
 
-            <Card className="glass border-white/20 dark:border-white/10 shadow-lg backdrop-blur-xl">
+            <Card className="bg-(--arch-bg) border-(--arch-border) shadow-none rounded-none">
               <CardHeader>
-                <CardTitle className="text-lg font-semibold flex items-center gap-2">
-                  <ExternalLink className="w-4 h-4 text-primary" />
+                <CardTitle className="text-sm font-mono uppercase tracking-wider text-(--arch-fg) flex items-center gap-2">
+                  <ExternalLink className="w-4 h-4" />
                   Workflow Context
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="flex items-center justify-between p-4 rounded-xl bg-background/30 border border-border/30">
+                <div className="flex items-center justify-between p-4 border border-(--arch-border) bg-(--arch-bg)">
                   <div>
-                    <p className="font-semibold text-lg">
+                    <p className="font-mono text-(--arch-fg) text-sm font-bold uppercase">
                       {execution.workflow.name}
                     </p>
-                    <p className="text-xs text-muted-foreground mt-1 font-mono opacity-70">
-                      {execution.workflow.id}
+                    <p className="text-[10px] text-(--arch-muted) mt-1 font-mono">
+                      ID: {execution.workflow.id}
                     </p>
                   </div>
                   <Button
                     variant="default"
                     size="sm"
                     asChild
-                    className="shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-all"
+                    className="bg-(--arch-fg) text-(--arch-bg) hover:bg-(--arch-fg)/80 rounded-none font-mono uppercase text-xs h-8"
                   >
                     <Link href={`/workflows/${execution.workflow.id}`}>
                       Open Workflow
@@ -340,15 +364,15 @@ export function ExecutionDetailClient({
           {/* Input/Output Data */}
           <div className="grid md:grid-cols-2 gap-6">
             {execution.inputData && (
-              <Card className="glass border-white/20 dark:border-white/10 shadow-lg backdrop-blur-xl h-full">
+              <Card className="bg-(--arch-bg) border-(--arch-border) shadow-none rounded-none h-full">
                 <CardHeader>
-                  <CardTitle className="text-lg font-semibold">
+                  <CardTitle className="text-sm font-mono uppercase tracking-wider text-(--arch-fg)">
                     Input Data
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="bg-zinc-950/50 backdrop-blur-sm p-4 rounded-xl border border-white/5 overflow-auto max-h-[400px]">
-                    <pre className="text-xs font-mono text-zinc-300">
+                  <div className="bg-(--arch-bg) p-4 border border-(--arch-border) overflow-auto max-h-[400px]">
+                    <pre className="text-xs font-mono text-(--arch-fg)">
                       {JSON.stringify(execution.inputData, null, 2)}
                     </pre>
                   </div>
@@ -357,15 +381,15 @@ export function ExecutionDetailClient({
             )}
 
             {execution.outputData && (
-              <Card className="glass border-white/20 dark:border-white/10 shadow-lg backdrop-blur-xl h-full">
+              <Card className="bg-(--arch-bg) border-(--arch-border) shadow-none rounded-none h-full">
                 <CardHeader>
-                  <CardTitle className="text-lg font-semibold">
+                  <CardTitle className="text-sm font-mono uppercase tracking-wider text-(--arch-fg)">
                     Output Data
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="bg-zinc-950/50 backdrop-blur-sm p-4 rounded-xl border border-white/5 overflow-auto max-h-[400px]">
-                    <pre className="text-xs font-mono text-zinc-300">
+                  <div className="bg-(--arch-bg) p-4 border border-(--arch-border) overflow-auto max-h-[400px]">
+                    <pre className="text-xs font-mono text-(--arch-fg)">
                       {JSON.stringify(execution.outputData, null, 2)}
                     </pre>
                   </div>
@@ -376,16 +400,16 @@ export function ExecutionDetailClient({
 
           {/* Error Message */}
           {execution.error && (
-            <Card className="border-red-500/30 bg-red-500/5 backdrop-blur-xl shadow-lg">
+            <Card className="border-(--arch-border) bg-(--arch-bg) shadow-none rounded-none">
               <CardHeader>
-                <CardTitle className="text-lg font-semibold text-red-500 flex items-center gap-2">
+                <CardTitle className="text-sm font-mono uppercase tracking-wider text-red-500 flex items-center gap-2">
                   <AlertCircle className="h-5 w-5" />
                   Error Details
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="bg-red-950/20 p-6 rounded-xl border border-red-500/20 overflow-auto">
-                  <pre className="text-sm font-mono text-red-200 whitespace-pre-wrap">
+                <div className="bg-red-500/10 p-6 border border-red-500/20 overflow-auto">
+                  <pre className="text-sm font-mono text-red-500 whitespace-pre-wrap">
                     {typeof execution.error === "string"
                       ? execution.error
                       : JSON.stringify(execution.error, null, 2)}

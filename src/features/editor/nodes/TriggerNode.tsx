@@ -30,35 +30,25 @@ export const TriggerNode = memo(function TriggerNode({
 
   return (
     <div
-      id="base-node"
-      className={`min-w-[200px] bg-[#0A160A] border shadow-none rounded-none transition-all duration-200 ${
-        selected
-          ? "border-[var(--arch-fg)] ring-1 ring-[var(--arch-fg)]"
-          : "border-[var(--arch-border)]"
-      }`}
+      className={`px-4 py-3 rounded-none bg-(--arch-bg) border border-(--arch-border) shadow-sm min-w-[180px] group transition-all duration-300 ${selected
+          ? "ring-1 ring-(--arch-fg) border-(--arch-fg)"
+          : "hover:border-(--arch-fg) hover:ring-1 hover:ring-(--arch-fg)/10"
+        }`}
     >
-      <div className="bg-[#0A160A] border-b border-[var(--arch-border)] px-3 py-2 flex items-center gap-2">
-        <Icon className="h-3 w-3 text-[var(--arch-fg)]" />
-        <span className="text-[10px] font-bold text-[var(--arch-fg)] font-mono uppercase tracking-wider">
-          Trigger
-        </span>
-      </div>
-      <div className="px-3 py-2 bg-[#0A160A]">
-        <p className="font-bold text-xs text-[var(--arch-fg)] font-mono uppercase truncate">
-          {data.label}
-        </p>
-        <p className="text-[10px] text-[var(--arch-muted)] mt-1 font-mono truncate">
-          {data.type === "manual" && "CLICK_TO_START"}
-          {data.type === "webhook" && "Creates HTTP EP"}
-          {data.type === "schedule" && "CRON_SCHEDULE"}
-        </p>
+      <div className="flex items-center gap-3">
+        <div className="p-1.5 rounded-none bg-emerald-500/10 text-emerald-500 border border-(--arch-border) transition-colors duration-300 group-hover:border-(--arch-fg)">
+          <Play className="w-4 h-4" />
+        </div>
+        <div>
+          <div className="text-xs font-bold text-(--arch-fg) font-mono tracking-wide uppercase">{data.label}</div>
+          <div className="text-[10px] text-(--arch-muted) font-mono uppercase tracking-wider mt-0.5">TRIGGER</div>
+        </div>
       </div>
 
-      {/* Output Handle */}
       <Handle
         type="source"
         position={Position.Bottom}
-        className="!bg-[#0A160A] !border-[var(--arch-fg)] !border-[1px] !rounded-none !w-2.5 !h-2.5 !bottom-[-6px]"
+        className="w-2.5! h-2.5! rounded-none! bg-[#0A160A]! border! border-(--arch-fg)! bottom-[-6px]! transition-all duration-300 group-hover:border-(--arch-fg)! group-hover:bg-(--arch-fg)!"
       />
     </div>
   );

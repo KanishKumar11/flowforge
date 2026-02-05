@@ -21,11 +21,11 @@ export const AuthLayout = ({ children }: { children: React.ReactNode }) => {
       {/* Vignette at bottom to fade grid */}
 
       {/* --- LAYER 1: The Schematic --- */}
-      <div className="absolute inset-0 z-[1] w-[60%] border-r border-(--arch-border) transition-colors duration-500 pointer-events-none">
+      <div className="absolute inset-0 z-1 w-[60%] border-r border-(--arch-border) transition-colors duration-500 pointer-events-none">
         <WorkflowVisualizer />
         {/* Decorative Data Lines */}
-        <div className="absolute bottom-32 left-12 w-32 h-[1px] bg-(--arch-border)" />
-        <div className="absolute bottom-32 left-12 w-[1px] h-8 bg-(--arch-border)" />
+        <div className="absolute bottom-32 left-12 w-32 h-px bg-(--arch-border)" />
+        <div className="absolute bottom-32 left-12 w-px h-8 bg-(--arch-border)" />
         <div className="absolute bottom-28 left-16 font-mono text-[10px] text-(--arch-muted) tracking-widest opacity-50">
           FIG. 01 — SYSTEM OVERVIEW
         </div>
@@ -66,11 +66,11 @@ export const AuthLayout = ({ children }: { children: React.ReactNode }) => {
         {/* Right Side: Control Panel (The Form) */}
         <div className="w-full lg:w-[40%] bg-(--arch-bg-secondary)/90 backdrop-blur-sm border-l border-(--arch-border) flex flex-col items-center justify-center p-8 relative transition-colors duration-500">
           {/* Tech Decoration */}
-          <div className="absolute top-0 right-0 p-4">
-            <div className="w-4 h-4 border-t border-r border-(--arch-border) transition-colors duration-500" />
+          <div className="absolute inset-x-0 -top-40 -bottom-40 overflow-hidden bg-neutral-950 z-1">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-emerald-500/20 blur-[120px] rounded-full mix-blend-screen opacity-20 animate-pulse" />
           </div>
-          <div className="absolute bottom-0 right-0 p-4">
-            <div className="w-4 h-4 border-b border-r border-(--arch-border) transition-colors duration-500" />
+          <div className="absolute inset-0 z-1">
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-size-[24px_24px]" />
           </div>
 
           <div className="w-full max-w-[400px]">{children}</div>

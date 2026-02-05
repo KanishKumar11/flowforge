@@ -129,61 +129,61 @@ export function WorkflowsPageClient() {
         {/* Stats Overview */}
         {!isLoading && workflows && workflows.length > 0 && (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div className="p-6 border border-[var(--arch-border)] bg-[var(--arch-bg)] relative overflow-hidden group">
+            <div className="p-6 border border-(--arch-border) bg-(--arch-bg) relative overflow-hidden group">
               <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-                <Workflow className="w-24 h-24 text-[var(--arch-fg)] transform rotate-12" />
+                <Workflow className="w-24 h-24 text-(--arch-fg) transform rotate-12" />
               </div>
               <div className="flex items-center gap-4 relative z-10">
-                <div className="p-3 border border-[var(--arch-fg)] bg-[var(--arch-fg)]/10 text-[var(--arch-fg)]">
+                <div className="p-3 border border-(--arch-fg) bg-(--arch-fg)/10 text-(--arch-fg)">
                   <Workflow className="h-6 w-6" />
                 </div>
                 <div>
-                  <p className="text-3xl font-bold tracking-tight font-mono text-[var(--arch-fg)]">
+                  <p className="text-3xl font-bold tracking-tight font-mono text-(--arch-fg)">
                     {workflows.length}
                   </p>
-                  <p className="text-xs text-[var(--arch-muted)] font-mono uppercase tracking-wider">
+                  <p className="text-xs text-(--arch-muted) font-mono uppercase tracking-wider">
                     Total Workflows
                   </p>
                 </div>
               </div>
             </div>
 
-            <div className="p-6 border border-[var(--arch-border)] bg-[var(--arch-bg)] relative overflow-hidden group">
+            <div className="p-6 border border-(--arch-border) bg-(--arch-bg) relative overflow-hidden group">
               <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-                <div className="w-24 h-24 bg-[var(--arch-fg)] rounded-full blur-2xl" />
+                <div className="w-24 h-24 bg-(--arch-fg) rounded-full blur-2xl" />
               </div>
               <div className="flex items-center gap-4 relative z-10">
-                <div className="p-3 border border-[var(--arch-fg)] bg-[var(--arch-fg)]/10 text-[var(--arch-fg)]">
+                <div className="p-3 border border-(--arch-fg) bg-(--arch-fg)/10 text-(--arch-fg)">
                   <div className="h-6 w-6 flex items-center justify-center">
-                    <span className="w-3 h-3 rounded-full bg-[var(--arch-fg)] animate-pulse" />
+                    <span className="w-3 h-3 rounded-full bg-(--arch-fg) animate-pulse" />
                   </div>
                 </div>
                 <div>
-                  <p className="text-3xl font-bold tracking-tight font-mono text-[var(--arch-fg)]">
+                  <p className="text-3xl font-bold tracking-tight font-mono text-(--arch-fg)">
                     {workflows.filter((w) => w.isActive).length}
                   </p>
-                  <p className="text-xs text-[var(--arch-muted)] font-mono uppercase tracking-wider">
+                  <p className="text-xs text-(--arch-muted) font-mono uppercase tracking-wider">
                     Active Systems
                   </p>
                 </div>
               </div>
             </div>
 
-            <div className="p-6 border border-[var(--arch-border)] bg-[var(--arch-bg)] relative overflow-hidden group">
+            <div className="p-6 border border-(--arch-border) bg-(--arch-bg) relative overflow-hidden group">
               <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-                <div className="w-24 h-24 bg-[var(--arch-muted)] rounded-full blur-2xl" />
+                <div className="w-24 h-24 bg-(--arch-muted) rounded-full blur-2xl" />
               </div>
               <div className="flex items-center gap-4 relative z-10">
-                <div className="p-3 border border-[var(--arch-muted)] bg-[var(--arch-muted)]/10 text-[var(--arch-muted)]">
+                <div className="p-3 border border-(--arch-muted) bg-(--arch-muted)/10 text-(--arch-muted)">
                   <div className="h-6 w-6 flex items-center justify-center">
-                    <span className="w-3 h-3 rounded-full bg-[var(--arch-muted)]" />
+                    <span className="w-3 h-3 rounded-full bg-(--arch-muted)" />
                   </div>
                 </div>
                 <div>
-                  <p className="text-3xl font-bold tracking-tight font-mono text-[var(--arch-muted)]">
+                  <p className="text-3xl font-bold tracking-tight font-mono text-(--arch-muted)">
                     {workflows.filter((w) => !w.isActive).length}
                   </p>
-                  <p className="text-xs text-[var(--arch-muted)] font-mono uppercase tracking-wider">
+                  <p className="text-xs text-(--arch-muted) font-mono uppercase tracking-wider">
                     Draft Mode
                   </p>
                 </div>

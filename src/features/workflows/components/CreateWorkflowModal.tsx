@@ -51,10 +51,12 @@ export function CreateWorkflowModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[480px]">
+      <DialogContent className="sm:max-w-[480px] bg-(--arch-bg) border-(--arch-border) rounded-none">
         <DialogHeader>
-          <DialogTitle>Create New Workflow</DialogTitle>
-          <DialogDescription>
+          <DialogTitle className="font-mono text-(--arch-fg) uppercase tracking-wide">
+            Create New Workflow
+          </DialogTitle>
+          <DialogDescription className="font-mono text-xs text-(--arch-muted)">
             Start building your automation. You can add nodes and configure them
             in the workflow editor.
           </DialogDescription>
@@ -62,23 +64,35 @@ export function CreateWorkflowModal({
         <form onSubmit={handleSubmit}>
           <div className="grid gap-4 py-4">
             <div className="space-y-2">
-              <Label htmlFor="name">Workflow Name</Label>
+              <Label
+                htmlFor="name"
+                className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider"
+              >
+                Workflow Name
+              </Label>
               <Input
                 id="name"
                 placeholder="My Awesome Workflow"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 autoFocus
+                className="bg-(--arch-bg) border-(--arch-border) focus:border-(--arch-fg) text-(--arch-fg) font-mono rounded-none placeholder:text-(--arch-muted) text-xs h-9 focus-visible:ring-0"
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="description">Description (optional)</Label>
+              <Label
+                htmlFor="description"
+                className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider"
+              >
+                Description (optional)
+              </Label>
               <Textarea
                 id="description"
                 placeholder="Describe what this workflow does..."
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 rows={3}
+                className="bg-(--arch-bg) border-(--arch-border) focus:border-(--arch-fg) text-(--arch-fg) font-mono rounded-none placeholder:text-(--arch-muted) text-xs focus-visible:ring-0"
               />
             </div>
           </div>
@@ -87,12 +101,14 @@ export function CreateWorkflowModal({
               type="button"
               variant="outline"
               onClick={() => onOpenChange(false)}
+              className="border-(--arch-border) hover:bg-(--arch-fg) hover:text-(--arch-bg) text-(--arch-fg) font-mono uppercase text-xs rounded-none h-9 transition-colors"
             >
               Cancel
             </Button>
             <Button
               type="submit"
               disabled={!name.trim() || isLoading || externalIsLoading}
+              className="bg-(--arch-fg) text-(--arch-bg) hover:bg-(--arch-fg)/90 font-mono uppercase text-xs rounded-none h-9 transition-colors disabled:opacity-50"
             >
               {(isLoading || externalIsLoading) && (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />

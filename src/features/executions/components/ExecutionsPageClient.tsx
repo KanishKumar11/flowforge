@@ -1,25 +1,6 @@
 "use client";
 
-import { DashboardHeader } from "@/components/DashboardHeader";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardHeader } from "@/components/ui/card";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Skeleton } from "@/components/ui/skeleton";
-import { useTRPC, useVanillaClient } from "@/trpc/client";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   formatDistanceToNow,
   formatDuration,
@@ -40,6 +21,25 @@ import {
 import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
+import { DashboardHeader } from "@/components/DashboardHeader";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardHeader } from "@/components/ui/card";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useTRPC, useVanillaClient } from "@/trpc/client";
 
 type ExecutionStatus =
   | "PENDING"
@@ -75,9 +75,42 @@ function formatDurationMs(ms: number | null | undefined): string {
   );
 }
 
+// Helper component defined outside
+const StatusIconWrapper = ({ status, Icon }: { status: ExecutionStatus; Icon: React.ComponentType<{ className?: string }> }) => {
+  const getStatusClasses = (s: ExecutionStatus) => {
+    switch (s) {
+      case "SUCCESS": return "bg-(--arch-fg)/10 text-(--arch-fg) border-(--arch-fg)";
+      case "ERROR": return "bg-(--arch-fg)/10 text-(--arch-fg) border-(--arch-fg)";
+      case "RUNNING": return "bg-(--arch-fg)/10 text-(--arch-fg) border-(--arch-fg)";
+      default: return "bg-(--arch-muted)/10 text-(--arch-muted) border-(--arch-muted)";
+    }
+  };
+
+  return (
+    <div className={`p-3 rounded-none border ${getStatusClasses(status)}`}>
+      <Icon className={`h-5 w-5 ${status === "RUNNING" ? "animate-spin" : ""}`} />
+    </div>
+  );
+};
+
+// Helper component to fix type instantiation depth issues
+const StatusBadge = ({ status, classes }: { status: ExecutionStatus; classes: string }) => {
+  return (
+    <Badge
+      variant="outline"
+      className={`${classes} border px-2.5 py-0.5 text-xs font-semibold`}
+    >
+      {status === "SUCCESS" ? "Success" :
+        status === "ERROR" ? "Failed" :
+          status === "RUNNING" ? "Running" :
+            status === "PENDING" ? "Pending" :
+              status === "CANCELLED" ? "Cancelled" : "Waiting"}
+    </Badge>
+  );
+};
+
 export function ExecutionsPageClient() {
   const [statusFilter, setStatusFilter] = useState<string>("all");
-
   const trpc = useTRPC();
   const client = useVanillaClient();
   const {
@@ -86,11 +119,11 @@ export function ExecutionsPageClient() {
     refetch,
   } = useQuery(
     trpc.executions.list.queryOptions({
-      status:
-        statusFilter !== "all" ? (statusFilter as ExecutionStatus) : undefined,
+      status: statusFilter !== "all" ? (statusFilter as ExecutionStatus) : undefined,
       limit: 50,
     }),
   );
+
   const { data: stats } = useQuery(
     trpc.executions.stats.queryOptions({ days: 7 }),
   );
@@ -131,55 +164,61 @@ export function ExecutionsPageClient() {
           {/* Stats Overview */}
           {stats && (
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-              <div className="glass p-6 rounded-xl border border-white/20 dark:border-white/10 shadow-lg backdrop-blur-xl hover-lift transition-all">
+              <div className="p-6 border border-(--arch-border) bg-(--arch-bg) group hover:border-(--arch-fg) transition-colors">
                 <div className="flex items-center gap-4">
-                  <div className="p-3 rounded-xl bg-primary/10 ring-1 ring-primary/20">
-                    <History className="h-6 w-6 text-primary" />
+                  <div className="p-3 bg-(--arch-fg)/10 text-(--arch-fg) border border-(--arch-border)">
+                    <History className="h-6 w-6" />
                   </div>
                   <div>
-                    <p className="text-2xl font-bold">{stats.total}</p>
-                    <p className="text-sm text-muted-foreground font-medium">
+                    <p className="text-2xl font-bold font-mono text-(--arch-fg)">
+                      {stats.total}
+                    </p>
+                    <p className="text-xs text-(--arch-muted) font-mono uppercase tracking-wider">
                       Total (7 days)
                     </p>
                   </div>
                 </div>
               </div>
-              <div className="glass p-6 rounded-xl border border-white/20 dark:border-white/10 shadow-lg backdrop-blur-xl hover-lift transition-all">
+              <div className="p-6 border border-(--arch-border) bg-(--arch-bg) group hover:border-(--arch-fg) transition-colors">
                 <div className="flex items-center gap-4">
-                  <div className="p-3 rounded-xl bg-emerald-500/10 ring-1 ring-emerald-500/20">
-                    <CheckCircle2 className="h-6 w-6 text-emerald-500" />
+                  <div className="p-3 bg-(--arch-fg)/10 text-(--arch-fg) border border-(--arch-border)">
+                    <CheckCircle2 className="h-6 w-6" />
                   </div>
                   <div>
-                    <p className="text-2xl font-bold">{stats.success}</p>
-                    <p className="text-sm text-muted-foreground font-medium">
+                    <p className="text-2xl font-bold font-mono text-(--arch-fg)">
+                      {stats.success}
+                    </p>
+                    <p className="text-xs text-(--arch-muted) font-mono uppercase tracking-wider">
                       Successful
                     </p>
                   </div>
                 </div>
               </div>
-              <div className="glass p-6 rounded-xl border border-white/20 dark:border-white/10 shadow-lg backdrop-blur-xl hover-lift transition-all">
+              <div className="p-6 border border-(--arch-border) bg-(--arch-bg) group hover:border-(--arch-fg) transition-colors">
                 <div className="flex items-center gap-4">
-                  <div className="p-3 rounded-xl bg-red-500/10 ring-1 ring-red-500/20">
-                    <AlertCircle className="h-6 w-6 text-red-500" />
+                  <div className="p-3 bg-(--arch-fg)/10 text-(--arch-fg) border border-(--arch-border)">
+                    <AlertCircle className="h-6 w-6" />
                   </div>
                   <div>
-                    <p className="text-2xl font-bold">{stats.error}</p>
-                    <p className="text-sm text-muted-foreground font-medium">
+                    <p className="text-2xl font-bold font-mono text-(--arch-fg)">
+                      {stats.error}
+                    </p>
+                    <p className="text-xs text-(--arch-muted) font-mono uppercase tracking-wider">
                       Failed
                     </p>
                   </div>
                 </div>
               </div>
-              <div className="glass p-6 rounded-xl border border-white/20 dark:border-white/10 shadow-lg backdrop-blur-xl hover-lift transition-all">
+              <div className="p-6 border border-(--arch-border) bg-(--arch-bg) group hover:border-(--arch-fg) transition-colors">
                 <div className="flex items-center gap-4">
-                  <div className="p-3 rounded-xl bg-blue-500/10 ring-1 ring-blue-500/20">
-                    <Clock className="h-6 w-6 text-blue-500" />
+                  <div className="p-3 bg-(--arch-fg)/10 text-(--arch-fg) border border-(--arch-border)">
+                    <Clock className="h-6 w-6" />
                   </div>
                   <div>
-                    <p className="text-2xl font-bold">
+                    <p className="text-2xl font-bold font-mono text-(--arch-fg)">
                       {stats.successRate.toFixed(0)}%
                     </p>
-                    <p className="text-sm text-muted-foreground font-medium">
+                    <p className="text-xs text-(--arch-muted) font-mono uppercase tracking-wider">
                       Success Rate
                     </p>
                   </div>
@@ -189,18 +228,48 @@ export function ExecutionsPageClient() {
           )}
 
           {/* Filters */}
-          <div className="flex items-center gap-4 p-1 glass rounded-2xl border border-white/10 w-fit">
+          <div className="flex items-center gap-4 p-1 bg-(--arch-bg) border border-(--arch-border) w-fit rounded-none">
             <Select value={statusFilter} onValueChange={setStatusFilter}>
-              <SelectTrigger className="w-[180px] bg-transparent border-none focus:ring-0">
+              <SelectTrigger className="w-[180px] bg-transparent border-none focus:ring-0 text-(--arch-fg) font-mono text-xs uppercase">
                 <SelectValue placeholder="Filter by status" />
               </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Statuses</SelectItem>
-                <SelectItem value="SUCCESS">Success</SelectItem>
-                <SelectItem value="ERROR">Failed</SelectItem>
-                <SelectItem value="RUNNING">Running</SelectItem>
-                <SelectItem value="PENDING">Pending</SelectItem>
-                <SelectItem value="CANCELLED">Cancelled</SelectItem>
+              <SelectContent className="bg-(--arch-bg) border-(--arch-border) rounded-none">
+                <SelectItem
+                  value="all"
+                  className="font-mono text-xs text-(--arch-fg) focus:bg-(--arch-fg) focus:text-(--arch-bg)"
+                >
+                  All Statuses
+                </SelectItem>
+                <SelectItem
+                  value="SUCCESS"
+                  className="font-mono text-xs text-(--arch-fg) focus:bg-(--arch-fg) focus:text-(--arch-bg)"
+                >
+                  Success
+                </SelectItem>
+                <SelectItem
+                  value="ERROR"
+                  className="font-mono text-xs text-(--arch-fg) focus:bg-(--arch-fg) focus:text-(--arch-bg)"
+                >
+                  Failed
+                </SelectItem>
+                <SelectItem
+                  value="RUNNING"
+                  className="font-mono text-xs text-(--arch-fg) focus:bg-(--arch-fg) focus:text-(--arch-bg)"
+                >
+                  Running
+                </SelectItem>
+                <SelectItem
+                  value="PENDING"
+                  className="font-mono text-xs text-(--arch-fg) focus:bg-(--arch-fg) focus:text-(--arch-bg)"
+                >
+                  Pending
+                </SelectItem>
+                <SelectItem
+                  value="CANCELLED"
+                  className="font-mono text-xs text-(--arch-fg) focus:bg-(--arch-fg) focus:text-(--arch-bg)"
+                >
+                  Cancelled
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -208,17 +277,18 @@ export function ExecutionsPageClient() {
           {/* Loading State */}
           {isLoading && (
             <div className="space-y-4">
+              {/* biome-ignore lint/suspicious/noArrayIndexKey: Skeleton loader needs index key */}
               {[...Array(5)].map((_, i) => (
                 <div
                   key={i}
-                  className="p-6 border rounded-xl flex items-center gap-4 bg-muted/20"
+                  className="p-6 border border-(--arch-border) rounded-none flex items-center gap-4 bg-(--arch-bg)"
                 >
-                  <Skeleton className="h-10 w-10 rounded-lg" />
+                  <Skeleton className="h-10 w-10 rounded-none bg-(--arch-muted)/20" />
                   <div className="flex-1 space-y-2">
-                    <Skeleton className="h-4 w-48" />
-                    <Skeleton className="h-3 w-32" />
+                    <Skeleton className="h-4 w-48 bg-(--arch-muted)/20" />
+                    <Skeleton className="h-3 w-32 bg-(--arch-muted)/20" />
                   </div>
-                  <Skeleton className="h-6 w-20" />
+                  <Skeleton className="h-6 w-20 bg-(--arch-muted)/20" />
                 </div>
               ))}
             </div>
@@ -226,27 +296,27 @@ export function ExecutionsPageClient() {
 
           {/* Empty State */}
           {!isLoading && executions.length === 0 && (
-            <div className="empty-state animate-fadeIn glass border border-white/20 dark:border-white/10 p-12 rounded-2xl">
-              <div className="flex items-center justify-center w-20 h-20 rounded-2xl bg-primary/10 mb-6 mx-auto ring-1 ring-primary/20">
-                <History className="w-10 h-10 text-primary" />
+            <div className="flex flex-col items-center justify-center p-12 border border-(--arch-border) border-dashed bg-(--arch-bg)">
+              <div className="flex items-center justify-center w-20 h-20 bg-(--arch-fg)/5 mb-6">
+                <History className="w-10 h-10 text-(--arch-fg)" />
               </div>
-              <h3 className="empty-state-title text-xl font-bold text-center">
-                No executions yet
+              <h3 className="text-xl font-bold font-mono uppercase text-(--arch-fg) tracking-widest text-center">
+                System Idle
               </h3>
-              <p className="empty-state-description max-w-md mx-auto mt-2 text-center text-muted-foreground">
+              <p className="max-w-md mx-auto mt-2 text-center text-(--arch-muted) font-mono text-xs">
                 {statusFilter !== "all"
-                  ? `No ${statusFilter.toLowerCase()} executions found. Try a different filter.`
-                  : "Execute a workflow to see its history here. All execution details and logs will be recorded."}
+                  ? `No ${statusFilter.toLowerCase()} executions found in recent logs.`
+                  : "No execution history details available."}
               </p>
               <div className="mt-8 flex justify-center">
                 <Button
                   asChild
                   size="lg"
-                  className="gap-2 shadow-lg shadow-primary/20 hover:shadow-primary/30"
+                  className="gap-2 bg-(--arch-fg) text-(--arch-bg) hover:bg-(--arch-fg)/90 rounded-none font-mono uppercase text-xs"
                 >
                   <Link href="/workflows">
                     <Play className="w-4 h-4" />
-                    Go to Workflows
+                    Execute Workflow
                   </Link>
                 </Button>
               </div>
@@ -256,122 +326,14 @@ export function ExecutionsPageClient() {
           {/* Executions List */}
           {!isLoading && executions.length > 0 && (
             <div className="space-y-4 animate-fadeIn">
-              {executions.map((execution) => {
-                const status =
-                  statusConfig[execution.status as ExecutionStatus];
-                const StatusIcon = status.icon;
-
-                return (
-                  <Card
-                    key={execution.id}
-                    className="card-interactive glass border-white/20 dark:border-white/10 hover:border-primary/30 transition-all duration-300"
-                  >
-                    <CardHeader className="p-4">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-6">
-                          <div
-                            className={`p-3 rounded-xl ${
-                              execution.status === "SUCCESS"
-                                ? "bg-emerald-500/10 text-emerald-500 ring-1 ring-emerald-500/20"
-                                : execution.status === "ERROR"
-                                  ? "bg-red-500/10 text-red-500 ring-1 ring-red-500/20"
-                                  : execution.status === "RUNNING"
-                                    ? "bg-blue-500/10 text-blue-500 ring-1 ring-blue-500/20"
-                                    : "bg-muted text-muted-foreground ring-1 ring-white/10"
-                            }`}
-                          >
-                            <StatusIcon
-                              className={`h-5 w-5 ${execution.status === "RUNNING" ? "animate-spin" : ""}`}
-                            />
-                          </div>
-                          <div>
-                            <div className="flex items-center gap-3">
-                              <Link
-                                href={`/workflows/${execution.workflowId}`}
-                                className="text-lg font-semibold hover:text-primary transition-colors"
-                              >
-                                {execution.workflow.name}
-                              </Link>
-                              <Badge
-                                variant="outline"
-                                className={`${status.classes} border px-2.5 py-0.5 text-xs font-semibold`}
-                              >
-                                {status.label}
-                              </Badge>
-                            </div>
-                            <div className="flex items-center gap-4 mt-1.5 text-sm text-muted-foreground font-medium">
-                              <span className="flex items-center gap-1.5">
-                                <Clock className="w-3.5 h-3.5" />
-                                {formatDistanceToNow(
-                                  new Date(execution.startedAt),
-                                  { addSuffix: true },
-                                )}
-                              </span>
-                              <span className="w-1 h-1 rounded-full bg-muted-foreground/30" />
-                              <span>{execution.mode}</span>
-                              {execution.duration && (
-                                <>
-                                  <span className="w-1 h-1 rounded-full bg-muted-foreground/30" />
-                                  <span className="font-mono">
-                                    {formatDurationMs(execution.duration)}
-                                  </span>
-                                </>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          {(execution.status === "ERROR" ||
-                            execution.status === "CANCELLED") && (
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              onClick={() =>
-                                retryExecution.mutate({ id: execution.id })
-                              }
-                              disabled={retryExecution.isPending}
-                              className="hover:bg-primary/5 hover:text-primary hover:border-primary/20"
-                            >
-                              <RefreshCw className="h-4 w-4 mr-1" />
-                              Retry
-                            </Button>
-                          )}
-                          <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                className="h-8 w-8 hover:bg-background/50"
-                              >
-                                <MoreVertical className="h-4 w-4" />
-                              </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent
-                              align="end"
-                              className="glass border-white/20 dark:border-white/10"
-                            >
-                              <DropdownMenuItem asChild>
-                                <Link href={`/executions/${execution.id}`}>
-                                  View Details
-                                </Link>
-                              </DropdownMenuItem>
-                              <DropdownMenuItem
-                                className="text-destructive focus:text-destructive"
-                                onClick={() =>
-                                  deleteExecution.mutate({ id: execution.id })
-                                }
-                              >
-                                <Trash2 className="mr-2 h-4 w-4" />
-                                Delete
-                              </DropdownMenuItem>
-                            </DropdownMenuContent>
-                          </DropdownMenu>
-                        </div>
-                      </div>
-                    </CardHeader>
-                  </Card>
-                );
-              })}
+              {(executions as any[]).map((execution) => (
+                <ExecutionCard
+                  key={execution.id}
+                  execution={execution}
+                  retryExecution={retryExecution}
+                  deleteExecution={deleteExecution}
+                />
+              ))}
             </div>
           )}
         </div>
@@ -379,3 +341,111 @@ export function ExecutionsPageClient() {
     </div>
   );
 }
+
+// Extracted Component to fix "Type instantiation is excessively deep"
+const ExecutionCard = ({
+  execution,
+  retryExecution,
+  deleteExecution,
+}: {
+  execution: any; // Using any to break the deep type inference chain if necessary, or proper type if possible
+  retryExecution: any;
+  deleteExecution: any;
+}) => {
+  const status = statusConfig[execution.status as ExecutionStatus];
+  const StatusIcon = status.icon;
+
+  return (
+    <Card
+      className="group border-(--arch-border) bg-(--arch-bg) shadow-none rounded-none hover:border-(--arch-fg) transition-all duration-300"
+    >
+      <CardHeader className="p-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-6">
+            <StatusIconWrapper status={execution.status as ExecutionStatus} Icon={StatusIcon} />
+            <div>
+              <div className="flex items-center gap-3">
+                <Link
+                  href={`/workflows/${execution.workflowId}`}
+                  className="text-lg font-bold font-mono uppercase text-(--arch-fg) hover:underline"
+                >
+                  {execution.workflow.name}
+                </Link>
+                <StatusBadge status={execution.status as ExecutionStatus} classes={status.classes} />
+              </div>
+              <div className="flex items-center gap-4 mt-1.5 text-xs text-(--arch-muted) font-mono">
+                <span className="flex items-center gap-1.5">
+                  <Clock className="w-3.5 h-3.5" />
+                  {formatDistanceToNow(
+                    new Date(execution.startedAt),
+                    { addSuffix: true },
+                  )}
+                </span>
+                <span>|</span>
+                <span>{execution.mode}</span>
+                {execution.duration && (
+                  <>
+                    <span>|</span>
+                    <span>
+                      {formatDurationMs(execution.duration)}
+                    </span>
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            {(execution.status === "ERROR" ||
+              execution.status === "CANCELLED") && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() =>
+                    retryExecution.mutate({ id: execution.id })
+                  }
+                  disabled={retryExecution.isPending}
+                  className="border-(--arch-border) text-(--arch-fg) hover:bg-(--arch-fg) hover:text-(--arch-bg) rounded-none font-mono uppercase text-xs h-8"
+                >
+                  <RefreshCw className="h-3 w-3 mr-1.5" />
+                  Retry
+                </Button>
+              )}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-8 w-8 text-(--arch-muted) hover:text-(--arch-fg) hover:bg-(--arch-fg)/10 rounded-none"
+                >
+                  <MoreVertical className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                align="end"
+                className="bg-(--arch-bg) border-(--arch-border) rounded-none"
+              >
+                <DropdownMenuItem
+                  asChild
+                  className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer font-mono text-xs uppercase"
+                >
+                  <Link href={`/executions/${execution.id}`}>
+                    View Details
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className="text-red-500 focus:bg-red-500 focus:text-white cursor-pointer font-mono text-xs uppercase"
+                  onClick={() =>
+                    deleteExecution.mutate({ id: execution.id })
+                  }
+                >
+                  <Trash2 className="mr-2 h-4 w-4" />
+                  Delete
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </div>
+      </CardHeader>
+    </Card>
+  );
+};
