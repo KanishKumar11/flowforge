@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useTRPC, useVanillaClient } from "@/trpc/client";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { Plus, Workflow } from "lucide-react";
+import { Plus, Workflow, Sparkles, Zap, Globe } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -31,6 +31,28 @@ interface WorkflowItem {
     executions: number;
   };
 }
+
+// Template configurations
+const TEMPLATES = [
+  {
+    id: "seo-writer",
+    name: "SEO Content Generator",
+    description: "Auto-generate optimized blog posts from keywords",
+    icon: Sparkles,
+  },
+  {
+    id: "email-responder",
+    name: "Email Auto-Responder",
+    description: "AI-powered email classification and drafting",
+    icon: Zap,
+  },
+  {
+    id: "data-scraper",
+    name: "Data Scraper",
+    description: "Extract and structure data from competitor sites",
+    icon: Globe,
+  },
+];
 
 export function WorkflowsPageClient() {
   const router = useRouter();
@@ -109,15 +131,24 @@ export function WorkflowsPageClient() {
     await createWorkflow.mutateAsync(data);
   };
 
+  const handleCreateFromTemplate = async (template: typeof TEMPLATES[0]) => {
+    await createWorkflow.mutateAsync({
+      name: template.name,
+      description: template.description,
+    });
+  };
+
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full bg-(--arch-bg) min-h-screen">
       <DashboardHeader
         title="Workflows"
         description="Create and manage your automation workflows"
         action={
           <div className="flex items-center gap-2">
-            <TemplateBrowser />
-            <Button onClick={() => setShowCreateModal(true)} className="gap-2">
+            <Button
+              onClick={() => setShowCreateModal(true)}
+              className="gap-2 bg-(--arch-fg) text-(--arch-bg) hover:bg-(--arch-fg)/90 rounded-none border-0 font-mono uppercase text-xs h-10 px-6 shadow-[0_0_15px_rgba(var(--arch-fg-rgb),0.3)]"
+            >
               <Plus className="h-4 w-4" />
               New Workflow
             </Button>
@@ -125,11 +156,47 @@ export function WorkflowsPageClient() {
         }
       />
 
-      <div className="flex-1 p-6 overflow-auto">
+      <div className="flex-1 p-8 overflow-auto">
+
+        {/* Templates Section */}
+        {!isLoading && (!workflows || workflows.length === 0) && (
+          <div className="mb-12">
+            <h3 className="text-sm font-bold font-mono uppercase text-(--arch-fg) tracking-widest mb-4 flex items-center gap-2">
+              <Sparkles className="w-4 h-4" />
+              Quick Start Templates
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {TEMPLATES.map((template) => (
+                <button
+                  key={template.id}
+                  onClick={() => handleCreateFromTemplate(template)}
+                  className="group text-left p-6 border border-(--arch-border) bg-(--arch-bg-secondary) hover:border-(--arch-fg) transition-all duration-300 relative overflow-hidden"
+                  disabled={createWorkflow.isPending}
+                >
+                  <div className="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity transform group-hover:scale-110 duration-500">
+                    <template.icon className="w-16 h-16 text-(--arch-fg)" />
+                  </div>
+                  <div className="relative z-10">
+                    <div className="p-2 border border-(--arch-border) bg-(--arch-bg) w-fit mb-4 group-hover:border-(--arch-fg) transition-colors">
+                      <template.icon className="w-5 h-5 text-(--arch-fg)" />
+                    </div>
+                    <h4 className="font-bold font-mono text-sm text-(--arch-fg) mb-1 uppercase tracking-tight">
+                      {template.name}
+                    </h4>
+                    <p className="text-xs text-(--arch-muted) font-mono leading-relaxed">
+                      {template.description}
+                    </p>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Stats Overview */}
         {!isLoading && workflows && workflows.length > 0 && (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div className="p-6 border border-(--arch-border) bg-(--arch-bg) relative overflow-hidden group">
+            <div className="p-6 border border-(--arch-border) bg-(--arch-bg-secondary) relative overflow-hidden group">
               <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
                 <Workflow className="w-24 h-24 text-(--arch-fg) transform rotate-12" />
               </div>

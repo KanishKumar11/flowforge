@@ -23,7 +23,7 @@ import { ActionNode } from "@/features/editor/nodes/ActionNode";
 import { NodePalette } from "./NodePalette";
 import { NodeConfigPanel } from "./NodeConfigPanel";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Play, Redo2, Save, Undo2 } from "lucide-react";
+import { ArrowLeft, Play, Redo2, Save, Undo2, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useTRPC, useVanillaClient } from "@/trpc/client";
 import { useQuery, useMutation } from "@tanstack/react-query";
@@ -86,17 +86,20 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
     mutationFn: (data: { id: string; inputData?: Record<string, unknown> }) =>
       client.workflows.execute.mutate(data),
     onSuccess: (data) => {
-      toast.success("Workflow execution started", {
-        description: `Execution ID: ${data.executionId}`,
+      toast.success("Execution Started", {
+        description: "Redirecting to execution logs...",
+        duration: 5000,
         action: {
-          label: "View",
-          onClick: () =>
-            window.open(`/executions/${data.executionId}`, "_blank"),
+          label: "VIEW LOGS",
+          onClick: () => window.open(`/executions/${data.executionId}`, "_blank"),
         },
       });
     },
     onError: (error: Error) => {
-      toast.error("Failed to start execution", { description: error.message });
+      toast.error("Execution Failed", {
+        description: error.message,
+        duration: 5000,
+      });
     },
   });
 
@@ -411,10 +414,20 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
               <Button
                 size="sm"
                 onClick={handleExecute}
-                className="bg-(--arch-fg) text-(--arch-bg) hover:bg-(--arch-fg)/90 border-0 h-8 rounded-none font-mono uppercase text-xs"
+                disabled={executeWorkflow.isPending}
+                className="bg-(--arch-fg) text-(--arch-bg) hover:bg-(--arch-fg)/90 border-0 h-8 rounded-none font-mono uppercase text-xs disabled:opacity-70 transition-all min-w-[100px]"
               >
-                <Play className="h-3.5 w-3.5 mr-2 fill-current" />
-                Execute
+                {executeWorkflow.isPending ? (
+                  <>
+                    <Loader2 className="h-3.5 w-3.5 mr-2 animate-spin" />
+                    Running
+                  </>
+                ) : (
+                  <>
+                    <Play className="h-3.5 w-3.5 mr-2 fill-current" />
+                    Execute
+                  </>
+                )}
               </Button>
             </div>
           </Panel>
