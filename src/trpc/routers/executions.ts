@@ -1,6 +1,8 @@
 import prisma from "@/lib/db";
 import { createTRPCRouter, protectedProcedure } from "../init";
 import { z } from "zod";
+import { PLANS } from "@/lib/plans";
+import { TRPCError } from "@trpc/server";
 
 export const executionsRouter = createTRPCRouter({
   // List executions with filters
@@ -191,6 +193,35 @@ export const executionsRouter = createTRPCRouter({
 
       if (!execution) {
         throw new Error("Execution not found or cannot be retried");
+      }
+
+      // Check monthly execution limits
+      const teamMember = await prisma.teamMember.findFirst({
+        where: { userId: ctx.user.id },
+        include: { team: true },
+      });
+
+      if (teamMember) {
+        const plan = ((teamMember.team as any).plan?.toUpperCase() as keyof typeof PLANS) || "FREE";
+        const limit = PLANS[plan]?.limits.executionsPerMonth || PLANS.FREE.limits.executionsPerMonth;
+
+        const startOfMonth = new Date();
+        startOfMonth.setDate(1);
+        startOfMonth.setHours(0, 0, 0, 0);
+
+        const count = await prisma.execution.count({
+          where: {
+            workflow: { userId: ctx.user.id },
+            startedAt: { gte: startOfMonth },
+          },
+        });
+
+        if (count >= limit) {
+          throw new TRPCError({
+            code: "FORBIDDEN",
+            message: `Monthly execution limit reached. Upgrade to Pro for more capacity.`,
+          });
+        }
       }
 
       // Create a new execution as a retry

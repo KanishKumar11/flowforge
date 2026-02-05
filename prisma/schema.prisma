@@ -9,6 +9,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 // ============================================
@@ -305,11 +306,13 @@ enum TeamRole {
 // ============================================
 
 model Team {
-  id          String  @id @default(cuid())
+  id          String       @id @default(cuid())
   name        String
-  slug        String  @unique
+  slug        String       @unique
   description String?
   image       String?
+  plan        String       @default("free")
+  invitations Invitation[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -318,6 +321,20 @@ model Team {
   workflows Workflow[]   @relation("TeamWorkflows")
 
   @@map("team")
+}
+
+model Invitation {
+  id        String   @id @default(cuid())
+  email     String
+  token     String   @unique
+  teamId    String
+  role      String   @default("MEMBER")
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  team      Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
+
+  @@index([token])
+  @@index([email])
 }
 
 model TeamMember {

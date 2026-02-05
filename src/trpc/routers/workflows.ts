@@ -2,6 +2,8 @@ import { inngest } from "@/inngest/client";
 import prisma from "@/lib/db";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../init";
 import { z } from "zod";
+import { PLANS } from "@/lib/plans";
+import { TRPCError } from "@trpc/server";
 import {
   workflowTemplates,
   getTemplateById,
@@ -24,6 +26,34 @@ export const workflowsRouter = createTRPCRouter({
       const template = getTemplateById(input.templateId);
       if (!template) {
         throw new Error("Template not found");
+      }
+
+      // Get user's team and plan
+      const teamMember = await prisma.teamMember.findFirst({
+        where: { userId: ctx.user.id },
+        include: { team: true },
+      });
+
+      if (!teamMember) {
+        throw new TRPCError({
+          code: "PRECONDITION_FAILED",
+          message: "You must be part of a team to create workflows",
+        });
+      }
+
+      const plan = ((teamMember.team as any).plan?.toUpperCase() as keyof typeof PLANS) || "FREE";
+      const limit = PLANS[plan]?.limits.workflows || PLANS.FREE.limits.workflows;
+
+      // Count existing workflows
+      const count = await prisma.workflow.count({
+        where: { userId: ctx.user.id },
+      });
+
+      if (count >= limit) {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: `Plan limit reached. Upgrade to Pro for more workflows.`,
+        });
       }
 
       return prisma.workflow.create({
@@ -76,6 +106,10 @@ export const workflowsRouter = createTRPCRouter({
       return workflow;
     }),
 
+
+
+  // ... existing imports
+
   // Create a new workflow
   create: protectedProcedure
     .input(
@@ -85,6 +119,34 @@ export const workflowsRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
+      // Get user's team and plan
+      const teamMember = await prisma.teamMember.findFirst({
+        where: { userId: ctx.user.id },
+        include: { team: true },
+      });
+
+      if (!teamMember) {
+        throw new TRPCError({
+          code: "PRECONDITION_FAILED",
+          message: "You must be part of a team to create workflows",
+        });
+      }
+
+      const plan = ((teamMember.team as any).plan?.toUpperCase() as keyof typeof PLANS) || "FREE";
+      const limit = PLANS[plan]?.limits.workflows || PLANS.FREE.limits.workflows;
+
+      // Count existing workflows
+      const count = await prisma.workflow.count({
+        where: { userId: ctx.user.id },
+      });
+
+      if (count >= limit) {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: `Plan limit reached. Upgrade to Pro for more workflows.`,
+        });
+      }
+
       return prisma.workflow.create({
         data: {
           name: input.name,
@@ -294,6 +356,35 @@ export const workflowsRouter = createTRPCRouter({
 
       if (!workflow) {
         throw new Error("Workflow not found");
+      }
+
+      // Check monthly execution limits
+      const teamMember = await prisma.teamMember.findFirst({
+        where: { userId: ctx.user.id },
+        include: { team: true },
+      });
+
+      if (teamMember) {
+        const plan = ((teamMember.team as any).plan?.toUpperCase() as keyof typeof PLANS) || "FREE";
+        const limit = PLANS[plan]?.limits.executionsPerMonth || PLANS.FREE.limits.executionsPerMonth;
+
+        const startOfMonth = new Date();
+        startOfMonth.setDate(1);
+        startOfMonth.setHours(0, 0, 0, 0);
+
+        const count = await prisma.execution.count({
+          where: {
+            workflow: { userId: ctx.user.id },
+            startedAt: { gte: startOfMonth },
+          },
+        });
+
+        if (count >= limit) {
+          throw new TRPCError({
+            code: "FORBIDDEN",
+            message: `Monthly execution limit reached (${limit}). Upgrade to Pro for more capacity.`,
+          });
+        }
       }
 
       // Create execution record

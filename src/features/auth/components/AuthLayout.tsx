@@ -73,7 +73,7 @@ export const AuthLayout = ({ children }: { children: React.ReactNode }) => {
             <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-size-[24px_24px]" />
           </div>
 
-          <div className="w-full max-w-[400px]">{children}</div>
+          <div className="w-full max-w-[400px] relative z-10">{children}</div>
 
           {/* Footer Links (Technical) */}
           <div className="absolute bottom-8 w-full text-center">

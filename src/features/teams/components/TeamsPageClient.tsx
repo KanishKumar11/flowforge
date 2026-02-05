@@ -61,12 +61,12 @@ export function TeamsPageClient() {
   return (
     <div className="flex flex-col h-full space-y-8 animate-fadeIn">
       <DashboardHeader
-        title={<span className="gradient-text">Teams</span>}
+        title={<span className="text-(--arch-fg) font-mono uppercase tracking-widest">Teams</span>}
         description="Collaborate with your organization members."
         action={
           <Button
             onClick={() => setShowCreateModal(true)}
-            className="gap-2 shadow-lg hover:shadow-primary/25 transition-all"
+            className="gap-2 bg-(--arch-fg) text-(--arch-bg) hover:bg-(--arch-fg)/90 rounded-none font-mono uppercase text-xs h-10 border border-(--arch-fg) shadow-none transition-all"
           >
             <Plus className="h-4 w-4" />
             New Team
@@ -79,11 +79,11 @@ export function TeamsPageClient() {
         {isLoading && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[...Array(3)].map((_, i) => (
-              <div key={i} className="p-8 border rounded-2xl space-y-4">
-                <Skeleton className="h-8 w-48" />
-                <Skeleton className="h-4 w-64" />
+              <div key={i} className="p-8 border border-(--arch-border) bg-(--arch-bg) rounded-none space-y-4">
+                <Skeleton className="h-8 w-48 bg-(--arch-border)" />
+                <Skeleton className="h-4 w-64 bg-(--arch-border)" />
                 <div className="flex gap-4 pt-4">
-                  <Skeleton className="h-10 w-full" />
+                  <Skeleton className="h-10 w-full bg-(--arch-border)" />
                 </div>
               </div>
             ))}
@@ -92,21 +92,21 @@ export function TeamsPageClient() {
 
         {/* Empty State */}
         {!isLoading && teams?.length === 0 && (
-          <div className="empty-state glass border border-white/20 dark:border-white/10 rounded-2xl p-12 text-center animate-fadeIn shadow-lg">
-            <div className="flex items-center justify-center w-24 h-24 rounded-full bg-primary/10 mb-8 mx-auto ring-1 ring-primary/20 shadow-inner">
-              <Users className="w-12 h-12 text-primary" />
+          <div className="empty-state border border-(--arch-border) bg-(--arch-bg) rounded-none p-12 text-center animate-fadeIn shadow-none">
+            <div className="flex items-center justify-center w-24 h-24 rounded-none bg-(--arch-fg)/5 mb-8 mx-auto border border-(--arch-fg)/20">
+              <Users className="w-12 h-12 text-(--arch-fg)" />
             </div>
-            <h3 className="text-2xl font-bold tracking-tight mb-3">
+            <h3 className="text-2xl font-bold tracking-tight mb-3 font-mono uppercase text-(--arch-fg)">
               No teams yet
             </h3>
-            <p className="text-muted-foreground mb-8 max-w-md mx-auto text-lg leading-relaxed">
+            <p className="text-(--arch-muted) mb-8 max-w-md mx-auto text-sm font-mono leading-relaxed">
               Create a team to start collaborating on workflows with your
               organization.
             </p>
             <Button
               onClick={() => setShowCreateModal(true)}
               size="lg"
-              className="gap-2 shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-all hover:-translate-y-0.5 text-base px-8 h-12"
+              className="gap-2 bg-(--arch-fg) text-(--arch-bg) hover:bg-(--arch-fg)/90 rounded-none font-mono uppercase text-xs h-12 px-8"
             >
               <Plus className="w-5 h-5" />
               Create Your First Team
@@ -120,51 +120,49 @@ export function TeamsPageClient() {
             {teams.map((team) => (
               <Card
                 key={team.id}
-                className="glass border-white/20 dark:border-white/10 shadow-lg backdrop-blur-xl hover-lift group overflow-hidden relative"
+                className="group bg-(--arch-bg) border-(--arch-border) shadow-none rounded-none hover:border-(--arch-fg) transition-all duration-300"
               >
-                <div className="absolute top-0 right-0 p-20 bg-linear-to-bl from-primary/5 to-transparent rounded-bl-full -mr-10 -mt-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                 <CardHeader className="relative z-10 pb-4">
                   <div className="flex items-start justify-between">
-                    <CardTitle className="text-xl font-bold group-hover:text-primary transition-colors">
+                    <CardTitle className="text-xl font-bold font-mono uppercase text-(--arch-fg) group-hover:underline">
                       {team.name}
                     </CardTitle>
                     <span
-                      className={`text-[10px] uppercase font-bold tracking-wider px-2.5 py-1 rounded-full border ${
-                        team.role === "OWNER"
-                          ? "bg-purple-500/10 text-purple-600 border-purple-500/20"
+                      className={`text-[10px] uppercase font-bold font-mono tracking-wider px-2.5 py-1 rounded-none border ${team.role === "OWNER"
+                          ? "bg-(--arch-fg) text-(--arch-bg) border-(--arch-fg)"
                           : team.role === "ADMIN"
-                            ? "bg-blue-500/10 text-blue-600 border-blue-500/20"
-                            : "bg-zinc-500/10 text-zinc-500 border-zinc-500/20"
-                      }`}
+                            ? "bg-(--arch-fg)/10 text-(--arch-fg) border-(--arch-fg)"
+                            : "bg-(--arch-muted)/10 text-(--arch-muted) border-(--arch-muted)"
+                        }`}
                     >
                       {team.role}
                     </span>
                   </div>
-                  <CardDescription className="line-clamp-2 min-h-[40px] text-sm mt-2">
+                  <CardDescription className="line-clamp-2 min-h-[40px] text-xs font-mono text-(--arch-muted) mt-2">
                     {team.description || "No description provided."}
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="relative z-10">
-                  <div className="flex items-center gap-6 text-sm text-muted-foreground mb-6 bg-background/30 p-3 rounded-lg border border-white/5">
+                  <div className="flex items-center gap-6 text-xs font-mono text-(--arch-muted) mb-6 bg-(--arch-bg-secondary)/50 p-3 rounded-none border border-(--arch-border)">
                     <div className="flex items-center gap-2">
-                      <Users className="h-4 w-4 text-primary/70" />
-                      <span className="font-semibold text-foreground">
+                      <Users className="h-4 w-4 text-(--arch-fg)" />
+                      <span className="font-bold text-(--arch-fg)">
                         {team.memberCount}
                       </span>{" "}
-                      members
+                      MEMBERS
                     </div>
                     <div className="flex items-center gap-2">
-                      <Workflow className="h-4 w-4 text-primary/70" />
-                      <span className="font-semibold text-foreground">
+                      <Workflow className="h-4 w-4 text-(--arch-fg)" />
+                      <span className="font-bold text-(--arch-fg)">
                         {team.workflowCount}
                       </span>{" "}
-                      workflows
+                      FLOWS
                     </div>
                   </div>
                   <div className="flex gap-3">
                     <Button
                       variant="default"
-                      className="w-full gap-2 shadow-md hover:shadow-lg transition-all"
+                      className="w-full gap-2 rounded-none font-mono uppercase text-xs h-10 bg-(--arch-fg) text-(--arch-bg) hover:bg-(--arch-fg)/90"
                       asChild
                     >
                       <Link href={`/teams/${team.id}`}>
@@ -182,27 +180,28 @@ export function TeamsPageClient() {
 
       {/* Create Team Modal */}
       <Dialog open={showCreateModal} onOpenChange={setShowCreateModal}>
-        <DialogContent>
+        <DialogContent className="bg-(--arch-bg) border-(--arch-border) rounded-none max-w-lg">
           <DialogHeader>
-            <DialogTitle>Create New Team</DialogTitle>
-            <DialogDescription>
+            <DialogTitle className="font-mono uppercase text-(--arch-fg)">Create New Team</DialogTitle>
+            <DialogDescription className="font-mono text-xs text-(--arch-muted)">
               Create a team to collaborate on workflows with others.
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 py-4">
             <div className="space-y-2">
-              <Label htmlFor="name">Team Name</Label>
+              <Label htmlFor="name" className="text-(--arch-fg) font-mono uppercase text-xs">Team Name</Label>
               <Input
                 id="name"
-                placeholder="My Team"
+                placeholder="MY_TEAM"
                 value={newTeam.name}
                 onChange={(e) =>
                   setNewTeam({ ...newTeam, name: e.target.value })
                 }
+                className="bg-(--arch-bg) border-(--arch-border) focus:border-(--arch-fg) text-(--arch-fg) font-mono rounded-none placeholder:text-(--arch-muted) text-xs"
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="description">Description (Optional)</Label>
+              <Label htmlFor="description" className="text-(--arch-fg) font-mono uppercase text-xs">Description (Optional)</Label>
               <Input
                 id="description"
                 placeholder="What does this team work on?"
@@ -210,16 +209,22 @@ export function TeamsPageClient() {
                 onChange={(e) =>
                   setNewTeam({ ...newTeam, description: e.target.value })
                 }
+                className="bg-(--arch-bg) border-(--arch-border) focus:border-(--arch-fg) text-(--arch-fg) font-mono rounded-none placeholder:text-(--arch-muted) text-xs"
               />
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setShowCreateModal(false)}>
+            <Button
+              variant="outline"
+              onClick={() => setShowCreateModal(false)}
+              className="border-(--arch-border) text-(--arch-fg) hover:bg-(--arch-fg) hover:text-(--arch-bg) rounded-none font-mono uppercase text-xs"
+            >
               Cancel
             </Button>
             <Button
               onClick={handleCreate}
               disabled={!newTeam.name.trim() || createTeam.isPending}
+              className="bg-(--arch-fg) text-(--arch-bg) hover:bg-(--arch-fg)/90 rounded-none font-mono uppercase text-xs"
             >
               {createTeam.isPending && (
                 <Loader2 className="h-4 w-4 mr-2 animate-spin" />

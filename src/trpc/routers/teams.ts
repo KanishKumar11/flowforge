@@ -2,6 +2,7 @@ import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
 import { TRPCError } from "@trpc/server";
 import prisma from "@/lib/db";
+import { PLANS } from "@/lib/plans";
 
 export const teamsRouter = createTRPCRouter({
   // List teams the user belongs to
@@ -139,47 +140,89 @@ export const teamsRouter = createTRPCRouter({
         where: {
           teamId_userId: { teamId: input.teamId, userId: ctx.user.id },
         },
+        include: { team: true },
       });
 
       if (!membership || !["OWNER", "ADMIN"].includes(membership.role)) {
         throw new TRPCError({ code: "FORBIDDEN", message: "Not authorized" });
       }
 
-      // Find user by email
-      const invitee = await prisma.user.findUnique({
-        where: { email: input.email },
+      // Check plan limits
+      const team = membership.team;
+      const plan = ((team as any).plan?.toUpperCase() as keyof typeof PLANS) || "FREE";
+      const limit =
+        PLANS[plan]?.limits.teamMembers || PLANS.FREE.limits.teamMembers;
+
+      const memberCount = await prisma.teamMember.count({
+        where: { teamId: input.teamId },
       });
 
-      if (!invitee) {
-        throw new TRPCError({ code: "NOT_FOUND", message: "User not found" });
+      if (memberCount >= limit) {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: `Plan limit reached. Upgrade to Pro to add more members.`,
+        });
       }
 
       // Check if already a member
-      const existing = await prisma.teamMember.findUnique({
+      const existingMember = await prisma.teamMember.findFirst({
         where: {
-          teamId_userId: { teamId: input.teamId, userId: invitee.id },
+          teamId: input.teamId,
+          user: { email: input.email },
         },
       });
 
-      if (existing) {
+      if (existingMember) {
         throw new TRPCError({
           code: "CONFLICT",
           message: "User is already a member",
         });
       }
 
-      const member = await prisma.teamMember.create({
-        data: {
+      // Check for pending invitation
+      const existingInvite = await prisma.invitation.findFirst({
+        where: {
           teamId: input.teamId,
-          userId: invitee.id,
-          role: input.role,
-        },
-        include: {
-          user: { select: { id: true, name: true, email: true, image: true } },
+          email: input.email,
         },
       });
 
-      return member;
+      if (existingInvite) {
+        throw new TRPCError({
+          code: "CONFLICT",
+          message: "Invitation already sent to this email",
+        });
+      }
+
+      // Create invitation
+      const token = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+      const expiresAt = new Date();
+      expiresAt.setDate(expiresAt.getDate() + 7); // 7 days expiry
+
+      const invitation = await prisma.invitation.create({
+        data: {
+          email: input.email,
+          teamId: input.teamId,
+          role: input.role,
+          token,
+          expiresAt,
+        },
+        include: { team: true }, // Include team for email
+      });
+
+      // Send email
+      const inviter = await prisma.user.findUnique({ where: { id: ctx.user.id } });
+      const link = `${process.env.NEXT_PUBLIC_APP_URL}/join/${token}`;
+
+      const { sendInvitationEmail } = await import("@/lib/email");
+      await sendInvitationEmail(
+        input.email,
+        invitation.team.name,
+        link,
+        inviter?.name || "A team member"
+      );
+
+      return { success: true, message: "Invitation sent" };
     }),
 
   // Remove a member from the team
@@ -283,5 +326,61 @@ export const teamsRouter = createTRPCRouter({
       await prisma.team.delete({ where: { id: input.id } });
 
       return { success: true };
+    }),
+
+  // Accept an invitation
+  acceptInvitation: protectedProcedure
+    .input(z.object({ token: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const invitation = await prisma.invitation.findUnique({
+        where: { token: input.token },
+        include: { team: true },
+      });
+
+      if (!invitation) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Invitation not found or invalid",
+        });
+      }
+
+      if (invitation.expiresAt < new Date()) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Invitation has expired",
+        });
+      }
+
+      // Check if user matches invitation email (optional, but good for security)
+      // For now, we allow any logged-in user to accept if they have the token, 
+      // OR we could enforce email match:
+      // if (invitation.email !== ctx.user.email) ...
+
+      // Check if already a member
+      const existingMember = await prisma.teamMember.findUnique({
+        where: {
+          teamId_userId: { teamId: invitation.teamId, userId: ctx.user.id },
+        },
+      });
+
+      if (existingMember) {
+        // Just delete invitation if already member
+        await prisma.invitation.delete({ where: { id: invitation.id } });
+        return { teamId: invitation.teamId };
+      }
+
+      // Create member
+      await prisma.teamMember.create({
+        data: {
+          teamId: invitation.teamId,
+          userId: ctx.user.id,
+          role: invitation.role as any,
+        },
+      });
+
+      // Delete invitation
+      await prisma.invitation.delete({ where: { id: invitation.id } });
+
+      return { teamId: invitation.teamId };
     }),
 });

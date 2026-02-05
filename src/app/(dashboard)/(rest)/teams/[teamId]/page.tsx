@@ -147,40 +147,34 @@ export default function TeamDetailPage() {
       <div className="flex-1 p-6 overflow-auto space-y-6 max-w-5xl mx-auto w-full">
         {/* Stats */}
         <div className="grid grid-cols-2 gap-6">
-          <Card className="glass border-white/20 dark:border-white/10 shadow-lg relative overflow-hidden group">
-            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-              <Users className="h-24 w-24 text-blue-500 transform -rotate-12" />
-            </div>
+          <Card className="bg-(--arch-bg) border-(--arch-border) shadow-none rounded-none group">
             <CardContent className="pt-6 relative z-10">
               <div className="flex items-center gap-4">
-                <div className="p-3 rounded-xl bg-blue-500/10 ring-1 ring-blue-500/20">
-                  <Users className="h-8 w-8 text-blue-500" />
+                <div className="p-3 bg-(--arch-fg)/10 border border-(--arch-fg)/20 rounded-none">
+                  <Users className="h-8 w-8 text-(--arch-fg)" />
                 </div>
                 <div>
-                  <p className="text-3xl font-bold tracking-tight">
+                  <p className="text-3xl font-bold tracking-tight text-(--arch-fg) font-mono">
                     {team.members.length}
                   </p>
-                  <p className="text-sm text-muted-foreground font-medium">
+                  <p className="text-xs text-(--arch-muted) font-mono uppercase tracking-wider">
                     Members
                   </p>
                 </div>
               </div>
             </CardContent>
           </Card>
-          <Card className="glass border-white/20 dark:border-white/10 shadow-lg relative overflow-hidden group">
-            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-              <Workflow className="h-24 w-24 text-green-500 transform rotate-12" />
-            </div>
+          <Card className="bg-(--arch-bg) border-(--arch-border) shadow-none rounded-none group">
             <CardContent className="pt-6 relative z-10">
               <div className="flex items-center gap-4">
-                <div className="p-3 rounded-xl bg-green-500/10 ring-1 ring-green-500/20">
-                  <Workflow className="h-8 w-8 text-green-500" />
+                <div className="p-3 bg-(--arch-fg)/10 border border-(--arch-fg)/20 rounded-none">
+                  <Workflow className="h-8 w-8 text-(--arch-fg)" />
                 </div>
                 <div>
-                  <p className="text-3xl font-bold tracking-tight">
+                  <p className="text-3xl font-bold tracking-tight text-(--arch-fg) font-mono">
                     {team._count.workflows}
                   </p>
-                  <p className="text-sm text-muted-foreground font-medium">
+                  <p className="text-xs text-(--arch-muted) font-mono uppercase tracking-wider">
                     Workflows
                   </p>
                 </div>
@@ -190,14 +184,14 @@ export default function TeamDetailPage() {
         </div>
 
         {/* Members */}
-        <Card className="glass border-white/20 dark:border-white/10 shadow-lg">
-          <CardHeader className="flex flex-row items-center justify-between pb-6 border-b border-white/5">
+        <Card className="bg-(--arch-bg) border-(--arch-border) shadow-none rounded-none">
+          <CardHeader className="flex flex-row items-center justify-between pb-6 border-b border-(--arch-border)">
             <div className="space-y-1">
-              <CardTitle className="text-xl font-bold flex items-center gap-2">
-                <Shield className="h-5 w-5 text-primary" />
+              <CardTitle className="text-xl font-bold flex items-center gap-2 font-mono uppercase text-(--arch-fg)">
+                <Shield className="h-5 w-5 text-(--arch-fg)" />
                 Team Members
               </CardTitle>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-xs text-(--arch-muted) font-mono">
                 Manage access and roles for your team
               </p>
             </div>
@@ -206,48 +200,47 @@ export default function TeamDetailPage() {
                 <DialogTrigger asChild>
                   <Button
                     size="sm"
-                    className="shadow-lg shadow-primary/20 hover:shadow-primary/30"
+                    className="shadow-none bg-(--arch-fg) text-(--arch-bg) hover:bg-(--arch-fg)/90 rounded-none font-mono uppercase text-xs h-8 border border-(--arch-fg)"
                   >
                     <UserPlus className="h-4 w-4 mr-2" />
                     Invite Member
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="glass border-white/20 dark:border-white/10 sm:max-w-[425px]">
+                <DialogContent className="bg-(--arch-bg) border-(--arch-border) rounded-none sm:max-w-[425px]">
                   <DialogHeader>
-                    <DialogTitle>Invite Team Member</DialogTitle>
+                    <DialogTitle className="font-mono uppercase text-(--arch-fg)">Invite Team Member</DialogTitle>
                   </DialogHeader>
                   <div className="space-y-4 pt-4">
                     <div className="space-y-2">
-                      {/* Input content same as before ... */}
-                      <Label>Email Address</Label>
+                      <Label className="text-(--arch-fg) font-mono uppercase text-xs">Email Address</Label>
                       <Input
                         type="email"
                         placeholder="member@example.com"
                         value={inviteEmail}
                         onChange={(e) => setInviteEmail(e.target.value)}
-                        className="bg-background/50 border-input/50"
+                        className="bg-(--arch-bg) border-(--arch-border) focus:border-(--arch-fg) text-(--arch-fg) font-mono rounded-none placeholder:text-(--arch-muted) text-xs"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label>Role</Label>
+                      <Label className="text-(--arch-fg) font-mono uppercase text-xs">Role</Label>
                       <Select
                         value={inviteRole}
                         onValueChange={(v) =>
                           setInviteRole(v as typeof inviteRole)
                         }
                       >
-                        <SelectTrigger className="bg-background/50 border-input/50">
+                        <SelectTrigger className="bg-(--arch-bg) border-(--arch-border) focus:border-(--arch-fg) text-(--arch-fg) font-mono rounded-none text-xs">
                           <SelectValue />
                         </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="ADMIN">Admin</SelectItem>
-                          <SelectItem value="MEMBER">Member</SelectItem>
-                          <SelectItem value="VIEWER">Viewer</SelectItem>
+                        <SelectContent className="bg-(--arch-bg) border-(--arch-border) rounded-none">
+                          <SelectItem value="ADMIN" className="font-mono text-xs focus:bg-(--arch-fg) focus:text-(--arch-bg)">ADMIN</SelectItem>
+                          <SelectItem value="MEMBER" className="font-mono text-xs focus:bg-(--arch-fg) focus:text-(--arch-bg)">MEMBER</SelectItem>
+                          <SelectItem value="VIEWER" className="font-mono text-xs focus:bg-(--arch-fg) focus:text-(--arch-bg)">VIEWER</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
                     <Button
-                      className="w-full"
+                      className="w-full bg-(--arch-fg) text-(--arch-bg) hover:bg-(--arch-fg)/90 rounded-none font-mono uppercase text-xs"
                       onClick={() =>
                         inviteMember.mutate({
                           teamId,
@@ -269,20 +262,20 @@ export default function TeamDetailPage() {
               {team.members.map((member) => (
                 <div
                   key={member.id}
-                  className="flex items-center justify-between p-4 rounded-xl border border-white/5 bg-background/40 hover:bg-background/60 transition-colors group"
+                  className="flex items-center justify-between p-4 border border-(--arch-border) bg-(--arch-bg-secondary)/20 hover:border-(--arch-fg) transition-colors group rounded-none"
                 >
                   <div className="flex items-center gap-4">
-                    <Avatar className="h-10 w-10 ring-2 ring-white/10 group-hover:ring-primary/20 transition-all">
-                      <AvatarImage src={member.user.image || undefined} />
-                      <AvatarFallback className="bg-primary/10 text-primary font-medium">
+                    <Avatar className="h-10 w-10 ring-1 ring-(--arch-border) rounded-none">
+                      <AvatarImage src={member.user.image || undefined} className="rounded-none" />
+                      <AvatarFallback className="bg-(--arch-fg)/10 text-(--arch-fg) font-mono rounded-none">
                         {member.user.name?.[0] || member.user.email[0]}
                       </AvatarFallback>
                     </Avatar>
                     <div>
-                      <p className="font-semibold text-sm">
+                      <p className="font-bold text-sm text-(--arch-fg) font-mono">
                         {member.user.name || member.user.email}
                       </p>
-                      <p className="text-xs text-muted-foreground font-mono opacity-80">
+                      <p className="text-xs text-(--arch-muted) font-mono opacity-80">
                         {member.user.email}
                       </p>
                     </div>
@@ -299,19 +292,19 @@ export default function TeamDetailPage() {
                           })
                         }
                       >
-                        <SelectTrigger className="w-28 h-8 bg-transparent border-white/10 focus:ring-0 hover:bg-white/5">
+                        <SelectTrigger className="w-28 h-8 bg-transparent border-(--arch-border) focus:ring-0 hover:border-(--arch-fg) rounded-none font-mono text-xs text-(--arch-fg)">
                           <SelectValue />
                         </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="ADMIN">Admin</SelectItem>
-                          <SelectItem value="MEMBER">Member</SelectItem>
-                          <SelectItem value="VIEWER">Viewer</SelectItem>
+                        <SelectContent className="bg-(--arch-bg) border-(--arch-border) rounded-none">
+                          <SelectItem value="ADMIN" className="font-mono text-xs focus:bg-(--arch-fg) focus:text-(--arch-bg)">ADMIN</SelectItem>
+                          <SelectItem value="MEMBER" className="font-mono text-xs focus:bg-(--arch-fg) focus:text-(--arch-bg)">MEMBER</SelectItem>
+                          <SelectItem value="VIEWER" className="font-mono text-xs focus:bg-(--arch-fg) focus:text-(--arch-bg)">VIEWER</SelectItem>
                         </SelectContent>
                       </Select>
                     ) : (
                       <Badge
                         variant="secondary"
-                        className="font-mono text-xs px-2.5 py-0.5 bg-secondary/50"
+                        className="font-mono text-[10px] px-2.5 py-0.5 bg-(--arch-fg)/10 text-(--arch-fg) border border-(--arch-fg)/20 rounded-none uppercase"
                       >
                         {member.role}
                       </Badge>
@@ -320,7 +313,7 @@ export default function TeamDetailPage() {
                       <Button
                         variant="ghost"
                         size="icon"
-                        className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors"
+                        className="h-8 w-8 text-(--arch-muted) hover:text-red-500 hover:bg-red-500/10 transition-colors rounded-none"
                         onClick={() =>
                           removeMember.mutate({
                             teamId,
@@ -340,13 +333,14 @@ export default function TeamDetailPage() {
 
         {/* Danger Zone */}
         {isOwner && (
-          <Card className="border-destructive/50">
-            <CardHeader>
-              <CardTitle className="text-destructive">Danger Zone</CardTitle>
+          <Card className="border-destructive/50 bg-destructive/5 shadow-none rounded-none">
+            <CardHeader className="border-b border-destructive/20">
+              <CardTitle className="text-destructive font-mono uppercase">Danger Zone</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-6">
               <Button
                 variant="destructive"
+                className="rounded-none font-mono uppercase text-xs"
                 onClick={() => {
                   if (confirm("Are you sure? This cannot be undone.")) {
                     deleteTeam.mutate({ id: teamId });

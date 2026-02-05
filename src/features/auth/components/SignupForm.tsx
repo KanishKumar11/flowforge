@@ -6,14 +6,6 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
   Form,
   FormControl,
   FormField,
@@ -22,13 +14,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Github, Loader2, Eye, EyeOff } from "lucide-react";
+import { Loader2, Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
 import { SocialAuthButtons } from "./SocialAuthButtons";
-// import { Spotlight } from "@/components/ui/spotlight";
 
 // Password matching validation
 const signupSchema = z
@@ -72,7 +63,7 @@ export function SignupForm() {
           callbackURL: "/",
         },
         {
-          onSuccess: () => {
+          onSuccess: async () => {
             router.push("/dashboard");
           },
           onError: (err) => {
@@ -81,7 +72,6 @@ export function SignupForm() {
           },
         },
       );
-      router.push("/dashboard");
     } catch (error) {
       console.error(error);
     } finally {
