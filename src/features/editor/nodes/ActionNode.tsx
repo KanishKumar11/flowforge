@@ -63,8 +63,11 @@ export const ActionNode = memo(function ActionNode({
   return (
     <div
       id="base-node"
-      className={`min-w-[200px] bg-[#0A160A] border shadow-none rounded-none transition-all duration-200 ${selected ? "border-[var(--arch-fg)] ring-1 ring-[var(--arch-fg)]" : "border-[var(--arch-border)]"
-        }`}
+      className={`min-w-[200px] bg-[#0A160A] border shadow-none rounded-none transition-all duration-200 ${
+        selected
+          ? "border-[var(--arch-fg)] ring-1 ring-[var(--arch-fg)]"
+          : "border-[var(--arch-border)]"
+      }`}
     >
       {/* Input Handle */}
       <Handle
@@ -80,9 +83,11 @@ export const ActionNode = memo(function ActionNode({
         </span>
       </div>
       <div className="px-3 py-2 bg-[#0A160A]">
-        <p className="font-bold text-xs text-[var(--arch-fg)] font-mono uppercase truncate">{data.label}</p>
+        <p className="font-bold text-xs text-[var(--arch-fg)] font-mono uppercase truncate">
+          {data.label}
+        </p>
         <p className="text-[10px] text-[var(--arch-muted)] mt-1 font-mono truncate uppercase">
-          {description.replace(/\s+/g, '_').toUpperCase()}
+          {description.replace(/\s+/g, "_").toUpperCase()}
         </p>
       </div>
 

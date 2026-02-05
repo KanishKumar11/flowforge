@@ -1,4 +1,3 @@
-
 export type IntegrationType = "oauth2" | "apiKey" | "basic";
 
 export interface IntegrationDef {
@@ -36,7 +35,11 @@ export const integrations: Record<string, IntegrationDef> = {
         name: "Send Message",
         description: "Post a message to a channel",
         args: {
-          channel: { type: "string", label: "Channel ID or Name", required: true },
+          channel: {
+            type: "string",
+            label: "Channel ID or Name",
+            required: true,
+          },
           message: { type: "string", label: "Message Text", required: true },
         },
       },
@@ -67,7 +70,11 @@ export const integrations: Record<string, IntegrationDef> = {
         name: "Append Row",
         description: "Add a new row to a sheet",
         args: {
-          spreadsheetId: { type: "string", label: "Spreadsheet ID", required: true },
+          spreadsheetId: {
+            type: "string",
+            label: "Spreadsheet ID",
+            required: true,
+          },
           range: { type: "string", label: "Sheet Name/Range", required: true },
           values: { type: "json", label: "Row Values (Array)", required: true },
         },
@@ -77,7 +84,11 @@ export const integrations: Record<string, IntegrationDef> = {
         name: "Read Rows",
         description: "Read data from a sheet",
         args: {
-          spreadsheetId: { type: "string", label: "Spreadsheet ID", required: true },
+          spreadsheetId: {
+            type: "string",
+            label: "Spreadsheet ID",
+            required: true,
+          },
           range: { type: "string", label: "Range (A1:B10)", required: true },
         },
       },
@@ -130,7 +141,11 @@ export const integrations: Record<string, IntegrationDef> = {
         description: "Create a new page in a database",
         args: {
           databaseId: { type: "string", label: "Database ID", required: true },
-          properties: { type: "json", label: "Properties (JSON)", required: true },
+          properties: {
+            type: "json",
+            label: "Properties (JSON)",
+            required: true,
+          },
         },
       },
       {

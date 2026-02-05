@@ -5,6 +5,6 @@ interface PageProps {
 }
 export default async function CredentialPage({ params }: PageProps) {
   const { credentialId } = await params;
-  await requireAuth()
+  await requireAuth();
   return <div>Credential {credentialId}</div>;
 }

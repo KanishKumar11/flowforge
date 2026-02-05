@@ -15,23 +15,47 @@ export const WorkflowVisualizer = ({ className }: { className?: string }) => {
   }, []);
 
   return (
-    <div className={cn("relative w-full h-full flex items-center justify-center pointer-events-none", className)}>
+    <div
+      className={cn(
+        "relative w-full h-full flex items-center justify-center pointer-events-none",
+        className,
+      )}
+    >
       {/* SVG Layer */}
-      <svg
-        viewBox="0 0 800 600"
-        className="w-full h-full"
-      >
+      <svg viewBox="0 0 800 600" className="w-full h-full">
         <defs>
-          <pattern id="small-grid" width="20" height="20" patternUnits="userSpaceOnUse">
-            <path d="M 20 0 L 0 0 0 20" fill="none" stroke="var(--arch-grid)" strokeWidth="0.5" />
+          <pattern
+            id="small-grid"
+            width="20"
+            height="20"
+            patternUnits="userSpaceOnUse"
+          >
+            <path
+              d="M 20 0 L 0 0 0 20"
+              fill="none"
+              stroke="var(--arch-grid)"
+              strokeWidth="0.5"
+            />
           </pattern>
-          <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+          <marker
+            id="arrow"
+            markerWidth="10"
+            markerHeight="10"
+            refX="9"
+            refY="3"
+            orient="auto"
+          >
             <path d="M0,0 L0,6 L9,3 z" fill="var(--arch-muted)" />
           </marker>
         </defs>
 
         {/* Background Grid for Blueprint feel */}
-        <rect width="100%" height="100%" fill="url(#small-grid)" opacity="0.4" />
+        <rect
+          width="100%"
+          height="100%"
+          fill="url(#small-grid)"
+          opacity="0.4"
+        />
 
         {/* --- Schematic Lines (Rectilinear / Manhattan) --- */}
 
@@ -60,7 +84,12 @@ export const WorkflowVisualizer = ({ className }: { className?: string }) => {
         />
 
         {/* --- Active Data Flow (Square Packets) --- */}
-        <rect width="6" height="6" fill="var(--arch-accent)" className="opacity-100">
+        <rect
+          width="6"
+          height="6"
+          fill="var(--arch-accent)"
+          className="opacity-100"
+        >
           <animateMotion
             dur="5s"
             repeatCount="indefinite"
@@ -71,7 +100,12 @@ export const WorkflowVisualizer = ({ className }: { className?: string }) => {
           />
         </rect>
 
-        <rect width="6" height="6" fill="var(--arch-accent)" className="opacity-100">
+        <rect
+          width="6"
+          height="6"
+          fill="var(--arch-accent)"
+          className="opacity-100"
+        >
           <animateMotion
             dur="7s"
             repeatCount="indefinite"
@@ -84,31 +118,95 @@ export const WorkflowVisualizer = ({ className }: { className?: string }) => {
 
         {/* Source Node */}
         <g transform="translate(100, 450)">
-          <rect x="-10" y="-10" width="20" height="20" fill="var(--arch-bg-secondary)" stroke="var(--arch-fg)" strokeWidth="2" />
-          <text x="-15" y="-20" fill="var(--arch-fg)" fontSize="10" fontFamily="monospace">IN_01</text>
+          <rect
+            x="-10"
+            y="-10"
+            width="20"
+            height="20"
+            fill="var(--arch-bg-secondary)"
+            stroke="var(--arch-fg)"
+            strokeWidth="2"
+          />
+          <text
+            x="-15"
+            y="-20"
+            fill="var(--arch-fg)"
+            fontSize="10"
+            fontFamily="monospace"
+          >
+            IN_01
+          </text>
         </g>
 
         {/* Router Node */}
         <g transform="translate(300, 450)">
-          <circle r="15" fill="var(--arch-bg-secondary)" stroke="var(--arch-fg)" strokeWidth="2" />
+          <circle
+            r="15"
+            fill="var(--arch-bg-secondary)"
+            stroke="var(--arch-fg)"
+            strokeWidth="2"
+          />
           <circle r="2" fill="var(--arch-accent)" className="animate-pulse" />
-          <text x="20" y="-10" fill="var(--arch-fg)" fontSize="10" fontFamily="monospace">ROUTER_X</text>
+          <text
+            x="20"
+            y="-10"
+            fill="var(--arch-fg)"
+            fontSize="10"
+            fontFamily="monospace"
+          >
+            ROUTER_X
+          </text>
         </g>
 
         {/* End Node 1 */}
         <g transform="translate(500, 350)">
-          <rect x="-15" y="-15" width="30" height="30" fill="var(--arch-bg-secondary)" stroke="var(--arch-fg)" strokeWidth="2" />
-          <path d="M-5 -5 L5 5 M-5 5 L5 -5" stroke="var(--arch-fg)" strokeWidth="2" />
-          <text x="20" y="5" fill="var(--arch-fg)" fontSize="10" fontFamily="monospace">PROC_A</text>
+          <rect
+            x="-15"
+            y="-15"
+            width="30"
+            height="30"
+            fill="var(--arch-bg-secondary)"
+            stroke="var(--arch-fg)"
+            strokeWidth="2"
+          />
+          <path
+            d="M-5 -5 L5 5 M-5 5 L5 -5"
+            stroke="var(--arch-fg)"
+            strokeWidth="2"
+          />
+          <text
+            x="20"
+            y="5"
+            fill="var(--arch-fg)"
+            fontSize="10"
+            fontFamily="monospace"
+          >
+            PROC_A
+          </text>
         </g>
 
         {/* End Node 2 */}
         <g transform="translate(500, 550)">
-          <rect x="-15" y="-15" width="30" height="30" fill="var(--arch-bg-secondary)" stroke="var(--arch-fg)" strokeWidth="2" />
+          <rect
+            x="-15"
+            y="-15"
+            width="30"
+            height="30"
+            fill="var(--arch-bg-secondary)"
+            stroke="var(--arch-fg)"
+            strokeWidth="2"
+          />
           <circle r="5" fill="var(--arch-fg)" />
-          <text x="20" y="5" fill="var(--arch-fg)" fontSize="10" fontFamily="monospace">PROC_B</text>
+          <text
+            x="20"
+            y="5"
+            fill="var(--arch-fg)"
+            fontSize="10"
+            fontFamily="monospace"
+          >
+            PROC_B
+          </text>
         </g>
-
       </svg>
 
       {/* Floating DOM Overlay */}

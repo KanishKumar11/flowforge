@@ -3,7 +3,13 @@
 import { useTRPC, useVanillaClient } from "@/trpc/client";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -13,7 +19,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { BookTemplate, Workflow, Zap, Database, MessageSquare, Clock } from "lucide-react";
+import {
+  BookTemplate,
+  Workflow,
+  Zap,
+  Database,
+  MessageSquare,
+  Clock,
+} from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -106,8 +119,11 @@ export function TemplateBrowser() {
           {filteredTemplates.map((template) => (
             <Card
               key={template.id}
-              className={`cursor-pointer transition-all hover:border-primary ${selectedTemplate === template.id ? "border-primary ring-2 ring-primary/20" : ""
-                }`}
+              className={`cursor-pointer transition-all hover:border-primary ${
+                selectedTemplate === template.id
+                  ? "border-primary ring-2 ring-primary/20"
+                  : ""
+              }`}
               onClick={() => {
                 setSelectedTemplate(template.id);
                 setWorkflowName(template.name);
@@ -158,7 +174,9 @@ export function TemplateBrowser() {
               }
               disabled={createFromTemplate.isPending}
             >
-              {createFromTemplate.isPending ? "Creating..." : "Create from Template"}
+              {createFromTemplate.isPending
+                ? "Creating..."
+                : "Create from Template"}
             </Button>
           </div>
         )}

@@ -79,7 +79,7 @@ export function SignupForm() {
             console.log(err);
             toast.error("Something went wrong");
           },
-        }
+        },
       );
       router.push("/dashboard");
     } catch (error) {
@@ -120,7 +120,9 @@ export function SignupForm() {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-(--arch-muted) text-[10px] font-mono uppercase tracking-widest transition-colors duration-500">Operator_Name</FormLabel>
+                <FormLabel className="text-(--arch-muted) text-[10px] font-mono uppercase tracking-widest transition-colors duration-500">
+                  Operator_Name
+                </FormLabel>
                 <FormControl>
                   <Input
                     placeholder="John Doe"
@@ -137,7 +139,9 @@ export function SignupForm() {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-(--arch-muted) text-[10px] font-mono uppercase tracking-widest transition-colors duration-500">Email_Address</FormLabel>
+                <FormLabel className="text-(--arch-muted) text-[10px] font-mono uppercase tracking-widest transition-colors duration-500">
+                  Email_Address
+                </FormLabel>
                 <FormControl>
                   <Input
                     placeholder="name@example.com"
@@ -154,7 +158,9 @@ export function SignupForm() {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-(--arch-muted) text-[10px] font-mono uppercase tracking-widest transition-colors duration-500">Set_Password</FormLabel>
+                <FormLabel className="text-(--arch-muted) text-[10px] font-mono uppercase tracking-widest transition-colors duration-500">
+                  Set_Password
+                </FormLabel>
                 <FormControl>
                   <div className="relative">
                     <Input
@@ -190,7 +196,9 @@ export function SignupForm() {
             name="confirmPassword"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-(--arch-muted) text-[10px] font-mono uppercase tracking-widest transition-colors duration-500">Confirm_Key</FormLabel>
+                <FormLabel className="text-(--arch-muted) text-[10px] font-mono uppercase tracking-widest transition-colors duration-500">
+                  Confirm_Key
+                </FormLabel>
                 <FormControl>
                   <div className="relative">
                     <Input
@@ -226,7 +234,11 @@ export function SignupForm() {
             className="w-full h-10 rounded-sm text-xs font-mono uppercase tracking-widest bg-(--arch-fg) text-(--arch-bg) hover:bg-(--arch-muted) hover:text-white transition-all border border-transparent shadow-[0_0_10px_rgba(255,255,255,0.2)]"
             disabled={isLoading}
           >
-            {isLoading ? <Loader2 className="mr-2 h-3 w-3 animate-spin" /> : "CREATE_ACCESS"}
+            {isLoading ? (
+              <Loader2 className="mr-2 h-3 w-3 animate-spin" />
+            ) : (
+              "CREATE_ACCESS"
+            )}
           </Button>
         </form>
       </Form>
@@ -240,9 +252,6 @@ export function SignupForm() {
           AUTHENTICATE
         </Link>
       </p>
-
-
     </div>
   );
 }
-

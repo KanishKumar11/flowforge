@@ -23,7 +23,14 @@ import {
 } from "@/components/ui/dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, UserPlus, Trash2, Shield, Users, Workflow } from "lucide-react";
+import {
+  ArrowLeft,
+  UserPlus,
+  Trash2,
+  Shield,
+  Users,
+  Workflow,
+} from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -37,11 +44,13 @@ export default function TeamDetailPage() {
   const teamId = params.teamId as string;
 
   const [inviteEmail, setInviteEmail] = useState("");
-  const [inviteRole, setInviteRole] = useState<"ADMIN" | "MEMBER" | "VIEWER">("MEMBER");
+  const [inviteRole, setInviteRole] = useState<"ADMIN" | "MEMBER" | "VIEWER">(
+    "MEMBER",
+  );
   const [isInviteOpen, setIsInviteOpen] = useState(false);
 
   const { data: team, isLoading } = useQuery(
-    trpc.teams.get.queryOptions({ id: teamId })
+    trpc.teams.get.queryOptions({ id: teamId }),
   );
 
   const inviteMember = useMutation(
@@ -55,7 +64,7 @@ export default function TeamDetailPage() {
       onError: (error) => {
         toast.error(error.message);
       },
-    })
+    }),
   );
 
   const removeMember = useMutation(
@@ -64,7 +73,7 @@ export default function TeamDetailPage() {
         queryClient.invalidateQueries({ queryKey: ["teams", "get"] });
         toast.success("Member removed");
       },
-    })
+    }),
   );
 
   const updateRole = useMutation(
@@ -73,7 +82,7 @@ export default function TeamDetailPage() {
         queryClient.invalidateQueries({ queryKey: ["teams", "get"] });
         toast.success("Role updated");
       },
-    })
+    }),
   );
 
   const deleteTeam = useMutation(
@@ -82,13 +91,15 @@ export default function TeamDetailPage() {
         toast.success("Team deleted");
         router.push("/teams");
       },
-    })
+    }),
   );
 
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-pulse text-muted-foreground">Loading team...</div>
+        <div className="animate-pulse text-muted-foreground">
+          Loading team...
+        </div>
       </div>
     );
   }
@@ -146,8 +157,12 @@ export default function TeamDetailPage() {
                   <Users className="h-8 w-8 text-blue-500" />
                 </div>
                 <div>
-                  <p className="text-3xl font-bold tracking-tight">{team.members.length}</p>
-                  <p className="text-sm text-muted-foreground font-medium">Members</p>
+                  <p className="text-3xl font-bold tracking-tight">
+                    {team.members.length}
+                  </p>
+                  <p className="text-sm text-muted-foreground font-medium">
+                    Members
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -162,8 +177,12 @@ export default function TeamDetailPage() {
                   <Workflow className="h-8 w-8 text-green-500" />
                 </div>
                 <div>
-                  <p className="text-3xl font-bold tracking-tight">{team._count.workflows}</p>
-                  <p className="text-sm text-muted-foreground font-medium">Workflows</p>
+                  <p className="text-3xl font-bold tracking-tight">
+                    {team._count.workflows}
+                  </p>
+                  <p className="text-sm text-muted-foreground font-medium">
+                    Workflows
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -178,12 +197,17 @@ export default function TeamDetailPage() {
                 <Shield className="h-5 w-5 text-primary" />
                 Team Members
               </CardTitle>
-              <p className="text-sm text-muted-foreground">Manage access and roles for your team</p>
+              <p className="text-sm text-muted-foreground">
+                Manage access and roles for your team
+              </p>
             </div>
             {isAdmin && (
               <Dialog open={isInviteOpen} onOpenChange={setIsInviteOpen}>
                 <DialogTrigger asChild>
-                  <Button size="sm" className="shadow-lg shadow-primary/20 hover:shadow-primary/30">
+                  <Button
+                    size="sm"
+                    className="shadow-lg shadow-primary/20 hover:shadow-primary/30"
+                  >
                     <UserPlus className="h-4 w-4 mr-2" />
                     Invite Member
                   </Button>
@@ -206,7 +230,12 @@ export default function TeamDetailPage() {
                     </div>
                     <div className="space-y-2">
                       <Label>Role</Label>
-                      <Select value={inviteRole} onValueChange={(v) => setInviteRole(v as typeof inviteRole)}>
+                      <Select
+                        value={inviteRole}
+                        onValueChange={(v) =>
+                          setInviteRole(v as typeof inviteRole)
+                        }
+                      >
                         <SelectTrigger className="bg-background/50 border-input/50">
                           <SelectValue />
                         </SelectTrigger>
@@ -219,7 +248,13 @@ export default function TeamDetailPage() {
                     </div>
                     <Button
                       className="w-full"
-                      onClick={() => inviteMember.mutate({ teamId, email: inviteEmail, role: inviteRole })}
+                      onClick={() =>
+                        inviteMember.mutate({
+                          teamId,
+                          email: inviteEmail,
+                          role: inviteRole,
+                        })
+                      }
                       disabled={!inviteEmail || inviteMember.isPending}
                     >
                       {inviteMember.isPending ? "Inviting..." : "Send Invite"}
@@ -244,8 +279,12 @@ export default function TeamDetailPage() {
                       </AvatarFallback>
                     </Avatar>
                     <div>
-                      <p className="font-semibold text-sm">{member.user.name || member.user.email}</p>
-                      <p className="text-xs text-muted-foreground font-mono opacity-80">{member.user.email}</p>
+                      <p className="font-semibold text-sm">
+                        {member.user.name || member.user.email}
+                      </p>
+                      <p className="text-xs text-muted-foreground font-mono opacity-80">
+                        {member.user.email}
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
@@ -270,7 +309,10 @@ export default function TeamDetailPage() {
                         </SelectContent>
                       </Select>
                     ) : (
-                      <Badge variant="secondary" className="font-mono text-xs px-2.5 py-0.5 bg-secondary/50">
+                      <Badge
+                        variant="secondary"
+                        className="font-mono text-xs px-2.5 py-0.5 bg-secondary/50"
+                      >
                         {member.role}
                       </Badge>
                     )}
@@ -279,7 +321,12 @@ export default function TeamDetailPage() {
                         variant="ghost"
                         size="icon"
                         className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors"
-                        onClick={() => removeMember.mutate({ teamId, userId: member.user.id })}
+                        onClick={() =>
+                          removeMember.mutate({
+                            teamId,
+                            userId: member.user.id,
+                          })
+                        }
                       >
                         <Trash2 className="h-4 w-4" />
                       </Button>

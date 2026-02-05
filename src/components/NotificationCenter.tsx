@@ -38,7 +38,8 @@ const mockNotifications: Notification[] = [
     id: "1",
     type: "error",
     title: "Workflow Failed",
-    message: "Customer Sync workflow failed with error: API rate limit exceeded",
+    message:
+      "Customer Sync workflow failed with error: API rate limit exceeded",
     timestamp: new Date(Date.now() - 1000 * 60 * 5),
     read: false,
   },
@@ -68,7 +69,10 @@ const mockNotifications: Notification[] = [
   },
 ];
 
-const typeIcons: Record<NotificationType, React.ComponentType<{ className?: string }>> = {
+const typeIcons: Record<
+  NotificationType,
+  React.ComponentType<{ className?: string }>
+> = {
   info: Info,
   success: CheckCircle2,
   warning: AlertCircle,
@@ -88,7 +92,7 @@ export function NotificationCenter() {
 
   const markAsRead = (id: string) => {
     setNotifications((prev) =>
-      prev.map((n) => (n.id === id ? { ...n, read: true } : n))
+      prev.map((n) => (n.id === id ? { ...n, read: true } : n)),
     );
   };
 
@@ -107,7 +111,11 @@ export function NotificationCenter() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="relative text-(--arch-muted) hover:text-(--arch-fg) hover:bg-transparent">
+        <Button
+          variant="ghost"
+          size="icon"
+          className="relative text-(--arch-muted) hover:text-(--arch-fg) hover:bg-transparent"
+        >
           <Bell className="h-5 w-5" />
           {unreadCount > 0 && (
             <span className="absolute -top-0.5 -right-0.5 h-4 w-4 rounded-full bg-(--arch-focus) text-(--arch-bg) text-[10px] font-bold flex items-center justify-center animate-pulse">
@@ -116,7 +124,10 @@ export function NotificationCenter() {
           )}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-80 bg-(--arch-bg) border-(--arch-border) text-(--arch-fg)">
+      <DropdownMenuContent
+        align="end"
+        className="w-80 bg-(--arch-bg) border-(--arch-border) text-(--arch-fg)"
+      >
         <DropdownMenuLabel className="flex items-center justify-between text-(--arch-fg) font-mono uppercase tracking-widest text-xs">
           <span>Sys_Notifications</span>
           {notifications.length > 0 && (
@@ -158,10 +169,14 @@ export function NotificationCenter() {
                   className="flex items-start gap-3 p-3 cursor-pointer focus:bg-(--arch-bg-secondary) focus:text-(--arch-fg)"
                   onClick={() => markAsRead(notification.id)}
                 >
-                  <Icon className={`h-4 w-4 mt-0.5 shrink-0 ${typeColors[notification.type]}`} />
+                  <Icon
+                    className={`h-4 w-4 mt-0.5 shrink-0 ${typeColors[notification.type]}`}
+                  />
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
-                      <p className={`text-xs font-mono font-bold uppercase tracking-wider truncate ${!notification.read ? "text-(--arch-fg)" : "text-(--arch-muted)"}`}>
+                      <p
+                        className={`text-xs font-mono font-bold uppercase tracking-wider truncate ${!notification.read ? "text-(--arch-fg)" : "text-(--arch-muted)"}`}
+                      >
                         {notification.title}
                       </p>
                       {!notification.read && (
@@ -172,7 +187,9 @@ export function NotificationCenter() {
                       {notification.message}
                     </p>
                     <p className="text-[10px] text-(--arch-muted) mt-1 font-mono opacity-60">
-                      {formatDistanceToNow(notification.timestamp, { addSuffix: true })}
+                      {formatDistanceToNow(notification.timestamp, {
+                        addSuffix: true,
+                      })}
                     </p>
                   </div>
                   <Button

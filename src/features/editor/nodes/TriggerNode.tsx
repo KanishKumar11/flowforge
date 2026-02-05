@@ -1,12 +1,7 @@
 "use client";
 
 import { Handle, Position, type NodeProps } from "@xyflow/react";
-import {
-  Calendar,
-  MousePointer,
-  Play,
-  Webhook,
-} from "lucide-react";
+import { Calendar, MousePointer, Play, Webhook } from "lucide-react";
 import { memo } from "react";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -36,8 +31,11 @@ export const TriggerNode = memo(function TriggerNode({
   return (
     <div
       id="base-node"
-      className={`min-w-[200px] bg-[#0A160A] border shadow-none rounded-none transition-all duration-200 ${selected ? "border-[var(--arch-fg)] ring-1 ring-[var(--arch-fg)]" : "border-[var(--arch-border)]"
-        }`}
+      className={`min-w-[200px] bg-[#0A160A] border shadow-none rounded-none transition-all duration-200 ${
+        selected
+          ? "border-[var(--arch-fg)] ring-1 ring-[var(--arch-fg)]"
+          : "border-[var(--arch-border)]"
+      }`}
     >
       <div className="bg-[#0A160A] border-b border-[var(--arch-border)] px-3 py-2 flex items-center gap-2">
         <Icon className="h-3 w-3 text-[var(--arch-fg)]" />
@@ -46,7 +44,9 @@ export const TriggerNode = memo(function TriggerNode({
         </span>
       </div>
       <div className="px-3 py-2 bg-[#0A160A]">
-        <p className="font-bold text-xs text-[var(--arch-fg)] font-mono uppercase truncate">{data.label}</p>
+        <p className="font-bold text-xs text-[var(--arch-fg)] font-mono uppercase truncate">
+          {data.label}
+        </p>
         <p className="text-[10px] text-[var(--arch-muted)] mt-1 font-mono truncate">
           {data.type === "manual" && "CLICK_TO_START"}
           {data.type === "webhook" && "Creates HTTP EP"}

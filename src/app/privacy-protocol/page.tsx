@@ -1,4 +1,3 @@
-
 import Link from "next/link";
 
 export default function PrivacyProtocolPage() {
@@ -17,8 +16,8 @@ export default function PrivacyProtocolPage() {
             </div>
           </div>
           <p className="text-sm text-(--arch-muted) max-w-xl">
-            // PROTOCOL FOR DATA COLLECTION, USAGE, AND RETENTION.
-          // EXECUTE COMPLIANCE CHECKS.
+            // PROTOCOL FOR DATA COLLECTION, USAGE, AND RETENTION. // EXECUTE
+            COMPLIANCE CHECKS.
           </p>
         </header>
 
@@ -31,10 +30,13 @@ export default function PrivacyProtocolPage() {
             </h2>
             <div className="pl-4 border-l border-(--arch-border) space-y-4 text-(--arch-fg) opacity-90">
               <p>
-                SYSTEM AUTOMATICALLY LOGS TELEMETRY DATA INCLUDING BUT NOT LIMITED TO: IP ADDRESSES, BROWSER FINGERPRINTS, AND INTERACTION TIMESTAMPS.
+                SYSTEM AUTOMATICALLY LOGS TELEMETRY DATA INCLUDING BUT NOT
+                LIMITED TO: IP ADDRESSES, BROWSER FINGERPRINTS, AND INTERACTION
+                TIMESTAMPS.
               </p>
               <p>
-                OPERATOR IDENTIFICATION DATA (NAME, EMAIL) IS ENCRYPTED AT REST. NO UNAUTHORIZED PERSONNEL MAY ACCESS OPERATOR RECORDS.
+                OPERATOR IDENTIFICATION DATA (NAME, EMAIL) IS ENCRYPTED AT REST.
+                NO UNAUTHORIZED PERSONNEL MAY ACCESS OPERATOR RECORDS.
               </p>
             </div>
           </section>
@@ -46,10 +48,12 @@ export default function PrivacyProtocolPage() {
             </h2>
             <div className="pl-4 border-l border-(--arch-border) space-y-4 text-(--arch-fg) opacity-90">
               <p>
-                COLLECTED DATA IS UTILIZED SOLELY FOR SYSTEM OPTIMIZATION, SECURITY AUDITING, AND AUTHENTICATION VERIFICATION.
+                COLLECTED DATA IS UTILIZED SOLELY FOR SYSTEM OPTIMIZATION,
+                SECURITY AUDITING, AND AUTHENTICATION VERIFICATION.
               </p>
               <p>
-                WE DO NOT TRANSMIT DATA TO OFF-WORLD ENTITIES OR UNAFFILIATED THIRD PARTIES WITHOUT EXPLICIT ADMINISTRATIVE OVERRIDE.
+                WE DO NOT TRANSMIT DATA TO OFF-WORLD ENTITIES OR UNAFFILIATED
+                THIRD PARTIES WITHOUT EXPLICIT ADMINISTRATIVE OVERRIDE.
               </p>
             </div>
           </section>
@@ -61,7 +65,9 @@ export default function PrivacyProtocolPage() {
             </h2>
             <div className="pl-4 border-l border-(--arch-border) space-y-4 text-(--arch-fg) opacity-90">
               <p>
-                OPERATORS MAY REQUEST A COMPLETE DATA PURGE VIA THE SETTINGS CONSOLE. UPON EXECUTION, ALL ASSOCIATED RECORDS ARE PERMANENTLY ERASED FROM THE MAINFRAME.
+                OPERATORS MAY REQUEST A COMPLETE DATA PURGE VIA THE SETTINGS
+                CONSOLE. UPON EXECUTION, ALL ASSOCIATED RECORDS ARE PERMANENTLY
+                ERASED FROM THE MAINFRAME.
               </p>
             </div>
           </section>
@@ -73,7 +79,9 @@ export default function PrivacyProtocolPage() {
             </h2>
             <div className="pl-4 border-l border-(--arch-border) space-y-4 text-(--arch-fg) opacity-90">
               <p>
-                SESSION TOKENS (COOKIES) ARE DEPLOYED FOR STATE MANAGEMENT. DISABLING COOKIES MAY RESULT IN CRITICAL SYSTEM FAILURE OR LOCKOUT.
+                SESSION TOKENS (COOKIES) ARE DEPLOYED FOR STATE MANAGEMENT.
+                DISABLING COOKIES MAY RESULT IN CRITICAL SYSTEM FAILURE OR
+                LOCKOUT.
               </p>
             </div>
           </section>
@@ -85,12 +93,12 @@ export default function PrivacyProtocolPage() {
             href="/register"
             className="text-xs font-bold uppercase tracking-widest hover:text-(--arch-accent) transition-colors flex items-center gap-2 group"
           >
-            <span className="group-hover:-translate-x-1 transition-transform">{"<-"}</span>
+            <span className="group-hover:-translate-x-1 transition-transform">
+              {"<-"}
+            </span>
             RETURN_TO_BASE
           </Link>
-          <div className="text-xs text-(--arch-muted)">
-            END_OF_FILE
-          </div>
+          <div className="text-xs text-(--arch-muted)">END_OF_FILE</div>
         </footer>
       </div>
     </div>

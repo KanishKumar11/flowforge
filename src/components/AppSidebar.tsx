@@ -85,15 +85,18 @@ export function AppSidebar() {
 
   const initials = user?.name
     ? user.name
-      .split(" ")
-      .map((n) => n[0])
-      .join("")
-      .toUpperCase()
-      .slice(0, 2)
+        .split(" ")
+        .map((n) => n[0])
+        .join("")
+        .toUpperCase()
+        .slice(0, 2)
     : "U";
 
   return (
-    <Sidebar collapsible="icon" className="border-r border-(--arch-border) bg-(--arch-bg) text-(--arch-fg) transition-colors duration-500">
+    <Sidebar
+      collapsible="icon"
+      className="border-r border-(--arch-border) bg-(--arch-bg) text-(--arch-fg) transition-colors duration-500"
+    >
       {/* Logo Header */}
       <SidebarHeader className="border-b border-(--arch-border) p-4">
         <SidebarMenuItem className="list-none">
@@ -137,10 +140,11 @@ export function AppSidebar() {
                       tooltip={item.label}
                       isActive={isActive}
                       asChild
-                      className={`h-10 px-3 gap-3 rounded-none transition-all duration-200 font-mono text-xs uppercase tracking-wider border-l-2 ${isActive
-                        ? "bg-(--arch-fg)/10 text-(--arch-fg) font-bold border-(--arch-fg)"
-                        : "text-(--arch-muted) border-transparent hover:text-(--arch-fg) hover:bg-(--arch-fg)/5"
-                        }`}
+                      className={`h-10 px-3 gap-3 rounded-none transition-all duration-200 font-mono text-xs uppercase tracking-wider border-l-2 ${
+                        isActive
+                          ? "bg-(--arch-fg)/10 text-(--arch-fg) font-bold border-(--arch-fg)"
+                          : "text-(--arch-muted) border-transparent hover:text-(--arch-fg) hover:bg-(--arch-fg)/5"
+                      }`}
                     >
                       <Link href={item.href} prefetch>
                         <item.icon
@@ -173,9 +177,7 @@ export function AppSidebar() {
                 }}
               >
                 <Sparkles className="w-4 h-4" />
-                {!isCollapsed && (
-                  <span className="font-bold">UPGRADE_SYS</span>
-                )}
+                {!isCollapsed && <span className="font-bold">UPGRADE_SYS</span>}
               </SidebarMenuButton>
             </SidebarMenuItem>
           )}
@@ -189,7 +191,10 @@ export function AppSidebar() {
                   className="h-12 px-2 gap-3 rounded-none hover:bg-(--arch-fg)/10 border border-transparent hover:border-(--arch-border) transition-all"
                 >
                   <Avatar className="w-8 h-8 rounded-none border border-(--arch-fg)">
-                    <AvatarImage src={user?.image || ""} alt={user?.name || "User"} />
+                    <AvatarImage
+                      src={user?.image || ""}
+                      alt={user?.name || "User"}
+                    />
                     <AvatarFallback className="bg-(--arch-bg) text-(--arch-fg) font-mono text-xs">
                       {initials}
                     </AvatarFallback>

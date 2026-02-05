@@ -9,10 +9,9 @@ Sentry.init({
   integrations: [
     Sentry.vercelAIIntegration({
       recordInputs: true,
-      recordOutputs: true
-
+      recordOutputs: true,
     }),
-    Sentry.consoleLoggingIntegration({ levels: ["info", "warn", "error"] })
+    Sentry.consoleLoggingIntegration({ levels: ["info", "warn", "error"] }),
   ],
   // Define how likely traces are sampled. Adjust this value in production, or use tracesSampler for greater control.
   tracesSampleRate: 1,

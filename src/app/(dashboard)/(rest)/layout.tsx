@@ -1,5 +1,3 @@
-
-
 export default function RestLayout({
   children,
 }: {
@@ -7,7 +5,6 @@ export default function RestLayout({
 }) {
   return (
     <>
-
       <main>{children}</main>
     </>
   );

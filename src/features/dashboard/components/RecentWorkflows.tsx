@@ -1,5 +1,10 @@
-
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Workflow } from "lucide-react";
@@ -10,12 +15,19 @@ interface RecentWorkflowsProps {
   isLoading: boolean;
 }
 
-export function RecentWorkflows({ workflows, isLoading }: RecentWorkflowsProps) {
+export function RecentWorkflows({
+  workflows,
+  isLoading,
+}: RecentWorkflowsProps) {
   return (
     <Card className="bg-(--arch-bg-secondary) border-(--arch-border) text-(--arch-fg) shadow-none rounded-none h-full">
       <CardHeader>
-        <CardTitle className="text-xl font-heading font-light tracking-tight text-(--arch-fg) uppercase">Recent_Workflows</CardTitle>
-        <CardDescription className="font-mono text-xs text-(--arch-muted)">LATEST_ACTIVITY //</CardDescription>
+        <CardTitle className="text-xl font-heading font-light tracking-tight text-(--arch-fg) uppercase">
+          Recent_Workflows
+        </CardTitle>
+        <CardDescription className="font-mono text-xs text-(--arch-muted)">
+          LATEST_ACTIVITY //
+        </CardDescription>
       </CardHeader>
       <CardContent>
         {isLoading ? (
@@ -39,17 +51,27 @@ export function RecentWorkflows({ workflows, isLoading }: RecentWorkflowsProps) 
                 className="flex items-center justify-between p-3 -mx-2 hover:bg-(--arch-bg) border border-transparent hover:border-(--arch-border) transition-all group"
               >
                 <div className="flex items-center gap-4">
-                  <div className={`p-2 transition-colors border ${workflow.isActive
-                    ? "bg-(--arch-fg) text-(--arch-bg) border-(--arch-fg)"
-                    : "bg-(--arch-bg) text-(--arch-muted) border-(--arch-border)"
-                    }`}>
+                  <div
+                    className={`p-2 transition-colors border ${
+                      workflow.isActive
+                        ? "bg-(--arch-fg) text-(--arch-bg) border-(--arch-fg)"
+                        : "bg-(--arch-bg) text-(--arch-muted) border-(--arch-border)"
+                    }`}
+                  >
                     <Workflow className="h-4 w-4" />
                   </div>
                   <div>
-                    <p className="font-mono text-sm font-medium text-(--arch-fg)">{workflow.name}</p>
+                    <p className="font-mono text-sm font-medium text-(--arch-fg)">
+                      {workflow.name}
+                    </p>
                     <div className="flex items-center gap-2 mt-0.5">
-                      <span className={`text-[10px] font-mono uppercase tracking-widest ${workflow.isActive ? "text-(--arch-accent)" : "text-(--arch-muted)"
-                        }`}>
+                      <span
+                        className={`text-[10px] font-mono uppercase tracking-widest ${
+                          workflow.isActive
+                            ? "text-(--arch-accent)"
+                            : "text-(--arch-muted)"
+                        }`}
+                      >
                         {workflow.isActive ? "STS:ACTIVE" : "STS:DRAFT"}
                       </span>
                     </div>
@@ -64,8 +86,14 @@ export function RecentWorkflows({ workflows, isLoading }: RecentWorkflowsProps) 
             <div className="w-16 h-16 border border-(--arch-border) flex items-center justify-center mx-auto mb-4 bg-(--arch-bg)">
               <Workflow className="h-8 w-8 text-[var(--arch-muted)]" />
             </div>
-            <p className="text-(--arch-muted) font-mono text-xs mb-4">NO_DATA_FOUND</p>
-            <Button size="sm" asChild className="rounded-none bg-(--arch-fg) text-(--arch-bg) hover:bg-(--arch-muted) text-xs font-mono uppercase">
+            <p className="text-(--arch-muted) font-mono text-xs mb-4">
+              NO_DATA_FOUND
+            </p>
+            <Button
+              size="sm"
+              asChild
+              className="rounded-none bg-(--arch-fg) text-(--arch-bg) hover:bg-(--arch-muted) text-xs font-mono uppercase"
+            >
               <Link href="/workflows">INIT_WORKFLOW</Link>
             </Button>
           </div>

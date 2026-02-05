@@ -2,7 +2,13 @@
 
 import { DashboardHeader } from "@/components/DashboardHeader";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
@@ -29,7 +35,11 @@ export default function SettingsPage() {
         title="Settings"
         description="Manage your account preferences and application settings"
         action={
-          <Button onClick={handleSave} disabled={isSaving} className="shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-all duration-300">
+          <Button
+            onClick={handleSave}
+            disabled={isSaving}
+            className="shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-all duration-300"
+          >
             {isSaving && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
             Save Changes
           </Button>
@@ -40,19 +50,31 @@ export default function SettingsPage() {
         <div className="max-w-5xl mx-auto">
           <Tabs defaultValue="profile" className="space-y-8">
             <TabsList className="grid w-full grid-cols-4 lg:w-[600px] bg-muted/50 p-1 backdrop-blur-sm border border-border/50 rounded-xl">
-              <TabsTrigger value="profile" className="gap-2 rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm transition-all duration-300">
+              <TabsTrigger
+                value="profile"
+                className="gap-2 rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm transition-all duration-300"
+              >
                 <User className="h-4 w-4" />
                 Profile
               </TabsTrigger>
-              <TabsTrigger value="notifications" className="gap-2 rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm transition-all duration-300">
+              <TabsTrigger
+                value="notifications"
+                className="gap-2 rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm transition-all duration-300"
+              >
                 <Bell className="h-4 w-4" />
                 Notifications
               </TabsTrigger>
-              <TabsTrigger value="appearance" className="gap-2 rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm transition-all duration-300">
+              <TabsTrigger
+                value="appearance"
+                className="gap-2 rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm transition-all duration-300"
+              >
                 <Palette className="h-4 w-4" />
                 Appearance
               </TabsTrigger>
-              <TabsTrigger value="security" className="gap-2 rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm transition-all duration-300">
+              <TabsTrigger
+                value="security"
+                className="gap-2 rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm transition-all duration-300"
+              >
                 <Shield className="h-4 w-4" />
                 Security
               </TabsTrigger>
@@ -62,7 +84,9 @@ export default function SettingsPage() {
             <TabsContent value="profile" className="animate-fadeIn">
               <Card className="glass border-white/20 dark:border-white/10 shadow-xl backdrop-blur-xl">
                 <CardHeader>
-                  <CardTitle className="text-xl bg-clip-text text-transparent bg-linear-to-r from-foreground to-foreground/70">Profile Information</CardTitle>
+                  <CardTitle className="text-xl bg-clip-text text-transparent bg-linear-to-r from-foreground to-foreground/70">
+                    Profile Information
+                  </CardTitle>
                   <CardDescription>
                     Update your account details and public profile information.
                   </CardDescription>
@@ -71,16 +95,29 @@ export default function SettingsPage() {
                   <div className="grid gap-6 md:grid-cols-2">
                     <div className="space-y-2">
                       <Label htmlFor="name">Display Name</Label>
-                      <Input id="name" placeholder="Your name" className="bg-background/50 border-input/50 focus:bg-background transition-all" />
+                      <Input
+                        id="name"
+                        placeholder="Your name"
+                        className="bg-background/50 border-input/50 focus:bg-background transition-all"
+                      />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="email">Email Address</Label>
-                      <Input id="email" type="email" placeholder="your@email.com" className="bg-background/50 border-input/50 focus:bg-background transition-all" />
+                      <Input
+                        id="email"
+                        type="email"
+                        placeholder="your@email.com"
+                        className="bg-background/50 border-input/50 focus:bg-background transition-all"
+                      />
                     </div>
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="timezone">Timezone</Label>
-                    <Input id="timezone" placeholder="UTC" className="bg-background/50 border-input/50 focus:bg-background transition-all" />
+                    <Input
+                      id="timezone"
+                      placeholder="UTC"
+                      className="bg-background/50 border-input/50 focus:bg-background transition-all"
+                    />
                     <p className="text-xs text-muted-foreground">
                       Your timezone is used for scheduling workflows.
                     </p>
@@ -93,7 +130,9 @@ export default function SettingsPage() {
             <TabsContent value="notifications" className="animate-fadeIn">
               <Card className="glass border-white/20 dark:border-white/10 shadow-xl backdrop-blur-xl">
                 <CardHeader>
-                  <CardTitle className="text-xl bg-clip-text text-transparent bg-linear-to-r from-foreground to-foreground/70">Notification Preferences</CardTitle>
+                  <CardTitle className="text-xl bg-clip-text text-transparent bg-linear-to-r from-foreground to-foreground/70">
+                    Notification Preferences
+                  </CardTitle>
                   <CardDescription>
                     Choose what notifications you want to receive.
                   </CardDescription>
@@ -106,7 +145,10 @@ export default function SettingsPage() {
                         Get notified immediately when a workflow fails
                       </p>
                     </div>
-                    <Switch defaultChecked className="data-[state=checked]:bg-primary" />
+                    <Switch
+                      defaultChecked
+                      className="data-[state=checked]:bg-primary"
+                    />
                   </div>
 
                   <div className="flex items-center justify-between p-4 rounded-xl bg-background/30 border border-border/30 hover:bg-background/50 transition-colors">
@@ -126,7 +168,10 @@ export default function SettingsPage() {
                         Receive a weekly summary of your workflow activity
                       </p>
                     </div>
-                    <Switch defaultChecked className="data-[state=checked]:bg-primary" />
+                    <Switch
+                      defaultChecked
+                      className="data-[state=checked]:bg-primary"
+                    />
                   </div>
 
                   <div className="flex items-center justify-between p-4 rounded-xl bg-background/30 border border-border/30 hover:bg-background/50 transition-colors">
@@ -146,7 +191,9 @@ export default function SettingsPage() {
             <TabsContent value="appearance" className="animate-fadeIn">
               <Card className="glass border-white/20 dark:border-white/10 shadow-xl backdrop-blur-xl">
                 <CardHeader>
-                  <CardTitle className="text-xl bg-clip-text text-transparent bg-linear-to-r from-foreground to-foreground/70">Appearance</CardTitle>
+                  <CardTitle className="text-xl bg-clip-text text-transparent bg-linear-to-r from-foreground to-foreground/70">
+                    Appearance
+                  </CardTitle>
                   <CardDescription>
                     Customize the look and feel of the application.
                   </CardDescription>
@@ -162,7 +209,10 @@ export default function SettingsPage() {
                         Use dark theme for the interface
                       </p>
                     </div>
-                    <Switch defaultChecked className="data-[state=checked]:bg-purple-600" />
+                    <Switch
+                      defaultChecked
+                      className="data-[state=checked]:bg-purple-600"
+                    />
                   </div>
 
                   <div className="flex items-center justify-between p-4 rounded-xl bg-background/30 border border-border/30 hover:bg-background/50 transition-colors">
@@ -192,7 +242,9 @@ export default function SettingsPage() {
             <TabsContent value="security" className="animate-fadeIn">
               <Card className="glass border-white/20 dark:border-white/10 shadow-xl backdrop-blur-xl">
                 <CardHeader>
-                  <CardTitle className="text-xl bg-clip-text text-transparent bg-linear-to-r from-foreground to-foreground/70">Security</CardTitle>
+                  <CardTitle className="text-xl bg-clip-text text-transparent bg-linear-to-r from-foreground to-foreground/70">
+                    Security
+                  </CardTitle>
                   <CardDescription>
                     Manage your password and security settings.
                   </CardDescription>
@@ -201,19 +253,36 @@ export default function SettingsPage() {
                   <div className="space-y-6">
                     <div className="space-y-2">
                       <Label htmlFor="current-password">Current Password</Label>
-                      <Input id="current-password" type="password" className="bg-background/50 border-input/50 focus:bg-background transition-all" />
+                      <Input
+                        id="current-password"
+                        type="password"
+                        className="bg-background/50 border-input/50 focus:bg-background transition-all"
+                      />
                     </div>
                     <div className="grid gap-6 md:grid-cols-2">
                       <div className="space-y-2">
                         <Label htmlFor="new-password">New Password</Label>
-                        <Input id="new-password" type="password" className="bg-background/50 border-input/50 focus:bg-background transition-all" />
+                        <Input
+                          id="new-password"
+                          type="password"
+                          className="bg-background/50 border-input/50 focus:bg-background transition-all"
+                        />
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="confirm-password">Confirm Password</Label>
-                        <Input id="confirm-password" type="password" className="bg-background/50 border-input/50 focus:bg-background transition-all" />
+                        <Label htmlFor="confirm-password">
+                          Confirm Password
+                        </Label>
+                        <Input
+                          id="confirm-password"
+                          type="password"
+                          className="bg-background/50 border-input/50 focus:bg-background transition-all"
+                        />
                       </div>
                     </div>
-                    <Button variant="outline" className="hover:bg-primary/5 hover:text-primary transition-colors">
+                    <Button
+                      variant="outline"
+                      className="hover:bg-primary/5 hover:text-primary transition-colors"
+                    >
                       <Key className="h-4 w-4 mr-2" />
                       Update Password
                     </Button>
@@ -227,7 +296,10 @@ export default function SettingsPage() {
                           Manage API keys for external integrations
                         </p>
                       </div>
-                      <Button variant="outline" className="border-primary/20 hover:bg-primary/5 hover:border-primary/50 transition-colors">
+                      <Button
+                        variant="outline"
+                        className="border-primary/20 hover:bg-primary/5 hover:border-primary/50 transition-colors"
+                      >
                         Manage API Keys
                       </Button>
                     </div>

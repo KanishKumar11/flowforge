@@ -75,7 +75,7 @@
   --border: oklch(0.92 0.01 260);
   --input: oklch(0.92 0.01 260);
   --ring: oklch(0.55 0.25 275);
-  
+
   --chart-1: oklch(0.5 0.2 270);
   --chart-2: oklch(0.55 0.2 300);
   --chart-3: oklch(0.6 0.2 330);
@@ -93,7 +93,7 @@
 
   --radius: 0.75rem;
   --tracking-normal: -0.01em;
-  
+
   /* Nebula Custom Colors */
   --nebula-glow: oklch(0.6 0.25 280);
   --nebula-highlight: oklch(0.7 0.2 300);
@@ -105,40 +105,40 @@
 .dark {
   --background: oklch(0.1 0.02 265); /* Deep Space Blue */
   --foreground: oklch(0.98 0.01 260); /* Star White */
-  
+
   /* Glass Card Base */
   --card: oklch(0.15 0.03 265);
   --card-foreground: oklch(0.98 0.01 260);
-  
+
   --popover: oklch(0.15 0.03 265);
   --popover-foreground: oklch(0.98 0.01 260);
-  
+
   /* Electric Neon Brand Colors */
   --primary: oklch(0.65 0.25 280); /* Electric Violet */
   --primary-foreground: oklch(0.1 0.02 265);
-  
+
   --secondary: oklch(0.2 0.04 260);
   --secondary-foreground: oklch(0.9 0.02 260);
-  
+
   --muted: oklch(0.15 0.02 265);
   --muted-foreground: oklch(0.7 0.05 260);
-  
+
   --accent: oklch(0.25 0.06 270);
   --accent-foreground: oklch(0.98 0.01 260);
-  
+
   --destructive: oklch(0.65 0.22 20);
   --destructive-foreground: oklch(1 0 0);
-  
+
   --border: oklch(0.25 0.05 265);
   --input: oklch(0.2 0.04 265);
   --ring: oklch(0.65 0.25 280);
-  
+
   /* Neon Chart Colors */
   --chart-1: oklch(0.65 0.25 280); /* Violet */
-  --chart-2: oklch(0.7 0.22 320);  /* Pink */
-  --chart-3: oklch(0.75 0.2 180);  /* Cyan */
-  --chart-4: oklch(0.7 0.2 40);    /* Orange */
-  --chart-5: oklch(0.8 0.15 80);   /* Yellow */
+  --chart-2: oklch(0.7 0.22 320); /* Pink */
+  --chart-3: oklch(0.75 0.2 180); /* Cyan */
+  --chart-4: oklch(0.7 0.2 40); /* Orange */
+  --chart-5: oklch(0.8 0.15 80); /* Yellow */
 
   --sidebar: oklch(0.08 0.02 265); /* Darker Deep Space */
   --sidebar-foreground: oklch(0.9 0.01 260);
@@ -227,24 +227,20 @@ body {
 
 /* 1. Hyper-Glass */
 @utility glass-premium {
-  background: linear-gradient(
-    135deg,
-    oklch(1 0 0 / 0.05),
-    oklch(1 0 0 / 0.01)
-  );
+  background: linear-gradient(135deg, oklch(1 0 0 / 0.05), oklch(1 0 0 / 0.01));
   backdrop-filter: blur(20px) saturate(140%);
   -webkit-backdrop-filter: blur(20px) saturate(140%);
   border: 1px solid oklch(1 0 0 / 0.08);
-  box-shadow: 
-    0 4px 6px -1px rgb(0 0 0 / 0.1), 
+  box-shadow:
+    0 4px 6px -1px rgb(0 0 0 / 0.1),
     0 2px 4px -2px rgb(0 0 0 / 0.1),
     inset 0 0 0 1px oklch(1 0 0 / 0.05);
 }
 
 @utility glass-panel {
-    background: oklch(0.13 0.02 265 / 0.6);
-    backdrop-filter: blur(12px);
-    border-right: 1px solid oklch(1 0 0 / 0.05);
+  background: oklch(0.13 0.02 265 / 0.6);
+  backdrop-filter: blur(12px);
+  border-right: 1px solid oklch(1 0 0 / 0.05);
 }
 
 /* 2. Text Effects */
@@ -271,13 +267,20 @@ body {
 }
 
 @utility glowing-ring {
-    box-shadow: 0 0 0 2px var(--background), 0 0 0 4px var(--primary);
+  box-shadow:
+    0 0 0 2px var(--background),
+    0 0 0 4px var(--primary);
 }
 
 /* 4. Animations */
 @keyframes float-slow {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 @utility animate-float-slow {
@@ -285,31 +288,36 @@ body {
 }
 
 @keyframes pulse-soft {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.7; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
 }
 
 @utility animate-pulse-soft {
-    animation: pulse-soft 3s ease-in-out infinite;
+  animation: pulse-soft 3s ease-in-out infinite;
 }
 
 /* ... previous code ... */
 
 /* 5. Inputs & Forms */
 @layer base {
-    input:-webkit-autofill,
-    input:-webkit-autofill:hover, 
-    input:-webkit-autofill:focus, 
-    textarea:-webkit-autofill,
-    textarea:-webkit-autofill:hover,
-    textarea:-webkit-autofill:focus,
-    select:-webkit-autofill,
-    select:-webkit-autofill:hover,
-    select:-webkit-autofill:focus {
-        -webkit-text-fill-color: var(--foreground);
-        -webkit-box-shadow: 0 0 0px 1000px oklch(0.1 0.02 265) inset;
-        transition: background-color 50000s ease-in-out 0s;
-    }
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  textarea:-webkit-autofill,
+  textarea:-webkit-autofill:hover,
+  textarea:-webkit-autofill:focus,
+  select:-webkit-autofill,
+  select:-webkit-autofill:hover,
+  select:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--foreground);
+    -webkit-box-shadow: 0 0 0px 1000px oklch(0.1 0.02 265) inset;
+    transition: background-color 50000s ease-in-out 0s;
+  }
 }
 
 /* 6. The Architect (Precision Engineering) */
@@ -329,13 +337,15 @@ body {
 
 @utility bg-grid {
   background-size: 40px 40px;
-  background-image: linear-gradient(to right, var(--arch-grid) 1px, transparent 1px),
+  background-image:
+    linear-gradient(to right, var(--arch-grid) 1px, transparent 1px),
     linear-gradient(to bottom, var(--arch-grid) 1px, transparent 1px);
 }
 
 @utility bg-grid-small {
   background-size: 10px 10px;
-  background-image: linear-gradient(to right, var(--arch-grid) 1px, transparent 1px),
+  background-image:
+    linear-gradient(to right, var(--arch-grid) 1px, transparent 1px),
     linear-gradient(to bottom, var(--arch-grid) 1px, transparent 1px);
 }
 
@@ -345,51 +355,55 @@ body {
 }
 
 @utility input-tech {
-    background-color: rgba(0, 0, 0, 0.4);
-    border: 1px solid var(--arch-border);
-    color: var(--arch-fg);
-    font-family: var(--font-mono);
-    font-size: 0.875rem;
-    height: 2.75rem; /* Explicit height */
-    padding: 0 1rem;
-    transition: all 0.2s ease;
-    border-radius: 2px;
-    
-    &:hover {
-        border-color: var(--arch-muted);
-        background-color: rgba(0, 0, 0, 0.6);
-    }
-    
-    &:focus {
-        border-color: var(--arch-accent);
-        background-color: rgba(0, 0, 0, 0.8);
-        outline: none;
-        box-shadow: 
-            0 0 0 1px var(--arch-accent),
-            0 0 15px -3px var(--arch-accent-dim);
-    }
+  background-color: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--arch-border);
+  color: var(--arch-fg);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  height: 2.75rem; /* Explicit height */
+  padding: 0 1rem;
+  transition: all 0.2s ease;
+  border-radius: 2px;
 
-    &::placeholder {
-        color: var(--arch-muted);
-        opacity: 0.7;
-        font-size: 0.75rem;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-    }
+  &:hover {
+    border-color: var(--arch-muted);
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+
+  &:focus {
+    border-color: var(--arch-accent);
+    background-color: rgba(0, 0, 0, 0.8);
+    outline: none;
+    box-shadow:
+      0 0 0 1px var(--arch-accent),
+      0 0 15px -3px var(--arch-accent-dim);
+  }
+
+  &::placeholder {
+    color: var(--arch-muted);
+    opacity: 0.7;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
 }
 
 @utility tech-panel {
-    background: var(--arch-bg-secondary);
-    backdrop-filter: blur(8px);
-    border: 1px solid var(--arch-border);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  background: var(--arch-bg-secondary);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--arch-border);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
 @keyframes scanline {
-    0% { transform: translateY(-100%); }
-    100% { transform: translateY(100%); }
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
 }
 
 @utility animate-scanline {
-    animation: scanline 4s linear infinite;
+  animation: scanline 4s linear infinite;
 }

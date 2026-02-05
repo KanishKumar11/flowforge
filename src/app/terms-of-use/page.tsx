@@ -1,4 +1,3 @@
-
 import Link from "next/link";
 
 export default function TermsOfUsePage() {
@@ -17,8 +16,8 @@ export default function TermsOfUsePage() {
             </div>
           </div>
           <p className="text-sm text-(--arch-muted) max-w-xl">
-            // CONDITIONS FOR SYSTEM ACCESS AND USAGE.
-          // FAILURE TO COMPLY WILL RESULT IN IMMEDIATE TERMINATION.
+            // CONDITIONS FOR SYSTEM ACCESS AND USAGE. // FAILURE TO COMPLY WILL
+            RESULT IN IMMEDIATE TERMINATION.
           </p>
         </header>
 
@@ -31,10 +30,14 @@ export default function TermsOfUsePage() {
             </h2>
             <div className="pl-4 border-l border-(--arch-border) space-y-4 text-(--arch-fg) opacity-90">
               <p>
-                ACCESS TO THE FLOWFORGE INFRASTRUCTURE IS A PRIVILEGE, NOT A RIGHT. ADMINISTRATION RESERVES THE RIGHT TO REVOKE ACCESS KEYS AT ANY MOMENT WITHOUT PRIOR WARNING.
+                ACCESS TO THE FLOWFORGE INFRASTRUCTURE IS A PRIVILEGE, NOT A
+                RIGHT. ADMINISTRATION RESERVES THE RIGHT TO REVOKE ACCESS KEYS
+                AT ANY MOMENT WITHOUT PRIOR WARNING.
               </p>
               <p>
-                YOU AGREE NOT TO ATTEMPT TO BYPASS SECURITY PROTOCOLS, REVERSE ENGINEER CORE SYSTEMS, OR INJECT MALICIOUS CODE INTO THE WORKFLOW ENGINE.
+                YOU AGREE NOT TO ATTEMPT TO BYPASS SECURITY PROTOCOLS, REVERSE
+                ENGINEER CORE SYSTEMS, OR INJECT MALICIOUS CODE INTO THE
+                WORKFLOW ENGINE.
               </p>
             </div>
           </section>
@@ -46,10 +49,13 @@ export default function TermsOfUsePage() {
             </h2>
             <div className="pl-4 border-l border-(--arch-border) space-y-4 text-(--arch-fg) opacity-90">
               <p>
-                OPERATORS ARE SOLELY RESPONSIBLE FOR THE INTEGRITY OF THEIR CREDENTIALS. ANY ACTION PERFORMED UNDER YOUR IDENTIFIER WILL BE ATTRIBUTED TO YOU.
+                OPERATORS ARE SOLELY RESPONSIBLE FOR THE INTEGRITY OF THEIR
+                CREDENTIALS. ANY ACTION PERFORMED UNDER YOUR IDENTIFIER WILL BE
+                ATTRIBUTED TO YOU.
               </p>
               <p>
-                DO NOT SHARE ACCESS KEYS. SECURITY BREACHES MUST BE REPORTED IMMEDIATELY VIA THE EMERGENCY CHANNEL.
+                DO NOT SHARE ACCESS KEYS. SECURITY BREACHES MUST BE REPORTED
+                IMMEDIATELY VIA THE EMERGENCY CHANNEL.
               </p>
             </div>
           </section>
@@ -61,7 +67,9 @@ export default function TermsOfUsePage() {
             </h2>
             <div className="pl-4 border-l border-(--arch-border) space-y-4 text-(--arch-fg) opacity-90">
               <p>
-                THE SYSTEM IS PROVIDED "AS IS". WE ARE NOT LIABLE FOR DATA LOSS, WORKFLOW INTERRUPTIONS, OR UNFORESEEN CASCADING FAILURES RESULTING FROM USER CONFIGURATIONS.
+                THE SYSTEM IS PROVIDED "AS IS". WE ARE NOT LIABLE FOR DATA LOSS,
+                WORKFLOW INTERRUPTIONS, OR UNFORESEEN CASCADING FAILURES
+                RESULTING FROM USER CONFIGURATIONS.
               </p>
             </div>
           </section>
@@ -73,7 +81,8 @@ export default function TermsOfUsePage() {
             </h2>
             <div className="pl-4 border-l border-(--arch-border) space-y-4 text-(--arch-fg) opacity-90">
               <p>
-                TERMS MAY BE UPDATED VIA OVER-THE-AIR PATCHES. CONTINUED USAGE OF THE SYSTEM IMPLIES ACCEPTANCE OF THE NEW PROTOCOLS.
+                TERMS MAY BE UPDATED VIA OVER-THE-AIR PATCHES. CONTINUED USAGE
+                OF THE SYSTEM IMPLIES ACCEPTANCE OF THE NEW PROTOCOLS.
               </p>
             </div>
           </section>
@@ -85,12 +94,12 @@ export default function TermsOfUsePage() {
             href="/register"
             className="text-xs font-bold uppercase tracking-widest hover:text-(--arch-accent) transition-colors flex items-center gap-2 group"
           >
-            <span className="group-hover:-translate-x-1 transition-transform">{"<-"}</span>
+            <span className="group-hover:-translate-x-1 transition-transform">
+              {"<-"}
+            </span>
             ACKNOWLEDGE_&_RETURN
           </Link>
-          <div className="text-xs text-(--arch-muted)">
-            FIRMWARE: V2.0.4
-          </div>
+          <div className="text-xs text-(--arch-muted)">FIRMWARE: V2.0.4</div>
         </footer>
       </div>
     </div>

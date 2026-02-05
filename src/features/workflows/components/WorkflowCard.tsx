@@ -81,8 +81,11 @@ export function WorkflowCard({
               }
             >
               <span
-                className={`w-1.5 h-1.5 mr-2 ${workflow.isActive ? "bg-[var(--arch-fg)] animate-pulse" : "bg-[var(--arch-muted)]"
-                  }`}
+                className={`w-1.5 h-1.5 mr-2 ${
+                  workflow.isActive
+                    ? "bg-[var(--arch-fg)] animate-pulse"
+                    : "bg-[var(--arch-muted)]"
+                }`}
               />
               {workflow.isActive ? "Active" : "Draft"}
             </Badge>
@@ -96,18 +99,30 @@ export function WorkflowCard({
                   <MoreVertical className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48 bg-[var(--arch-bg)] border-[var(--arch-border)] text-[var(--arch-fg)] rounded-none font-mono uppercase text-xs">
-                <DropdownMenuItem asChild className="focus:bg-[var(--arch-fg)] focus:text-[var(--arch-bg)] cursor-pointer">
+              <DropdownMenuContent
+                align="end"
+                className="w-48 bg-[var(--arch-bg)] border-[var(--arch-border)] text-[var(--arch-fg)] rounded-none font-mono uppercase text-xs"
+              >
+                <DropdownMenuItem
+                  asChild
+                  className="focus:bg-[var(--arch-fg)] focus:text-[var(--arch-bg)] cursor-pointer"
+                >
                   <Link href={`/workflows/${workflow.id}`}>
                     <Settings className="mr-2 h-4 w-4" />
                     Edit
                   </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => onDuplicate?.(workflow.id)} className="focus:bg-[var(--arch-fg)] focus:text-[var(--arch-bg)] cursor-pointer">
+                <DropdownMenuItem
+                  onClick={() => onDuplicate?.(workflow.id)}
+                  className="focus:bg-[var(--arch-fg)] focus:text-[var(--arch-bg)] cursor-pointer"
+                >
                   <Copy className="mr-2 h-4 w-4" />
                   Clone
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => onActivate?.(workflow.id)} className="focus:bg-[var(--arch-fg)] focus:text-[var(--arch-bg)] cursor-pointer">
+                <DropdownMenuItem
+                  onClick={() => onActivate?.(workflow.id)}
+                  className="focus:bg-[var(--arch-fg)] focus:text-[var(--arch-bg)] cursor-pointer"
+                >
                   {workflow.isActive ? (
                     <>
                       <Pause className="mr-2 h-4 w-4" />
@@ -137,11 +152,17 @@ export function WorkflowCard({
         <div className="flex items-center justify-between text-xs font-mono text-[var(--arch-muted)] bg-[var(--arch-fg)]/5 p-3 border-t border-[var(--arch-border)]">
           <div className="flex items-center gap-4">
             <span className="flex items-center gap-1.5 uppercase">
-              UPDATED {formatDistanceToNow(new Date(workflow.updatedAt), { addSuffix: true })}
+              UPDATED{" "}
+              {formatDistanceToNow(new Date(workflow.updatedAt), {
+                addSuffix: true,
+              })}
             </span>
           </div>
           {workflow._count && (
-            <Badge variant="secondary" className="bg-[var(--arch-bg)] text-[var(--arch-fg)] border border-[var(--arch-border)] rounded-none text-[10px] uppercase">
+            <Badge
+              variant="secondary"
+              className="bg-[var(--arch-bg)] text-[var(--arch-fg)] border border-[var(--arch-border)] rounded-none text-[10px] uppercase"
+            >
               {workflow._count.executions} runs
             </Badge>
           )}

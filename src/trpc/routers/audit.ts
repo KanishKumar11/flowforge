@@ -11,7 +11,7 @@ export const auditRouter = createTRPCRouter({
         action: z.string().optional(),
         limit: z.number().min(1).max(100).default(50),
         cursor: z.string().optional(),
-      })
+      }),
     )
     .query(async ({ ctx, input }) => {
       const logs = await prisma.auditLog.findMany({
@@ -63,7 +63,7 @@ export const auditRouter = createTRPCRouter({
         entity: z.string(),
         entityId: z.string().optional(),
         details: z.any().optional(),
-      })
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       return prisma.auditLog.create({
@@ -102,7 +102,12 @@ export const auditRouter = createTRPCRouter({
 
       return {
         totalActions,
-        byEntity: byEntity.map((b: { entity: string; _count: { entity: number } }) => ({ entity: b.entity, count: b._count.entity })),
+        byEntity: byEntity.map(
+          (b: { entity: string; _count: { entity: number } }) => ({
+            entity: b.entity,
+            count: b._count.entity,
+          }),
+        ),
         recentLogs,
       };
     }),

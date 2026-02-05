@@ -1,17 +1,17 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Command as CommandPrimitive } from "cmdk"
-import { SearchIcon } from "lucide-react"
+import * as React from "react";
+import { Command as CommandPrimitive } from "cmdk";
+import { SearchIcon } from "lucide-react";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
 
 function Command({
   className,
@@ -22,11 +22,11 @@ function Command({
       data-slot="command"
       className={cn(
         "bg-(--arch-bg) text-(--arch-fg) flex h-full w-full flex-col overflow-hidden rounded-md",
-        className
+        className,
       )}
       {...props}
     />
-  )
+  );
 }
 
 function CommandDialog({
@@ -37,10 +37,10 @@ function CommandDialog({
   showCloseButton = true,
   ...props
 }: React.ComponentProps<typeof Dialog> & {
-  title?: string
-  description?: string
-  className?: string
-  showCloseButton?: boolean
+  title?: string;
+  description?: string;
+  className?: string;
+  showCloseButton?: boolean;
 }) {
   return (
     <Dialog {...props}>
@@ -49,7 +49,10 @@ function CommandDialog({
         <DialogDescription>{description}</DialogDescription>
       </DialogHeader>
       <DialogContent
-        className={cn("overflow-hidden p-0 bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) shadow-[0_0_20px_rgba(0,0,0,0.5)]", className)}
+        className={cn(
+          "overflow-hidden p-0 bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) shadow-[0_0_20px_rgba(0,0,0,0.5)]",
+          className,
+        )}
         showCloseButton={showCloseButton}
       >
         <Command className="**:[[cmdk-group-heading]]:text-(--arch-muted) **:[[cmdk-group-heading]]:font-mono **:[[cmdk-group-heading]]:uppercase **:[[cmdk-group-heading]]:tracking-widest **:data-[slot=command-input-wrapper]:h-12 **:[[cmdk-group-heading]]:px-2 **:[[cmdk-group-heading]]:font-medium **:[[cmdk-group]]:px-2 **:[[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 **:[[cmdk-input-wrapper]_svg]:h-5 **:[[cmdk-input-wrapper]_svg]:w-5 **:[[cmdk-input]]:h-12 **:[[cmdk-item]]:px-2 **:[[cmdk-item]]:py-3 **:[[cmdk-item]_svg]:h-5 **:[[cmdk-item]_svg]:w-5 **:[[cmdk-input-wrapper]_svg]:text-(--arch-muted)">
@@ -57,7 +60,7 @@ function CommandDialog({
         </Command>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
 
 function CommandInput({
@@ -74,12 +77,12 @@ function CommandInput({
         data-slot="command-input"
         className={cn(
           "placeholder:text-(--arch-muted) flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-hidden disabled:cursor-not-allowed disabled:opacity-50 text-(--arch-fg) font-mono",
-          className
+          className,
         )}
         {...props}
       />
     </div>
-  )
+  );
 }
 
 function CommandList({
@@ -91,11 +94,11 @@ function CommandList({
       data-slot="command-list"
       className={cn(
         "max-h-[300px] scroll-py-1 overflow-x-hidden overflow-y-auto",
-        className
+        className,
       )}
       {...props}
     />
-  )
+  );
 }
 
 function CommandEmpty({
@@ -107,7 +110,7 @@ function CommandEmpty({
       className="py-6 text-center text-xs text-(--arch-muted) font-mono uppercase tracking-widest"
       {...props}
     />
-  )
+  );
 }
 
 function CommandGroup({
@@ -119,11 +122,11 @@ function CommandGroup({
       data-slot="command-group"
       className={cn(
         "text-(--arch-fg) **:[[cmdk-group-heading]]:text-(--arch-muted) overflow-hidden p-1 **:[[cmdk-group-heading]]:px-2 **:[[cmdk-group-heading]]:py-1.5 **:[[cmdk-group-heading]]:text-xs **:[[cmdk-group-heading]]:font-medium",
-        className
+        className,
       )}
       {...props}
     />
-  )
+  );
 }
 
 function CommandSeparator({
@@ -136,7 +139,7 @@ function CommandSeparator({
       className={cn("bg-(--arch-border) -mx-1 h-px", className)}
       {...props}
     />
-  )
+  );
 }
 
 function CommandItem({
@@ -148,11 +151,11 @@ function CommandItem({
       data-slot="command-item"
       className={cn(
         "data-[selected=true]:bg-(--arch-bg-secondary) data-[selected=true]:text-(--arch-fg) [&_svg:not([class*='text-'])]:text-(--arch-muted) relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 font-mono uppercase tracking-wide transition-colors",
-        className
+        className,
       )}
       {...props}
     />
-  )
+  );
 }
 
 function CommandShortcut({
@@ -164,11 +167,11 @@ function CommandShortcut({
       data-slot="command-shortcut"
       className={cn(
         "text-muted-foreground ml-auto text-xs tracking-widest",
-        className
+        className,
       )}
       {...props}
     />
-  )
+  );
 }
 
 export {
@@ -181,4 +184,4 @@ export {
   CommandItem,
   CommandShortcut,
   CommandSeparator,
-}
+};

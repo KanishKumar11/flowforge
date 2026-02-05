@@ -19,8 +19,25 @@ export const workflowTemplates: WorkflowTemplate[] = [
     category: "Notifications",
     icon: "webhook",
     nodes: [
-      { id: "1", type: "trigger", position: { x: 100, y: 100 }, data: { type: "webhook", label: "Webhook Trigger", config: {} } },
-      { id: "2", type: "action", position: { x: 350, y: 100 }, data: { type: "slack", label: "Send to Slack", config: { channel: "#general", message: "New webhook received: {{trigger.body}}" } } },
+      {
+        id: "1",
+        type: "trigger",
+        position: { x: 100, y: 100 },
+        data: { type: "webhook", label: "Webhook Trigger", config: {} },
+      },
+      {
+        id: "2",
+        type: "action",
+        position: { x: 350, y: 100 },
+        data: {
+          type: "slack",
+          label: "Send to Slack",
+          config: {
+            channel: "#general",
+            message: "New webhook received: {{trigger.body}}",
+          },
+        },
+      },
     ],
     edges: [{ id: "e1-2", source: "1", target: "2" }],
     tags: ["webhook", "slack", "notification"],
@@ -32,9 +49,36 @@ export const workflowTemplates: WorkflowTemplate[] = [
     category: "Scheduled",
     icon: "schedule",
     nodes: [
-      { id: "1", type: "trigger", position: { x: 100, y: 100 }, data: { type: "schedule", label: "Daily at 9 AM", config: { cron: "0 9 * * *" } } },
-      { id: "2", type: "action", position: { x: 350, y: 100 }, data: { type: "http-request", label: "Fetch Data", config: { url: "https://api.example.com/data", method: "GET" } } },
-      { id: "3", type: "action", position: { x: 600, y: 100 }, data: { type: "email", label: "Send Report", config: { to: "team@example.com", subject: "Daily Report" } } },
+      {
+        id: "1",
+        type: "trigger",
+        position: { x: 100, y: 100 },
+        data: {
+          type: "schedule",
+          label: "Daily at 9 AM",
+          config: { cron: "0 9 * * *" },
+        },
+      },
+      {
+        id: "2",
+        type: "action",
+        position: { x: 350, y: 100 },
+        data: {
+          type: "http-request",
+          label: "Fetch Data",
+          config: { url: "https://api.example.com/data", method: "GET" },
+        },
+      },
+      {
+        id: "3",
+        type: "action",
+        position: { x: 600, y: 100 },
+        data: {
+          type: "email",
+          label: "Send Report",
+          config: { to: "team@example.com", subject: "Daily Report" },
+        },
+      },
     ],
     edges: [
       { id: "e1-2", source: "1", target: "2" },
@@ -49,9 +93,35 @@ export const workflowTemplates: WorkflowTemplate[] = [
     category: "AI",
     icon: "openai",
     nodes: [
-      { id: "1", type: "trigger", position: { x: 100, y: 100 }, data: { type: "manual", label: "Manual Trigger", config: {} } },
-      { id: "2", type: "action", position: { x: 350, y: 100 }, data: { type: "openai", label: "Generate Content", config: { model: "gpt-4o-mini", prompt: "Write a blog post about {{trigger.topic}}" } } },
-      { id: "3", type: "action", position: { x: 600, y: 100 }, data: { type: "notion", label: "Save to Notion", config: { operation: "create_page" } } },
+      {
+        id: "1",
+        type: "trigger",
+        position: { x: 100, y: 100 },
+        data: { type: "manual", label: "Manual Trigger", config: {} },
+      },
+      {
+        id: "2",
+        type: "action",
+        position: { x: 350, y: 100 },
+        data: {
+          type: "openai",
+          label: "Generate Content",
+          config: {
+            model: "gpt-4o-mini",
+            prompt: "Write a blog post about {{trigger.topic}}",
+          },
+        },
+      },
+      {
+        id: "3",
+        type: "action",
+        position: { x: 600, y: 100 },
+        data: {
+          type: "notion",
+          label: "Save to Notion",
+          config: { operation: "create_page" },
+        },
+      },
     ],
     edges: [
       { id: "e1-2", source: "1", target: "2" },
@@ -66,10 +136,46 @@ export const workflowTemplates: WorkflowTemplate[] = [
     category: "Data",
     icon: "database",
     nodes: [
-      { id: "1", type: "trigger", position: { x: 100, y: 100 }, data: { type: "schedule", label: "Every Hour", config: { cron: "0 * * * *" } } },
-      { id: "2", type: "action", position: { x: 350, y: 100 }, data: { type: "http-request", label: "Fetch API", config: { url: "https://api.example.com/items", method: "GET" } } },
-      { id: "3", type: "action", position: { x: 600, y: 100 }, data: { type: "loop", label: "Process Items", config: { expression: "item" } } },
-      { id: "4", type: "action", position: { x: 850, y: 100 }, data: { type: "google_sheets", label: "Save to Sheets", config: { operation: "append_row" } } },
+      {
+        id: "1",
+        type: "trigger",
+        position: { x: 100, y: 100 },
+        data: {
+          type: "schedule",
+          label: "Every Hour",
+          config: { cron: "0 * * * *" },
+        },
+      },
+      {
+        id: "2",
+        type: "action",
+        position: { x: 350, y: 100 },
+        data: {
+          type: "http-request",
+          label: "Fetch API",
+          config: { url: "https://api.example.com/items", method: "GET" },
+        },
+      },
+      {
+        id: "3",
+        type: "action",
+        position: { x: 600, y: 100 },
+        data: {
+          type: "loop",
+          label: "Process Items",
+          config: { expression: "item" },
+        },
+      },
+      {
+        id: "4",
+        type: "action",
+        position: { x: 850, y: 100 },
+        data: {
+          type: "google_sheets",
+          label: "Save to Sheets",
+          config: { operation: "append_row" },
+        },
+      },
     ],
     edges: [
       { id: "e1-2", source: "1", target: "2" },
@@ -85,9 +191,35 @@ export const workflowTemplates: WorkflowTemplate[] = [
     category: "Developer",
     icon: "github",
     nodes: [
-      { id: "1", type: "trigger", position: { x: 100, y: 100 }, data: { type: "webhook", label: "GitHub Webhook", config: {} } },
-      { id: "2", type: "action", position: { x: 350, y: 100 }, data: { type: "if", label: "Is New Issue?", config: { condition: "trigger.action === 'opened'" } } },
-      { id: "3", type: "action", position: { x: 600, y: 100 }, data: { type: "slack", label: "Notify Team", config: { channel: "#dev", message: "New issue: {{trigger.issue.title}}" } } },
+      {
+        id: "1",
+        type: "trigger",
+        position: { x: 100, y: 100 },
+        data: { type: "webhook", label: "GitHub Webhook", config: {} },
+      },
+      {
+        id: "2",
+        type: "action",
+        position: { x: 350, y: 100 },
+        data: {
+          type: "if",
+          label: "Is New Issue?",
+          config: { condition: "trigger.action === 'opened'" },
+        },
+      },
+      {
+        id: "3",
+        type: "action",
+        position: { x: 600, y: 100 },
+        data: {
+          type: "slack",
+          label: "Notify Team",
+          config: {
+            channel: "#dev",
+            message: "New issue: {{trigger.issue.title}}",
+          },
+        },
+      },
     ],
     edges: [
       { id: "e1-2", source: "1", target: "2" },

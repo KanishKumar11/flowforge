@@ -3,7 +3,13 @@
 import { useVanillaClient } from "@/trpc/client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
@@ -38,7 +44,14 @@ export function ErrorAlertSettings({
       email !== (initialEmail || "") ||
       slackWebhook !== (initialSlack || "");
     setHasChanges(changed);
-  }, [enabled, email, slackWebhook, initialEnabled, initialEmail, initialSlack]);
+  }, [
+    enabled,
+    email,
+    slackWebhook,
+    initialEnabled,
+    initialEmail,
+    initialSlack,
+  ]);
 
   const updateAlerts = useMutation({
     mutationFn: (data: {
@@ -73,9 +86,7 @@ export function ErrorAlertSettings({
           <AlertTriangle className="h-4 w-4 text-orange-500" />
           Error Alerts
         </CardTitle>
-        <CardDescription>
-          Get notified when this workflow fails
-        </CardDescription>
+        <CardDescription>Get notified when this workflow fails</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         {/* Enable Toggle */}

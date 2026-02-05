@@ -90,8 +90,13 @@ export function CreateWorkflowModal({
             >
               Cancel
             </Button>
-            <Button type="submit" disabled={!name.trim() || isLoading || externalIsLoading}>
-              {(isLoading || externalIsLoading) && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            <Button
+              type="submit"
+              disabled={!name.trim() || isLoading || externalIsLoading}
+            >
+              {(isLoading || externalIsLoading) && (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              )}
               Create Workflow
             </Button>
           </DialogFooter>

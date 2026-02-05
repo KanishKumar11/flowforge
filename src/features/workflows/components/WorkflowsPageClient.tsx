@@ -39,7 +39,11 @@ export function WorkflowsPageClient() {
 
   const trpc = useTRPC();
   const client = useVanillaClient();
-  const { data: workflowsData, isLoading, refetch } = useQuery(trpc.workflows.list.queryOptions());
+  const {
+    data: workflowsData,
+    isLoading,
+    refetch,
+  } = useQuery(trpc.workflows.list.queryOptions());
 
   // Cast to explicit type to avoid deep type inference
   const workflows = workflowsData as WorkflowItem[] | undefined;
@@ -60,7 +64,8 @@ export function WorkflowsPageClient() {
   });
 
   const toggleWorkflow = useMutation({
-    mutationFn: (data: { id: string }) => client.workflows.toggleActive.mutate(data),
+    mutationFn: (data: { id: string }) =>
+      client.workflows.toggleActive.mutate(data),
     onSuccess: () => {
       refetch();
       toast.success("Workflow status updated");
@@ -71,7 +76,8 @@ export function WorkflowsPageClient() {
   });
 
   const duplicateWorkflow = useMutation({
-    mutationFn: (data: { id: string }) => client.workflows.duplicate.mutate(data),
+    mutationFn: (data: { id: string }) =>
+      client.workflows.duplicate.mutate(data),
     onSuccess: () => {
       refetch();
       toast.success("Workflow duplicated");
@@ -93,7 +99,7 @@ export function WorkflowsPageClient() {
   });
 
   const filteredWorkflows = workflows?.filter((w) =>
-    w.name.toLowerCase().includes(search.toLowerCase())
+    w.name.toLowerCase().includes(search.toLowerCase()),
   );
 
   const handleCreateWorkflow = async (data: {
@@ -132,8 +138,12 @@ export function WorkflowsPageClient() {
                   <Workflow className="h-6 w-6" />
                 </div>
                 <div>
-                  <p className="text-3xl font-bold tracking-tight font-mono text-[var(--arch-fg)]">{workflows.length}</p>
-                  <p className="text-xs text-[var(--arch-muted)] font-mono uppercase tracking-wider">Total Workflows</p>
+                  <p className="text-3xl font-bold tracking-tight font-mono text-[var(--arch-fg)]">
+                    {workflows.length}
+                  </p>
+                  <p className="text-xs text-[var(--arch-muted)] font-mono uppercase tracking-wider">
+                    Total Workflows
+                  </p>
                 </div>
               </div>
             </div>
@@ -152,7 +162,9 @@ export function WorkflowsPageClient() {
                   <p className="text-3xl font-bold tracking-tight font-mono text-[var(--arch-fg)]">
                     {workflows.filter((w) => w.isActive).length}
                   </p>
-                  <p className="text-xs text-[var(--arch-muted)] font-mono uppercase tracking-wider">Active Systems</p>
+                  <p className="text-xs text-[var(--arch-muted)] font-mono uppercase tracking-wider">
+                    Active Systems
+                  </p>
                 </div>
               </div>
             </div>
@@ -171,7 +183,9 @@ export function WorkflowsPageClient() {
                   <p className="text-3xl font-bold tracking-tight font-mono text-[var(--arch-muted)]">
                     {workflows.filter((w) => !w.isActive).length}
                   </p>
-                  <p className="text-xs text-[var(--arch-muted)] font-mono uppercase tracking-wider">Draft Mode</p>
+                  <p className="text-xs text-[var(--arch-muted)] font-mono uppercase tracking-wider">
+                    Draft Mode
+                  </p>
                 </div>
               </div>
             </div>
@@ -199,7 +213,9 @@ export function WorkflowsPageClient() {
                 key={workflow.id}
                 workflow={workflow}
                 onActivate={() => toggleWorkflow.mutate({ id: workflow.id })}
-                onDuplicate={() => duplicateWorkflow.mutate({ id: workflow.id })}
+                onDuplicate={() =>
+                  duplicateWorkflow.mutate({ id: workflow.id })
+                }
                 onDelete={() => deleteWorkflow.mutate({ id: workflow.id })}
               />
             ))}

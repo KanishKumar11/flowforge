@@ -33,7 +33,7 @@ interface ExecutionContext {
 // Node executor functions
 async function executeHttpRequest(
   config: Record<string, unknown>,
-  context: ExecutionContext
+  context: ExecutionContext,
 ): Promise<unknown> {
   const url = config.url as string;
   const method = (config.method as string) || "GET";
@@ -64,7 +64,7 @@ async function executeHttpRequest(
 
 async function executeCode(
   config: Record<string, unknown>,
-  context: ExecutionContext
+  context: ExecutionContext,
 ): Promise<unknown> {
   const code = config.code as string;
 
@@ -77,7 +77,7 @@ async function executeCode(
       `
       "use strict";
       ${code}
-      `
+      `,
     );
     return fn(context.triggerData, context.nodeResults);
   } catch (error) {
@@ -87,7 +87,7 @@ async function executeCode(
 
 async function executeIf(
   config: Record<string, unknown>,
-  context: ExecutionContext
+  context: ExecutionContext,
 ): Promise<{ condition: boolean; branch: "true" | "false" }> {
   const condition = config.condition as string;
 
@@ -98,7 +98,7 @@ async function executeIf(
       `
       "use strict";
       return Boolean(${condition});
-      `
+      `,
     );
     const result = fn(context.triggerData, context.nodeResults);
     return { condition: result, branch: result ? "true" : "false" };
@@ -108,7 +108,7 @@ async function executeIf(
 }
 
 async function executeWait(
-  config: Record<string, unknown>
+  config: Record<string, unknown>,
 ): Promise<{ waited: number }> {
   const duration = (config.duration as number) || 1000;
   // Inngest will handle this with step.sleep
@@ -117,7 +117,7 @@ async function executeWait(
 
 async function executeEmail(
   config: Record<string, unknown>,
-  context: ExecutionContext
+  context: ExecutionContext,
 ): Promise<unknown> {
   // In production, integrate with email service (SendGrid, Resend, etc.)
   const to = config.to as string;
@@ -132,12 +132,11 @@ async function executeEmail(
     subject,
     timestamp: new Date().toISOString(),
   };
-
 }
 
 async function executeSet(
   config: Record<string, unknown>,
-  context: ExecutionContext
+  context: ExecutionContext,
 ): Promise<unknown> {
   const mode = (config.mode as string) || "overwrite";
   const fields = (config.fields as Record<string, unknown>) || {};
@@ -150,7 +149,7 @@ async function executeSet(
 
 async function executeFilter(
   config: Record<string, unknown>,
-  context: ExecutionContext
+  context: ExecutionContext,
 ): Promise<unknown> {
   const condition = config.condition as string;
   const items = (config.items || context.triggerData) as unknown[]; // Default to trigger data if not specified
@@ -163,7 +162,7 @@ async function executeFilter(
     const fn = new Function(
       "item",
       "index",
-      `"use strict"; return Boolean(${condition});`
+      `"use strict"; return Boolean(${condition});`,
     );
     return items.filter((item, index) => fn(item, index));
   } catch (error) {
@@ -173,7 +172,7 @@ async function executeFilter(
 
 async function executeSort(
   config: Record<string, unknown>,
-  context: ExecutionContext
+  context: ExecutionContext,
 ): Promise<unknown> {
   const field = config.field as string;
   const order = (config.order as string) || "asc";
@@ -193,11 +192,9 @@ async function executeSort(
   });
 }
 
-
-
 async function executeSlack(
   config: Record<string, unknown>,
-  context: ExecutionContext
+  context: ExecutionContext,
 ): Promise<unknown> {
   const channel = config.channel as string;
   const message = config.message as string;
@@ -216,7 +213,7 @@ async function executeSlack(
 
 async function executeDatabase(
   config: Record<string, unknown>,
-  context: ExecutionContext
+  context: ExecutionContext,
 ): Promise<unknown> {
   const operation = (config.operation as string) || "find";
   const collection = config.collection as string;
@@ -236,13 +233,15 @@ async function executeDatabase(
 
 async function executeGoogleSheets(
   config: Record<string, unknown>,
-  context: ExecutionContext
+  context: ExecutionContext,
 ): Promise<unknown> {
   const operation = config.operation as string;
   const spreadsheetId = config.spreadsheetId as string;
   const range = config.range as string;
 
-  console.log(`[Google Sheets] ${operation} on ${spreadsheetId} range ${range}`);
+  console.log(
+    `[Google Sheets] ${operation} on ${spreadsheetId} range ${range}`,
+  );
 
   // Full implementation would use googleapis or google-spreadsheet
   return { success: true, operation, spreadsheetId, range };
@@ -250,7 +249,7 @@ async function executeGoogleSheets(
 
 async function executeGitHub(
   config: Record<string, unknown>,
-  context: ExecutionContext
+  context: ExecutionContext,
 ): Promise<unknown> {
   const operation = config.operation as string;
   const owner = config.owner as string;
@@ -264,7 +263,7 @@ async function executeGitHub(
 
 async function executeNotion(
   config: Record<string, unknown>,
-  context: ExecutionContext
+  context: ExecutionContext,
 ): Promise<unknown> {
   const operation = config.operation as string;
   const databaseId = config.databaseId as string;
@@ -284,7 +283,7 @@ async function executeNotion(
 // Loop executor - iterates over an array and returns results
 async function executeLoop(
   config: Record<string, unknown>,
-  context: ExecutionContext
+  context: ExecutionContext,
 ): Promise<unknown> {
   const items = (config.items || context.triggerData) as unknown[];
   const expression = config.expression as string;
@@ -298,7 +297,11 @@ async function executeLoop(
     const item = items[i];
     if (expression) {
       try {
-        const fn = new Function("item", "index", `"use strict"; return ${expression};`);
+        const fn = new Function(
+          "item",
+          "index",
+          `"use strict"; return ${expression};`,
+        );
         results.push(fn(item, i));
       } catch (error) {
         results.push({ error: (error as Error).message, item, index: i });
@@ -314,10 +317,11 @@ async function executeLoop(
 // Switch executor - multi-branch conditional logic
 async function executeSwitch(
   config: Record<string, unknown>,
-  context: ExecutionContext
+  context: ExecutionContext,
 ): Promise<unknown> {
   const value = config.value as unknown;
-  const cases = (config.cases as Array<{ value: unknown; output: unknown }>) || [];
+  const cases =
+    (config.cases as Array<{ value: unknown; output: unknown }>) || [];
   const defaultOutput = config.default as unknown;
 
   // Find matching case
@@ -334,7 +338,7 @@ async function executeSwitch(
 // OpenAI/LLM executor - call ChatGPT, Claude, or Gemini API
 async function executeOpenAI(
   config: Record<string, unknown>,
-  context: ExecutionContext
+  context: ExecutionContext,
 ): Promise<unknown> {
   const provider = (config.provider as string) || "openai";
   const model = (config.model as string) || "gpt-4o-mini";
@@ -346,7 +350,11 @@ async function executeOpenAI(
     const apiKey = process.env.ANTHROPIC_API_KEY || (config.apiKey as string);
     if (!apiKey) {
       console.log("[Anthropic] No API key found, returning mock response");
-      return { mock: true, message: `[Mock Claude] Response for: ${prompt}`, model };
+      return {
+        mock: true,
+        message: `[Mock Claude] Response for: ${prompt}`,
+        model,
+      };
     }
 
     try {
@@ -376,7 +384,9 @@ async function executeOpenAI(
         usage: data.usage,
       };
     } catch (error) {
-      throw new Error(`Anthropic execution failed: ${(error as Error).message}`);
+      throw new Error(
+        `Anthropic execution failed: ${(error as Error).message}`,
+      );
     }
   }
 
@@ -384,7 +394,11 @@ async function executeOpenAI(
     const apiKey = process.env.GOOGLE_API_KEY || (config.apiKey as string);
     if (!apiKey) {
       console.log("[Gemini] No API key found, returning mock response");
-      return { mock: true, message: `[Mock Gemini] Response for: ${prompt}`, model };
+      return {
+        mock: true,
+        message: `[Mock Gemini] Response for: ${prompt}`,
+        model,
+      };
     }
 
     try {
@@ -396,13 +410,15 @@ async function executeOpenAI(
         body: JSON.stringify({
           contents: [
             {
-              parts: [{ text: prompt }]
-            }
+              parts: [{ text: prompt }],
+            },
           ],
-          // Google doesn't have a direct "system" role in standard generateContent in the same way, 
+          // Google doesn't have a direct "system" role in standard generateContent in the same way,
           // but we can prepend it or use system_instruction if supported by the model version.
           // For simplicity we prepend.
-          ...(systemPrompt ? { system_instruction: { parts: [{ text: systemPrompt }] } } : {})
+          ...(systemPrompt
+            ? { system_instruction: { parts: [{ text: systemPrompt }] } }
+            : {}),
         }),
       });
 
@@ -428,7 +444,7 @@ async function executeOpenAI(
     return {
       mock: true,
       message: `[Mock GPT] Response for: ${prompt}`,
-      model
+      model,
     };
   }
 
@@ -441,7 +457,7 @@ async function executeOpenAI(
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${apiKey}`,
+        Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
         model,
@@ -471,10 +487,13 @@ async function executeOpenAI(
 // Sub-Workflow executor - execute another workflow
 async function executeSubWorkflow(
   config: Record<string, unknown>,
-  context: ExecutionContext
+  context: ExecutionContext,
 ): Promise<unknown> {
   const workflowId = config.workflowId as string;
-  const inputData = (config.inputData || context.triggerData) as Record<string, unknown>;
+  const inputData = (config.inputData || context.triggerData) as Record<
+    string,
+    unknown
+  >;
 
   if (!workflowId) {
     throw new Error("Sub-workflow ID is required");
@@ -501,7 +520,9 @@ async function executeSubWorkflow(
 
   // Note: In a real implementation, this would trigger the sub-workflow execution
   // For now, we return a reference to track it
-  console.log(`[SubWorkflow] Triggered workflow ${workflowId} with execution ${execution.id}`);
+  console.log(
+    `[SubWorkflow] Triggered workflow ${workflowId} with execution ${execution.id}`,
+  );
 
   return {
     subWorkflowId: workflowId,
@@ -514,7 +535,7 @@ async function executeSubWorkflow(
 // Merge executor - combine multiple inputs into one
 async function executeMerge(
   config: Record<string, unknown>,
-  context: ExecutionContext
+  context: ExecutionContext,
 ): Promise<unknown> {
   const mode = (config.mode as string) || "combine";
   // In a real execution, inputs would come from multiple incoming connections
@@ -539,7 +560,7 @@ async function executeMerge(
 // Stripe executor - payment operations
 async function executeStripe(
   config: Record<string, unknown>,
-  context: ExecutionContext
+  context: ExecutionContext,
 ): Promise<unknown> {
   const apiKey = process.env.STRIPE_SECRET_KEY || (config.apiKey as string);
   const operation = (config.operation as string) || "create_payment_intent";
@@ -555,20 +576,23 @@ async function executeStripe(
         const amount = (config.amount as number) || 1000;
         const currency = (config.currency as string) || "usd";
 
-        const response = await fetch("https://api.stripe.com/v1/payment_intents", {
-          method: "POST",
-          headers: {
-            "Authorization": `Bearer ${apiKey}`,
-            "Content-Type": "application/x-www-form-urlencoded",
+        const response = await fetch(
+          "https://api.stripe.com/v1/payment_intents",
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${apiKey}`,
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: `amount=${amount}&currency=${currency}`,
           },
-          body: `amount=${amount}&currency=${currency}`,
-        });
+        );
 
         return await response.json();
       }
       case "list_customers": {
         const response = await fetch("https://api.stripe.com/v1/customers", {
-          headers: { "Authorization": `Bearer ${apiKey}` },
+          headers: { Authorization: `Bearer ${apiKey}` },
         });
         return await response.json();
       }
@@ -583,17 +607,24 @@ async function executeStripe(
 // Twilio executor - send SMS
 async function executeTwilio(
   config: Record<string, unknown>,
-  context: ExecutionContext
+  context: ExecutionContext,
 ): Promise<unknown> {
-  const accountSid = process.env.TWILIO_ACCOUNT_SID || (config.accountSid as string);
-  const authToken = process.env.TWILIO_AUTH_TOKEN || (config.authToken as string);
+  const accountSid =
+    process.env.TWILIO_ACCOUNT_SID || (config.accountSid as string);
+  const authToken =
+    process.env.TWILIO_AUTH_TOKEN || (config.authToken as string);
   const from = (config.from as string) || process.env.TWILIO_PHONE_NUMBER;
   const to = config.to as string;
   const body = config.body as string;
 
   if (!accountSid || !authToken) {
     console.log("[Twilio] Credentials not found, returning mock response");
-    return { mock: true, to, body, message: "Twilio credentials not configured" };
+    return {
+      mock: true,
+      to,
+      body,
+      message: "Twilio credentials not configured",
+    };
   }
 
   if (!to || !body) {
@@ -606,11 +637,11 @@ async function executeTwilio(
       {
         method: "POST",
         headers: {
-          "Authorization": `Basic ${Buffer.from(`${accountSid}:${authToken}`).toString("base64")}`,
+          Authorization: `Basic ${Buffer.from(`${accountSid}:${authToken}`).toString("base64")}`,
           "Content-Type": "application/x-www-form-urlencoded",
         },
         body: `To=${encodeURIComponent(to)}&From=${encodeURIComponent(from || "")}&Body=${encodeURIComponent(body)}`,
-      }
+      },
     );
 
     return await response.json();
@@ -627,7 +658,7 @@ async function executeComment(): Promise<unknown> {
 // Execute a single node
 async function executeNode(
   node: WorkflowNode,
-  context: ExecutionContext
+  context: ExecutionContext,
 ): Promise<unknown> {
   const { type, config } = node.data;
 
@@ -689,7 +720,7 @@ async function executeNode(
 function getNextNodes(
   currentNodeId: string,
   edges: WorkflowEdge[],
-  nodes: WorkflowNode[]
+  nodes: WorkflowNode[],
 ): WorkflowNode[] {
   const outgoingEdges = edges.filter((e) => e.source === currentNodeId);
   return outgoingEdges
@@ -763,9 +794,12 @@ export const executeWorkflow = inngest.createFunction(
         }
 
         // Execute the node
-        const result = await step.run(`execute-node-${currentNode.id}`, async () => {
-          return executeNode(currentNode, context);
-        });
+        const result = await step.run(
+          `execute-node-${currentNode.id}`,
+          async () => {
+            return executeNode(currentNode, context);
+          },
+        );
 
         // Handle wait nodes specially
         if (currentNode.data.type === "wait") {
@@ -826,7 +860,7 @@ export const executeWorkflow = inngest.createFunction(
 
       throw error;
     }
-  }
+  },
 );
 
 // Schedule trigger function
@@ -870,7 +904,10 @@ export const scheduledWorkflow = inngest.createFunction(
           data: {
             workflowId: schedule.workflowId,
             executionId: execution.id,
-            triggerData: { scheduleId: schedule.id, triggeredAt: new Date().toISOString() },
+            triggerData: {
+              scheduleId: schedule.id,
+              triggeredAt: new Date().toISOString(),
+            },
           },
         });
 
@@ -888,5 +925,5 @@ export const scheduledWorkflow = inngest.createFunction(
     }
 
     return { processed: dueSchedules.length };
-  }
+  },
 );

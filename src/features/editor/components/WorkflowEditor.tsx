@@ -57,13 +57,20 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
   const [historyIndex, setHistoryIndex] = useState(-1);
   const isUndoRedo = useRef(false);
 
-  const { data: workflow, isLoading, refetch } = useQuery(
-    trpc.workflows.get.queryOptions({ id: workflowId })
-  );
+  const {
+    data: workflow,
+    isLoading,
+    refetch,
+  } = useQuery(trpc.workflows.get.queryOptions({ id: workflowId }));
 
   const updateWorkflow = useMutation({
-    mutationFn: (data: { id: string; nodes?: unknown; edges?: unknown; name?: string; description?: string }) =>
-      client.workflows.update.mutate(data),
+    mutationFn: (data: {
+      id: string;
+      nodes?: unknown;
+      edges?: unknown;
+      name?: string;
+      description?: string;
+    }) => client.workflows.update.mutate(data),
     onSuccess: () => {
       refetch();
       toast.success("Workflow saved");
@@ -83,7 +90,8 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
         description: `Execution ID: ${data.executionId}`,
         action: {
           label: "View",
-          onClick: () => window.open(`/executions/${data.executionId}`, "_blank"),
+          onClick: () =>
+            window.open(`/executions/${data.executionId}`, "_blank"),
         },
       });
     },
@@ -99,8 +107,12 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
   useEffect(() => {
     if (workflow) {
       // @ts-ignore - Suppress deep recursion error from React Flow types
-      const loadedNodes = (Array.isArray(workflow.nodes) ? workflow.nodes : []) as unknown as Node[];
-      const loadedEdges = (Array.isArray(workflow.edges) ? workflow.edges : []) as unknown as Edge[];
+      const loadedNodes = (Array.isArray(workflow.nodes)
+        ? workflow.nodes
+        : []) as unknown as Node[];
+      const loadedEdges = (Array.isArray(workflow.edges)
+        ? workflow.edges
+        : []) as unknown as Edge[];
       setNodes(loadedNodes);
       setEdges(loadedEdges);
       // Initialize history
@@ -159,7 +171,10 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
         handleUndo();
       }
       // Redo: Cmd/Ctrl + Shift + Z or Cmd/Ctrl + Y
-      if ((e.metaKey || e.ctrlKey) && (e.key === "y" || (e.key === "z" && e.shiftKey))) {
+      if (
+        (e.metaKey || e.ctrlKey) &&
+        (e.key === "y" || (e.key === "z" && e.shiftKey))
+      ) {
         e.preventDefault();
         handleRedo();
       }
@@ -181,24 +196,29 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
 
   const onConnect = useCallback(
     (params: Connection) => setEdges((eds) => addEdge(params, eds)),
-    [setEdges]
+    [setEdges],
   );
 
   const handleAddNode = useCallback(
-    (type: string, nodeType: "trigger" | "action", position?: { x: number; y: number }) => {
+    (
+      type: string,
+      nodeType: "trigger" | "action",
+      position?: { x: number; y: number },
+    ) => {
       const newNode: Node = {
         id: `${type}-${Date.now()}`,
         type: nodeType,
         position: position || { x: 250, y: nodes.length * 120 + 50 },
         data: {
           type,
-          label: type.charAt(0).toUpperCase() + type.slice(1).replace(/-/g, " "),
+          label:
+            type.charAt(0).toUpperCase() + type.slice(1).replace(/-/g, " "),
           config: {},
         },
       };
       setNodes((nds) => [...nds, newNode]);
     },
-    [nodes, setNodes]
+    [nodes, setNodes],
   );
 
   // Handle drop from palette
@@ -223,7 +243,7 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
 
       handleAddNode(nodeType, category, position);
     },
-    [screenToFlowPosition, handleAddNode]
+    [screenToFlowPosition, handleAddNode],
   );
 
   const handleSave = () => {
@@ -250,10 +270,10 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
   const handleNodeUpdate = useCallback(
     (nodeId: string, data: Record<string, unknown>) => {
       setNodes((nds) =>
-        nds.map((node) => (node.id === nodeId ? { ...node, data } : node))
+        nds.map((node) => (node.id === nodeId ? { ...node, data } : node)),
       );
     },
-    [setNodes]
+    [setNodes],
   );
 
   if (isLoading) {
@@ -282,7 +302,9 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
   return (
     <div className="h-full w-full flex">
       {/* Node Palette */}
-      <NodePalette onAddNode={(type, nodeType) => handleAddNode(type, nodeType)} />
+      <NodePalette
+        onAddNode={(type, nodeType) => handleAddNode(type, nodeType)}
+      />
 
       {/* Canvas */}
       <div className="flex-1 h-full" ref={reactFlowWrapper}>
@@ -337,7 +359,9 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
               </Link>
             </Button>
             <div className="bg-(--arch-bg) border border-(--arch-border) px-4 py-2 flex items-center gap-2 shadow-none">
-              <span className="font-mono uppercase text-(--arch-fg) text-sm">{workflow.name}</span>
+              <span className="font-mono uppercase text-(--arch-fg) text-sm">
+                {workflow.name}
+              </span>
               {isSaving && (
                 <span className="flex items-center gap-1.5 text-xs text-(--arch-fg) bg-(--arch-fg)/10 px-2 py-0.5 rounded-none font-mono uppercase">
                   <div className="h-1.5 w-1.5 bg-(--arch-fg) animate-pulse" />

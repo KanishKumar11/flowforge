@@ -56,7 +56,7 @@ export const credentialsRouter = createTRPCRouter({
         type: z.enum(["oauth2", "apiKey", "basic", "bearer", "custom"]),
         provider: z.string().min(1).max(50),
         data: z.record(z.string(), z.any()), // The credential data to encrypt
-      })
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       // TODO: Implement proper AES-256 encryption
@@ -88,7 +88,7 @@ export const credentialsRouter = createTRPCRouter({
         id: z.string(),
         name: z.string().min(1).max(100).optional(),
         data: z.record(z.string(), z.any()).optional(),
-      })
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       const { id, ...updateData } = input;

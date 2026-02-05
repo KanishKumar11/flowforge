@@ -21,13 +21,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useTRPC, useVanillaClient } from "@/trpc/client";
-import {
-  Loader2,
-  Plus,
-  Settings,
-  Users,
-  Workflow,
-} from "lucide-react";
+import { Loader2, Plus, Settings, Users, Workflow } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -39,7 +33,11 @@ export function TeamsPageClient() {
 
   const trpc = useTRPC();
   const client = useVanillaClient();
-  const { data: teams, isLoading, refetch } = useQuery(trpc.teams.list.queryOptions());
+  const {
+    data: teams,
+    isLoading,
+    refetch,
+  } = useQuery(trpc.teams.list.queryOptions());
 
   const createTeam = useMutation({
     mutationFn: (data: { name: string; description?: string }) =>
@@ -66,7 +64,10 @@ export function TeamsPageClient() {
         title={<span className="gradient-text">Teams</span>}
         description="Collaborate with your organization members."
         action={
-          <Button onClick={() => setShowCreateModal(true)} className="gap-2 shadow-lg hover:shadow-primary/25 transition-all">
+          <Button
+            onClick={() => setShowCreateModal(true)}
+            className="gap-2 shadow-lg hover:shadow-primary/25 transition-all"
+          >
             <Plus className="h-4 w-4" />
             New Team
           </Button>
@@ -95,9 +96,12 @@ export function TeamsPageClient() {
             <div className="flex items-center justify-center w-24 h-24 rounded-full bg-primary/10 mb-8 mx-auto ring-1 ring-primary/20 shadow-inner">
               <Users className="w-12 h-12 text-primary" />
             </div>
-            <h3 className="text-2xl font-bold tracking-tight mb-3">No teams yet</h3>
+            <h3 className="text-2xl font-bold tracking-tight mb-3">
+              No teams yet
+            </h3>
             <p className="text-muted-foreground mb-8 max-w-md mx-auto text-lg leading-relaxed">
-              Create a team to start collaborating on workflows with your organization.
+              Create a team to start collaborating on workflows with your
+              organization.
             </p>
             <Button
               onClick={() => setShowCreateModal(true)}
@@ -114,17 +118,25 @@ export function TeamsPageClient() {
         {!isLoading && teams && teams.length > 0 && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {teams.map((team) => (
-              <Card key={team.id} className="glass border-white/20 dark:border-white/10 shadow-lg backdrop-blur-xl hover-lift group overflow-hidden relative">
+              <Card
+                key={team.id}
+                className="glass border-white/20 dark:border-white/10 shadow-lg backdrop-blur-xl hover-lift group overflow-hidden relative"
+              >
                 <div className="absolute top-0 right-0 p-20 bg-linear-to-bl from-primary/5 to-transparent rounded-bl-full -mr-10 -mt-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                 <CardHeader className="relative z-10 pb-4">
                   <div className="flex items-start justify-between">
                     <CardTitle className="text-xl font-bold group-hover:text-primary transition-colors">
                       {team.name}
                     </CardTitle>
-                    <span className={`text-[10px] uppercase font-bold tracking-wider px-2.5 py-1 rounded-full border ${team.role === 'OWNER' ? 'bg-purple-500/10 text-purple-600 border-purple-500/20' :
-                      team.role === 'ADMIN' ? 'bg-blue-500/10 text-blue-600 border-blue-500/20' :
-                        'bg-zinc-500/10 text-zinc-500 border-zinc-500/20'
-                      }`}>
+                    <span
+                      className={`text-[10px] uppercase font-bold tracking-wider px-2.5 py-1 rounded-full border ${
+                        team.role === "OWNER"
+                          ? "bg-purple-500/10 text-purple-600 border-purple-500/20"
+                          : team.role === "ADMIN"
+                            ? "bg-blue-500/10 text-blue-600 border-blue-500/20"
+                            : "bg-zinc-500/10 text-zinc-500 border-zinc-500/20"
+                      }`}
+                    >
                       {team.role}
                     </span>
                   </div>
@@ -136,15 +148,25 @@ export function TeamsPageClient() {
                   <div className="flex items-center gap-6 text-sm text-muted-foreground mb-6 bg-background/30 p-3 rounded-lg border border-white/5">
                     <div className="flex items-center gap-2">
                       <Users className="h-4 w-4 text-primary/70" />
-                      <span className="font-semibold text-foreground">{team.memberCount}</span> members
+                      <span className="font-semibold text-foreground">
+                        {team.memberCount}
+                      </span>{" "}
+                      members
                     </div>
                     <div className="flex items-center gap-2">
                       <Workflow className="h-4 w-4 text-primary/70" />
-                      <span className="font-semibold text-foreground">{team.workflowCount}</span> workflows
+                      <span className="font-semibold text-foreground">
+                        {team.workflowCount}
+                      </span>{" "}
+                      workflows
                     </div>
                   </div>
                   <div className="flex gap-3">
-                    <Button variant="default" className="w-full gap-2 shadow-md hover:shadow-lg transition-all" asChild>
+                    <Button
+                      variant="default"
+                      className="w-full gap-2 shadow-md hover:shadow-lg transition-all"
+                      asChild
+                    >
                       <Link href={`/teams/${team.id}`}>
                         <Settings className="h-4 w-4" />
                         Manage Team
@@ -174,7 +196,9 @@ export function TeamsPageClient() {
                 id="name"
                 placeholder="My Team"
                 value={newTeam.name}
-                onChange={(e) => setNewTeam({ ...newTeam, name: e.target.value })}
+                onChange={(e) =>
+                  setNewTeam({ ...newTeam, name: e.target.value })
+                }
               />
             </div>
             <div className="space-y-2">
@@ -183,7 +207,9 @@ export function TeamsPageClient() {
                 id="description"
                 placeholder="What does this team work on?"
                 value={newTeam.description}
-                onChange={(e) => setNewTeam({ ...newTeam, description: e.target.value })}
+                onChange={(e) =>
+                  setNewTeam({ ...newTeam, description: e.target.value })
+                }
               />
             </div>
           </div>
@@ -195,7 +221,9 @@ export function TeamsPageClient() {
               onClick={handleCreate}
               disabled={!newTeam.name.trim() || createTeam.isPending}
             >
-              {createTeam.isPending && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
+              {createTeam.isPending && (
+                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+              )}
               Create Team
             </Button>
           </DialogFooter>

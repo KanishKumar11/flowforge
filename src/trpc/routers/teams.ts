@@ -38,7 +38,11 @@ export const teamsRouter = createTRPCRouter({
           team: {
             include: {
               members: {
-                include: { user: { select: { id: true, name: true, email: true, image: true } } },
+                include: {
+                  user: {
+                    select: { id: true, name: true, email: true, image: true },
+                  },
+                },
               },
               _count: { select: { workflows: true } },
             },
@@ -62,7 +66,7 @@ export const teamsRouter = createTRPCRouter({
       z.object({
         name: z.string().min(1).max(100),
         description: z.string().optional(),
-      })
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       // Generate slug from name
@@ -95,7 +99,7 @@ export const teamsRouter = createTRPCRouter({
         id: z.string(),
         name: z.string().min(1).max(100).optional(),
         description: z.string().optional(),
-      })
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       // Check if user is OWNER or ADMIN
@@ -127,7 +131,7 @@ export const teamsRouter = createTRPCRouter({
         teamId: z.string(),
         email: z.string().email(),
         role: z.enum(["ADMIN", "MEMBER", "VIEWER"]).default("MEMBER"),
-      })
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       // Check if user is OWNER or ADMIN
@@ -158,7 +162,10 @@ export const teamsRouter = createTRPCRouter({
       });
 
       if (existing) {
-        throw new TRPCError({ code: "CONFLICT", message: "User is already a member" });
+        throw new TRPCError({
+          code: "CONFLICT",
+          message: "User is already a member",
+        });
       }
 
       const member = await prisma.teamMember.create({
@@ -181,7 +188,7 @@ export const teamsRouter = createTRPCRouter({
       z.object({
         teamId: z.string(),
         userId: z.string(),
-      })
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       // Check if user is OWNER or ADMIN
@@ -203,7 +210,10 @@ export const teamsRouter = createTRPCRouter({
       });
 
       if (targetMember?.role === "OWNER") {
-        throw new TRPCError({ code: "FORBIDDEN", message: "Cannot remove the owner" });
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "Cannot remove the owner",
+        });
       }
 
       await prisma.teamMember.delete({
@@ -222,7 +232,7 @@ export const teamsRouter = createTRPCRouter({
         teamId: z.string(),
         userId: z.string(),
         role: z.enum(["ADMIN", "MEMBER", "VIEWER"]),
-      })
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       // Check if user is OWNER
@@ -233,7 +243,10 @@ export const teamsRouter = createTRPCRouter({
       });
 
       if (!membership || membership.role !== "OWNER") {
-        throw new TRPCError({ code: "FORBIDDEN", message: "Only owner can change roles" });
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "Only owner can change roles",
+        });
       }
 
       const member = await prisma.teamMember.update({
@@ -261,7 +274,10 @@ export const teamsRouter = createTRPCRouter({
       });
 
       if (!membership || membership.role !== "OWNER") {
-        throw new TRPCError({ code: "FORBIDDEN", message: "Only owner can delete team" });
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "Only owner can delete team",
+        });
       }
 
       await prisma.team.delete({ where: { id: input.id } });

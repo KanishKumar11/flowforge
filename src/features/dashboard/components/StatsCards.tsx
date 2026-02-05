@@ -1,5 +1,10 @@
-
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { CheckCircle2, Play, Workflow, Zap, AlertCircle } from "lucide-react";
 import Link from "next/link";
@@ -12,7 +17,12 @@ interface StatsCardsProps {
   statsLoading: boolean;
 }
 
-export function StatsCards({ workflows, stats, workflowsLoading, statsLoading }: StatsCardsProps) {
+export function StatsCards({
+  workflows,
+  stats,
+  workflowsLoading,
+  statsLoading,
+}: StatsCardsProps) {
   const activeWorkflows = workflows?.filter((w) => w.isActive).length || 0;
   const totalWorkflows = workflows?.length || 0;
 
@@ -30,7 +40,9 @@ export function StatsCards({ workflows, stats, workflowsLoading, statsLoading }:
             {workflowsLoading ? (
               <Skeleton className="h-8 w-20 bg-[var(--arch-border)]" />
             ) : (
-              <p className="text-4xl font-bold tracking-tight text-(--arch-fg) font-mono">{totalWorkflows}</p>
+              <p className="text-4xl font-bold tracking-tight text-(--arch-fg) font-mono">
+                {totalWorkflows}
+              </p>
             )}
           </CardContent>
         </Card>
@@ -102,11 +114,15 @@ export function StatsCards({ workflows, stats, workflowsLoading, statsLoading }:
               SYSTEM_ALERT: ERRORS_DETECTED
             </CardTitle>
             <CardDescription className="text-(--arch-muted) font-mono text-xs">
-              {stats.error} execution{stats.error !== 1 ? 's' : ''} failed in the last 7 days.
+              {stats.error} execution{stats.error !== 1 ? "s" : ""} failed in
+              the last 7 days.
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Link href="/executions?status=ERROR" className="inline-flex items-center text-xs font-mono uppercase text-(--arch-fg) hover:text-(--arch-accent) hover:underline underline-offset-4">
+            <Link
+              href="/executions?status=ERROR"
+              className="inline-flex items-center text-xs font-mono uppercase text-(--arch-fg) hover:text-(--arch-accent) hover:underline underline-offset-4"
+            >
               VIEW_ERROR_LOGS
               <Play className="h-3 w-3 ml-2" />
             </Link>

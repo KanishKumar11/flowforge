@@ -89,7 +89,9 @@ export function CronPicker({ value, onChange }: CronPickerProps) {
 
       {/* Description */}
       {value && description && (
-        <Card className={description.valid ? "bg-accent/50" : "bg-destructive/10"}>
+        <Card
+          className={description.valid ? "bg-accent/50" : "bg-destructive/10"}
+        >
           <CardContent className="p-3 flex items-start gap-2">
             {description.valid ? (
               <Clock className="h-4 w-4 text-green-500 mt-0.5" />

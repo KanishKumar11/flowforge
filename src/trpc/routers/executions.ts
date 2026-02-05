@@ -9,11 +9,18 @@ export const executionsRouter = createTRPCRouter({
       z.object({
         workflowId: z.string().optional(),
         status: z
-          .enum(["PENDING", "RUNNING", "SUCCESS", "ERROR", "CANCELLED", "WAITING"])
+          .enum([
+            "PENDING",
+            "RUNNING",
+            "SUCCESS",
+            "ERROR",
+            "CANCELLED",
+            "WAITING",
+          ])
           .optional(),
         limit: z.number().min(1).max(100).default(50),
         cursor: z.string().optional(),
-      })
+      }),
     )
     .query(async ({ ctx, input }) => {
       const executions = await prisma.execution.findMany({
@@ -79,7 +86,7 @@ export const executionsRouter = createTRPCRouter({
       z.object({
         workflowId: z.string().optional(),
         days: z.number().min(1).max(90).default(7),
-      })
+      }),
     )
     .query(async ({ ctx, input }) => {
       const startDate = new Date();
@@ -226,7 +233,7 @@ export const executionsRouter = createTRPCRouter({
       z.object({
         workflowId: z.string().optional(),
         hours: z.number().min(1).max(168).default(24), // Max 1 week
-      })
+      }),
     )
     .query(async ({ ctx, input }) => {
       const startDate = new Date();
@@ -248,7 +255,10 @@ export const executionsRouter = createTRPCRouter({
       });
 
       // Group by hour
-      const hourlyData: Record<string, { success: number; error: number; total: number }> = {};
+      const hourlyData: Record<
+        string,
+        { success: number; error: number; total: number }
+      > = {};
 
       executions.forEach((exec) => {
         if (exec.startedAt) {

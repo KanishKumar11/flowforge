@@ -14,11 +14,11 @@ export function DashboardHomeClient() {
   const trpc = useTRPC();
 
   const { data: workflows, isLoading: workflowsLoading } = useQuery(
-    trpc.workflows.list.queryOptions()
+    trpc.workflows.list.queryOptions(),
   );
 
   const { data: stats, isLoading: statsLoading } = useQuery(
-    trpc.executions.stats.queryOptions({ days: 7 })
+    trpc.executions.stats.queryOptions({ days: 7 }),
   );
 
   return (
@@ -31,11 +31,14 @@ export function DashboardHomeClient() {
         }
         description={
           <span className="font-mono text-xs text-(--arch-muted) tracking-widest">
-                // SYSTEM_OVERVIEW_MODE: ACTIVE
+            // SYSTEM_OVERVIEW_MODE: ACTIVE
           </span>
         }
         action={
-          <Button asChild className="gap-2 rounded-none bg-(--arch-fg) text-(--arch-bg) hover:bg-(--arch-muted) hover:text-white transition-all font-mono text-xs uppercase tracking-wider h-10 px-6">
+          <Button
+            asChild
+            className="gap-2 rounded-none bg-(--arch-fg) text-(--arch-bg) hover:bg-(--arch-muted) hover:text-white transition-all font-mono text-xs uppercase tracking-wider h-10 px-6"
+          >
             <Link href="/workflows">
               <Plus className="h-4 w-4" />
               NEW_FLOW
@@ -62,4 +65,3 @@ export function DashboardHomeClient() {
     </div>
   );
 }
-

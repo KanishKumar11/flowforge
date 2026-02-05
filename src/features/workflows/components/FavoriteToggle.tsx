@@ -13,15 +13,22 @@ interface FavoriteToggleProps {
   size?: "sm" | "default" | "lg" | "icon";
 }
 
-export function FavoriteToggle({ workflowId, isFavorite, size = "icon" }: FavoriteToggleProps) {
+export function FavoriteToggle({
+  workflowId,
+  isFavorite,
+  size = "icon",
+}: FavoriteToggleProps) {
   const client = useVanillaClient();
   const queryClient = useQueryClient();
 
   const toggleFavorite = useMutation({
-    mutationFn: (data: { id: string }) => client.workflows.toggleFavorite.mutate(data),
+    mutationFn: (data: { id: string }) =>
+      client.workflows.toggleFavorite.mutate(data),
     onSuccess: (workflow) => {
       queryClient.invalidateQueries({ queryKey: ["workflows"] });
-      toast.success(workflow.isFavorite ? "Added to favorites" : "Removed from favorites");
+      toast.success(
+        workflow.isFavorite ? "Added to favorites" : "Removed from favorites",
+      );
     },
     onError: (error: Error) => {
       toast.error(error.message);
@@ -40,7 +47,9 @@ export function FavoriteToggle({ workflowId, isFavorite, size = "icon" }: Favori
       disabled={toggleFavorite.isPending}
       className={cn(
         "transition-colors",
-        isFavorite ? "text-yellow-500 hover:text-yellow-600" : "text-muted-foreground hover:text-yellow-500"
+        isFavorite
+          ? "text-yellow-500 hover:text-yellow-600"
+          : "text-muted-foreground hover:text-yellow-500",
       )}
     >
       <Star className={cn("h-4 w-4", isFavorite && "fill-current")} />

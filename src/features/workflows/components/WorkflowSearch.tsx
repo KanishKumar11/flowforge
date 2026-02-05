@@ -108,7 +108,11 @@ export function WorkflowSearch() {
                           </Badge>
                         )}
                         {workflow.tags?.slice(0, 2).map((tag) => (
-                          <Badge key={tag} variant="secondary" className="text-xs">
+                          <Badge
+                            key={tag}
+                            variant="secondary"
+                            className="text-xs"
+                          >
                             <Tag className="h-2 w-2 mr-1" />
                             {tag}
                           </Badge>
@@ -133,10 +137,7 @@ export function WorkflowSearch() {
 
       {/* Click outside to close */}
       {isOpen && (
-        <div
-          className="fixed inset-0 z-40"
-          onClick={() => setIsOpen(false)}
-        />
+        <div className="fixed inset-0 z-40" onClick={() => setIsOpen(false)} />
       )}
     </div>
   );

@@ -2,7 +2,14 @@
 
 import { DashboardHeader } from "@/components/DashboardHeader";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { authClient } from "@/lib/auth-client";
 import { useHasActiveSubscription } from "@/features/hooks/useSubscription";
 import { Check, Sparkles, Zap, Loader2 } from "lucide-react";
@@ -28,7 +35,8 @@ export default function SubscriptionPage() {
               Simple, transparent pricing
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Choose the plan that's right for you and start building powerful automations today.
+              Choose the plan that's right for you and start building powerful
+              automations today.
             </p>
           </div>
 
@@ -43,7 +51,10 @@ export default function SubscriptionPage() {
               </CardHeader>
               <CardContent className="flex-1 space-y-6">
                 <div className="text-4xl font-bold">
-                  $0<span className="text-lg font-normal text-muted-foreground">/mo</span>
+                  $0
+                  <span className="text-lg font-normal text-muted-foreground">
+                    /mo
+                  </span>
                 </div>
                 <div className="space-y-3">
                   <div className="flex items-center gap-3">
@@ -83,14 +94,19 @@ export default function SubscriptionPage() {
               <div className="absolute inset-0 bg-linear-to-br from-primary/5 to-purple-500/5 pointer-events-none" />
 
               <CardHeader>
-                <CardTitle className="text-2xl font-bold bg-clip-text text-transparent bg-linear-to-r from-primary to-purple-600">Pro</CardTitle>
+                <CardTitle className="text-2xl font-bold bg-clip-text text-transparent bg-linear-to-r from-primary to-purple-600">
+                  Pro
+                </CardTitle>
                 <CardDescription className="text-base">
                   For professionals and growing teams
                 </CardDescription>
               </CardHeader>
               <CardContent className="flex-1 space-y-6 relative">
                 <div className="text-4xl font-bold">
-                  $29<span className="text-lg font-normal text-muted-foreground">/mo</span>
+                  $29
+                  <span className="text-lg font-normal text-muted-foreground">
+                    /mo
+                  </span>
                 </div>
                 <div className="space-y-3">
                   <div className="flex items-center gap-3">
@@ -109,7 +125,9 @@ export default function SubscriptionPage() {
                     <div className="p-1 rounded-full bg-primary/20 text-primary">
                       <Zap className="h-3.5 w-3.5" />
                     </div>
-                    <span className="font-medium">Premium integrations (Stripe, etc.)</span>
+                    <span className="font-medium">
+                      Premium integrations (Stripe, etc.)
+                    </span>
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="p-1 rounded-full bg-primary/20 text-primary">
@@ -121,7 +139,9 @@ export default function SubscriptionPage() {
                     <div className="p-1 rounded-full bg-primary/20 text-primary">
                       <Zap className="h-3.5 w-3.5" />
                     </div>
-                    <span className="font-medium">30-day history retention</span>
+                    <span className="font-medium">
+                      30-day history retention
+                    </span>
                   </div>
                 </div>
               </CardContent>
@@ -141,15 +161,25 @@ export default function SubscriptionPage() {
           </div>
 
           <div className="mt-16 text-center">
-            <h3 className="text-lg font-semibold mb-4">Frequently Asked Questions</h3>
+            <h3 className="text-lg font-semibold mb-4">
+              Frequently Asked Questions
+            </h3>
             <div className="grid md:grid-cols-2 gap-6 text-left max-w-3xl mx-auto">
               <div className="p-6 rounded-2xl glass border border-white/10">
                 <h4 className="font-semibold mb-2">Can I cancel anytime?</h4>
-                <p className="text-sm text-muted-foreground">Yes, you can cancel your subscription at any time. Your access will continue until the end of your billing period.</p>
+                <p className="text-sm text-muted-foreground">
+                  Yes, you can cancel your subscription at any time. Your access
+                  will continue until the end of your billing period.
+                </p>
               </div>
               <div className="p-6 rounded-2xl glass border border-white/10">
-                <h4 className="font-semibold mb-2">What happens if I hit the limit?</h4>
-                <p className="text-sm text-muted-foreground">On the free plan, executions will be paused until the next month. You can upgrade to Pro for unlimited access.</p>
+                <h4 className="font-semibold mb-2">
+                  What happens if I hit the limit?
+                </h4>
+                <p className="text-sm text-muted-foreground">
+                  On the free plan, executions will be paused until the next
+                  month. You can upgrade to Pro for unlimited access.
+                </p>
               </div>
             </div>
           </div>

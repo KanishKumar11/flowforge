@@ -2,7 +2,11 @@ import { inngest } from "@/inngest/client";
 import prisma from "@/lib/db";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../init";
 import { z } from "zod";
-import { workflowTemplates, getTemplateById, getCategories } from "@/lib/templates";
+import {
+  workflowTemplates,
+  getTemplateById,
+  getCategories,
+} from "@/lib/templates";
 
 export const workflowsRouter = createTRPCRouter({
   // List all templates
@@ -78,7 +82,7 @@ export const workflowsRouter = createTRPCRouter({
       z.object({
         name: z.string().min(1).max(100),
         description: z.string().max(500).optional(),
-      })
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       return prisma.workflow.create({
@@ -104,7 +108,7 @@ export const workflowsRouter = createTRPCRouter({
         viewport: z.any().optional(),
         settings: z.any().optional(),
         isActive: z.boolean().optional(),
-      })
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       const { id, ...data } = input;
@@ -183,7 +187,7 @@ export const workflowsRouter = createTRPCRouter({
         where: {
           workflowId_versionNum: {
             workflowId: input.workflowId,
-            versionNum: input.versionNum
+            versionNum: input.versionNum,
           },
         },
       });
@@ -308,7 +312,10 @@ export const workflowsRouter = createTRPCRouter({
         data: {
           workflowId: workflow.id,
           executionId: execution.id,
-          triggerData: { triggeredBy: ctx.user.id, triggeredAt: new Date().toISOString() },
+          triggerData: {
+            triggeredBy: ctx.user.id,
+            triggeredAt: new Date().toISOString(),
+          },
         },
       });
 
@@ -363,7 +370,7 @@ export const workflowsRouter = createTRPCRouter({
           folder: z.string().optional(),
           tags: z.array(z.string()).optional(),
         }),
-      })
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       const { data } = input;
@@ -489,7 +496,7 @@ export const workflowsRouter = createTRPCRouter({
         errorAlertEnabled: z.boolean(),
         errorAlertEmail: z.string().email().nullable().optional(),
         errorAlertSlack: z.string().url().nullable().optional(),
-      })
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       const workflow = await prisma.workflow.findFirst({
@@ -523,7 +530,8 @@ export const workflowsRouter = createTRPCRouter({
         throw new Error("Workflow not found");
       }
 
-      const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+      const baseUrl =
+        process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
 
       return {
         workflowName: workflow.name,

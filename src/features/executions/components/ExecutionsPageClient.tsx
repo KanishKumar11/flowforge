@@ -20,7 +20,11 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { useTRPC, useVanillaClient } from "@/trpc/client";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { formatDistanceToNow, formatDuration, intervalToDuration } from "date-fns";
+import {
+  formatDistanceToNow,
+  formatDuration,
+  intervalToDuration,
+} from "date-fns";
 import {
   AlertCircle,
   CheckCircle2,
@@ -37,9 +41,22 @@ import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
 
-type ExecutionStatus = "PENDING" | "RUNNING" | "SUCCESS" | "ERROR" | "CANCELLED" | "WAITING";
+type ExecutionStatus =
+  | "PENDING"
+  | "RUNNING"
+  | "SUCCESS"
+  | "ERROR"
+  | "CANCELLED"
+  | "WAITING";
 
-const statusConfig: Record<ExecutionStatus, { icon: React.ComponentType<{ className?: string }>; label: string; classes: string }> = {
+const statusConfig: Record<
+  ExecutionStatus,
+  {
+    icon: React.ComponentType<{ className?: string }>;
+    label: string;
+    classes: string;
+  }
+> = {
   PENDING: { icon: Clock, label: "Pending", classes: "badge-pending" },
   RUNNING: { icon: Loader2, label: "Running", classes: "badge-pending" },
   SUCCESS: { icon: CheckCircle2, label: "Success", classes: "badge-success" },
@@ -52,7 +69,10 @@ function formatDurationMs(ms: number | null | undefined): string {
   if (!ms) return "—";
   if (ms < 1000) return `${ms}ms`;
   const duration = intervalToDuration({ start: 0, end: ms });
-  return formatDuration(duration, { format: ["minutes", "seconds"] }) || `${Math.round(ms / 1000)}s`;
+  return (
+    formatDuration(duration, { format: ["minutes", "seconds"] }) ||
+    `${Math.round(ms / 1000)}s`
+  );
 }
 
 export function ExecutionsPageClient() {
@@ -60,13 +80,20 @@ export function ExecutionsPageClient() {
 
   const trpc = useTRPC();
   const client = useVanillaClient();
-  const { data: executionsData, isLoading, refetch } = useQuery(
+  const {
+    data: executionsData,
+    isLoading,
+    refetch,
+  } = useQuery(
     trpc.executions.list.queryOptions({
-      status: statusFilter !== "all" ? (statusFilter as ExecutionStatus) : undefined,
+      status:
+        statusFilter !== "all" ? (statusFilter as ExecutionStatus) : undefined,
       limit: 50,
-    })
+    }),
   );
-  const { data: stats } = useQuery(trpc.executions.stats.queryOptions({ days: 7 }));
+  const { data: stats } = useQuery(
+    trpc.executions.stats.queryOptions({ days: 7 }),
+  );
 
   const retryExecution = useMutation({
     mutationFn: (data: { id: string }) => client.executions.retry.mutate(data),
@@ -111,7 +138,9 @@ export function ExecutionsPageClient() {
                   </div>
                   <div>
                     <p className="text-2xl font-bold">{stats.total}</p>
-                    <p className="text-sm text-muted-foreground font-medium">Total (7 days)</p>
+                    <p className="text-sm text-muted-foreground font-medium">
+                      Total (7 days)
+                    </p>
                   </div>
                 </div>
               </div>
@@ -122,7 +151,9 @@ export function ExecutionsPageClient() {
                   </div>
                   <div>
                     <p className="text-2xl font-bold">{stats.success}</p>
-                    <p className="text-sm text-muted-foreground font-medium">Successful</p>
+                    <p className="text-sm text-muted-foreground font-medium">
+                      Successful
+                    </p>
                   </div>
                 </div>
               </div>
@@ -133,7 +164,9 @@ export function ExecutionsPageClient() {
                   </div>
                   <div>
                     <p className="text-2xl font-bold">{stats.error}</p>
-                    <p className="text-sm text-muted-foreground font-medium">Failed</p>
+                    <p className="text-sm text-muted-foreground font-medium">
+                      Failed
+                    </p>
                   </div>
                 </div>
               </div>
@@ -143,8 +176,12 @@ export function ExecutionsPageClient() {
                     <Clock className="h-6 w-6 text-blue-500" />
                   </div>
                   <div>
-                    <p className="text-2xl font-bold">{stats.successRate.toFixed(0)}%</p>
-                    <p className="text-sm text-muted-foreground font-medium">Success Rate</p>
+                    <p className="text-2xl font-bold">
+                      {stats.successRate.toFixed(0)}%
+                    </p>
+                    <p className="text-sm text-muted-foreground font-medium">
+                      Success Rate
+                    </p>
                   </div>
                 </div>
               </div>
@@ -172,7 +209,10 @@ export function ExecutionsPageClient() {
           {isLoading && (
             <div className="space-y-4">
               {[...Array(5)].map((_, i) => (
-                <div key={i} className="p-6 border rounded-xl flex items-center gap-4 bg-muted/20">
+                <div
+                  key={i}
+                  className="p-6 border rounded-xl flex items-center gap-4 bg-muted/20"
+                >
                   <Skeleton className="h-10 w-10 rounded-lg" />
                   <div className="flex-1 space-y-2">
                     <Skeleton className="h-4 w-48" />
@@ -190,14 +230,20 @@ export function ExecutionsPageClient() {
               <div className="flex items-center justify-center w-20 h-20 rounded-2xl bg-primary/10 mb-6 mx-auto ring-1 ring-primary/20">
                 <History className="w-10 h-10 text-primary" />
               </div>
-              <h3 className="empty-state-title text-xl font-bold text-center">No executions yet</h3>
+              <h3 className="empty-state-title text-xl font-bold text-center">
+                No executions yet
+              </h3>
               <p className="empty-state-description max-w-md mx-auto mt-2 text-center text-muted-foreground">
                 {statusFilter !== "all"
                   ? `No ${statusFilter.toLowerCase()} executions found. Try a different filter.`
                   : "Execute a workflow to see its history here. All execution details and logs will be recorded."}
               </p>
               <div className="mt-8 flex justify-center">
-                <Button asChild size="lg" className="gap-2 shadow-lg shadow-primary/20 hover:shadow-primary/30">
+                <Button
+                  asChild
+                  size="lg"
+                  className="gap-2 shadow-lg shadow-primary/20 hover:shadow-primary/30"
+                >
                   <Link href="/workflows">
                     <Play className="w-4 h-4" />
                     Go to Workflows
@@ -211,20 +257,32 @@ export function ExecutionsPageClient() {
           {!isLoading && executions.length > 0 && (
             <div className="space-y-4 animate-fadeIn">
               {executions.map((execution) => {
-                const status = statusConfig[execution.status as ExecutionStatus];
+                const status =
+                  statusConfig[execution.status as ExecutionStatus];
                 const StatusIcon = status.icon;
 
                 return (
-                  <Card key={execution.id} className="card-interactive glass border-white/20 dark:border-white/10 hover:border-primary/30 transition-all duration-300">
+                  <Card
+                    key={execution.id}
+                    className="card-interactive glass border-white/20 dark:border-white/10 hover:border-primary/30 transition-all duration-300"
+                  >
                     <CardHeader className="p-4">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-6">
-                          <div className={`p-3 rounded-xl ${execution.status === "SUCCESS" ? "bg-emerald-500/10 text-emerald-500 ring-1 ring-emerald-500/20" :
-                            execution.status === "ERROR" ? "bg-red-500/10 text-red-500 ring-1 ring-red-500/20" :
-                              execution.status === "RUNNING" ? "bg-blue-500/10 text-blue-500 ring-1 ring-blue-500/20" :
-                                "bg-muted text-muted-foreground ring-1 ring-white/10"
-                            }`}>
-                            <StatusIcon className={`h-5 w-5 ${execution.status === "RUNNING" ? "animate-spin" : ""}`} />
+                          <div
+                            className={`p-3 rounded-xl ${
+                              execution.status === "SUCCESS"
+                                ? "bg-emerald-500/10 text-emerald-500 ring-1 ring-emerald-500/20"
+                                : execution.status === "ERROR"
+                                  ? "bg-red-500/10 text-red-500 ring-1 ring-red-500/20"
+                                  : execution.status === "RUNNING"
+                                    ? "bg-blue-500/10 text-blue-500 ring-1 ring-blue-500/20"
+                                    : "bg-muted text-muted-foreground ring-1 ring-white/10"
+                            }`}
+                          >
+                            <StatusIcon
+                              className={`h-5 w-5 ${execution.status === "RUNNING" ? "animate-spin" : ""}`}
+                            />
                           </div>
                           <div>
                             <div className="flex items-center gap-3">
@@ -234,32 +292,43 @@ export function ExecutionsPageClient() {
                               >
                                 {execution.workflow.name}
                               </Link>
-                              <Badge variant="outline" className={`${status.classes} border px-2.5 py-0.5 text-xs font-semibold`}>
+                              <Badge
+                                variant="outline"
+                                className={`${status.classes} border px-2.5 py-0.5 text-xs font-semibold`}
+                              >
                                 {status.label}
                               </Badge>
                             </div>
                             <div className="flex items-center gap-4 mt-1.5 text-sm text-muted-foreground font-medium">
                               <span className="flex items-center gap-1.5">
                                 <Clock className="w-3.5 h-3.5" />
-                                {formatDistanceToNow(new Date(execution.startedAt), { addSuffix: true })}
+                                {formatDistanceToNow(
+                                  new Date(execution.startedAt),
+                                  { addSuffix: true },
+                                )}
                               </span>
                               <span className="w-1 h-1 rounded-full bg-muted-foreground/30" />
                               <span>{execution.mode}</span>
                               {execution.duration && (
                                 <>
                                   <span className="w-1 h-1 rounded-full bg-muted-foreground/30" />
-                                  <span className="font-mono">{formatDurationMs(execution.duration)}</span>
+                                  <span className="font-mono">
+                                    {formatDurationMs(execution.duration)}
+                                  </span>
                                 </>
                               )}
                             </div>
                           </div>
                         </div>
                         <div className="flex items-center gap-2">
-                          {(execution.status === "ERROR" || execution.status === "CANCELLED") && (
+                          {(execution.status === "ERROR" ||
+                            execution.status === "CANCELLED") && (
                             <Button
                               variant="outline"
                               size="sm"
-                              onClick={() => retryExecution.mutate({ id: execution.id })}
+                              onClick={() =>
+                                retryExecution.mutate({ id: execution.id })
+                              }
                               disabled={retryExecution.isPending}
                               className="hover:bg-primary/5 hover:text-primary hover:border-primary/20"
                             >
@@ -269,11 +338,18 @@ export function ExecutionsPageClient() {
                           )}
                           <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                              <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-background/50">
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-8 w-8 hover:bg-background/50"
+                              >
                                 <MoreVertical className="h-4 w-4" />
                               </Button>
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end" className="glass border-white/20 dark:border-white/10">
+                            <DropdownMenuContent
+                              align="end"
+                              className="glass border-white/20 dark:border-white/10"
+                            >
                               <DropdownMenuItem asChild>
                                 <Link href={`/executions/${execution.id}`}>
                                   View Details
@@ -281,7 +357,9 @@ export function ExecutionsPageClient() {
                               </DropdownMenuItem>
                               <DropdownMenuItem
                                 className="text-destructive focus:text-destructive"
-                                onClick={() => deleteExecution.mutate({ id: execution.id })}
+                                onClick={() =>
+                                  deleteExecution.mutate({ id: execution.id })
+                                }
                               >
                                 <Trash2 className="mr-2 h-4 w-4" />
                                 Delete

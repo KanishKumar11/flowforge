@@ -6,7 +6,7 @@ import { headers } from "next/headers";
 // OAuth2 callback handler for various providers
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ provider: string }> }
+  { params }: { params: Promise<{ provider: string }> },
 ) {
   const { provider } = await params;
   const searchParams = request.nextUrl.searchParams;
@@ -17,24 +17,26 @@ export async function GET(
   if (error) {
     console.error(`OAuth error for ${provider}:`, error);
     return NextResponse.redirect(
-      new URL(`/credentials?error=${encodeURIComponent(error)}`, request.url)
+      new URL(`/credentials?error=${encodeURIComponent(error)}`, request.url),
     );
   }
 
   if (!code) {
     return NextResponse.redirect(
-      new URL("/credentials?error=no_code", request.url)
+      new URL("/credentials?error=no_code", request.url),
     );
   }
 
   try {
     // Decode state to get user info
-    const stateData = state ? JSON.parse(Buffer.from(state, "base64").toString()) : null;
+    const stateData = state
+      ? JSON.parse(Buffer.from(state, "base64").toString())
+      : null;
     const userId = stateData?.userId;
 
     if (!userId) {
       return NextResponse.redirect(
-        new URL("/credentials?error=invalid_state", request.url)
+        new URL("/credentials?error=invalid_state", request.url),
       );
     }
 
@@ -59,12 +61,12 @@ export async function GET(
     });
 
     return NextResponse.redirect(
-      new URL(`/credentials?success=${provider}`, request.url)
+      new URL(`/credentials?success=${provider}`, request.url),
     );
   } catch (err) {
     console.error(`OAuth callback error for ${provider}:`, err);
     return NextResponse.redirect(
-      new URL(`/credentials?error=exchange_failed`, request.url)
+      new URL(`/credentials?error=exchange_failed`, request.url),
     );
   }
 }
@@ -73,7 +75,7 @@ export async function GET(
 async function exchangeCodeForTokens(
   provider: string,
   code: string,
-  redirectUrl: string
+  redirectUrl: string,
 ): Promise<{
   access_token: string;
   refresh_token?: string;
@@ -81,10 +83,14 @@ async function exchangeCodeForTokens(
   scope?: string;
   token_type?: string;
 }> {
-  const redirectUri = new URL(`/api/oauth/${provider}/callback`, redirectUrl).origin +
+  const redirectUri =
+    new URL(`/api/oauth/${provider}/callback`, redirectUrl).origin +
     `/api/oauth/${provider}/callback`;
 
-  const configs: Record<string, { tokenUrl: string; clientId: string; clientSecret: string }> = {
+  const configs: Record<
+    string,
+    { tokenUrl: string; clientId: string; clientSecret: string }
+  > = {
     slack: {
       tokenUrl: "https://slack.com/api/oauth.v2.access",
       clientId: process.env.SLACK_CLIENT_ID || "",

@@ -7,21 +7,81 @@ export interface CronPreset {
 }
 
 export const cronPresets: CronPreset[] = [
-  { label: "Every minute", expression: "* * * * *", description: "Runs every minute" },
-  { label: "Every 5 minutes", expression: "*/5 * * * *", description: "Runs every 5 minutes" },
-  { label: "Every 15 minutes", expression: "*/15 * * * *", description: "Runs every 15 minutes" },
-  { label: "Every 30 minutes", expression: "*/30 * * * *", description: "Runs every 30 minutes" },
-  { label: "Every hour", expression: "0 * * * *", description: "Runs at the start of every hour" },
-  { label: "Every 2 hours", expression: "0 */2 * * *", description: "Runs every 2 hours" },
-  { label: "Every 6 hours", expression: "0 */6 * * *", description: "Runs every 6 hours" },
-  { label: "Every 12 hours", expression: "0 */12 * * *", description: "Runs twice a day" },
-  { label: "Daily at midnight", expression: "0 0 * * *", description: "Runs at 00:00 every day" },
-  { label: "Daily at 9 AM", expression: "0 9 * * *", description: "Runs at 09:00 every day" },
-  { label: "Daily at 6 PM", expression: "0 18 * * *", description: "Runs at 18:00 every day" },
-  { label: "Weekly (Monday 9 AM)", expression: "0 9 * * 1", description: "Runs every Monday at 09:00" },
-  { label: "Weekly (Friday 5 PM)", expression: "0 17 * * 5", description: "Runs every Friday at 17:00" },
-  { label: "Monthly (1st at midnight)", expression: "0 0 1 * *", description: "Runs on the 1st of each month" },
-  { label: "Monthly (15th at noon)", expression: "0 12 15 * *", description: "Runs on the 15th of each month at 12:00" },
+  {
+    label: "Every minute",
+    expression: "* * * * *",
+    description: "Runs every minute",
+  },
+  {
+    label: "Every 5 minutes",
+    expression: "*/5 * * * *",
+    description: "Runs every 5 minutes",
+  },
+  {
+    label: "Every 15 minutes",
+    expression: "*/15 * * * *",
+    description: "Runs every 15 minutes",
+  },
+  {
+    label: "Every 30 minutes",
+    expression: "*/30 * * * *",
+    description: "Runs every 30 minutes",
+  },
+  {
+    label: "Every hour",
+    expression: "0 * * * *",
+    description: "Runs at the start of every hour",
+  },
+  {
+    label: "Every 2 hours",
+    expression: "0 */2 * * *",
+    description: "Runs every 2 hours",
+  },
+  {
+    label: "Every 6 hours",
+    expression: "0 */6 * * *",
+    description: "Runs every 6 hours",
+  },
+  {
+    label: "Every 12 hours",
+    expression: "0 */12 * * *",
+    description: "Runs twice a day",
+  },
+  {
+    label: "Daily at midnight",
+    expression: "0 0 * * *",
+    description: "Runs at 00:00 every day",
+  },
+  {
+    label: "Daily at 9 AM",
+    expression: "0 9 * * *",
+    description: "Runs at 09:00 every day",
+  },
+  {
+    label: "Daily at 6 PM",
+    expression: "0 18 * * *",
+    description: "Runs at 18:00 every day",
+  },
+  {
+    label: "Weekly (Monday 9 AM)",
+    expression: "0 9 * * 1",
+    description: "Runs every Monday at 09:00",
+  },
+  {
+    label: "Weekly (Friday 5 PM)",
+    expression: "0 17 * * 5",
+    description: "Runs every Friday at 17:00",
+  },
+  {
+    label: "Monthly (1st at midnight)",
+    expression: "0 0 1 * *",
+    description: "Runs on the 1st of each month",
+  },
+  {
+    label: "Monthly (15th at noon)",
+    expression: "0 12 15 * *",
+    description: "Runs on the 15th of each month at 12:00",
+  },
 ];
 
 // Parse cron expression parts
@@ -82,7 +142,15 @@ export function describeCron(expression: string): string {
   }
 
   if (parts.dayOfWeek !== "*") {
-    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const days = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
     const dayNum = parseInt(parts.dayOfWeek);
     if (!isNaN(dayNum) && days[dayNum]) {
       descriptions.push(`on ${days[dayNum]}`);

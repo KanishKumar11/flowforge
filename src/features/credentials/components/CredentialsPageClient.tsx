@@ -50,13 +50,16 @@ import {
   Trash2,
   Terminal,
   Shield,
-  Smartphone
+  Smartphone,
 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
-const providerIcons: Record<string, React.ComponentType<{ className?: string }>> = {
+const providerIcons: Record<
+  string,
+  React.ComponentType<{ className?: string }>
+> = {
   github: Github,
   slack: Slack,
   custom: Terminal,
@@ -68,7 +71,9 @@ const providerIcons: Record<string, React.ComponentType<{ className?: string }>>
 export function CredentialsPageClient() {
   const [search, setSearch] = useState("");
   const [showCreateModal, setShowCreateModal] = useState(false);
-  const [editingCredentialId, setEditingCredentialId] = useState<string | null>(null);
+  const [editingCredentialId, setEditingCredentialId] = useState<string | null>(
+    null,
+  );
   const [newCredential, setNewCredential] = useState({
     name: "",
     type: "apiKey" as "apiKey" | "oauth2" | "basic" | "bearer" | "custom",
@@ -78,7 +83,11 @@ export function CredentialsPageClient() {
 
   const trpc = useTRPC();
   const client = useVanillaClient();
-  const { data: credentials, isLoading, refetch } = useQuery(trpc.credentials.list.queryOptions());
+  const {
+    data: credentials,
+    isLoading,
+    refetch,
+  } = useQuery(trpc.credentials.list.queryOptions());
 
   const createCredential = useMutation({
     mutationFn: (data: {
@@ -91,31 +100,49 @@ export function CredentialsPageClient() {
       refetch();
       setShowCreateModal(false);
       setEditingCredentialId(null);
-      setNewCredential({ name: "", type: "apiKey", provider: "custom", apiKey: "" });
+      setNewCredential({
+        name: "",
+        type: "apiKey",
+        provider: "custom",
+        apiKey: "",
+      });
       toast.success("Credential created successfully");
     },
     onError: (error: Error) => {
-      toast.error("Failed to create credential", { description: error.message });
+      toast.error("Failed to create credential", {
+        description: error.message,
+      });
     },
   });
 
   const updateCredential = useMutation({
-    mutationFn: (data: { id: string; name?: string; data?: Record<string, unknown> }) =>
-      client.credentials.update.mutate(data),
+    mutationFn: (data: {
+      id: string;
+      name?: string;
+      data?: Record<string, unknown>;
+    }) => client.credentials.update.mutate(data),
     onSuccess: () => {
       refetch();
       setShowCreateModal(false);
       setEditingCredentialId(null);
-      setNewCredential({ name: "", type: "apiKey", provider: "custom", apiKey: "" });
+      setNewCredential({
+        name: "",
+        type: "apiKey",
+        provider: "custom",
+        apiKey: "",
+      });
       toast.success("Credential updated successfully");
     },
     onError: (error: Error) => {
-      toast.error("Failed to update credential", { description: error.message });
+      toast.error("Failed to update credential", {
+        description: error.message,
+      });
     },
   });
 
   const deleteCredential = useMutation({
-    mutationFn: (data: { id: string }) => client.credentials.delete.mutate(data),
+    mutationFn: (data: { id: string }) =>
+      client.credentials.delete.mutate(data),
     onSuccess: () => {
       refetch();
       toast.success("Credential deleted");
@@ -126,7 +153,7 @@ export function CredentialsPageClient() {
   });
 
   const filteredCredentials = credentials?.filter((c) =>
-    c.name.toLowerCase().includes(search.toLowerCase())
+    c.name.toLowerCase().includes(search.toLowerCase()),
   );
 
   const handleCreateOrUpdate = async () => {
@@ -153,7 +180,12 @@ export function CredentialsPageClient() {
   const handleCloseModal = () => {
     setShowCreateModal(false);
     setEditingCredentialId(null);
-    setNewCredential({ name: "", type: "apiKey", provider: "custom", apiKey: "" });
+    setNewCredential({
+      name: "",
+      type: "apiKey",
+      provider: "custom",
+      apiKey: "",
+    });
   };
 
   return (
@@ -166,9 +198,9 @@ export function CredentialsPageClient() {
               System Credentials
             </h1>
             <p className="text-(--arch-muted) font-mono text-sm max-w-2xl">
-                  // SECURE STORAGE FOR API KEYS AND AUTH TOKENS
+              // SECURE STORAGE FOR API KEYS AND AUTH TOKENS
               <br />
-                  // ENCRYPTED AT REST. ACCESS RESTRICTED.
+              // ENCRYPTED AT REST. ACCESS RESTRICTED.
             </p>
           </div>
           <Button
@@ -187,18 +219,37 @@ export function CredentialsPageClient() {
           {!isLoading && credentials && credentials.length > 0 && (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
-                { label: "Total Active", value: credentials.length, icon: Shield },
-                { label: "API Keys", value: credentials.filter((c) => c.type === "apiKey").length, icon: Key },
-                { label: "OAuth Links", value: credentials.filter((c) => c.type === "oauth2").length, icon: Globe },
+                {
+                  label: "Total Active",
+                  value: credentials.length,
+                  icon: Shield,
+                },
+                {
+                  label: "API Keys",
+                  value: credentials.filter((c) => c.type === "apiKey").length,
+                  icon: Key,
+                },
+                {
+                  label: "OAuth Links",
+                  value: credentials.filter((c) => c.type === "oauth2").length,
+                  icon: Globe,
+                },
               ].map((stat, i) => (
-                <div key={i} className="bg-(--arch-bg-secondary) border border-(--arch-border) p-6 rounded-none shadow-lg">
+                <div
+                  key={i}
+                  className="bg-(--arch-bg-secondary) border border-(--arch-border) p-6 rounded-none shadow-lg"
+                >
                   <div className="flex items-center gap-4">
                     <div className="p-3 bg-(--arch-bg) border border-(--arch-border)">
                       <stat.icon className="h-6 w-6 text-(--arch-fg)" />
                     </div>
                     <div>
-                      <p className="text-2xl font-bold font-mono text-(--arch-fg)">{stat.value}</p>
-                      <p className="text-xs text-(--arch-muted) font-mono uppercase tracking-wider">{stat.label}</p>
+                      <p className="text-2xl font-bold font-mono text-(--arch-fg)">
+                        {stat.value}
+                      </p>
+                      <p className="text-xs text-(--arch-muted) font-mono uppercase tracking-wider">
+                        {stat.label}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -223,15 +274,27 @@ export function CredentialsPageClient() {
             {/* Quick Connect OAuth */}
             <div className="flex flex-wrap gap-3">
               {[
-                { name: "Slack", icon: Slack, href: "/api/oauth/slack/connect" },
-                { name: "Google", icon: Globe, href: "/api/oauth/google/connect" },
-                { name: "GitHub", icon: Github, href: "/api/oauth/github/connect" },
+                {
+                  name: "Slack",
+                  icon: Slack,
+                  href: "/api/oauth/slack/connect",
+                },
+                {
+                  name: "Google",
+                  icon: Globe,
+                  href: "/api/oauth/google/connect",
+                },
+                {
+                  name: "GitHub",
+                  icon: Github,
+                  href: "/api/oauth/github/connect",
+                },
               ].map((provider) => (
                 <Button
                   key={provider.name}
                   variant="outline"
                   className="gap-2 bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) hover:bg-(--arch-fg) hover:text-(--arch-bg) rounded-none font-mono uppercase text-xs h-9 transition-colors"
-                  onClick={() => window.location.href = provider.href}
+                  onClick={() => (window.location.href = provider.href)}
                 >
                   <provider.icon className="h-3.5 w-3.5" />
                   Link {provider.name}
@@ -244,7 +307,10 @@ export function CredentialsPageClient() {
           {isLoading && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[...Array(6)].map((_, i) => (
-                <div key={i} className="p-6 border border-(--arch-border) bg-(--arch-bg-secondary) space-y-4">
+                <div
+                  key={i}
+                  className="p-6 border border-(--arch-border) bg-(--arch-bg-secondary) space-y-4"
+                >
                   <div className="flex items-center gap-3">
                     <Skeleton className="h-10 w-10 rounded-none bg-(--arch-muted)/20" />
                     <div className="space-y-2">
@@ -263,9 +329,12 @@ export function CredentialsPageClient() {
               <div className="flex items-center justify-center w-16 h-16 bg-(--arch-bg) border border-(--arch-border) mx-auto mb-6">
                 <KeyRound className="w-8 h-8 text-(--arch-fg)" />
               </div>
-              <h3 className="text-lg font-bold font-mono text-(--arch-fg) uppercase tracking-wider mb-2">No Credentials Found</h3>
+              <h3 className="text-lg font-bold font-mono text-(--arch-fg) uppercase tracking-wider mb-2">
+                No Credentials Found
+              </h3>
               <p className="max-w-md mx-auto text-(--arch-muted) font-mono text-sm mb-8">
-                Initialize your secure storage by adding API keys or authentication tokens.
+                Initialize your secure storage by adding API keys or
+                authentication tokens.
               </p>
               <Button
                 onClick={() => setShowCreateModal(true)}
@@ -278,86 +347,110 @@ export function CredentialsPageClient() {
           )}
 
           {/* Credentials Grid */}
-          {!isLoading && filteredCredentials && filteredCredentials.length > 0 && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredCredentials.map((credential) => {
-                const Icon = providerIcons[credential.provider] || providerIcons.default;
+          {!isLoading &&
+            filteredCredentials &&
+            filteredCredentials.length > 0 && (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredCredentials.map((credential) => {
+                  const Icon =
+                    providerIcons[credential.provider] || providerIcons.default;
 
-                return (
-                  <Card key={credential.id} className="group bg-(--arch-bg) border-(--arch-border) hover:border-(--arch-fg) transition-colors rounded-none shadow-none">
-                    <CardHeader className="pb-3 border-b border-(--arch-border) bg-(--arch-bg-secondary)/30">
-                      <div className="flex items-start justify-between">
-                        <div className="flex items-center gap-4">
-                          <div className="p-2 bg-(--arch-bg) border border-(--arch-border) flex items-center justify-center">
-                            <Icon className="h-5 w-5 text-(--arch-fg)" />
+                  return (
+                    <Card
+                      key={credential.id}
+                      className="group bg-(--arch-bg) border-(--arch-border) hover:border-(--arch-fg) transition-colors rounded-none shadow-none"
+                    >
+                      <CardHeader className="pb-3 border-b border-(--arch-border) bg-(--arch-bg-secondary)/30">
+                        <div className="flex items-start justify-between">
+                          <div className="flex items-center gap-4">
+                            <div className="p-2 bg-(--arch-bg) border border-(--arch-border) flex items-center justify-center">
+                              <Icon className="h-5 w-5 text-(--arch-fg)" />
+                            </div>
+                            <div>
+                              <CardTitle className="text-sm font-bold font-mono text-(--arch-fg) uppercase tracking-wider">
+                                {credential.name}
+                              </CardTitle>
+                              <CardDescription className="text-xs font-mono text-(--arch-muted) mt-1">
+                                TYPE: {credential.type.toUpperCase()}
+                              </CardDescription>
+                            </div>
                           </div>
-                          <div>
-                            <CardTitle className="text-sm font-bold font-mono text-(--arch-fg) uppercase tracking-wider">{credential.name}</CardTitle>
-                            <CardDescription className="text-xs font-mono text-(--arch-muted) mt-1">
-                              TYPE: {credential.type.toUpperCase()}
-                            </CardDescription>
-                          </div>
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-8 w-8 text-(--arch-muted) hover:text-(--arch-fg) hover:bg-(--arch-fg)/10 rounded-none"
+                              >
+                                <MoreVertical className="h-4 w-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent
+                              align="end"
+                              className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) rounded-none font-mono z-50 min-w-[150px]"
+                            >
+                              <DropdownMenuItem
+                                className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs uppercase tracking-wider"
+                                onClick={() => {
+                                  setNewCredential({
+                                    name: credential.name,
+                                    type: credential.type as
+                                      | "apiKey"
+                                      | "oauth2"
+                                      | "basic"
+                                      | "bearer"
+                                      | "custom",
+                                    provider: credential.provider,
+                                    apiKey: "",
+                                  });
+                                  setEditingCredentialId(credential.id);
+                                  setShowCreateModal(true);
+                                }}
+                              >
+                                <Pencil className="mr-2 h-3.5 w-3.5" />
+                                Edit Config
+                              </DropdownMenuItem>
+                              <DropdownMenuItem
+                                className="text-red-400 focus:bg-red-900/40 focus:text-red-400 cursor-pointer text-xs uppercase tracking-wider"
+                                onClick={() =>
+                                  deleteCredential.mutate({ id: credential.id })
+                                }
+                              >
+                                <Trash2 className="mr-2 h-3.5 w-3.5" />
+                                Terminate
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
                         </div>
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="h-8 w-8 text-(--arch-muted) hover:text-(--arch-fg) hover:bg-(--arch-fg)/10 rounded-none"
-                            >
-                              <MoreVertical className="h-4 w-4" />
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end" className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) rounded-none font-mono z-50 min-w-[150px]">
-                            <DropdownMenuItem
-                              className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs uppercase tracking-wider"
-                              onClick={() => {
-                                setNewCredential({
-                                  name: credential.name,
-                                  type: credential.type as "apiKey" | "oauth2" | "basic" | "bearer" | "custom",
-                                  provider: credential.provider,
-                                  apiKey: "",
-                                });
-                                setEditingCredentialId(credential.id);
-                                setShowCreateModal(true);
-                              }}
-                            >
-                              <Pencil className="mr-2 h-3.5 w-3.5" />
-                              Edit Config
-                            </DropdownMenuItem>
-                            <DropdownMenuItem
-                              className="text-red-400 focus:bg-red-900/40 focus:text-red-400 cursor-pointer text-xs uppercase tracking-wider"
-                              onClick={() => deleteCredential.mutate({ id: credential.id })}
-                            >
-                              <Trash2 className="mr-2 h-3.5 w-3.5" />
-                              Terminate
-                            </DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      </div>
-                    </CardHeader>
-                    <CardContent className="pt-4">
-                      <div className="flex items-center justify-between text-[10px] font-mono text-(--arch-muted) uppercase tracking-widest">
-                        <span>
-                          CREATED: {formatDistanceToNow(credential.createdAt, { addSuffix: true })}
-                        </span>
-                        {credential.lastUsedAt && (
+                      </CardHeader>
+                      <CardContent className="pt-4">
+                        <div className="flex items-center justify-between text-[10px] font-mono text-(--arch-muted) uppercase tracking-widest">
                           <span>
-                            LAST_ACCESS: {formatDistanceToNow(credential.lastUsedAt, { addSuffix: true })}
+                            CREATED:{" "}
+                            {formatDistanceToNow(credential.createdAt, {
+                              addSuffix: true,
+                            })}
                           </span>
-                        )}
-                      </div>
-                      <div className="mt-4 flex gap-2">
-                        <div className="h-1 w-1 bg-(--arch-muted) rounded-full animate-pulse"></div>
-                        <div className="h-1 w-1 bg-(--arch-muted) rounded-full delay-75 animate-pulse"></div>
-                        <div className="h-1 w-1 bg-(--arch-muted) rounded-full delay-150 animate-pulse"></div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                );
-              })}
-            </div>
-          )}
+                          {credential.lastUsedAt && (
+                            <span>
+                              LAST_ACCESS:{" "}
+                              {formatDistanceToNow(credential.lastUsedAt, {
+                                addSuffix: true,
+                              })}
+                            </span>
+                          )}
+                        </div>
+                        <div className="mt-4 flex gap-2">
+                          <div className="h-1 w-1 bg-(--arch-muted) rounded-full animate-pulse"></div>
+                          <div className="h-1 w-1 bg-(--arch-muted) rounded-full delay-75 animate-pulse"></div>
+                          <div className="h-1 w-1 bg-(--arch-muted) rounded-full delay-150 animate-pulse"></div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  );
+                })}
+              </div>
+            )}
         </div>
       </div>
 
@@ -377,7 +470,12 @@ export function CredentialsPageClient() {
           </DialogHeader>
           <div className="grid gap-6 p-6">
             <div className="space-y-2">
-              <Label htmlFor="name" className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider mb-1 block">Identifier (Name)</Label>
+              <Label
+                htmlFor="name"
+                className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider mb-1 block"
+              >
+                Identifier (Name)
+              </Label>
               <Input
                 id="name"
                 placeholder="MY_API_KEY_01"
@@ -390,27 +488,64 @@ export function CredentialsPageClient() {
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider mb-1 block">Auth Type</Label>
+                <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider mb-1 block">
+                  Auth Type
+                </Label>
                 <Select
                   value={newCredential.type}
                   onValueChange={(value) =>
-                    setNewCredential({ ...newCredential, type: value as "apiKey" | "oauth2" | "basic" | "bearer" | "custom" })
+                    setNewCredential({
+                      ...newCredential,
+                      type: value as
+                        | "apiKey"
+                        | "oauth2"
+                        | "basic"
+                        | "bearer"
+                        | "custom",
+                    })
                   }
                 >
                   <SelectTrigger className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) rounded-none font-mono text-xs h-10 focus:ring-1 focus:ring-(--arch-fg)">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) rounded-none font-mono z-50">
-                    <SelectItem value="apiKey" className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs font-mono">API_KEY</SelectItem>
-                    <SelectItem value="bearer" className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs font-mono">BEARER_TOKEN</SelectItem>
-                    <SelectItem value="basic" className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs font-mono">BASIC_AUTH</SelectItem>
-                    <SelectItem value="oauth2" className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs font-mono">OAUTH2</SelectItem>
-                    <SelectItem value="custom" className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs font-mono">CUSTOM</SelectItem>
+                    <SelectItem
+                      value="apiKey"
+                      className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs font-mono"
+                    >
+                      API_KEY
+                    </SelectItem>
+                    <SelectItem
+                      value="bearer"
+                      className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs font-mono"
+                    >
+                      BEARER_TOKEN
+                    </SelectItem>
+                    <SelectItem
+                      value="basic"
+                      className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs font-mono"
+                    >
+                      BASIC_AUTH
+                    </SelectItem>
+                    <SelectItem
+                      value="oauth2"
+                      className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs font-mono"
+                    >
+                      OAUTH2
+                    </SelectItem>
+                    <SelectItem
+                      value="custom"
+                      className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs font-mono"
+                    >
+                      CUSTOM
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </div>
               <div className="space-y-2">
-                <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider mb-1 block">Provider</Label>
+                <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider mb-1 block">
+                  Provider
+                </Label>
                 <Select
                   value={newCredential.provider}
                   onValueChange={(value) =>
@@ -421,17 +556,47 @@ export function CredentialsPageClient() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) rounded-none font-mono z-50">
-                    <SelectItem value="custom" className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs font-mono">CUSTOM</SelectItem>
-                    <SelectItem value="github" className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs font-mono">GITHUB</SelectItem>
-                    <SelectItem value="slack" className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs font-mono">SLACK</SelectItem>
-                    <SelectItem value="google" className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs font-mono">GOOGLE</SelectItem>
-                    <SelectItem value="openai" className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs font-mono">OPENAI</SelectItem>
+                    <SelectItem
+                      value="custom"
+                      className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs font-mono"
+                    >
+                      CUSTOM
+                    </SelectItem>
+                    <SelectItem
+                      value="github"
+                      className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs font-mono"
+                    >
+                      GITHUB
+                    </SelectItem>
+                    <SelectItem
+                      value="slack"
+                      className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs font-mono"
+                    >
+                      SLACK
+                    </SelectItem>
+                    <SelectItem
+                      value="google"
+                      className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs font-mono"
+                    >
+                      GOOGLE
+                    </SelectItem>
+                    <SelectItem
+                      value="openai"
+                      className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs font-mono"
+                    >
+                      OPENAI
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </div>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="apiKey" className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider mb-1 block">Secret / Token</Label>
+              <Label
+                htmlFor="apiKey"
+                className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider mb-1 block"
+              >
+                Secret / Token
+              </Label>
               <Input
                 id="apiKey"
                 type="password"
@@ -445,12 +610,20 @@ export function CredentialsPageClient() {
             </div>
           </div>
           <DialogFooter className="p-6 border-t border-(--arch-border) bg-(--arch-bg-secondary) flex justify-end gap-2">
-            <Button variant="ghost" onClick={handleCloseModal} className="text-(--arch-muted) hover:text-(--arch-fg) hover:bg-(--arch-fg)/10 font-mono uppercase text-xs rounded-none">
+            <Button
+              variant="ghost"
+              onClick={handleCloseModal}
+              className="text-(--arch-muted) hover:text-(--arch-fg) hover:bg-(--arch-fg)/10 font-mono uppercase text-xs rounded-none"
+            >
               Cancel
             </Button>
             <Button
               onClick={handleCreateOrUpdate}
-              disabled={!newCredential.name.trim() || createCredential.isPending || updateCredential.isPending}
+              disabled={
+                !newCredential.name.trim() ||
+                createCredential.isPending ||
+                updateCredential.isPending
+              }
               className="bg-(--arch-fg) text-(--arch-bg) hover:bg-(--arch-fg)/90 rounded-none font-mono uppercase text-xs px-6 shadow-[0_0_10px_rgba(74,222,128,0.3)]"
             >
               {(createCredential.isPending || updateCredential.isPending) && (

@@ -22,10 +22,7 @@ export async function DELETE(request: NextRequest, { params }: WebhookParams) {
   return handleWebhook(request, await params);
 }
 
-async function handleWebhook(
-  request: NextRequest,
-  { path }: { path: string }
-) {
+async function handleWebhook(request: NextRequest, { path }: { path: string }) {
   try {
     // Find the webhook endpoint by path
     const webhook = await prisma.webhookEndpoint.findFirst({
@@ -41,7 +38,7 @@ async function handleWebhook(
     if (!webhook) {
       return NextResponse.json(
         { error: "Webhook not found or inactive" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -49,7 +46,7 @@ async function handleWebhook(
     if (!webhook.workflow.isActive) {
       return NextResponse.json(
         { error: "Workflow is not active" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -78,7 +75,9 @@ async function handleWebhook(
       }
     }
 
-    const queryParams = Object.fromEntries(request.nextUrl.searchParams.entries());
+    const queryParams = Object.fromEntries(
+      request.nextUrl.searchParams.entries(),
+    );
 
     // Create trigger data - serialize to JSON-compatible format
     const triggerData = {
@@ -126,7 +125,7 @@ async function handleWebhook(
     console.error("Webhook handling error:", error);
     return NextResponse.json(
       { error: "Internal server error", message: (error as Error).message },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

@@ -5,7 +5,7 @@ import { headers } from "next/headers";
 // Initiates OAuth2 flow for a provider
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ provider: string }> }
+  { params }: { params: Promise<{ provider: string }> },
 ) {
   const { provider } = await params;
 
@@ -19,11 +19,14 @@ export async function GET(
 
   // Build state for callback verification
   const state = Buffer.from(
-    JSON.stringify({ userId, timestamp: Date.now() })
+    JSON.stringify({ userId, timestamp: Date.now() }),
   ).toString("base64");
 
   // OAuth config per provider
-  const configs: Record<string, { authUrl: string; clientId: string; scopes: string[] }> = {
+  const configs: Record<
+    string,
+    { authUrl: string; clientId: string; scopes: string[] }
+  > = {
     slack: {
       authUrl: "https://slack.com/oauth/v2/authorize",
       clientId: process.env.SLACK_CLIENT_ID || "",
@@ -54,7 +57,10 @@ export async function GET(
     return NextResponse.json({ error: "Unknown provider" }, { status: 400 });
   }
 
-  const redirectUri = new URL(`/api/oauth/${provider}/callback`, request.url).toString();
+  const redirectUri = new URL(
+    `/api/oauth/${provider}/callback`,
+    request.url,
+  ).toString();
 
   const authUrl = new URL(config.authUrl);
   authUrl.searchParams.set("client_id", config.clientId);

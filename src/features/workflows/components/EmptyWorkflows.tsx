@@ -13,7 +13,9 @@ export function EmptyWorkflows({ onCreateClick }: EmptyWorkflowsProps) {
       <div className="flex items-center justify-center w-24 h-24 rounded-full bg-primary/10 mb-8 mx-auto ring-1 ring-primary/20 shadow-inner">
         <Workflow className="w-12 h-12 text-primary" />
       </div>
-      <h3 className="text-2xl font-bold tracking-tight mb-3">No workflows yet</h3>
+      <h3 className="text-2xl font-bold tracking-tight mb-3">
+        No workflows yet
+      </h3>
       <p className="text-muted-foreground mb-8 max-w-md mx-auto text-lg leading-relaxed">
         Create your first workflow to start automating tasks. Connect your apps
         and build powerful automations with our visual editor.

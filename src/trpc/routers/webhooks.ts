@@ -9,7 +9,7 @@ export const webhooksRouter = createTRPCRouter({
     .input(
       z.object({
         workflowId: z.string().optional(),
-      })
+      }),
     )
     .query(async ({ ctx, input }) => {
       return prisma.webhookEndpoint.findMany({
@@ -31,9 +31,11 @@ export const webhooksRouter = createTRPCRouter({
     .input(
       z.object({
         workflowId: z.string(),
-        method: z.enum(["GET", "POST", "PUT", "PATCH", "DELETE"]).default("POST"),
+        method: z
+          .enum(["GET", "POST", "PUT", "PATCH", "DELETE"])
+          .default("POST"),
         isActive: z.boolean().default(true),
-      })
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       // Verify workflow ownership
@@ -65,7 +67,7 @@ export const webhooksRouter = createTRPCRouter({
         id: z.string(),
         method: z.enum(["GET", "POST", "PUT", "PATCH", "DELETE"]).optional(),
         isActive: z.boolean().optional(),
-      })
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       const { id, ...data } = input;

@@ -29,13 +29,16 @@ interface WorkflowVersion {
   createdBy: VersionUser | null;
 }
 
-export function VersionHistoryPanel({ workflowId, currentVersion }: VersionHistoryPanelProps) {
+export function VersionHistoryPanel({
+  workflowId,
+  currentVersion,
+}: VersionHistoryPanelProps) {
   const trpc = useTRPC();
   const client = useVanillaClient();
   const queryClient = useQueryClient();
 
   const { data: versions, isLoading } = useQuery(
-    trpc.workflows.listVersions.queryOptions({ workflowId })
+    trpc.workflows.listVersions.queryOptions({ workflowId }),
   );
 
   const rollback = useMutation({
@@ -54,7 +57,9 @@ export function VersionHistoryPanel({ workflowId, currentVersion }: VersionHisto
     return (
       <Card>
         <CardContent className="p-6">
-          <div className="animate-pulse text-muted-foreground">Loading versions...</div>
+          <div className="animate-pulse text-muted-foreground">
+            Loading versions...
+          </div>
         </CardContent>
       </Card>
     );
@@ -81,14 +86,17 @@ export function VersionHistoryPanel({ workflowId, currentVersion }: VersionHisto
               {typedVersions.map((version) => (
                 <div
                   key={version.id}
-                  className={`flex items-center justify-between p-3 rounded-lg border ${version.versionNum === currentVersion
-                    ? "border-primary bg-primary/5"
-                    : "hover:bg-accent"
-                    }`}
+                  className={`flex items-center justify-between p-3 rounded-lg border ${
+                    version.versionNum === currentVersion
+                      ? "border-primary bg-primary/5"
+                      : "hover:bg-accent"
+                  }`}
                 >
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
-                      <span className="font-medium">Version {version.versionNum}</span>
+                      <span className="font-medium">
+                        Version {version.versionNum}
+                      </span>
                       {version.versionNum === currentVersion && (
                         <span className="text-xs bg-primary text-primary-foreground px-1.5 py-0.5 rounded">
                           Current
@@ -98,7 +106,9 @@ export function VersionHistoryPanel({ workflowId, currentVersion }: VersionHisto
                     <div className="flex items-center gap-3 text-xs text-muted-foreground">
                       <span className="flex items-center gap-1">
                         <Clock className="h-3 w-3" />
-                        {formatDistanceToNow(new Date(version.createdAt), { addSuffix: true })}
+                        {formatDistanceToNow(new Date(version.createdAt), {
+                          addSuffix: true,
+                        })}
                       </span>
                       {version.createdBy && (
                         <span className="flex items-center gap-1">
@@ -118,7 +128,10 @@ export function VersionHistoryPanel({ workflowId, currentVersion }: VersionHisto
                       variant="outline"
                       size="sm"
                       onClick={() =>
-                        rollback.mutate({ workflowId, versionNum: version.versionNum })
+                        rollback.mutate({
+                          workflowId,
+                          versionNum: version.versionNum,
+                        })
                       }
                       disabled={rollback.isPending}
                       className="gap-1"
@@ -134,7 +147,9 @@ export function VersionHistoryPanel({ workflowId, currentVersion }: VersionHisto
             <div className="text-center py-8 text-muted-foreground">
               <History className="h-8 w-8 mx-auto mb-2 opacity-50" />
               <p>No version history yet</p>
-              <p className="text-xs">Versions are saved when you edit the workflow</p>
+              <p className="text-xs">
+                Versions are saved when you edit the workflow
+              </p>
             </div>
           )}
         </ScrollArea>

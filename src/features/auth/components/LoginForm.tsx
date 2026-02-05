@@ -45,20 +45,22 @@ export function LoginForm() {
   const onSubmit = async (values: LoginFormValues) => {
     setIsLoading(true);
     try {
-      await authClient.signIn.email({
-        email: values.email,
-        password: values.password,
-        callbackURL: "/",
-      }
-        , {
+      await authClient.signIn.email(
+        {
+          email: values.email,
+          password: values.password,
+          callbackURL: "/",
+        },
+        {
           onSuccess: () => {
             router.push("/dashboard");
           },
           onError: () => {
             toast.error("Invalid email or password");
             setIsLoading(false);
-          }
-        });
+          },
+        },
+      );
     } catch (error) {
       console.error(error);
       setIsLoading(false);
@@ -130,7 +132,9 @@ export function LoginForm() {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-(--arch-muted) text-[10px] font-mono uppercase tracking-widest transition-colors duration-500">User_Email</FormLabel>
+                <FormLabel className="text-(--arch-muted) text-[10px] font-mono uppercase tracking-widest transition-colors duration-500">
+                  User_Email
+                </FormLabel>
                 <FormControl>
                   <Input
                     placeholder="name@example.com"
@@ -148,7 +152,9 @@ export function LoginForm() {
             render={({ field }) => (
               <FormItem>
                 <div className="flex items-center justify-between">
-                  <FormLabel className="text-(--arch-muted) text-[10px] font-mono uppercase tracking-widest transition-colors duration-500">Password_Key</FormLabel>
+                  <FormLabel className="text-(--arch-muted) text-[10px] font-mono uppercase tracking-widest transition-colors duration-500">
+                    Password_Key
+                  </FormLabel>
                   <Link
                     href="/forgot-password"
                     className="text-[10px] font-mono text-(--arch-muted) hover:text-(--arch-fg) transition-colors"
@@ -191,7 +197,11 @@ export function LoginForm() {
             className="w-full h-10 rounded-sm text-xs font-mono uppercase tracking-widest bg-(--arch-fg) text-(--arch-bg) hover:bg-(--arch-muted) hover:text-white transition-all border border-transparent shadow-[0_0_10px_rgba(255,255,255,0.2)]"
             disabled={isLoading}
           >
-            {isLoading ? <Loader2 className="mr-2 h-3 w-3 animate-spin" /> : "INITIATE_SESSION"}
+            {isLoading ? (
+              <Loader2 className="mr-2 h-3 w-3 animate-spin" />
+            ) : (
+              "INITIATE_SESSION"
+            )}
           </Button>
         </form>
       </Form>
