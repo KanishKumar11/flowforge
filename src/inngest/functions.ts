@@ -331,26 +331,109 @@ async function executeSwitch(
 }
 
 // OpenAI executor - call ChatGPT API
+// OpenAI/LLM executor - call ChatGPT, Claude, or Gemini API
 async function executeOpenAI(
   config: Record<string, unknown>,
   context: ExecutionContext
 ): Promise<unknown> {
-  const apiKey = process.env.OPENAI_API_KEY || (config.apiKey as string);
+  const provider = (config.provider as string) || "openai";
   const model = (config.model as string) || "gpt-4o-mini";
   const prompt = config.prompt as string;
   const systemPrompt = config.systemPrompt as string;
 
+  // Provider-specific execution
+  if (provider === "anthropic") {
+    const apiKey = process.env.ANTHROPIC_API_KEY || (config.apiKey as string);
+    if (!apiKey) {
+      console.log("[Anthropic] No API key found, returning mock response");
+      return { mock: true, message: `[Mock Claude] Response for: ${prompt}`, model };
+    }
+
+    try {
+      const response = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: {
+          "x-api-key": apiKey,
+          "anthropic-version": "2023-06-01",
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          model,
+          max_tokens: 1024,
+          system: systemPrompt,
+          messages: [{ role: "user", content: prompt }],
+        }),
+      });
+
+      if (!response.ok) {
+        const error = await response.text();
+        throw new Error(`Anthropic API error: ${error}`);
+      }
+      const data = await response.json();
+      return {
+        message: data.content?.[0]?.text || "",
+        model,
+        usage: data.usage,
+      };
+    } catch (error) {
+      throw new Error(`Anthropic execution failed: ${(error as Error).message}`);
+    }
+  }
+
+  if (provider === "google") {
+    const apiKey = process.env.GOOGLE_API_KEY || (config.apiKey as string);
+    if (!apiKey) {
+      console.log("[Gemini] No API key found, returning mock response");
+      return { mock: true, message: `[Mock Gemini] Response for: ${prompt}`, model };
+    }
+
+    try {
+      // Simple Gemini GenerateContent API
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+      const response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents: [
+            {
+              parts: [{ text: prompt }]
+            }
+          ],
+          // Google doesn't have a direct "system" role in standard generateContent in the same way, 
+          // but we can prepend it or use system_instruction if supported by the model version.
+          // For simplicity we prepend.
+          ...(systemPrompt ? { system_instruction: { parts: [{ text: systemPrompt }] } } : {})
+        }),
+      });
+
+      if (!response.ok) {
+        const error = await response.text();
+        throw new Error(`Gemini API error: ${error}`);
+      }
+      const data = await response.json();
+      return {
+        message: data.candidates?.[0]?.content?.parts?.[0]?.text || "",
+        model,
+        usage: data.usageMetadata,
+      };
+    } catch (error) {
+      throw new Error(`Gemini execution failed: ${(error as Error).message}`);
+    }
+  }
+
+  // Default: OpenAI
+  const apiKey = process.env.OPENAI_API_KEY || (config.apiKey as string);
   if (!apiKey) {
     console.log("[OpenAI] No API key found, returning mock response");
     return {
       mock: true,
-      message: `Mock response for: ${prompt}`,
+      message: `[Mock GPT] Response for: ${prompt}`,
       model
     };
   }
 
   if (!prompt) {
-    throw new Error("OpenAI prompt is required");
+    throw new Error("Prompt is required");
   }
 
   try {

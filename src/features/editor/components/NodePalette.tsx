@@ -77,28 +77,28 @@ export function NodePalette({ onAddNode }: NodePaletteProps) {
   };
 
   return (
-    <div className="w-64 h-full glass border-r border-border/50 flex flex-col bg-background/50 backdrop-blur-xl">
+    <div className="w-64 h-full bg-[var(--arch-bg)] border-r border-[var(--arch-border)] flex flex-col">
       {/* Header */}
-      <div className="p-4 border-b border-border/50">
-        <h3 className="font-semibold text-sm mb-3 bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70">Add Nodes</h3>
+      <div className="p-4 border-b border-[var(--arch-border)]">
+        <h3 className="font-bold text-sm mb-3 text-[var(--arch-fg)] font-mono uppercase tracking-wider">Add Nodes</h3>
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--arch-muted)]" />
           <Input
-            placeholder="Search nodes..."
+            placeholder="SEARCH..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="pl-9 h-8 bg-background/50 border-input/50 focus:bg-background transition-all text-xs"
+            className="pl-9 h-8 bg-[var(--arch-bg)] border-[var(--arch-border)] focus:border-[var(--arch-fg)] transition-all text-xs font-mono text-[var(--arch-fg)] rounded-none placeholder:text-[var(--arch-muted)]"
           />
         </div>
       </div>
 
       {/* Node List */}
-      <ScrollArea className="flex-1">
+      <div className="flex-1 overflow-y-auto min-h-0">
         <div className="p-4 space-y-6">
           {/* Triggers */}
           {filteredTriggers.length > 0 && (
             <div>
-              <h4 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-3 px-1">
+              <h4 className="text-[10px] font-bold text-[var(--arch-muted)] uppercase tracking-wider mb-3 px-1 font-mono">
                 Triggers
               </h4>
               <div className="space-y-2">
@@ -108,13 +108,13 @@ export function NodePalette({ onAddNode }: NodePaletteProps) {
                     onClick={() => onAddNode(node.type, "trigger")}
                     draggable
                     onDragStart={(e) => handleDragStart(e, node.type, "trigger")}
-                    className="w-full flex items-center gap-3 p-2.5 rounded-xl border border-border/50 bg-card/30 hover:bg-primary/5 hover:border-primary/30 hover:scale-[1.02] hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 text-left group cursor-grab active:cursor-grabbing"
+                    className="w-full flex items-center gap-3 p-2.5 rounded-none border border-[var(--arch-border)] bg-[var(--arch-bg-secondary)] hover:bg-[var(--arch-fg)] hover:text-[var(--arch-bg)] text-[var(--arch-fg)] transition-colors duration-200 text-left group cursor-grab active:cursor-grabbing font-mono uppercase text-xs shadow-sm hover:shadow-none"
                   >
-                    <div className={`p-2 rounded-lg bg-background shadow-sm ${node.color} group-hover:scale-110 transition-transform`}>
-                      <node.icon className="h-4 w-4" />
+                    <div className="p-1">
+                      <node.icon className="h-4 w-4 text-[var(--arch-fg)] group-hover:text-[var(--arch-bg)]" />
                     </div>
                     <div>
-                      <span className="text-sm font-medium group-hover:text-primary transition-colors">{node.label}</span>
+                      <span className="font-bold">{node.label}</span>
                     </div>
                   </button>
                 ))}
@@ -125,7 +125,7 @@ export function NodePalette({ onAddNode }: NodePaletteProps) {
           {/* Actions */}
           {filteredActions.length > 0 && (
             <div>
-              <h4 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-3 px-1">
+              <h4 className="text-[10px] font-bold text-[var(--arch-muted)] uppercase tracking-wider mb-3 px-1 font-mono">
                 Actions
               </h4>
               <div className="space-y-2">
@@ -135,13 +135,13 @@ export function NodePalette({ onAddNode }: NodePaletteProps) {
                     onClick={() => onAddNode(node.type, "action")}
                     draggable
                     onDragStart={(e) => handleDragStart(e, node.type, "action")}
-                    className="w-full flex items-center gap-3 p-2.5 rounded-xl border border-border/50 bg-card/30 hover:bg-primary/5 hover:border-primary/30 hover:scale-[1.02] hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 text-left group cursor-grab active:cursor-grabbing"
+                    className="w-full flex items-center gap-3 p-2.5 rounded-none border border-[var(--arch-border)] bg-[var(--arch-bg-secondary)] hover:bg-[var(--arch-fg)] hover:text-[var(--arch-bg)] text-[var(--arch-fg)] transition-colors duration-200 text-left group cursor-grab active:cursor-grabbing font-mono uppercase text-xs shadow-sm hover:shadow-none"
                   >
-                    <div className={`p-2 rounded-lg bg-background shadow-sm ${node.color} group-hover:scale-110 transition-transform`}>
-                      <node.icon className="h-4 w-4" />
+                    <div className="p-1">
+                      <node.icon className="h-4 w-4 text-[var(--arch-fg)] group-hover:text-[var(--arch-bg)]" />
                     </div>
                     <div>
-                      <span className="text-sm font-medium group-hover:text-primary transition-colors">{node.label}</span>
+                      <span className="font-bold">{node.label}</span>
                     </div>
                   </button>
                 ))}
@@ -151,17 +151,17 @@ export function NodePalette({ onAddNode }: NodePaletteProps) {
 
           {/* No results */}
           {filteredTriggers.length === 0 && filteredActions.length === 0 && (
-            <div className="text-center py-8 text-muted-foreground">
-              <p className="text-sm">No nodes found</p>
+            <div className="text-center py-8 text-[var(--arch-muted)] font-mono">
+              <p className="text-xs">NO_NODES_FOUND</p>
             </div>
           )}
         </div>
-      </ScrollArea>
+      </div>
 
       {/* Drag hint */}
-      <div className="p-3 border-t border-border/50 bg-muted/20">
-        <p className="text-[10px] text-muted-foreground text-center font-medium">
-          Drag nodes to canvas or click to add
+      <div className="p-3 border-t border-[var(--arch-border)] bg-[var(--arch-bg)] z-10">
+        <p className="text-[10px] text-[var(--arch-muted)] text-center font-mono uppercase">
+          Drag to canvas
         </p>
       </div>
     </div>

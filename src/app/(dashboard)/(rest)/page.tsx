@@ -1,7 +1,7 @@
 import { requireAuth } from "@/lib/auth-utils";
-import { DashboardHomeClient } from "@/features/dashboard/components/DashboardHomeClient";
+import { redirect } from "next/navigation";
 
-export default async function DashboardPage() {
+export default async function HomePage() {
   await requireAuth();
-  return <DashboardHomeClient />;
+  return redirect("/dashboard");
 }

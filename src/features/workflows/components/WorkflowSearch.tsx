@@ -52,23 +52,23 @@ export function WorkflowSearch() {
   return (
     <div className="relative w-full max-w-md">
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-[var(--arch-muted)]" />
         <Input
           type="text"
-          placeholder="Search workflows..."
+          placeholder="SEARCH_WORKFLOWS..."
           value={query}
           onChange={(e) => {
             setQuery(e.target.value);
             setIsOpen(true);
           }}
           onFocus={() => query && setIsOpen(true)}
-          className="pl-10 pr-8"
+          className="pl-10 pr-8 bg-[var(--arch-bg)] border-[var(--arch-border)] text-[var(--arch-fg)] font-mono text-sm placeholder:text-[var(--arch-muted)] rounded-none focus-visible:ring-0 focus-visible:border-[var(--arch-fg)] transition-colors h-10"
         />
         {query && (
           <Button
             variant="ghost"
             size="icon"
-            className="absolute right-1 top-1/2 transform -translate-y-1/2 h-6 w-6"
+            className="absolute right-1 top-1/2 transform -translate-y-1/2 h-6 w-6 text-[var(--arch-muted)] hover:text-[var(--arch-fg)]"
             onClick={handleClear}
           >
             <X className="h-3 w-3" />

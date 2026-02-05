@@ -1,4 +1,4 @@
-// Built-in workflow templates for FlowForge
+// Built-in workflow templates for Flowgent
 
 export interface WorkflowTemplate {
   id: string;

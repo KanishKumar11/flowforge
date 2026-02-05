@@ -58,39 +58,39 @@ export const ActionNode = memo(function ActionNode({
   selected,
 }: NodeProps & { data: ActionNodeData }) {
   const Icon = iconMap[data.type] || Zap;
-  const colors = colorMap[data.type] || "bg-primary/10 text-primary border-primary/30";
-  const description = descriptionMap[data.type] || "Configure this action";
+  const description = descriptionMap[data.type] || "CONFIGURE_ACTION";
 
   return (
     <div
       id="base-node"
-      className={`workflow-node min-w-[200px] ${selected ? "selected" : ""}`}
+      className={`min-w-[200px] bg-[#0A160A] border shadow-none rounded-none transition-all duration-200 ${selected ? "border-[var(--arch-fg)] ring-1 ring-[var(--arch-fg)]" : "border-[var(--arch-border)]"
+        }`}
     >
       {/* Input Handle */}
       <Handle
         type="target"
         position={Position.Top}
-        className="node-handle !top-[-6px]"
+        className="!bg-[#0A160A] !border-[var(--arch-fg)] !border-[1px] !rounded-none !w-2.5 !h-2.5 !top-[-6px]"
       />
 
-      <div className={`px-4 py-3 rounded-t-xl border-b ${colors}`}>
-        <div className="flex items-center gap-2">
-          <Icon className="h-4 w-4" />
-          <span className="text-xs font-medium uppercase tracking-wide">
-            Action
-          </span>
-        </div>
+      <div className="bg-[#0A160A] border-b border-[var(--arch-border)] px-3 py-2 flex items-center gap-2">
+        <Icon className="h-3 w-3 text-[var(--arch-fg)]" />
+        <span className="text-[10px] font-bold text-[var(--arch-fg)] font-mono uppercase tracking-wider">
+          Action
+        </span>
       </div>
-      <div className="px-4 py-3">
-        <p className="font-medium text-sm">{data.label}</p>
-        <p className="text-xs text-muted-foreground mt-1">{description}</p>
+      <div className="px-3 py-2 bg-[#0A160A]">
+        <p className="font-bold text-xs text-[var(--arch-fg)] font-mono uppercase truncate">{data.label}</p>
+        <p className="text-[10px] text-[var(--arch-muted)] mt-1 font-mono truncate uppercase">
+          {description.replace(/\s+/g, '_').toUpperCase()}
+        </p>
       </div>
 
       {/* Output Handle */}
       <Handle
         type="source"
         position={Position.Bottom}
-        className="node-handle !bottom-[-6px]"
+        className="!bg-[var(--arch-bg)] !border-[var(--arch-fg)] !border-[1px] !rounded-none !w-2.5 !h-2.5 !bottom-[-6px]"
       />
     </div>
   );

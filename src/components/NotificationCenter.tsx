@@ -76,9 +76,9 @@ const typeIcons: Record<NotificationType, React.ComponentType<{ className?: stri
 };
 
 const typeColors: Record<NotificationType, string> = {
-  info: "text-blue-500",
-  success: "text-emerald-500",
-  warning: "text-amber-500",
+  info: "text-[var(--arch-fg)]",
+  success: "text-[var(--arch-accent)]",
+  warning: "text-yellow-500",
   error: "text-red-500",
 };
 
@@ -107,46 +107,46 @@ export function NotificationCenter() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="relative">
+        <Button variant="ghost" size="icon" className="relative text-[var(--arch-muted)] hover:text-[var(--arch-fg)] hover:bg-transparent">
           <Bell className="h-5 w-5" />
           {unreadCount > 0 && (
-            <span className="absolute -top-0.5 -right-0.5 h-4 w-4 rounded-full bg-destructive text-destructive-foreground text-xs flex items-center justify-center">
+            <span className="absolute -top-0.5 -right-0.5 h-4 w-4 rounded-full bg-[var(--arch-focus)] text-[var(--arch-bg)] text-[10px] font-bold flex items-center justify-center animate-pulse">
               {unreadCount}
             </span>
           )}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-80">
-        <DropdownMenuLabel className="flex items-center justify-between">
-          <span>Notifications</span>
+      <DropdownMenuContent align="end" className="w-80 bg-[var(--arch-bg)] border-[var(--arch-border)] text-[var(--arch-fg)]">
+        <DropdownMenuLabel className="flex items-center justify-between text-[var(--arch-fg)] font-mono uppercase tracking-widest text-xs">
+          <span>Sys_Notifications</span>
           {notifications.length > 0 && (
             <div className="flex items-center gap-2">
               {unreadCount > 0 && (
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="h-auto py-0 px-1 text-xs text-muted-foreground"
+                  className="h-auto py-0 px-1 text-[10px] text-[var(--arch-muted)] hover:text-[var(--arch-fg)] font-mono uppercase hover:bg-transparent"
                   onClick={markAllAsRead}
                 >
-                  Mark all read
+                  Mark_Read
                 </Button>
               )}
               <Button
                 variant="ghost"
                 size="sm"
-                className="h-auto py-0 px-1 text-xs text-muted-foreground"
+                className="h-auto py-0 px-1 text-[10px] text-[var(--arch-muted)] hover:text-[var(--arch-fg)] font-mono uppercase hover:bg-transparent"
                 onClick={clearAll}
               >
-                Clear all
+                Clear
               </Button>
             </div>
           )}
         </DropdownMenuLabel>
-        <DropdownMenuSeparator />
+        <DropdownMenuSeparator className="bg-[var(--arch-border)]" />
 
         {notifications.length === 0 ? (
-          <div className="p-4 text-center text-sm text-muted-foreground">
-            No notifications
+          <div className="p-4 text-center text-xs text-[var(--arch-muted)] font-mono uppercase tracking-widest">
+            NO_NOTIFICATIONS_FOUND
           </div>
         ) : (
           <ScrollArea className="max-h-[320px]">
@@ -155,30 +155,30 @@ export function NotificationCenter() {
               return (
                 <DropdownMenuItem
                   key={notification.id}
-                  className="flex items-start gap-3 p-3 cursor-pointer"
+                  className="flex items-start gap-3 p-3 cursor-pointer focus:bg-[var(--arch-bg-secondary)] focus:text-[var(--arch-fg)]"
                   onClick={() => markAsRead(notification.id)}
                 >
                   <Icon className={`h-4 w-4 mt-0.5 shrink-0 ${typeColors[notification.type]}`} />
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
-                      <p className={`text-sm font-medium truncate ${!notification.read ? "text-foreground" : "text-muted-foreground"}`}>
+                      <p className={`text-xs font-mono font-bold uppercase tracking-wider truncate ${!notification.read ? "text-[var(--arch-fg)]" : "text-[var(--arch-muted)]"}`}>
                         {notification.title}
                       </p>
                       {!notification.read && (
-                        <span className="h-2 w-2 rounded-full bg-primary shrink-0" />
+                        <span className="h-1.5 w-1.5 rounded-full bg-[var(--arch-focus)] shrink-0 animate-pulse" />
                       )}
                     </div>
-                    <p className="text-xs text-muted-foreground line-clamp-2 mt-0.5">
+                    <p className="text-xs text-[var(--arch-muted)] line-clamp-2 mt-0.5 font-mono">
                       {notification.message}
                     </p>
-                    <p className="text-xs text-muted-foreground mt-1">
+                    <p className="text-[10px] text-[var(--arch-muted)] mt-1 font-mono opacity-60">
                       {formatDistanceToNow(notification.timestamp, { addSuffix: true })}
                     </p>
                   </div>
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="h-6 w-6 shrink-0 opacity-0 group-hover:opacity-100"
+                    className="h-6 w-6 shrink-0 opacity-0 group-hover:opacity-100 hover:text-[var(--arch-fg)] text-[var(--arch-muted)] hover:bg-transparent"
                     onClick={(e) => {
                       e.stopPropagation();
                       deleteNotification(notification.id);

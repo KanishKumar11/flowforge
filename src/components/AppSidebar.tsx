@@ -29,12 +29,8 @@ import {
   History,
   KeyRound,
   LogOut,
-  MoreVertical,
-  Moon,
-  Palette,
   Settings,
   Sparkles,
-  Sun,
   User,
   Users,
   Workflow,
@@ -47,39 +43,33 @@ import { useTheme } from "next-themes";
 const mainMenuItems = [
   {
     label: "Dashboard",
-    href: "/",
+    href: "/dashboard",
     icon: FolderKanban,
-    description: "Overview & quick actions",
   },
   {
     label: "Workflows",
     href: "/workflows",
     icon: Workflow,
-    description: "Manage your automations",
   },
   {
     label: "Executions",
     href: "/executions",
     icon: History,
-    description: "View execution history",
   },
   {
     label: "Credentials",
     href: "/credentials",
     icon: KeyRound,
-    description: "Manage API keys & tokens",
   },
   {
     label: "Teams",
     href: "/teams",
     icon: Users,
-    description: "Collaborate with others",
   },
   {
     label: "Settings",
     href: "/settings",
     icon: Settings,
-    description: "Account & preferences",
   },
 ];
 
@@ -87,7 +77,6 @@ export function AppSidebar() {
   const router = useRouter();
   const pathname = usePathname();
   const { hasActiveSubscription, isLoading } = useHasActiveSubscription();
-  const { theme, setTheme } = useTheme();
   const { state } = useSidebar();
   const isCollapsed = state === "collapsed";
 
@@ -104,22 +93,27 @@ export function AppSidebar() {
     : "U";
 
   return (
-    <Sidebar collapsible="icon" className="border-r border-sidebar-border">
+    <Sidebar collapsible="icon" className="border-r border-[var(--arch-border)] bg-[var(--arch-bg)] text-[var(--arch-fg)] transition-colors duration-500">
       {/* Logo Header */}
-      <SidebarHeader className="border-b border-sidebar-border">
+      <SidebarHeader className="border-b border-[var(--arch-border)] p-4">
         <SidebarMenuItem className="list-none">
           <SidebarMenuButton
             asChild
-            className="h-14 px-4 gap-3 hover:bg-sidebar-accent"
+            className="h-10 px-0 gap-3 hover:bg-transparent group"
           >
-            <Link href="/workflows" className="flex items-center">
-              <div className="flex items-center justify-center w-8 h-8 rounded-lg gradient-primary">
-                <Zap className="w-4 h-4 text-white" />
+            <Link href="/dashboard" className="flex items-center gap-3">
+              <div className="flex items-center justify-center w-10 h-10 border border-[var(--arch-fg)] bg-[var(--arch-bg)] transition-all group-hover:bg-[var(--arch-fg)] group-hover:text-[var(--arch-bg)]">
+                <Zap className="w-5 h-5" />
               </div>
               {!isCollapsed && (
-                <span className="font-bold text-lg tracking-tight">
-                  FlowForge
-                </span>
+                <div className="flex flex-col">
+                  <span className="font-heading text-lg tracking-tight uppercase leading-none">
+                    FLOWGENT
+                  </span>
+                  <span className="font-mono text-[10px] text-[var(--arch-muted)] tracking-widest">
+                    V2.0.4
+                  </span>
+                </div>
               )}
             </Link>
           </SidebarMenuButton>
@@ -127,7 +121,7 @@ export function AppSidebar() {
       </SidebarHeader>
 
       {/* Main Navigation */}
-      <SidebarContent className="px-2 py-4">
+      <SidebarContent className="px-2 py-6">
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu className="space-y-1">
@@ -135,7 +129,7 @@ export function AppSidebar() {
                 const isActive =
                   item.href === "/"
                     ? pathname === item.href
-                    : pathname.startsWith(item.href);
+                    : pathname.startsWith(item.href) && item.href !== "/";
 
                 return (
                   <SidebarMenuItem key={item.label}>
@@ -143,14 +137,14 @@ export function AppSidebar() {
                       tooltip={item.label}
                       isActive={isActive}
                       asChild
-                      className={`h-11 px-3 gap-3 rounded-lg transition-all duration-200 ${isActive
-                        ? "bg-sidebar-accent text-sidebar-accent-foreground font-medium"
-                        : "text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent/50"
+                      className={`h-10 px-3 gap-3 rounded-none transition-all duration-200 font-mono text-xs uppercase tracking-wider border-l-2 ${isActive
+                        ? "bg-[var(--arch-fg)]/10 text-[var(--arch-fg)] font-bold border-[var(--arch-fg)]"
+                        : "text-[var(--arch-muted)] border-transparent hover:text-[var(--arch-fg)] hover:bg-[var(--arch-fg)]/5"
                         }`}
                     >
                       <Link href={item.href} prefetch>
                         <item.icon
-                          className={`w-5 h-5 ${isActive ? "text-primary" : ""}`}
+                          className={`w-4 h-4 ${isActive ? "text-[var(--arch-fg)]" : "text-[var(--arch-muted)] group-hover:text-[var(--arch-fg)]"}`}
                         />
                         {!isCollapsed && <span>{item.label}</span>}
                       </Link>
@@ -164,66 +158,48 @@ export function AppSidebar() {
       </SidebarContent>
 
       {/* Footer with User & Actions */}
-      <SidebarFooter className="border-t border-sidebar-border p-2">
-        <SidebarMenu className="space-y-1">
-          {/* Upgrade Button */}
+      <SidebarFooter className="border-t border-[var(--arch-border)] p-4 bg-[var(--arch-bg)]">
+        <SidebarMenu className="space-y-4">
+          {/* Upgrade Button - Styled as System Upgrade */}
           {!isLoading && !hasActiveSubscription && (
             <SidebarMenuItem>
               <SidebarMenuButton
-                tooltip="Upgrade to Pro"
-                className="h-11 px-3 gap-3 rounded-lg bg-gradient-to-r from-primary/10 to-purple-500/10 hover:from-primary/20 hover:to-purple-500/20 text-primary border border-primary/20"
+                tooltip="Upgrade Protocol"
+                className="h-10 px-3 gap-3 rounded-none border border-[var(--arch-accent)] text-[var(--arch-accent)] hover:bg-[var(--arch-accent)] hover:text-[var(--arch-bg)] transition-all font-mono text-xs uppercase"
                 onClick={() => {
                   authClient.checkout({
                     slug: "pro",
                   });
                 }}
               >
-                <Sparkles className="w-5 h-5" />
+                <Sparkles className="w-4 h-4" />
                 {!isCollapsed && (
-                  <span className="font-medium">Upgrade to Pro</span>
+                  <span className="font-bold">UPGRADE_SYS</span>
                 )}
               </SidebarMenuButton>
             </SidebarMenuItem>
           )}
-
-          {/* Theme Toggle */}
-          <SidebarMenuItem>
-            <SidebarMenuButton
-              tooltip={theme === "dark" ? "Light Mode" : "Dark Mode"}
-              className="h-11 px-3 gap-3 rounded-lg text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent/50"
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            >
-              {theme === "dark" ? (
-                <Sun className="w-5 h-5" />
-              ) : (
-                <Moon className="w-5 h-5" />
-              )}
-              {!isCollapsed && (
-                <span>{theme === "dark" ? "Light Mode" : "Dark Mode"}</span>
-              )}
-            </SidebarMenuButton>
-          </SidebarMenuItem>
 
           {/* User Menu */}
           <SidebarMenuItem>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton
-                  tooltip={user?.name || "Account"}
-                  className="h-12 px-3 gap-3 rounded-lg hover:bg-sidebar-accent/50"
+                  tooltip={user?.name || "Access"}
+                  className="h-12 px-2 gap-3 rounded-none hover:bg-[var(--arch-fg)]/10 border border-transparent hover:border-[var(--arch-border)] transition-all"
                 >
-                  <Avatar className="w-7 h-7">
+                  <Avatar className="w-8 h-8 rounded-none border border-[var(--arch-fg)]">
                     <AvatarImage src={user?.image || ""} alt={user?.name || "User"} />
-                    <AvatarFallback className="bg-primary/10 text-primary text-xs font-medium">
+                    <AvatarFallback className="bg-[var(--arch-bg)] text-[var(--arch-fg)] font-mono text-xs">
                       {initials}
                     </AvatarFallback>
                   </Avatar>
                   {!isCollapsed && (
                     <div className="flex flex-col items-start text-left overflow-hidden">
-                      <span className="text-sm font-medium truncate max-w-[140px]">
-                        {user?.name || "User"}
+                      <span className="font-mono text-xs font-bold uppercase truncate max-w-[120px] text-[var(--arch-fg)]">
+                        {user?.name || "OPERATOR"}
                       </span>
-                      <span className="text-xs text-muted-foreground truncate max-w-[140px]">
+                      <span className="font-mono text-[10px] text-[var(--arch-muted)] truncate max-w-[120px]">
                         {user?.email}
                       </span>
                     </div>
@@ -233,32 +209,32 @@ export function AppSidebar() {
               <DropdownMenuContent
                 align="end"
                 side="top"
-                className="w-56 glass"
+                className="w-56 rounded-none border-[var(--arch-border)] bg-[var(--arch-bg)] text-[var(--arch-fg)] font-mono"
               >
-                <DropdownMenuLabel className="font-normal">
+                <DropdownMenuLabel className="font-normal border-b border-[var(--arch-border)] pb-2">
                   <div className="flex flex-col space-y-1">
-                    <p className="text-sm font-medium">{user?.name}</p>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-xs font-bold uppercase">{user?.name}</p>
+                    <p className="text-[10px] text-[var(--arch-muted)]">
                       {user?.email}
                     </p>
                   </div>
                 </DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <User className="mr-2 h-4 w-4" />
-                  Profile
+
+                <DropdownMenuItem className="focus:bg-[var(--arch-fg)] focus:text-[var(--arch-bg)] cursor-pointer text-xs uppercase">
+                  <User className="mr-2 h-3 w-3" />
+                  ID_CARD
                 </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Settings className="mr-2 h-4 w-4" />
-                  Settings
+                <DropdownMenuItem className="focus:bg-[var(--arch-fg)] focus:text-[var(--arch-bg)] cursor-pointer text-xs uppercase">
+                  <Settings className="mr-2 h-3 w-3" />
+                  CONFIG
                 </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <CreditCard className="mr-2 h-4 w-4" />
-                  Billing
+                <DropdownMenuItem className="focus:bg-[var(--arch-fg)] focus:text-[var(--arch-bg)] cursor-pointer text-xs uppercase">
+                  <CreditCard className="mr-2 h-3 w-3" />
+                  CREDITS
                 </DropdownMenuItem>
-                <DropdownMenuSeparator />
+                <DropdownMenuSeparator className="bg-[var(--arch-border)]" />
                 <DropdownMenuItem
-                  className="text-destructive focus:text-destructive"
+                  className="text-red-500 focus:bg-red-500 focus:text-white cursor-pointer text-xs uppercase"
                   onClick={() => {
                     authClient.signOut({
                       fetchOptions: {
@@ -269,8 +245,8 @@ export function AppSidebar() {
                     });
                   }}
                 >
-                  <LogOut className="mr-2 h-4 w-4" />
-                  Log out
+                  <LogOut className="mr-2 h-3 w-3" />
+                  TERMINATE
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

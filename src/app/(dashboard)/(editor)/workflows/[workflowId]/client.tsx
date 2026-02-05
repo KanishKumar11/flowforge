@@ -8,7 +8,7 @@ interface WorkflowEditorClientProps {
 
 export function WorkflowEditorClient({ workflowId }: WorkflowEditorClientProps) {
   return (
-    <div className="h-screen w-full">
+    <div className="h-[calc(100vh-4rem)] w-full overflow-hidden">
       <WorkflowEditor workflowId={workflowId} />
     </div>
   );

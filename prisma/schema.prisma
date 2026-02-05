@@ -1,4 +1,4 @@
-// FlowForge - Workflow Automation Platform
+// Flowgent - Workflow Automation Platform
 // Complete database schema for workflows, executions, and credentials
 
 generator client {
@@ -28,7 +28,7 @@ model User {
   sessions Session[]
   accounts Account[]
 
-  // FlowForge relations
+  // Flowgent relations
   workflows        Workflow[]
   credentials      Credential[]
   executions       Execution[]

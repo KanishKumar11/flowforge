@@ -18,7 +18,7 @@ export default function SubscriptionPage() {
     <div className="flex flex-col h-full">
       <DashboardHeader
         title="Subscription"
-        description="Manage your FlowForge subscription"
+        description="Manage your Flowgent subscription"
       />
 
       <div className="flex-1 px-8 pb-8 overflow-auto">

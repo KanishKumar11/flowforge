@@ -31,25 +31,30 @@ export function NodeConfigPanel({ node, onClose, onUpdate }: NodeConfigPanelProp
 
   if (!node) return null;
 
-  const handleConfigChange = (key: string, value: unknown) => {
+  const updateConfig = (updates: Record<string, unknown>) => {
     onUpdate(node.id, {
       ...node.data,
       config: {
         ...(node.data.config as Record<string, unknown>),
-        [key]: value,
+        ...updates,
       },
     });
   };
 
+  const handleConfigChange = (key: string, value: unknown) => {
+    updateConfig({ [key]: value });
+  };
+
+
   return (
-    <div className="w-80 h-full bg-background/80 backdrop-blur-xl border-l border-white/10 flex flex-col shadow-2xl z-50">
+    <div className="w-80 h-full bg-[var(--arch-bg)] border-l border-[var(--arch-border)] flex flex-col shadow-none z-50">
       {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b border-white/10">
+      <div className="flex items-center justify-between p-4 border-b border-[var(--arch-border)]">
         <div>
-          <h3 className="font-semibold text-sm">Configure Node</h3>
-          <p className="text-xs text-muted-foreground">{node.data.label as string}</p>
+          <h3 className="font-bold text-sm text-[var(--arch-fg)] font-mono uppercase tracking-wider">Configure Node</h3>
+          <p className="text-xs text-[var(--arch-muted)] font-mono">{node.data.label as string}</p>
         </div>
-        <Button variant="ghost" size="icon" className="h-8 w-8" onClick={onClose}>
+        <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-[var(--arch-fg)]/10 text-[var(--arch-fg)] rounded-none" onClick={onClose}>
           <X className="h-4 w-4" />
         </Button>
       </div>
@@ -59,11 +64,12 @@ export function NodeConfigPanel({ node, onClose, onUpdate }: NodeConfigPanelProp
         <div className="space-y-4">
           {/* Common Fields */}
           <div className="space-y-2">
-            <Label htmlFor="name">Node Name</Label>
+            <Label htmlFor="name" className="text-[var(--arch-fg)] font-mono uppercase text-xs tracking-wider mb-1 block">Node Name</Label>
             <Input
               id="name"
               value={(node.data.label as string) || ""}
               onChange={(e) => onUpdate(node.id, { ...node.data, label: e.target.value })}
+              className="bg-[var(--arch-bg)] border-[var(--arch-border)] focus:border-[var(--arch-fg)] text-[var(--arch-fg)] font-mono rounded-none placeholder:text-[var(--arch-muted)] text-xs h-9 focus-visible:ring-0"
             />
           </div>
 
@@ -71,50 +77,53 @@ export function NodeConfigPanel({ node, onClose, onUpdate }: NodeConfigPanelProp
           {node.data.type === "http-request" && (
             <>
               <div className="space-y-2">
-                <Label>Method</Label>
+                <Label className="text-[var(--arch-fg)] font-mono uppercase text-xs tracking-wider">Method</Label>
                 <Select
                   value={(node.data.config as Record<string, string>)?.method || "GET"}
                   onValueChange={(value) => handleConfigChange("method", value)}
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="bg-[var(--arch-bg)] border-[var(--arch-border)] text-[var(--arch-fg)] rounded-none font-mono">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="GET">GET</SelectItem>
-                    <SelectItem value="POST">POST</SelectItem>
-                    <SelectItem value="PUT">PUT</SelectItem>
-                    <SelectItem value="PATCH">PATCH</SelectItem>
-                    <SelectItem value="DELETE">DELETE</SelectItem>
+                  <SelectContent className="bg-[var(--arch-bg)] border-[var(--arch-border)] text-[var(--arch-fg)] rounded-none font-mono">
+                    <SelectItem value="GET" className="focus:bg-[var(--arch-fg)] focus:text-[var(--arch-bg)] cursor-pointer">GET</SelectItem>
+                    <SelectItem value="POST" className="focus:bg-[var(--arch-fg)] focus:text-[var(--arch-bg)] cursor-pointer">POST</SelectItem>
+                    <SelectItem value="PUT" className="focus:bg-[var(--arch-fg)] focus:text-[var(--arch-bg)] cursor-pointer">PUT</SelectItem>
+                    <SelectItem value="PATCH" className="focus:bg-[var(--arch-fg)] focus:text-[var(--arch-bg)] cursor-pointer">PATCH</SelectItem>
+                    <SelectItem value="DELETE" className="focus:bg-[var(--arch-fg)] focus:text-[var(--arch-bg)] cursor-pointer">DELETE</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="url">URL</Label>
+                <Label htmlFor="url" className="text-[var(--arch-fg)] font-mono uppercase text-xs tracking-wider">URL</Label>
                 <Input
                   id="url"
                   placeholder="https://api.example.com/endpoint"
                   value={(node.data.config as Record<string, string>)?.url || ""}
                   onChange={(e) => handleConfigChange("url", e.target.value)}
+                  className="bg-[var(--arch-bg)] border-[var(--arch-border)] focus:border-[var(--arch-fg)] text-[var(--arch-fg)] font-mono rounded-none placeholder:text-[var(--arch-muted)]"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="headers">Headers (JSON)</Label>
+                <Label htmlFor="headers" className="text-[var(--arch-fg)] font-mono uppercase text-xs tracking-wider">Headers (JSON)</Label>
                 <Textarea
                   id="headers"
                   placeholder='{"Content-Type": "application/json"}'
                   rows={3}
                   value={(node.data.config as Record<string, string>)?.headers || ""}
                   onChange={(e) => handleConfigChange("headers", e.target.value)}
+                  className="bg-[var(--arch-bg)] border-[var(--arch-border)] focus:border-[var(--arch-fg)] text-[var(--arch-fg)] font-mono rounded-none placeholder:text-[var(--arch-muted)] font-mono text-xs"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="body">Body (JSON)</Label>
+                <Label htmlFor="body" className="text-[var(--arch-fg)] font-mono uppercase text-xs tracking-wider">Body (JSON)</Label>
                 <Textarea
                   id="body"
                   placeholder='{"key": "value"}'
                   rows={4}
                   value={(node.data.config as Record<string, string>)?.body || ""}
                   onChange={(e) => handleConfigChange("body", e.target.value)}
+                  className="bg-[var(--arch-bg)] border-[var(--arch-border)] focus:border-[var(--arch-fg)] text-[var(--arch-fg)] font-mono rounded-none placeholder:text-[var(--arch-muted)] font-mono text-xs"
                 />
               </div>
             </>
@@ -624,40 +633,88 @@ export function NodeConfigPanel({ node, onClose, onUpdate }: NodeConfigPanelProp
           {node.data.type === "openai" && (
             <>
               <div className="space-y-2">
-                <Label>Model</Label>
+                <Label className="text-[var(--arch-fg)] font-mono uppercase text-xs tracking-wider mb-1 block">Provider</Label>
                 <Select
-                  value={(node.data.config as Record<string, string>)?.model || "gpt-4o-mini"}
-                  onValueChange={(value) => handleConfigChange("model", value)}
+                  value={(node.data.config as Record<string, string>)?.provider || "openai"}
+                  onValueChange={(value) => {
+                    // Reset model when provider changes to a default relevant to that provider
+                    const defaultModels: Record<string, string> = {
+                      openai: "gpt-5.2-pro",
+                      anthropic: "claude-sonnet-4-5",
+                      google: "gemini-3-flash-preview"
+                    };
+                    updateConfig({
+                      provider: value,
+                      model: defaultModels[value] || "gpt-5.2-pro"
+                    });
+                  }}
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="bg-[var(--arch-bg)] border-[var(--arch-border)] text-[var(--arch-fg)] rounded-none font-mono text-xs h-9 focus:ring-1 focus:ring-[var(--arch-fg)] hover:border-[var(--arch-fg)] transition-colors">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="gpt-4o-mini">GPT-4o Mini</SelectItem>
-                    <SelectItem value="gpt-4o">GPT-4o</SelectItem>
-                    <SelectItem value="gpt-4-turbo">GPT-4 Turbo</SelectItem>
-                    <SelectItem value="gpt-3.5-turbo">GPT-3.5 Turbo</SelectItem>
+                  <SelectContent className="bg-[var(--arch-bg)] border-[var(--arch-border)] text-[var(--arch-fg)] rounded-none font-mono z-50">
+                    <SelectItem value="openai" className="focus:bg-[var(--arch-fg)] focus:text-[var(--arch-bg)] cursor-pointer font-mono text-xs">OpenAI</SelectItem>
+                    <SelectItem value="anthropic" className="focus:bg-[var(--arch-fg)] focus:text-[var(--arch-bg)] cursor-pointer font-mono text-xs">Anthropic</SelectItem>
+                    <SelectItem value="google" className="focus:bg-[var(--arch-fg)] focus:text-[var(--arch-bg)] cursor-pointer font-mono text-xs">Google Gemini</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label className="text-[var(--arch-fg)] font-mono uppercase text-xs tracking-wider mb-1 block">Model</Label>
+                <Select
+                  value={(node.data.config as Record<string, string>)?.model || "gpt-5.2-pro"}
+                  onValueChange={(value) => updateConfig({ model: value })}
+                >
+                  <SelectTrigger className="bg-[var(--arch-bg)] border-[var(--arch-border)] text-[var(--arch-fg)] rounded-none font-mono text-xs h-9 focus:ring-1 focus:ring-[var(--arch-fg)] hover:border-[var(--arch-fg)] transition-colors">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="bg-[var(--arch-bg)] border-[var(--arch-border)] text-[var(--arch-fg)] rounded-none font-mono z-50">
+                    {((node.data.config as Record<string, string>)?.provider === "anthropic") ? (
+                      <>
+                        <SelectItem value="claude-sonnet-4-5" className="focus:bg-[var(--arch-fg)] focus:text-[var(--arch-bg)] cursor-pointer font-mono text-xs">Claude 4.5 Sonnet</SelectItem>
+                        <SelectItem value="claude-haiku-4-5" className="focus:bg-[var(--arch-fg)] focus:text-[var(--arch-bg)] cursor-pointer font-mono text-xs">Claude 4.5 Haiku</SelectItem>
+                        <SelectItem value="claude-opus-4-5" className="focus:bg-[var(--arch-fg)] focus:text-[var(--arch-bg)] cursor-pointer font-mono text-xs">Claude 4.5 Opus</SelectItem>
+                      </>
+                    ) : ((node.data.config as Record<string, string>)?.provider === "google") ? (
+                      <>
+                        <SelectItem value="gemini-3-pro-preview" className="focus:bg-[var(--arch-fg)] focus:text-[var(--arch-bg)] cursor-pointer font-mono text-xs">Gemini 3 Pro (Preview)</SelectItem>
+                        <SelectItem value="gemini-3-flash-preview" className="focus:bg-[var(--arch-fg)] focus:text-[var(--arch-bg)] cursor-pointer font-mono text-xs">Gemini 3 Flash (Preview)</SelectItem>
+                        <SelectItem value="gemini-2.5-pro" className="focus:bg-[var(--arch-fg)] focus:text-[var(--arch-bg)] cursor-pointer font-mono text-xs">Gemini 2.5 Pro</SelectItem>
+                        <SelectItem value="gemini-2.5-flash" className="focus:bg-[var(--arch-fg)] focus:text-[var(--arch-bg)] cursor-pointer font-mono text-xs">Gemini 2.5 Flash</SelectItem>
+                      </>
+                    ) : (
+                      <>
+                        <SelectItem value="gpt-5.2-pro" className="focus:bg-[var(--arch-fg)] focus:text-[var(--arch-bg)] cursor-pointer font-mono text-xs">GPT-5.2 Pro</SelectItem>
+                        <SelectItem value="gpt-5.2-instant" className="focus:bg-[var(--arch-fg)] focus:text-[var(--arch-bg)] cursor-pointer font-mono text-xs">GPT-5.2 Instant</SelectItem>
+                        <SelectItem value="gpt-5.2-thinking" className="focus:bg-[var(--arch-fg)] focus:text-[var(--arch-bg)] cursor-pointer font-mono text-xs">GPT-5.2 Thinking</SelectItem>
+                        <SelectItem value="o3-deep-research" className="focus:bg-[var(--arch-fg)] focus:text-[var(--arch-bg)] cursor-pointer font-mono text-xs">o3 Deep Research</SelectItem>
+                        <SelectItem value="gpt-4o" className="focus:bg-[var(--arch-fg)] focus:text-[var(--arch-bg)] cursor-pointer font-mono text-xs">GPT-4o (Legacy)</SelectItem>
+                      </>
+                    )}
                   </SelectContent>
                 </Select>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="systemPrompt">System Prompt (Optional)</Label>
+                <Label htmlFor="systemPrompt" className="text-[var(--arch-fg)] font-mono uppercase text-xs tracking-wider mb-1 block">System Prompt (Optional)</Label>
                 <Textarea
                   id="systemPrompt"
                   placeholder="You are a helpful assistant..."
                   rows={2}
                   value={(node.data.config as Record<string, string>)?.systemPrompt || ""}
-                  onChange={(e) => handleConfigChange("systemPrompt", e.target.value)}
+                  onChange={(e) => updateConfig({ systemPrompt: e.target.value })}
+                  className="bg-[var(--arch-bg)] border-[var(--arch-border)] focus:border-[var(--arch-fg)] text-[var(--arch-fg)] font-mono rounded-none placeholder:text-[var(--arch-muted)] text-xs min-h-[60px] focus-visible:ring-0"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="prompt">Prompt</Label>
+                <Label htmlFor="prompt" className="text-[var(--arch-fg)] font-mono uppercase text-xs tracking-wider mb-1 block">Prompt</Label>
                 <Textarea
                   id="prompt"
                   placeholder="Summarize: {{trigger.text}}"
                   rows={4}
                   value={(node.data.config as Record<string, string>)?.prompt || ""}
-                  onChange={(e) => handleConfigChange("prompt", e.target.value)}
+                  onChange={(e) => updateConfig({ prompt: e.target.value })}
+                  className="bg-[var(--arch-bg)] border-[var(--arch-border)] focus:border-[var(--arch-fg)] text-[var(--arch-fg)] font-mono rounded-none placeholder:text-[var(--arch-muted)] text-xs min-h-[100px] focus-visible:ring-0"
                 />
               </div>
             </>

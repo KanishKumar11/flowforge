@@ -1,4 +1,4 @@
-import { AppHeader } from "@/components/AppHeader";
+
 
 export default function RestLayout({
   children,
@@ -7,7 +7,7 @@ export default function RestLayout({
 }) {
   return (
     <>
-      <AppHeader />
+
       <main>{children}</main>
     </>
   );
