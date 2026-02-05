@@ -92,10 +92,10 @@ export function SignupForm() {
   return (
     <div className="w-full max-w-md space-y-8 tech-panel p-8 rounded-none transition-colors duration-500">
       <div className="space-y-2">
-        <h1 className="text-2xl font-bold font-heading tracking-tight text-[var(--arch-fg)] uppercase transition-colors duration-500">
+        <h1 className="text-2xl font-bold font-heading tracking-tight text-(--arch-fg) uppercase transition-colors duration-500">
           New_Operator
         </h1>
-        <p className="text-[var(--arch-muted)] text-xs font-mono transition-colors duration-500">
+        <p className="text-(--arch-muted) text-xs font-mono transition-colors duration-500">
           INITIALIZE SETTINGS //
         </p>
       </div>
@@ -104,10 +104,10 @@ export function SignupForm() {
 
       <div className="relative my-6">
         <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t border-[var(--arch-border)] transition-colors duration-500" />
+          <span className="w-full border-t border-(--arch-border) transition-colors duration-500" />
         </div>
         <div className="relative flex justify-center text-[10px] items-center">
-          <span className="bg-[var(--arch-bg-secondary)] px-2 text-[var(--arch-muted)] font-mono uppercase tracking-widest border border-[var(--arch-border)] transition-colors duration-500">
+          <span className="bg-(--arch-bg-secondary) px-2 text-(--arch-muted) font-mono uppercase tracking-widest border border-(--arch-border) transition-colors duration-500">
             OR
           </span>
         </div>
@@ -120,7 +120,7 @@ export function SignupForm() {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-[var(--arch-muted)] text-[10px] font-mono uppercase tracking-widest transition-colors duration-500">Operator_Name</FormLabel>
+                <FormLabel className="text-(--arch-muted) text-[10px] font-mono uppercase tracking-widest transition-colors duration-500">Operator_Name</FormLabel>
                 <FormControl>
                   <Input
                     placeholder="John Doe"
@@ -137,7 +137,7 @@ export function SignupForm() {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-[var(--arch-muted)] text-[10px] font-mono uppercase tracking-widest transition-colors duration-500">Email_Address</FormLabel>
+                <FormLabel className="text-(--arch-muted) text-[10px] font-mono uppercase tracking-widest transition-colors duration-500">Email_Address</FormLabel>
                 <FormControl>
                   <Input
                     placeholder="name@example.com"
@@ -154,20 +154,20 @@ export function SignupForm() {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-[var(--arch-muted)] text-[10px] font-mono uppercase tracking-widest transition-colors duration-500">Set_Password</FormLabel>
+                <FormLabel className="text-(--arch-muted) text-[10px] font-mono uppercase tracking-widest transition-colors duration-500">Set_Password</FormLabel>
                 <FormControl>
                   <div className="relative">
                     <Input
                       type={showPassword ? "text" : "password"}
                       placeholder="********"
                       {...field}
-                      className="input-tech h-10 rounded-sm hover:border-[var(--arch-accent)] focus:border-[var(--arch-focus)] pr-10"
+                      className="input-tech h-10 rounded-sm hover:border-(--arch-accent) focus:border-(--arch-focus) pr-10"
                     />
                     <Button
                       type="button"
                       variant="ghost"
                       size="sm"
-                      className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent text-[var(--arch-muted)] hover:text-[var(--arch-fg)] transition-colors"
+                      className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent text-(--arch-muted) hover:text-(--arch-fg) transition-colors"
                       onClick={() => setShowPassword(!showPassword)}
                     >
                       {showPassword ? (
@@ -190,20 +190,20 @@ export function SignupForm() {
             name="confirmPassword"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-[var(--arch-muted)] text-[10px] font-mono uppercase tracking-widest transition-colors duration-500">Confirm_Key</FormLabel>
+                <FormLabel className="text-(--arch-muted) text-[10px] font-mono uppercase tracking-widest transition-colors duration-500">Confirm_Key</FormLabel>
                 <FormControl>
                   <div className="relative">
                     <Input
                       type={showPassword ? "text" : "password"}
                       placeholder="********"
                       {...field}
-                      className="input-tech h-10 rounded-sm hover:border-[var(--arch-accent)] focus:border-[var(--arch-focus)] pr-10"
+                      className="input-tech h-10 rounded-sm hover:border-(--arch-accent) focus:border-(--arch-focus) pr-10"
                     />
                     <Button
                       type="button"
                       variant="ghost"
                       size="sm"
-                      className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent text-[var(--arch-muted)] hover:text-[var(--arch-fg)] transition-colors"
+                      className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent text-(--arch-muted) hover:text-(--arch-fg) transition-colors"
                       onClick={() => setShowPassword(!showPassword)}
                     >
                       {showPassword ? (
@@ -223,7 +223,7 @@ export function SignupForm() {
           />
           <Button
             type="submit"
-            className="w-full h-10 rounded-sm text-xs font-mono uppercase tracking-widest bg-[var(--arch-fg)] text-[var(--arch-bg)] hover:bg-[var(--arch-muted)] hover:text-white transition-all border border-transparent shadow-[0_0_10px_rgba(255,255,255,0.2)]"
+            className="w-full h-10 rounded-sm text-xs font-mono uppercase tracking-widest bg-(--arch-fg) text-(--arch-bg) hover:bg-(--arch-muted) hover:text-white transition-all border border-transparent shadow-[0_0_10px_rgba(255,255,255,0.2)]"
             disabled={isLoading}
           >
             {isLoading ? <Loader2 className="mr-2 h-3 w-3 animate-spin" /> : "CREATE_ACCESS"}
@@ -231,11 +231,11 @@ export function SignupForm() {
         </form>
       </Form>
 
-      <p className="text-center text-xs text-[var(--arch-muted)] font-mono pt-4 border-t border-[var(--arch-border)] transition-colors duration-500">
+      <p className="text-center text-xs text-(--arch-muted) font-mono pt-4 border-t border-(--arch-border) transition-colors duration-500">
         HAS_ACCOUNT?{" "}
         <Link
           href="/login"
-          className="text-[var(--arch-fg)] hover:underline underline-offset-4 decoration-[var(--arch-muted)]"
+          className="text-(--arch-fg) hover:underline underline-offset-4 decoration-(--arch-muted)"
         >
           AUTHENTICATE
         </Link>

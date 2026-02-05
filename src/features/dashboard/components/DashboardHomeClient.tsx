@@ -22,20 +22,20 @@ export function DashboardHomeClient() {
   );
 
   return (
-    <div className="flex flex-col h-full space-y-8 animate-fadeIn bg-[var(--arch-bg)] text-[var(--arch-fg)]">
+    <div className="flex flex-col h-full space-y-8 animate-fadeIn bg-(--arch-bg) text-(--arch-fg)">
       <DashboardHeader
         title={
-          <span className="font-heading uppercase tracking-tight text-[var(--arch-fg)] text-3xl">
+          <span className="font-heading uppercase tracking-tight text-(--arch-fg) text-3xl">
             SYS.DASHBOARD
           </span>
         }
         description={
-          <span className="font-mono text-xs text-[var(--arch-muted)] tracking-widest">
+          <span className="font-mono text-xs text-(--arch-muted) tracking-widest">
                 // SYSTEM_OVERVIEW_MODE: ACTIVE
           </span>
         }
         action={
-          <Button asChild className="gap-2 rounded-none bg-[var(--arch-fg)] text-[var(--arch-bg)] hover:bg-[var(--arch-muted)] hover:text-white transition-all font-mono text-xs uppercase tracking-wider h-10 px-6">
+          <Button asChild className="gap-2 rounded-none bg-(--arch-fg) text-(--arch-bg) hover:bg-(--arch-muted) hover:text-white transition-all font-mono text-xs uppercase tracking-wider h-10 px-6">
             <Link href="/workflows">
               <Plus className="h-4 w-4" />
               NEW_FLOW

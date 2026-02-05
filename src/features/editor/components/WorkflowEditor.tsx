@@ -313,9 +313,9 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
             color="var(--arch-muted)"
             className="opacity-20"
           />
-          <Controls className="!bg-[var(--arch-bg)] !border-[var(--arch-border)] !shadow-none !rounded-none [&>button]:!border-[var(--arch-border)] [&>button]:!bg-[var(--arch-bg)] [&>button]:!text-[var(--arch-fg)] [&>button:hover]:!bg-[var(--arch-fg)] [&>button:hover]:!text-[var(--arch-bg)]" />
+          <Controls className="bg-(--arch-bg)! border-(--arch-border)! shadow-none! rounded-none! [&>button]:border-(--arch-border)! [&>button]:bg-(--arch-bg)! [&>button]:text-(--arch-fg)! [&>button:hover]:bg-(--arch-fg)! [&>button:hover]:text-(--arch-bg)!" />
           <MiniMap
-            className="!bg-[var(--arch-bg-secondary)] !border-[var(--arch-border)] !border-2 !shadow-lg !rounded-none"
+            className="bg-(--arch-bg-secondary)! border-(--arch-border)! border-2! shadow-lg! rounded-none!"
             nodeColor={(n) => {
               return "var(--arch-fg)";
             }}
@@ -328,7 +328,7 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
             <Button
               variant="outline"
               size="sm"
-              className="bg-[var(--arch-bg)] border-[var(--arch-border)] text-[var(--arch-fg)] hover:bg-[var(--arch-fg)] hover:text-[var(--arch-bg)] rounded-none font-mono uppercase text-xs"
+              className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) hover:bg-(--arch-fg) hover:text-(--arch-bg) rounded-none font-mono uppercase text-xs"
               asChild
             >
               <Link href="/workflows" className="gap-2">
@@ -336,11 +336,11 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
                 Back
               </Link>
             </Button>
-            <div className="bg-[var(--arch-bg)] border border-[var(--arch-border)] px-4 py-2 flex items-center gap-2 shadow-none">
-              <span className="font-mono uppercase text-[var(--arch-fg)] text-sm">{workflow.name}</span>
+            <div className="bg-(--arch-bg) border border-(--arch-border) px-4 py-2 flex items-center gap-2 shadow-none">
+              <span className="font-mono uppercase text-(--arch-fg) text-sm">{workflow.name}</span>
               {isSaving && (
-                <span className="flex items-center gap-1.5 text-xs text-[var(--arch-fg)] bg-[var(--arch-fg)]/10 px-2 py-0.5 rounded-none font-mono uppercase">
-                  <div className="h-1.5 w-1.5 bg-[var(--arch-fg)] animate-pulse" />
+                <span className="flex items-center gap-1.5 text-xs text-(--arch-fg) bg-(--arch-fg)/10 px-2 py-0.5 rounded-none font-mono uppercase">
+                  <div className="h-1.5 w-1.5 bg-(--arch-fg) animate-pulse" />
                   Saving...
                 </span>
               )}
@@ -349,37 +349,37 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
 
           {/* Top Right Panel */}
           <Panel position="top-right" className="flex items-center gap-3 m-4">
-            <div className="bg-[var(--arch-bg)] border border-[var(--arch-border)] p-1 flex items-center gap-1 shadow-none">
+            <div className="bg-(--arch-bg) border border-(--arch-border) p-1 flex items-center gap-1 shadow-none">
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={handleUndo}
                 disabled={!canUndo}
                 title="Undo (⌘Z)"
-                className="h-8 w-8 hover:bg-[var(--arch-fg)] hover:text-[var(--arch-bg)] text-[var(--arch-fg)] transition-colors rounded-none"
+                className="h-8 w-8 hover:bg-(--arch-fg) hover:text-(--arch-bg) text-(--arch-fg) transition-colors rounded-none"
               >
                 <Undo2 className="h-4 w-4" />
               </Button>
-              <div className="w-px h-4 bg-[var(--arch-border)]" />
+              <div className="w-px h-4 bg-(--arch-border)" />
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={handleRedo}
                 disabled={!canRedo}
                 title="Redo (⌘⇧Z)"
-                className="h-8 w-8 hover:bg-[var(--arch-fg)] hover:text-[var(--arch-bg)] text-[var(--arch-fg)] transition-colors rounded-none"
+                className="h-8 w-8 hover:bg-(--arch-fg) hover:text-(--arch-bg) text-(--arch-fg) transition-colors rounded-none"
               >
                 <Redo2 className="h-4 w-4" />
               </Button>
             </div>
 
-            <div className="bg-[var(--arch-bg)] border border-[var(--arch-border)] p-1 flex items-center gap-2 shadow-none">
+            <div className="bg-(--arch-bg) border border-(--arch-border) p-1 flex items-center gap-2 shadow-none">
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={handleSave}
                 disabled={isSaving}
-                className="hover:bg-[var(--arch-fg)] hover:text-[var(--arch-bg)] text-[var(--arch-fg)] h-8 rounded-none font-mono uppercase text-xs"
+                className="hover:bg-(--arch-fg) hover:text-(--arch-bg) text-(--arch-fg) h-8 rounded-none font-mono uppercase text-xs"
               >
                 <Save className="h-3.5 w-3.5 mr-2" />
                 Save
@@ -387,7 +387,7 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
               <Button
                 size="sm"
                 onClick={handleExecute}
-                className="bg-[var(--arch-fg)] text-[var(--arch-bg)] hover:bg-[var(--arch-fg)]/90 border-0 h-8 rounded-none font-mono uppercase text-xs"
+                className="bg-(--arch-fg) text-(--arch-bg) hover:bg-(--arch-fg)/90 border-0 h-8 rounded-none font-mono uppercase text-xs"
               >
                 <Play className="h-3.5 w-3.5 mr-2 fill-current" />
                 Execute
@@ -397,7 +397,7 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
 
           {/* Keyboard Shortcuts Hint */}
           <Panel position="bottom-left" className="m-4">
-            <div className="bg-[var(--arch-bg)]/80 backdrop-blur-sm px-3 py-1.5 text-xs font-mono text-[var(--arch-muted)] border border-[var(--arch-border)] uppercase">
+            <div className="bg-(--arch-bg)/80 backdrop-blur-sm px-3 py-1.5 text-xs font-mono text-(--arch-muted) border border-(--arch-border) uppercase">
               ⌘S Save • ⌘Z Undo • ⌘⇧Z Redo • ⌫ Delete
             </div>
           </Panel>

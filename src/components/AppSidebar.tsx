@@ -93,16 +93,16 @@ export function AppSidebar() {
     : "U";
 
   return (
-    <Sidebar collapsible="icon" className="border-r border-[var(--arch-border)] bg-[var(--arch-bg)] text-[var(--arch-fg)] transition-colors duration-500">
+    <Sidebar collapsible="icon" className="border-r border-(--arch-border) bg-(--arch-bg) text-(--arch-fg) transition-colors duration-500">
       {/* Logo Header */}
-      <SidebarHeader className="border-b border-[var(--arch-border)] p-4">
+      <SidebarHeader className="border-b border-(--arch-border) p-4">
         <SidebarMenuItem className="list-none">
           <SidebarMenuButton
             asChild
             className="h-10 px-0 gap-3 hover:bg-transparent group"
           >
             <Link href="/dashboard" className="flex items-center gap-3">
-              <div className="flex items-center justify-center w-10 h-10 border border-[var(--arch-fg)] bg-[var(--arch-bg)] transition-all group-hover:bg-[var(--arch-fg)] group-hover:text-[var(--arch-bg)]">
+              <div className="flex items-center justify-center w-10 h-10 border border-(--arch-fg) bg-(--arch-bg) transition-all group-hover:bg-(--arch-fg) group-hover:text-(--arch-bg)">
                 <Zap className="w-5 h-5" />
               </div>
               {!isCollapsed && (
@@ -110,7 +110,7 @@ export function AppSidebar() {
                   <span className="font-heading text-lg tracking-tight uppercase leading-none">
                     FLOWGENT
                   </span>
-                  <span className="font-mono text-[10px] text-[var(--arch-muted)] tracking-widest">
+                  <span className="font-mono text-[10px] text-(--arch-muted) tracking-widest">
                     V2.0.4
                   </span>
                 </div>
@@ -138,13 +138,13 @@ export function AppSidebar() {
                       isActive={isActive}
                       asChild
                       className={`h-10 px-3 gap-3 rounded-none transition-all duration-200 font-mono text-xs uppercase tracking-wider border-l-2 ${isActive
-                        ? "bg-[var(--arch-fg)]/10 text-[var(--arch-fg)] font-bold border-[var(--arch-fg)]"
-                        : "text-[var(--arch-muted)] border-transparent hover:text-[var(--arch-fg)] hover:bg-[var(--arch-fg)]/5"
+                        ? "bg-(--arch-fg)/10 text-(--arch-fg) font-bold border-(--arch-fg)"
+                        : "text-(--arch-muted) border-transparent hover:text-(--arch-fg) hover:bg-(--arch-fg)/5"
                         }`}
                     >
                       <Link href={item.href} prefetch>
                         <item.icon
-                          className={`w-4 h-4 ${isActive ? "text-[var(--arch-fg)]" : "text-[var(--arch-muted)] group-hover:text-[var(--arch-fg)]"}`}
+                          className={`w-4 h-4 ${isActive ? "text-(--arch-fg)" : "text-(--arch-muted) group-hover:text-(--arch-fg)"}`}
                         />
                         {!isCollapsed && <span>{item.label}</span>}
                       </Link>
@@ -158,14 +158,14 @@ export function AppSidebar() {
       </SidebarContent>
 
       {/* Footer with User & Actions */}
-      <SidebarFooter className="border-t border-[var(--arch-border)] p-4 bg-[var(--arch-bg)]">
+      <SidebarFooter className="border-t border-(--arch-border) p-4 bg-(--arch-bg)">
         <SidebarMenu className="space-y-4">
           {/* Upgrade Button - Styled as System Upgrade */}
           {!isLoading && !hasActiveSubscription && (
             <SidebarMenuItem>
               <SidebarMenuButton
                 tooltip="Upgrade Protocol"
-                className="h-10 px-3 gap-3 rounded-none border border-[var(--arch-accent)] text-[var(--arch-accent)] hover:bg-[var(--arch-accent)] hover:text-[var(--arch-bg)] transition-all font-mono text-xs uppercase"
+                className="h-10 px-3 gap-3 rounded-none border border-(--arch-accent) text-(--arch-accent) hover:bg-(--arch-accent) hover:text-(--arch-bg) transition-all font-mono text-xs uppercase"
                 onClick={() => {
                   authClient.checkout({
                     slug: "pro",
@@ -186,20 +186,20 @@ export function AppSidebar() {
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton
                   tooltip={user?.name || "Access"}
-                  className="h-12 px-2 gap-3 rounded-none hover:bg-[var(--arch-fg)]/10 border border-transparent hover:border-[var(--arch-border)] transition-all"
+                  className="h-12 px-2 gap-3 rounded-none hover:bg-(--arch-fg)/10 border border-transparent hover:border-(--arch-border) transition-all"
                 >
-                  <Avatar className="w-8 h-8 rounded-none border border-[var(--arch-fg)]">
+                  <Avatar className="w-8 h-8 rounded-none border border-(--arch-fg)">
                     <AvatarImage src={user?.image || ""} alt={user?.name || "User"} />
-                    <AvatarFallback className="bg-[var(--arch-bg)] text-[var(--arch-fg)] font-mono text-xs">
+                    <AvatarFallback className="bg-(--arch-bg) text-(--arch-fg) font-mono text-xs">
                       {initials}
                     </AvatarFallback>
                   </Avatar>
                   {!isCollapsed && (
                     <div className="flex flex-col items-start text-left overflow-hidden">
-                      <span className="font-mono text-xs font-bold uppercase truncate max-w-[120px] text-[var(--arch-fg)]">
+                      <span className="font-mono text-xs font-bold uppercase truncate max-w-[120px] text-(--arch-fg)">
                         {user?.name || "OPERATOR"}
                       </span>
-                      <span className="font-mono text-[10px] text-[var(--arch-muted)] truncate max-w-[120px]">
+                      <span className="font-mono text-[10px] text-(--arch-muted) truncate max-w-[120px]">
                         {user?.email}
                       </span>
                     </div>
@@ -209,30 +209,30 @@ export function AppSidebar() {
               <DropdownMenuContent
                 align="end"
                 side="top"
-                className="w-56 rounded-none border-[var(--arch-border)] bg-[var(--arch-bg)] text-[var(--arch-fg)] font-mono"
+                className="w-56 rounded-none border-(--arch-border) bg-(--arch-bg) text-(--arch-fg) font-mono"
               >
-                <DropdownMenuLabel className="font-normal border-b border-[var(--arch-border)] pb-2">
+                <DropdownMenuLabel className="font-normal border-b border-(--arch-border) pb-2">
                   <div className="flex flex-col space-y-1">
                     <p className="text-xs font-bold uppercase">{user?.name}</p>
-                    <p className="text-[10px] text-[var(--arch-muted)]">
+                    <p className="text-[10px] text-(--arch-muted)">
                       {user?.email}
                     </p>
                   </div>
                 </DropdownMenuLabel>
 
-                <DropdownMenuItem className="focus:bg-[var(--arch-fg)] focus:text-[var(--arch-bg)] cursor-pointer text-xs uppercase">
+                <DropdownMenuItem className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs uppercase">
                   <User className="mr-2 h-3 w-3" />
                   ID_CARD
                 </DropdownMenuItem>
-                <DropdownMenuItem className="focus:bg-[var(--arch-fg)] focus:text-[var(--arch-bg)] cursor-pointer text-xs uppercase">
+                <DropdownMenuItem className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs uppercase">
                   <Settings className="mr-2 h-3 w-3" />
                   CONFIG
                 </DropdownMenuItem>
-                <DropdownMenuItem className="focus:bg-[var(--arch-fg)] focus:text-[var(--arch-bg)] cursor-pointer text-xs uppercase">
+                <DropdownMenuItem className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs uppercase">
                   <CreditCard className="mr-2 h-3 w-3" />
                   CREDITS
                 </DropdownMenuItem>
-                <DropdownMenuSeparator className="bg-[var(--arch-border)]" />
+                <DropdownMenuSeparator className="bg-(--arch-border)" />
                 <DropdownMenuItem
                   className="text-red-500 focus:bg-red-500 focus:text-white cursor-pointer text-xs uppercase"
                   onClick={() => {

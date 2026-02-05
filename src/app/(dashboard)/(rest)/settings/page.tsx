@@ -62,7 +62,7 @@ export default function SettingsPage() {
             <TabsContent value="profile" className="animate-fadeIn">
               <Card className="glass border-white/20 dark:border-white/10 shadow-xl backdrop-blur-xl">
                 <CardHeader>
-                  <CardTitle className="text-xl bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70">Profile Information</CardTitle>
+                  <CardTitle className="text-xl bg-clip-text text-transparent bg-linear-to-r from-foreground to-foreground/70">Profile Information</CardTitle>
                   <CardDescription>
                     Update your account details and public profile information.
                   </CardDescription>
@@ -93,7 +93,7 @@ export default function SettingsPage() {
             <TabsContent value="notifications" className="animate-fadeIn">
               <Card className="glass border-white/20 dark:border-white/10 shadow-xl backdrop-blur-xl">
                 <CardHeader>
-                  <CardTitle className="text-xl bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70">Notification Preferences</CardTitle>
+                  <CardTitle className="text-xl bg-clip-text text-transparent bg-linear-to-r from-foreground to-foreground/70">Notification Preferences</CardTitle>
                   <CardDescription>
                     Choose what notifications you want to receive.
                   </CardDescription>
@@ -146,7 +146,7 @@ export default function SettingsPage() {
             <TabsContent value="appearance" className="animate-fadeIn">
               <Card className="glass border-white/20 dark:border-white/10 shadow-xl backdrop-blur-xl">
                 <CardHeader>
-                  <CardTitle className="text-xl bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70">Appearance</CardTitle>
+                  <CardTitle className="text-xl bg-clip-text text-transparent bg-linear-to-r from-foreground to-foreground/70">Appearance</CardTitle>
                   <CardDescription>
                     Customize the look and feel of the application.
                   </CardDescription>
@@ -192,7 +192,7 @@ export default function SettingsPage() {
             <TabsContent value="security" className="animate-fadeIn">
               <Card className="glass border-white/20 dark:border-white/10 shadow-xl backdrop-blur-xl">
                 <CardHeader>
-                  <CardTitle className="text-xl bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70">Security</CardTitle>
+                  <CardTitle className="text-xl bg-clip-text text-transparent bg-linear-to-r from-foreground to-foreground/70">Security</CardTitle>
                   <CardDescription>
                     Manage your password and security settings.
                   </CardDescription>

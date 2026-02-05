@@ -112,7 +112,7 @@ export const WorkflowVisualizer = ({ className }: { className?: string }) => {
       </svg>
 
       {/* Floating DOM Overlay */}
-      <div className="absolute top-8 right-8 text-right font-mono text-[10px] text-[var(--arch-muted)] tracking-widest opacity-70">
+      <div className="absolute top-8 right-8 text-right font-mono text-[10px] text-(--arch-muted) tracking-widest opacity-70">
         <div>SYS.TIME: {ticks}</div>
         <div>MODE: ARCHITECT</div>
         <div>STATUS: NOMINAL</div>

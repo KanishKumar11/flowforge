@@ -76,8 +76,8 @@ const typeIcons: Record<NotificationType, React.ComponentType<{ className?: stri
 };
 
 const typeColors: Record<NotificationType, string> = {
-  info: "text-[var(--arch-fg)]",
-  success: "text-[var(--arch-accent)]",
+  info: "text-(--arch-fg)",
+  success: "text-(--arch-accent)",
   warning: "text-yellow-500",
   error: "text-red-500",
 };
@@ -107,17 +107,17 @@ export function NotificationCenter() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="relative text-[var(--arch-muted)] hover:text-[var(--arch-fg)] hover:bg-transparent">
+        <Button variant="ghost" size="icon" className="relative text-(--arch-muted) hover:text-(--arch-fg) hover:bg-transparent">
           <Bell className="h-5 w-5" />
           {unreadCount > 0 && (
-            <span className="absolute -top-0.5 -right-0.5 h-4 w-4 rounded-full bg-[var(--arch-focus)] text-[var(--arch-bg)] text-[10px] font-bold flex items-center justify-center animate-pulse">
+            <span className="absolute -top-0.5 -right-0.5 h-4 w-4 rounded-full bg-(--arch-focus) text-(--arch-bg) text-[10px] font-bold flex items-center justify-center animate-pulse">
               {unreadCount}
             </span>
           )}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-80 bg-[var(--arch-bg)] border-[var(--arch-border)] text-[var(--arch-fg)]">
-        <DropdownMenuLabel className="flex items-center justify-between text-[var(--arch-fg)] font-mono uppercase tracking-widest text-xs">
+      <DropdownMenuContent align="end" className="w-80 bg-(--arch-bg) border-(--arch-border) text-(--arch-fg)">
+        <DropdownMenuLabel className="flex items-center justify-between text-(--arch-fg) font-mono uppercase tracking-widest text-xs">
           <span>Sys_Notifications</span>
           {notifications.length > 0 && (
             <div className="flex items-center gap-2">
@@ -125,7 +125,7 @@ export function NotificationCenter() {
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="h-auto py-0 px-1 text-[10px] text-[var(--arch-muted)] hover:text-[var(--arch-fg)] font-mono uppercase hover:bg-transparent"
+                  className="h-auto py-0 px-1 text-[10px] text-(--arch-muted) hover:text-(--arch-fg) font-mono uppercase hover:bg-transparent"
                   onClick={markAllAsRead}
                 >
                   Mark_Read
@@ -134,7 +134,7 @@ export function NotificationCenter() {
               <Button
                 variant="ghost"
                 size="sm"
-                className="h-auto py-0 px-1 text-[10px] text-[var(--arch-muted)] hover:text-[var(--arch-fg)] font-mono uppercase hover:bg-transparent"
+                className="h-auto py-0 px-1 text-[10px] text-(--arch-muted) hover:text-(--arch-fg) font-mono uppercase hover:bg-transparent"
                 onClick={clearAll}
               >
                 Clear
@@ -142,10 +142,10 @@ export function NotificationCenter() {
             </div>
           )}
         </DropdownMenuLabel>
-        <DropdownMenuSeparator className="bg-[var(--arch-border)]" />
+        <DropdownMenuSeparator className="bg-(--arch-border)" />
 
         {notifications.length === 0 ? (
-          <div className="p-4 text-center text-xs text-[var(--arch-muted)] font-mono uppercase tracking-widest">
+          <div className="p-4 text-center text-xs text-(--arch-muted) font-mono uppercase tracking-widest">
             NO_NOTIFICATIONS_FOUND
           </div>
         ) : (
@@ -155,30 +155,30 @@ export function NotificationCenter() {
               return (
                 <DropdownMenuItem
                   key={notification.id}
-                  className="flex items-start gap-3 p-3 cursor-pointer focus:bg-[var(--arch-bg-secondary)] focus:text-[var(--arch-fg)]"
+                  className="flex items-start gap-3 p-3 cursor-pointer focus:bg-(--arch-bg-secondary) focus:text-(--arch-fg)"
                   onClick={() => markAsRead(notification.id)}
                 >
                   <Icon className={`h-4 w-4 mt-0.5 shrink-0 ${typeColors[notification.type]}`} />
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
-                      <p className={`text-xs font-mono font-bold uppercase tracking-wider truncate ${!notification.read ? "text-[var(--arch-fg)]" : "text-[var(--arch-muted)]"}`}>
+                      <p className={`text-xs font-mono font-bold uppercase tracking-wider truncate ${!notification.read ? "text-(--arch-fg)" : "text-(--arch-muted)"}`}>
                         {notification.title}
                       </p>
                       {!notification.read && (
-                        <span className="h-1.5 w-1.5 rounded-full bg-[var(--arch-focus)] shrink-0 animate-pulse" />
+                        <span className="h-1.5 w-1.5 rounded-full bg-(--arch-focus) shrink-0 animate-pulse" />
                       )}
                     </div>
-                    <p className="text-xs text-[var(--arch-muted)] line-clamp-2 mt-0.5 font-mono">
+                    <p className="text-xs text-(--arch-muted) line-clamp-2 mt-0.5 font-mono">
                       {notification.message}
                     </p>
-                    <p className="text-[10px] text-[var(--arch-muted)] mt-1 font-mono opacity-60">
+                    <p className="text-[10px] text-(--arch-muted) mt-1 font-mono opacity-60">
                       {formatDistanceToNow(notification.timestamp, { addSuffix: true })}
                     </p>
                   </div>
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="h-6 w-6 shrink-0 opacity-0 group-hover:opacity-100 hover:text-[var(--arch-fg)] text-[var(--arch-muted)] hover:bg-transparent"
+                    className="h-6 w-6 shrink-0 opacity-0 group-hover:opacity-100 hover:text-(--arch-fg) text-(--arch-muted) hover:bg-transparent"
                     onClick={(e) => {
                       e.stopPropagation();
                       deleteNotification(notification.id);

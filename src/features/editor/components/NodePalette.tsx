@@ -77,17 +77,17 @@ export function NodePalette({ onAddNode }: NodePaletteProps) {
   };
 
   return (
-    <div className="w-64 h-full bg-[var(--arch-bg)] border-r border-[var(--arch-border)] flex flex-col">
+    <div className="w-64 h-full bg-(--arch-bg) border-r border-(--arch-border) flex flex-col">
       {/* Header */}
-      <div className="p-4 border-b border-[var(--arch-border)]">
-        <h3 className="font-bold text-sm mb-3 text-[var(--arch-fg)] font-mono uppercase tracking-wider">Add Nodes</h3>
+      <div className="p-4 border-b border-(--arch-border)">
+        <h3 className="font-bold text-sm mb-3 text-(--arch-fg) font-mono uppercase tracking-wider">Add Nodes</h3>
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--arch-muted)]" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-(--arch-muted)" />
           <Input
             placeholder="SEARCH..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="pl-9 h-8 bg-[var(--arch-bg)] border-[var(--arch-border)] focus:border-[var(--arch-fg)] transition-all text-xs font-mono text-[var(--arch-fg)] rounded-none placeholder:text-[var(--arch-muted)]"
+            className="pl-9 h-8 bg-(--arch-bg) border-(--arch-border) focus:border-(--arch-fg) transition-all text-xs font-mono text-(--arch-fg) rounded-none placeholder:text-(--arch-muted)"
           />
         </div>
       </div>
@@ -98,7 +98,7 @@ export function NodePalette({ onAddNode }: NodePaletteProps) {
           {/* Triggers */}
           {filteredTriggers.length > 0 && (
             <div>
-              <h4 className="text-[10px] font-bold text-[var(--arch-muted)] uppercase tracking-wider mb-3 px-1 font-mono">
+              <h4 className="text-[10px] font-bold text-(--arch-muted) uppercase tracking-wider mb-3 px-1 font-mono">
                 Triggers
               </h4>
               <div className="space-y-2">
@@ -108,10 +108,10 @@ export function NodePalette({ onAddNode }: NodePaletteProps) {
                     onClick={() => onAddNode(node.type, "trigger")}
                     draggable
                     onDragStart={(e) => handleDragStart(e, node.type, "trigger")}
-                    className="w-full flex items-center gap-3 p-2.5 rounded-none border border-[var(--arch-border)] bg-[var(--arch-bg-secondary)] hover:bg-[var(--arch-fg)] hover:text-[var(--arch-bg)] text-[var(--arch-fg)] transition-colors duration-200 text-left group cursor-grab active:cursor-grabbing font-mono uppercase text-xs shadow-sm hover:shadow-none"
+                    className="w-full flex items-center gap-3 p-2.5 rounded-none border border-(--arch-border) bg-(--arch-bg-secondary) hover:bg-(--arch-fg) hover:text-(--arch-bg) text-(--arch-fg) transition-colors duration-200 text-left group cursor-grab active:cursor-grabbing font-mono uppercase text-xs shadow-sm hover:shadow-none"
                   >
                     <div className="p-1">
-                      <node.icon className="h-4 w-4 text-[var(--arch-fg)] group-hover:text-[var(--arch-bg)]" />
+                      <node.icon className="h-4 w-4 text-(--arch-fg) group-hover:text-(--arch-bg)" />
                     </div>
                     <div>
                       <span className="font-bold">{node.label}</span>
@@ -125,7 +125,7 @@ export function NodePalette({ onAddNode }: NodePaletteProps) {
           {/* Actions */}
           {filteredActions.length > 0 && (
             <div>
-              <h4 className="text-[10px] font-bold text-[var(--arch-muted)] uppercase tracking-wider mb-3 px-1 font-mono">
+              <h4 className="text-[10px] font-bold text-(--arch-muted) uppercase tracking-wider mb-3 px-1 font-mono">
                 Actions
               </h4>
               <div className="space-y-2">
@@ -135,10 +135,10 @@ export function NodePalette({ onAddNode }: NodePaletteProps) {
                     onClick={() => onAddNode(node.type, "action")}
                     draggable
                     onDragStart={(e) => handleDragStart(e, node.type, "action")}
-                    className="w-full flex items-center gap-3 p-2.5 rounded-none border border-[var(--arch-border)] bg-[var(--arch-bg-secondary)] hover:bg-[var(--arch-fg)] hover:text-[var(--arch-bg)] text-[var(--arch-fg)] transition-colors duration-200 text-left group cursor-grab active:cursor-grabbing font-mono uppercase text-xs shadow-sm hover:shadow-none"
+                    className="w-full flex items-center gap-3 p-2.5 rounded-none border border-(--arch-border) bg-(--arch-bg-secondary) hover:bg-(--arch-fg) hover:text-(--arch-bg) text-(--arch-fg) transition-colors duration-200 text-left group cursor-grab active:cursor-grabbing font-mono uppercase text-xs shadow-sm hover:shadow-none"
                   >
                     <div className="p-1">
-                      <node.icon className="h-4 w-4 text-[var(--arch-fg)] group-hover:text-[var(--arch-bg)]" />
+                      <node.icon className="h-4 w-4 text-(--arch-fg) group-hover:text-(--arch-bg)" />
                     </div>
                     <div>
                       <span className="font-bold">{node.label}</span>
@@ -151,7 +151,7 @@ export function NodePalette({ onAddNode }: NodePaletteProps) {
 
           {/* No results */}
           {filteredTriggers.length === 0 && filteredActions.length === 0 && (
-            <div className="text-center py-8 text-[var(--arch-muted)] font-mono">
+            <div className="text-center py-8 text-(--arch-muted) font-mono">
               <p className="text-xs">NO_NODES_FOUND</p>
             </div>
           )}
@@ -159,8 +159,8 @@ export function NodePalette({ onAddNode }: NodePaletteProps) {
       </div>
 
       {/* Drag hint */}
-      <div className="p-3 border-t border-[var(--arch-border)] bg-[var(--arch-bg)] z-10">
-        <p className="text-[10px] text-[var(--arch-muted)] text-center font-mono uppercase">
+      <div className="p-3 border-t border-(--arch-border) bg-(--arch-bg) z-10">
+        <p className="text-[10px] text-(--arch-muted) text-center font-mono uppercase">
           Drag to canvas
         </p>
       </div>

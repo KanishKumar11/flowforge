@@ -24,7 +24,7 @@ export default function SubscriptionPage() {
       <div className="flex-1 px-8 pb-8 overflow-auto">
         <div className="max-w-4xl mx-auto space-y-8">
           <div className="text-center space-y-4 mb-12">
-            <h2 className="text-4xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70 sm:text-5xl">
+            <h2 className="text-4xl font-bold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-foreground to-foreground/70 sm:text-5xl">
               Simple, transparent pricing
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -47,23 +47,23 @@ export default function SubscriptionPage() {
                 </div>
                 <div className="space-y-3">
                   <div className="flex items-center gap-3">
-                    <Check className="h-5 w-5 text-primary flex-shrink-0" />
+                    <Check className="h-5 w-5 text-primary shrink-0" />
                     <span>500 executions per month</span>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Check className="h-5 w-5 text-primary flex-shrink-0" />
+                    <Check className="h-5 w-5 text-primary shrink-0" />
                     <span>5 active workflows</span>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Check className="h-5 w-5 text-primary flex-shrink-0" />
+                    <Check className="h-5 w-5 text-primary shrink-0" />
                     <span>Basic integrations</span>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Check className="h-5 w-5 text-primary flex-shrink-0" />
+                    <Check className="h-5 w-5 text-primary shrink-0" />
                     <span>Community support</span>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Check className="h-5 w-5 text-primary flex-shrink-0" />
+                    <Check className="h-5 w-5 text-primary shrink-0" />
                     <span>7-day history retention</span>
                   </div>
                 </div>
@@ -77,13 +77,13 @@ export default function SubscriptionPage() {
 
             {/* Pro Plan */}
             <Card className="glass border-primary/50 shadow-2xl shadow-primary/10 relative overflow-hidden flex flex-col hover-lift transition-all">
-              <div className="absolute top-0 right-0 p-3 bg-gradient-to-bl from-primary to-purple-600 rounded-bl-2xl text-white text-xs font-bold shadow-lg">
+              <div className="absolute top-0 right-0 p-3 bg-linear-to-bl from-primary to-purple-600 rounded-bl-2xl text-white text-xs font-bold shadow-lg">
                 RECOMMENDED
               </div>
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-purple-500/5 pointer-events-none" />
+              <div className="absolute inset-0 bg-linear-to-br from-primary/5 to-purple-500/5 pointer-events-none" />
 
               <CardHeader>
-                <CardTitle className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-600">Pro</CardTitle>
+                <CardTitle className="text-2xl font-bold bg-clip-text text-transparent bg-linear-to-r from-primary to-purple-600">Pro</CardTitle>
                 <CardDescription className="text-base">
                   For professionals and growing teams
                 </CardDescription>
@@ -127,7 +127,7 @@ export default function SubscriptionPage() {
               </CardContent>
               <CardFooter className="relative">
                 <Button
-                  className="w-full bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 shadow-lg shadow-primary/25 border-0"
+                  className="w-full bg-linear-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 shadow-lg shadow-primary/25 border-0"
                   onClick={handleUpgrade}
                   disabled={isLoading}
                 >
