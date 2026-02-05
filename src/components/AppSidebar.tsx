@@ -85,11 +85,11 @@ export function AppSidebar() {
 
   const initials = user?.name
     ? user.name
-        .split(" ")
-        .map((n) => n[0])
-        .join("")
-        .toUpperCase()
-        .slice(0, 2)
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase()
+      .slice(0, 2)
     : "U";
 
   return (
@@ -140,11 +140,10 @@ export function AppSidebar() {
                       tooltip={item.label}
                       isActive={isActive}
                       asChild
-                      className={`h-10 px-3 gap-3 rounded-none transition-all duration-200 font-mono text-xs uppercase tracking-wider border-l-2 ${
-                        isActive
+                      className={`h-10 px-3 gap-3 rounded-none transition-all duration-200 font-mono text-xs uppercase tracking-wider border-l-2 ${isActive
                           ? "bg-(--arch-fg)/10 text-(--arch-fg) font-bold border-(--arch-fg)"
                           : "text-(--arch-muted) border-transparent hover:text-(--arch-fg) hover:bg-(--arch-fg)/5"
-                      }`}
+                        }`}
                     >
                       <Link href={item.href} prefetch>
                         <item.icon
@@ -163,25 +162,7 @@ export function AppSidebar() {
 
       {/* Footer with User & Actions */}
       <SidebarFooter className="border-t border-(--arch-border) p-4 bg-(--arch-bg)">
-        <SidebarMenu className="space-y-4">
-          {/* Upgrade Button - Styled as System Upgrade */}
-          {!isLoading && !hasActiveSubscription && (
-            <SidebarMenuItem>
-              <SidebarMenuButton
-                tooltip="Upgrade Protocol"
-                className="h-10 px-3 gap-3 rounded-none border border-(--arch-accent) text-(--arch-accent) hover:bg-(--arch-accent) hover:text-(--arch-bg) transition-all font-mono text-xs uppercase"
-                onClick={() => {
-                  authClient.checkout({
-                    slug: "pro",
-                  });
-                }}
-              >
-                <Sparkles className="w-4 h-4" />
-                {!isCollapsed && <span className="font-bold">UPGRADE_SYS</span>}
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          )}
-
+        <SidebarMenu>
           {/* User Menu */}
           <SidebarMenuItem>
             <DropdownMenu>
@@ -214,9 +195,9 @@ export function AppSidebar() {
               <DropdownMenuContent
                 align="end"
                 side="top"
-                className="w-56 rounded-none border-(--arch-border) bg-(--arch-bg) text-(--arch-fg) font-mono"
+                className="w-56 rounded-none border border-(--arch-border) bg-(--arch-bg) text-(--arch-fg) font-mono"
               >
-                <DropdownMenuLabel className="font-normal border-b border-(--arch-border) pb-2">
+                <DropdownMenuLabel className="font-normal border-b border-(--arch-border) pb-2 mb-2">
                   <div className="flex flex-col space-y-1">
                     <p className="text-xs font-bold uppercase">{user?.name}</p>
                     <p className="text-[10px] text-(--arch-muted)">
@@ -224,6 +205,23 @@ export function AppSidebar() {
                     </p>
                   </div>
                 </DropdownMenuLabel>
+
+                {!isLoading && !hasActiveSubscription && (
+                  <>
+                    <DropdownMenuItem
+                      className="focus:bg-(--arch-accent) focus:text-(--arch-bg) cursor-pointer text-xs uppercase text-(--arch-accent) font-bold"
+                      onClick={() => {
+                        authClient.checkout({
+                          slug: "pro",
+                        });
+                      }}
+                    >
+                      <Sparkles className="mr-2 h-3 w-3" />
+                      UPGRADE_SYS
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator className="bg-(--arch-border)" />
+                  </>
+                )}
 
                 <DropdownMenuItem className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs uppercase">
                   <User className="mr-2 h-3 w-3" />
@@ -237,7 +235,18 @@ export function AppSidebar() {
                   <CreditCard className="mr-2 h-3 w-3" />
                   CREDITS
                 </DropdownMenuItem>
+
                 <DropdownMenuSeparator className="bg-(--arch-border)" />
+
+                <DropdownMenuLabel className="text-[10px] text-(--arch-muted) uppercase tracking-wider">
+                  Theme_Mode
+                </DropdownMenuLabel>
+                <div className="flex items-center justify-between px-2 py-1.5">
+                  <ThemeToggle />
+                </div>
+
+                <DropdownMenuSeparator className="bg-(--arch-border)" />
+
                 <DropdownMenuItem
                   className="text-red-500 focus:bg-red-500 focus:text-white cursor-pointer text-xs uppercase"
                   onClick={() => {
@@ -260,4 +269,28 @@ export function AppSidebar() {
       </SidebarFooter>
     </Sidebar>
   );
+}
+
+function ThemeToggle() {
+  const { setTheme, theme } = useTheme();
+
+  return (
+    <div className="flex gap-1 w-full border border-(--arch-border) p-0.5 bg-(--arch-bg-secondary)">
+      {['light', 'dark', 'system'].map((mode) => (
+        <button
+          key={mode}
+          onClick={() => setTheme(mode)}
+          className={`flex-1 flex items-center justify-center p-1.5 transition-all text-[10px] uppercase font-mono ${theme === mode
+              ? 'bg-(--arch-fg) text-(--arch-bg) font-bold'
+              : 'text-(--arch-muted) hover:text-(--arch-fg)'
+            }`}
+          title={`Switch to ${mode} mode`}
+        >
+          {mode === 'light' && "LGT"}
+          {mode === 'dark' && "DRK"}
+          {mode === 'system' && "SYS"}
+        </button>
+      ))}
+    </div>
+  )
 }
