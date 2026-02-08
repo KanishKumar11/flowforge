@@ -95,7 +95,7 @@ export function AppSidebar() {
   return (
     <Sidebar
       collapsible="icon"
-      className="border-r border-(--arch-border) bg-(--arch-bg) text-(--arch-fg) transition-colors duration-500"
+      className="border-r border-(--arch-border) bg-(--arch-bg) text-(--arch-fg) transition-colors duration-500 no-print"
     >
       {/* Logo Header */}
       <SidebarHeader className="border-b border-(--arch-border) p-4">
@@ -141,8 +141,8 @@ export function AppSidebar() {
                       isActive={isActive}
                       asChild
                       className={`h-10 px-3 gap-3 rounded-none transition-all duration-200 font-mono text-xs uppercase tracking-wider border-l-2 ${isActive
-                          ? "bg-(--arch-fg)/10 text-(--arch-fg) font-bold border-(--arch-fg)"
-                          : "text-(--arch-muted) border-transparent hover:text-(--arch-fg) hover:bg-(--arch-fg)/5"
+                        ? "bg-(--arch-fg)/10 text-(--arch-fg) font-bold border-(--arch-fg)"
+                        : "text-(--arch-muted) border-transparent hover:text-(--arch-fg) hover:bg-(--arch-fg)/5"
                         }`}
                     >
                       <Link href={item.href} prefetch>
@@ -281,8 +281,8 @@ function ThemeToggle() {
           key={mode}
           onClick={() => setTheme(mode)}
           className={`flex-1 flex items-center justify-center p-1.5 transition-all text-[10px] uppercase font-mono ${theme === mode
-              ? 'bg-(--arch-fg) text-(--arch-bg) font-bold'
-              : 'text-(--arch-muted) hover:text-(--arch-fg)'
+            ? 'bg-(--arch-fg) text-(--arch-bg) font-bold'
+            : 'text-(--arch-muted) hover:text-(--arch-fg)'
             }`}
           title={`Switch to ${mode} mode`}
         >

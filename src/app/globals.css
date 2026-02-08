@@ -407,3 +407,406 @@ body {
 @utility animate-scanline {
   animation: scanline 4s linear infinite;
 }
+
+/* ============================================
+   PROJECT REPORT PRINT STYLES
+   Professional A4 Print Layout
+   ============================================ */
+
+/* Print-specific page setup */
+@media print {
+  @page {
+    size: A4;
+    margin: 0 !important; /* Remove browser margins to give full control to CSS */
+  }
+
+  /* First page - title page has no header/footer */
+  @page :first {
+    margin: 0 !important;
+  }
+
+  /* Named page for full-bleed printing (no margins) */
+  @page no-margin {
+    margin: 0 !important;
+    size: A4;
+  }
+
+  /* Utility to apply the named page */
+  .print-no-margin {
+    page: no-margin !important;
+  }
+
+  html, body {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    background: white !important;
+    /* Removed overrides to match screen design */
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Hide non-print elements */
+  .no-print,
+  nav,
+  button,
+  [data-sidebar],
+  [data-slot="sidebar"],
+  [data-slot="sidebar-gap"],
+  [data-slot="sidebar-container"],
+  [data-slot="sidebar-wrapper"] > .peer {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+
+  /* Force white background */
+  html, body, .min-h-screen, .report-container, .report-page, .report-section {
+    background: white !important;
+    background-color: white !important;
+  }
+
+  /* Make sure report container is visible */
+  .report-container {
+    display: block !important;
+    visibility: visible !important;
+    background: white !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Report pages should be visible */
+  .report-page,
+  .report-section {
+    display: block !important;
+    visibility: visible !important;
+    background: white !important;
+  }
+
+  /* Container adjustments for print */
+  .container {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Force min-h-screen container to be clean */
+  .min-h-screen {
+    background: white !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Page break controls */
+  .page-break-before {
+    page-break-before: always !important;
+    break-before: page !important;
+  }
+
+  .page-break-after {
+    page-break-after: always !important;
+    break-after: page !important;
+  }
+
+  .avoid-break {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  /* Report sections - Apply standard margins as padding, EXCEPT for custom layout pages */
+  .report-section:not(.print-no-margin) {
+    page-break-before: always !important;
+    padding: 5mm 5mm 5mm 5mm !important; /* Standard academic margins applied as padding */
+  }
+
+  .report-section.print-no-margin {
+    page-break-before: always !important;
+    /* No default padding - let component utility classes control it */
+  }
+
+  .report-section:first-child {
+    page-break-before: avoid !important;
+  }
+
+  /* Title page special styling - let component control layout */
+  .title-page {
+    page-break-after: always !important;
+    min-height: 100vh;
+    /* Removed flex overrides to let component control layout */
+  }
+
+  /* Full-page sections that need explicit height and flex layout */
+  .print-no-margin {
+    height: 297mm !important;
+    min-height: 297mm !important;
+    max-height: 297mm !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 0 !important; /* Override default .report-page padding */
+    margin: 0 !important;
+    /* justify-content: space-between !important; */
+  }
+
+  /* Images */
+  img {
+    max-width: 100% !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Tables */
+  table {
+    page-break-inside: auto !important;
+  }
+
+  tr {
+    page-break-inside: avoid !important;
+  }
+
+  thead {
+    display: table-header-group !important;
+  }
+
+  /* Code blocks */
+  pre,
+  code {
+    font-family: "Courier New", Courier, monospace !important;
+    font-size: 10pt !important;
+    background: #f5f5f5 !important;
+    border: 1px solid #ddd !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Headings */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+    color: black !important;
+  }
+
+  h1 {
+    font-size: 18pt !important;
+    margin-bottom: 1em !important;
+  }
+
+  h2 {
+    font-size: 16pt !important;
+    margin-bottom: 0.8em !important;
+  }
+
+  h3 {
+    font-size: 14pt !important;
+    margin-bottom: 0.6em !important;
+  }
+
+  /* Lists */
+  ul,
+  ol {
+    page-break-inside: avoid !important;
+  }
+
+  /* Links */
+  a {
+    color: black !important;
+    text-decoration: none !important;
+  }
+
+  a[href^="http"]:after {
+    content: " (" attr(href) ")";
+    font-size: 9pt;
+    color: #666;
+  }
+
+  /* Figures */
+  figure {
+    page-break-inside: avoid !important;
+    margin: 1em 0 !important;
+  }
+
+  figcaption {
+    font-style: italic;
+    text-align: center;
+    font-size: 10pt !important;
+  }
+}
+
+/* Report styling (screen + print) */
+.report-container {
+  max-width: 210mm;
+  margin: 0 auto;
+  background: white;
+  color: black;
+  font-family: "Times New Roman", Times, serif;
+}
+
+.report-page {
+  min-height: 297mm;
+  padding: 20mm 15mm 20mm 20mm;
+  position: relative;
+}
+
+/* Report headings */
+.report-h1 {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 24px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.report-h2 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #333;
+}
+
+.report-h3 {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.report-paragraph {
+  text-align: justify;
+  text-indent: 40px;
+  margin-bottom: 12px;
+  line-height: 1.8;
+}
+
+.report-list {
+  margin-left: 40px;
+  margin-bottom: 16px;
+}
+
+.report-list li {
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+
+/* Report tables */
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 11pt;
+}
+
+.report-table th,
+.report-table td {
+  border: 1px solid #333;
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.report-table th {
+  background: #f0f0f0;
+  font-weight: bold;
+}
+
+.report-table caption {
+  caption-side: bottom;
+  font-style: italic;
+  padding-top: 8px;
+  font-size: 10pt;
+}
+
+/* Signature section */
+.signature-section {
+  margin-top: 60px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.signature-box {
+  text-align: center;
+  width: 200px;
+}
+
+.signature-line {
+  border-top: 1px solid #333;
+  margin-top: 60px;
+  padding-top: 8px;
+}
+
+/* Code snippet styling */
+.code-snippet {
+  background: #f8f8f8;
+  border: 1px solid #ddd;
+  border-left: 4px solid #4a5568;
+  padding: 16px;
+  margin: 16px 0;
+  font-family: "Courier New", monospace;
+  font-size: 10pt;
+  overflow-x: auto;
+  white-space: pre-wrap;
+}
+
+.code-snippet-caption {
+  font-style: italic;
+  font-size: 10pt;
+  color: #666;
+  margin-top: 8px;
+  text-align: center;
+}
+
+/* Figure styling */
+.report-figure {
+  margin: 24px 0;
+  text-align: center;
+}
+
+.report-figure img {
+  max-width: 100%;
+  border: 1px solid #ddd;
+}
+
+.report-figure-caption {
+  font-style: italic;
+  font-size: 10pt;
+  margin-top: 8px;
+}
+
+/* Table of contents */
+.toc-entry {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+  border-bottom: 1px dotted #ccc;
+}
+
+.toc-title {
+  flex: 1;
+}
+
+.toc-page {
+  font-weight: bold;
+  min-width: 30px;
+  text-align: right;
+}
+
+/* Header and footer for print */
+.print-header {
+  position: running(header);
+  text-align: center;
+  font-size: 10pt;
+  border-bottom: 1px solid #333;
+  padding-bottom: 8px;
+}
+
+.print-footer {
+  position: running(footer);
+  text-align: center;
+  font-size: 10pt;
+  border-top: 1px solid #333;
+  padding-top: 8px;
+}
