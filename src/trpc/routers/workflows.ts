@@ -42,8 +42,11 @@ export const workflowsRouter = createTRPCRouter({
         });
       }
 
-      const plan = ((teamMember.team as any).plan?.toUpperCase() as keyof typeof PLANS) || "FREE";
-      const limit = PLANS[plan]?.limits.workflows || PLANS.FREE.limits.workflows;
+      const plan =
+        ((teamMember.team as any).plan?.toUpperCase() as keyof typeof PLANS) ||
+        "FREE";
+      const limit =
+        PLANS[plan]?.limits.workflows || PLANS.FREE.limits.workflows;
 
       // Count existing workflows
       const count = await prisma.workflow.count({
@@ -107,8 +110,6 @@ export const workflowsRouter = createTRPCRouter({
       return workflow;
     }),
 
-
-
   // ... existing imports
 
   // Create a new workflow
@@ -133,8 +134,11 @@ export const workflowsRouter = createTRPCRouter({
         });
       }
 
-      const plan = ((teamMember.team as any).plan?.toUpperCase() as keyof typeof PLANS) || "FREE";
-      const limit = PLANS[plan]?.limits.workflows || PLANS.FREE.limits.workflows;
+      const plan =
+        ((teamMember.team as any).plan?.toUpperCase() as keyof typeof PLANS) ||
+        "FREE";
+      const limit =
+        PLANS[plan]?.limits.workflows || PLANS.FREE.limits.workflows;
 
       // Count existing workflows
       const count = await prisma.workflow.count({
@@ -366,8 +370,13 @@ export const workflowsRouter = createTRPCRouter({
       });
 
       if (teamMember) {
-        const plan = ((teamMember.team as any).plan?.toUpperCase() as keyof typeof PLANS) || "FREE";
-        const limit = PLANS[plan]?.limits.executionsPerMonth || PLANS.FREE.limits.executionsPerMonth;
+        const plan =
+          ((
+            teamMember.team as any
+          ).plan?.toUpperCase() as keyof typeof PLANS) || "FREE";
+        const limit =
+          PLANS[plan]?.limits.executionsPerMonth ||
+          PLANS.FREE.limits.executionsPerMonth;
 
         const startOfMonth = new Date();
         startOfMonth.setDate(1);

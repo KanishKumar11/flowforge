@@ -734,7 +734,11 @@ export async function executeWorkflowDirect(
   workflowId: string,
   executionId: string,
   triggerData: Record<string, unknown> = {},
-): Promise<{ success: boolean; executionId: string; results: Record<string, unknown> }> {
+): Promise<{
+  success: boolean;
+  executionId: string;
+  results: Record<string, unknown>;
+}> {
   // Update execution status to running
   await prisma.execution.update({
     where: { id: executionId },
@@ -1010,14 +1014,10 @@ export const scheduledWorkflow = inngest.createFunction(
         });
 
         // Execute workflow directly
-        await executeWorkflowDirect(
-          schedule.workflowId,
-          execution.id,
-          {
-            scheduleId: schedule.id,
-            triggeredAt: new Date().toISOString(),
-          },
-        );
+        await executeWorkflowDirect(schedule.workflowId, execution.id, {
+          scheduleId: schedule.id,
+          triggeredAt: new Date().toISOString(),
+        });
 
         // Update next run time based on cron
         // In production, use a proper cron parser
