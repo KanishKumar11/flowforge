@@ -64,7 +64,7 @@ export const ActionNode = memo(function ActionNode({
     <div
       className={`px-4 py-3 rounded-none bg-(--arch-bg) border border-(--arch-border) shadow-sm min-w-[180px] group transition-all duration-300 ${selected
         ? "ring-1 ring-(--arch-fg) border-(--arch-fg)"
-        : "hover:border-(--arch-fg) hover:ring-1 hover:ring-(--arch-fg)/10"
+        : "hover:border-(--arch-fg) hover:ring-1 hover:ring-[rgba(var(--arch-fg-rgb)/0.1)]"
         }`}
     >
       <Handle

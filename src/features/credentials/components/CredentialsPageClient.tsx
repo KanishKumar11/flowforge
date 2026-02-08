@@ -205,7 +205,7 @@ export function CredentialsPageClient() {
           </div>
           <Button
             onClick={() => setShowCreateModal(true)}
-            className="gap-2 bg-(--arch-fg) text-(--arch-bg) hover:bg-(--arch-fg)/90 rounded-none border-0 font-mono uppercase text-xs h-10 px-6"
+            className="gap-2 bg-(--arch-fg) text-(--arch-bg) hover:bg-[rgba(var(--arch-fg-rgb)/0.9)] rounded-none border-0 font-mono uppercase text-xs h-10 px-6"
           >
             <Plus className="h-4 w-4" />
             New Credential
@@ -312,10 +312,10 @@ export function CredentialsPageClient() {
                   className="p-6 border border-(--arch-border) bg-(--arch-bg-secondary) space-y-4"
                 >
                   <div className="flex items-center gap-3">
-                    <Skeleton className="h-10 w-10 rounded-none bg-(--arch-muted)/20" />
+                    <Skeleton className="h-10 w-10 rounded-none bg-[rgba(var(--arch-muted-rgb)/0.2)]" />
                     <div className="space-y-2">
-                      <Skeleton className="h-4 w-24 bg-(--arch-muted)/20" />
-                      <Skeleton className="h-3 w-16 bg-(--arch-muted)/20" />
+                      <Skeleton className="h-4 w-24 bg-[rgba(var(--arch-muted-rgb)/0.2)]" />
+                      <Skeleton className="h-3 w-16 bg-[rgba(var(--arch-muted-rgb)/0.2)]" />
                     </div>
                   </div>
                 </div>
@@ -325,7 +325,7 @@ export function CredentialsPageClient() {
 
           {/* Empty State */}
           {!isLoading && credentials?.length === 0 && (
-            <div className="border border-(--arch-border) border-dashed p-12 bg-(--arch-bg-secondary)/50 text-center">
+            <div className="border border-(--arch-border) border-dashed p-12 bg-[rgba(var(--arch-bg-secondary-rgb)/0.5)] text-center">
               <div className="flex items-center justify-center w-16 h-16 bg-(--arch-bg) border border-(--arch-border) mx-auto mb-6">
                 <KeyRound className="w-8 h-8 text-(--arch-fg)" />
               </div>
@@ -338,7 +338,7 @@ export function CredentialsPageClient() {
               </p>
               <Button
                 onClick={() => setShowCreateModal(true)}
-                className="bg-(--arch-fg) text-(--arch-bg) hover:bg-(--arch-fg)/90 rounded-none font-mono uppercase text-xs h-10 px-8"
+                className="bg-(--arch-fg) text-(--arch-bg) hover:bg-[rgba(var(--arch-fg-rgb)/0.9)] rounded-none font-mono uppercase text-xs h-10 px-8"
               >
                 <Plus className="w-4 h-4 mr-2" />
                 Initialize Storage
@@ -380,7 +380,7 @@ export function CredentialsPageClient() {
                               <Button
                                 variant="ghost"
                                 size="icon"
-                                className="h-8 w-8 text-(--arch-muted) hover:text-(--arch-fg) hover:bg-(--arch-fg)/10 rounded-none"
+                                className="h-8 w-8 text-(--arch-muted) hover:text-(--arch-fg) hover:bg-[rgba(var(--arch-fg-rgb)/0.1)] rounded-none"
                               >
                                 <MoreVertical className="h-4 w-4" />
                               </Button>
@@ -613,7 +613,7 @@ export function CredentialsPageClient() {
             <Button
               variant="ghost"
               onClick={handleCloseModal}
-              className="text-(--arch-muted) hover:text-(--arch-fg) hover:bg-(--arch-fg)/10 font-mono uppercase text-xs rounded-none"
+              className="text-(--arch-muted) hover:text-(--arch-fg) hover:bg-[rgba(var(--arch-fg-rgb)/0.1)] font-mono uppercase text-xs rounded-none"
             >
               Cancel
             </Button>
@@ -624,7 +624,7 @@ export function CredentialsPageClient() {
                 createCredential.isPending ||
                 updateCredential.isPending
               }
-              className="bg-(--arch-fg) text-(--arch-bg) hover:bg-(--arch-fg)/90 rounded-none font-mono uppercase text-xs px-6 shadow-[0_0_10px_rgba(74,222,128,0.3)]"
+              className="bg-(--arch-fg) text-(--arch-bg) hover:bg-[rgba(var(--arch-fg-rgb)/0.9)] rounded-none font-mono uppercase text-xs px-6 shadow-[0_0_10px_rgba(74,222,128,0.3)]"
             >
               {(createCredential.isPending || updateCredential.isPending) && (
                 <Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" />

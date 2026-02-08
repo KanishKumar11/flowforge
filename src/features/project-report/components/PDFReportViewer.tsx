@@ -40,7 +40,7 @@ export default function PDFReportViewer() {
       const arrayBuffer = await blob.arrayBuffer();
 
       // Step 2: Post-process with pdf-lib to add page numbers
-      const processedBytes = await addPageNumbers(arrayBuffer, 19);
+      const processedBytes = await addPageNumbers(arrayBuffer, 24);
 
       // Step 3: Create blob URL for display/download
       const processedBlob = new Blob([processedBytes as BlobPart], {

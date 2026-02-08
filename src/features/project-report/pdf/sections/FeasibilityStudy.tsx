@@ -4,6 +4,10 @@ import { View, Text } from "@react-pdf/renderer";
 import { styles } from "../styles";
 import BookPageLayout from "../components/BookPageLayout";
 import SWOTDiagram from "../diagrams/SWOTDiagram";
+import TechFeasibilityRadar from "../diagrams/TechFeasibilityRadar";
+import CostBreakdownChart from "../diagrams/CostBreakdownChart";
+import ScheduleTimeline from "../diagrams/ScheduleTimeline";
+import FeasibilityScorecard from "../diagrams/FeasibilityScorecard";
 
 /**
  * Chapter 4: Feasibility Study (7 pages)
@@ -544,6 +548,23 @@ export default function FeasibilityStudy() {
         </Text>
       </View>
 
+      <View
+        wrap={false}
+        style={{ alignItems: "center", marginTop: 16, marginBottom: 8 }}
+      >
+        <TechFeasibilityRadar />
+      </View>
+      <Text
+        style={{
+          fontSize: 9,
+          fontFamily: "Times-Italic",
+          textAlign: "center",
+          marginBottom: 12,
+        }}
+      >
+        Figure 4.1: Technical Feasibility Radar Assessment
+      </Text>
+
       <Text style={styles.h3}>4.3 Economic Feasibility</Text>
       <Text style={styles.paragraphIndent}>
         Economic feasibility analyzes the costs and benefits of the project to
@@ -614,6 +635,11 @@ export default function FeasibilityStudy() {
             "INR2,40,000 (imputed)",
           ],
           [
+            "Hardware",
+            "Laptop (one-time, amortized over project)",
+            "INR65,000 (one-time)",
+          ],
+          [
             "Development Tools",
             "VS Code, Git, Browser DevTools",
             "INR0 (Free)",
@@ -625,7 +651,7 @@ export default function FeasibilityStudy() {
             key={i}
             style={{
               flexDirection: "row",
-              borderBottomWidth: i < 3 ? 1 : 0,
+              borderBottomWidth: i < 4 ? 1 : 0,
               borderBottomColor: "#cccccc",
             }}
           >
@@ -926,7 +952,7 @@ export default function FeasibilityStudy() {
               • Portfolio project
             </Text>
             <Text style={{ fontSize: 8, marginBottom: 2 }}>
-              • Open-source contribution
+              • Potential SaaS product launch
             </Text>
             <Text style={{ fontSize: 8, marginBottom: 2 }}>
               • Potential commercial value
@@ -968,6 +994,23 @@ export default function FeasibilityStudy() {
           scalable with usage.
         </Text>
       </View>
+
+      <View
+        wrap={false}
+        style={{ alignItems: "center", marginTop: 16, marginBottom: 8 }}
+      >
+        <CostBreakdownChart />
+      </View>
+      <Text
+        style={{
+          fontSize: 9,
+          fontFamily: "Times-Italic",
+          textAlign: "center",
+          marginBottom: 12,
+        }}
+      >
+        Figure 4.2: Project Cost Breakdown
+      </Text>
 
       <Text style={styles.h3}>4.4 Operational Feasibility</Text>
       <Text style={styles.paragraphIndent}>
@@ -1366,6 +1409,23 @@ export default function FeasibilityStudy() {
         </Text>
       </View>
 
+      <View
+        wrap={false}
+        style={{ alignItems: "center", marginTop: 16, marginBottom: 8 }}
+      >
+        <ScheduleTimeline />
+      </View>
+      <Text
+        style={{
+          fontSize: 9,
+          fontFamily: "Times-Italic",
+          textAlign: "center",
+          marginBottom: 12,
+        }}
+      >
+        Figure 4.3: 12-Week Project Schedule Timeline
+      </Text>
+
       <Text style={styles.h3}>4.6 Legal Feasibility</Text>
       <Text style={styles.paragraphIndent}>
         Legal feasibility examines regulatory, licensing, and compliance
@@ -1567,7 +1627,7 @@ export default function FeasibilityStudy() {
             marginBottom: 12,
           }}
         >
-          Figure 4.1: SWOT Analysis Matrix
+          Figure 4.4: SWOT Analysis Matrix
         </Text>
       </View>
 
@@ -1686,6 +1746,23 @@ export default function FeasibilityStudy() {
         }}
       >
         Table 4.4: Feasibility Summary
+      </Text>
+
+      <View
+        wrap={false}
+        style={{ alignItems: "center", marginTop: 16, marginBottom: 8 }}
+      >
+        <FeasibilityScorecard />
+      </View>
+      <Text
+        style={{
+          fontSize: 9,
+          fontFamily: "Times-Italic",
+          textAlign: "center",
+          marginBottom: 12,
+        }}
+      >
+        Figure 4.5: Feasibility Assessment Scorecard
       </Text>
 
       <Text style={styles.h3}>4.9 Conclusion</Text>

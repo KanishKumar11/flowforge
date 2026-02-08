@@ -72,7 +72,7 @@ export default function MarketGrowthChart() {
               textAnchor="end"
               style={{ fontSize: 7, fontFamily: "Times-Roman", fill: "#888" }}
             >
-              ${val}B
+              {`$${val}B`}
             </SvgText>
           </G>
         );
@@ -136,7 +136,7 @@ export default function MarketGrowthChart() {
                 fill: "#333",
               }}
             >
-              ${d.value}B
+              {`$${d.value}B`}
             </SvgText>
             {/* Year label */}
             <SvgText

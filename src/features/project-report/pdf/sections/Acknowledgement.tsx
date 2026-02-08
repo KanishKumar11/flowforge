@@ -42,9 +42,9 @@ export default function Acknowledgement({ pageNumber }: AcknowledgementProps) {
 
         <Text style={[styles.paragraph, { marginTop: 14 }]}>
           I would like to express my sincere thanks to the Head of Department,{" "}
-          <Text style={styles.bold}>Dr. Rama Sharma</Text>, Department of
-          Computer Applications, for providing this opportunity and for the
-          necessary support and facilities during the project work.
+          <Text style={styles.bold}>Dr. Rama Sharma</Text>, PG Department of
+          Computer Science & Applications, for providing this opportunity and
+          for the necessary support and facilities during the project work.
         </Text>
 
         <Text style={[styles.paragraph, { marginTop: 14 }]}>

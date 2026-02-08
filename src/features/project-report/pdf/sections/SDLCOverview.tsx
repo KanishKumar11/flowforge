@@ -10,7 +10,7 @@ import SDLCDiagram from "../diagrams/SDLCDiagram";
  */
 export default function SDLCOverview() {
   return (
-    <BookPageLayout chapterTitle="SDLC" chapterNum="05">
+    <BookPageLayout chapterTitle="SDLC" chapterNum="06">
       {/* Chapter Title */}
       <View style={{ alignItems: "center", marginBottom: 32 }}>
         <Text
@@ -40,8 +40,8 @@ export default function SDLCOverview() {
         <View style={{ width: 60, height: 3, backgroundColor: "#000000" }} />
       </View>
 
-      {/* 5.1 Introduction */}
-      <Text style={styles.h2}>5.1 Introduction to SDLC</Text>
+      {/* 6.1 Introduction */}
+      <Text style={styles.h2}>6.1 Introduction to SDLC</Text>
       <Text style={styles.paragraphIndent}>
         The Software Development Life Cycle (SDLC) is a comprehensive framework
         that defines the processes and activities involved in developing
@@ -65,8 +65,8 @@ export default function SDLCOverview() {
         software that truly meets user needs.
       </Text>
 
-      {/* 5.1.1 Importance of SDLC */}
-      <Text style={styles.h3}>5.1.1 Importance of SDLC</Text>
+      {/* 6.1.1 Importance of SDLC */}
+      <Text style={styles.h3}>6.1.1 Importance of SDLC</Text>
       <Text style={styles.paragraphIndent}>
         Following a structured SDLC methodology provides numerous benefits that
         contribute to project success. These benefits are particularly relevant
@@ -74,7 +74,7 @@ export default function SDLCOverview() {
         integration points, and user-facing features.
       </Text>
 
-      <Text style={styles.h3}>5.1.1.1 Quality Assurance</Text>
+      <Text style={styles.h3}>6.1.1.1 Quality Assurance</Text>
       <Text style={styles.paragraphIndent}>
         A structured SDLC incorporates quality checkpoints at each phase,
         ensuring that defects are identified and addressed early when they are
@@ -84,7 +84,7 @@ export default function SDLCOverview() {
         critical bugs in production.
       </Text>
 
-      <Text style={styles.h3}>5.1.1.2 Risk Management</Text>
+      <Text style={styles.h3}>6.1.1.2 Risk Management</Text>
       <Text style={styles.paragraphIndent}>
         By requiring feasibility analysis and careful planning before
         implementation, the SDLC helps identify and mitigate risks early.
@@ -94,7 +94,7 @@ export default function SDLCOverview() {
         implementation.
       </Text>
 
-      <Text style={styles.h3}>5.1.1.3 Resource Optimization</Text>
+      <Text style={styles.h3}>6.1.1.3 Resource Optimization</Text>
       <Text style={styles.paragraphIndent}>
         Clear phase definitions and deliverables enable efficient allocation of
         time and effort. Rather than pursuing multiple directions
@@ -104,7 +104,7 @@ export default function SDLCOverview() {
       </Text>
 
       <Text style={styles.h3}>
-        5.1.1.4 Documentation and Knowledge Transfer
+        6.1.1.4 Documentation and Knowledge Transfer
       </Text>
       <Text style={styles.paragraphIndent}>
         SDLC phases produce documentation artifacts that capture decisions,
@@ -113,8 +113,8 @@ export default function SDLCOverview() {
         maintenance, and facilitating knowledge transfer to future maintainers.
       </Text>
 
-      {/* 5.1.2 SDLC Phases Overview */}
-      <Text style={styles.h3}>5.1.2 SDLC Phases Overview</Text>
+      {/* 6.1.2 SDLC Phases Overview */}
+      <Text style={styles.h3}>6.1.2 SDLC Phases Overview</Text>
       <Text style={styles.paragraphIndent}>
         The development of Flowgent followed a six-phase SDLC model, each phase
         producing specific deliverables that informed and enabled subsequent
@@ -273,12 +273,12 @@ export default function SDLCOverview() {
         Table 5.1: SDLC Phases and Deliverables Overview
       </Text>
 
-      {/* 5.1.3 Phase Descriptions */}
-      <Text style={styles.h3}>5.1.3 Phase Descriptions</Text>
+      {/* 6.1.3 Phase Descriptions */}
+      <Text style={styles.h3}>6.1.3 Phase Descriptions</Text>
 
       {/* Phase 1: Requirements */}
       <Text style={styles.h3}>
-        5.1.3.1 Phase 1: Requirement Gathering and Analysis
+        6.1.3.1 Phase 1: Requirement Gathering and Analysis
       </Text>
       <Text style={styles.paragraphIndent}>
         The requirements phase focused on understanding the problem domain,
@@ -325,12 +325,12 @@ export default function SDLCOverview() {
           marginBottom: 12,
         }}
       >
-        Detailed coverage: Section 5.3 (Requirement Gathering), Section 5.4
+        Detailed coverage: Section 6.3 (Requirement Gathering), Section 6.4
         (SRS)
       </Text>
 
       {/* Phase 2: Feasibility */}
-      <Text style={styles.h3}>5.1.3.2 Phase 2: Feasibility Study</Text>
+      <Text style={styles.h3}>6.1.3.2 Phase 2: Feasibility Study</Text>
       <Text style={styles.paragraphIndent}>
         The feasibility study evaluated whether the project could be completed
         successfully given the available resources, technologies, and timeline.
@@ -376,7 +376,7 @@ export default function SDLCOverview() {
       </Text>
 
       {/* Phase 3: Design */}
-      <Text style={styles.h3}>5.1.3.3 Phase 3: System Design</Text>
+      <Text style={styles.h3}>6.1.3.3 Phase 3: System Design</Text>
       <Text style={styles.paragraphIndent}>
         The design phase translated requirements into a detailed technical
         blueprint for the system. This included high-level architecture design,
@@ -424,7 +424,7 @@ export default function SDLCOverview() {
       </Text>
 
       {/* Phase 4: Development */}
-      <Text style={styles.h3}>5.1.3.4 Phase 4: Development (Coding)</Text>
+      <Text style={styles.h3}>6.1.3.4 Phase 4: Development (Coding)</Text>
       <Text style={styles.paragraphIndent}>
         The development phase implemented the designed system following the
         Agile methodology with iterative sprints. This phase produced the actual
@@ -470,12 +470,12 @@ export default function SDLCOverview() {
           marginBottom: 12,
         }}
       >
-        Detailed coverage: Section 5.2 (Process Model), Chapter 8
+        Detailed coverage: Section 6.2 (Process Model), Chapter 8
         (Implementation)
       </Text>
 
       {/* Phase 5: Testing */}
-      <Text style={styles.h3}>5.1.3.5 Phase 5: Testing</Text>
+      <Text style={styles.h3}>6.1.3.5 Phase 5: Testing</Text>
       <Text style={styles.paragraphIndent}>
         The testing phase validated that the implemented system met its
         requirements and functioned correctly under various conditions. Testing
@@ -521,7 +521,7 @@ export default function SDLCOverview() {
       </Text>
 
       {/* Phase 6: Deployment */}
-      <Text style={styles.h3}>5.1.3.6 Phase 6: Deployment</Text>
+      <Text style={styles.h3}>6.1.3.6 Phase 6: Deployment</Text>
       <Text style={styles.paragraphIndent}>
         The deployment phase prepared the application for production use,
         establishing the necessary infrastructure, configuration, and monitoring
@@ -558,8 +558,8 @@ export default function SDLCOverview() {
         Deployment Documentation, Monitoring Dashboard
       </Text>
 
-      {/* 5.1.4 Phase Duration and Timeline */}
-      <Text style={styles.h3}>5.1.4 Phase Duration and Timeline</Text>
+      {/* 6.1.4 Phase Duration and Timeline */}
+      <Text style={styles.h3}>6.1.4 Phase Duration and Timeline</Text>
       <Text style={styles.paragraphIndent}>
         The project was completed over a 12-week period, with time allocated to
         each phase based on its complexity and dependencies. The following table
@@ -707,8 +707,8 @@ export default function SDLCOverview() {
         Table 5.2: SDLC Phase Duration and Timeline
       </Text>
 
-      {/* 5.1.5 Summary */}
-      <Text style={styles.h3}>5.1.5 Summary</Text>
+      {/* 6.1.5 Summary */}
+      <Text style={styles.h3}>6.1.5 Summary</Text>
       <Text style={styles.paragraphIndent}>
         This section has provided an overview of the Software Development Life
         Cycle followed in the development of the Flowgent platform. The

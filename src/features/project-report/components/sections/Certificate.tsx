@@ -20,22 +20,25 @@ export default function Certificate() {
         <div className="max-w-3xl mx-auto space-y-5 text-justify leading-relaxed">
           <p className="report-paragraph text-base">
             This is to certify that the project report entitled{" "}
-            <strong>"FLOWGENT 1.0 - Visual Workflow Automation Platform"</strong>{" "}
-            submitted by <strong>Kanish Kumar</strong>{" "}
-            (Roll No: <strong>11792312331</strong>) is a bonafide work carried out by
-            the candidate under our supervision and guidance.
+            <strong>
+              "FLOWGENT 1.0 - Visual Workflow Automation Platform"
+            </strong>{" "}
+            submitted by <strong>Kanish Kumar</strong> (Roll No:{" "}
+            <strong>11792312331</strong>) is a bonafide work carried out by the
+            candidate under our supervision and guidance.
           </p>
 
           <p className="report-paragraph text-base">
             This project is submitted in partial fulfillment of the requirements
-            for the award of the degree of <strong>Bachelor of Computer Applications (BCA)</strong>{" "}
-            from <strong>Hindu College, Amritsar</strong>.
+            for the award of the degree of{" "}
+            <strong>Bachelor of Computer Applications (BCA)</strong> from{" "}
+            <strong>Hindu College, Amritsar</strong>.
           </p>
 
           <p className="report-paragraph text-base">
-            To the best of our knowledge, the work presented in this project report
-            is original and has not been submitted previously for any other degree
-            or diploma.
+            To the best of our knowledge, the work presented in this project
+            report is original and has not been submitted previously for any
+            other degree or diploma.
           </p>
 
           <p className="report-paragraph text-base font-medium text-center mt-6 border border-gray-300 py-3 px-6">
@@ -65,7 +68,9 @@ export default function Certificate() {
             <div className="w-36 border-b-2 border-black mx-auto mb-2" />
             <p className="font-bold text-black">Dr. Rama Sharma</p>
             <p className="text-gray-600 text-sm">Head of Department</p>
-            <p className="text-gray-500 text-xs">Department of Computer Applications</p>
+            <p className="text-gray-500 text-xs">
+              PG Department of Computer Science & Applications
+            </p>
           </div>
 
           {/* Principal */}
@@ -79,7 +84,11 @@ export default function Certificate() {
         {/* Seal placeholder */}
         <div className="flex justify-center mt-10">
           <div className="w-20 h-20 rounded-full border-2 border-dashed border-gray-400 flex items-center justify-center">
-            <p className="text-gray-400 text-xs text-center">College<br />Seal</p>
+            <p className="text-gray-400 text-xs text-center">
+              College
+              <br />
+              Seal
+            </p>
           </div>
         </div>
       </div>

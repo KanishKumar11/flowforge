@@ -108,7 +108,7 @@ export function CreateWorkflowModal({
             <Button
               type="submit"
               disabled={!name.trim() || isLoading || externalIsLoading}
-              className="bg-(--arch-fg) text-(--arch-bg) hover:bg-(--arch-fg)/90 font-mono uppercase text-xs rounded-none h-9 transition-colors disabled:opacity-50"
+              className="bg-(--arch-fg) text-(--arch-bg) hover:bg-[rgba(var(--arch-fg-rgb)/0.9)] font-mono uppercase text-xs rounded-none h-9 transition-colors disabled:opacity-50"
             >
               {(isLoading || externalIsLoading) && (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />

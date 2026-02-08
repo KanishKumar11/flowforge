@@ -18,27 +18,30 @@ const SchemaTable = ({
       wrap={false}
       style={{
         borderWidth: 1,
-        borderColor: "#333333",
+        borderColor: "#d1d5db",
         marginTop: 8,
         marginBottom: 4,
+        borderRadius: 2,
+        overflow: "hidden",
       }}
     >
       {/* Table name header */}
       <View
         style={{
           flexDirection: "row",
-          backgroundColor: "#e8e8e8",
+          backgroundColor: "#1e40af",
           borderBottomWidth: 1,
-          borderBottomColor: "#333333",
+          borderBottomColor: "#1e3a8a",
         }}
       >
         <Text
           style={{
             width: "100%",
-            padding: 4,
+            padding: 5,
             fontSize: 9,
             fontFamily: "Times-Bold",
             textAlign: "center",
+            color: "#ffffff",
           }}
         >
           {tableName}
@@ -48,9 +51,9 @@ const SchemaTable = ({
       <View
         style={{
           flexDirection: "row",
-          backgroundColor: "#f0f0f0",
+          backgroundColor: "#eff6ff",
           borderBottomWidth: 1,
-          borderBottomColor: "#333333",
+          borderBottomColor: "#bfdbfe",
         }}
       >
         <Text
@@ -60,7 +63,8 @@ const SchemaTable = ({
             fontSize: 9,
             fontFamily: "Times-Bold",
             borderRightWidth: 1,
-            borderRightColor: "#333333",
+            borderRightColor: "#bfdbfe",
+            color: "#1e40af",
           }}
         >
           Field
@@ -72,7 +76,8 @@ const SchemaTable = ({
             fontSize: 9,
             fontFamily: "Times-Bold",
             borderRightWidth: 1,
-            borderRightColor: "#333333",
+            borderRightColor: "#bfdbfe",
+            color: "#1e40af",
           }}
         >
           Type
@@ -83,6 +88,7 @@ const SchemaTable = ({
             padding: 4,
             fontSize: 9,
             fontFamily: "Times-Bold",
+            color: "#1e40af",
           }}
         >
           Constraints
@@ -95,7 +101,8 @@ const SchemaTable = ({
           style={{
             flexDirection: "row",
             borderBottomWidth: i < fields.length - 1 ? 1 : 0,
-            borderBottomColor: "#cccccc",
+            borderBottomColor: "#e5e7eb",
+            backgroundColor: i % 2 === 0 ? "#ffffff" : "#f9fafb",
           }}
         >
           <Text
@@ -105,7 +112,7 @@ const SchemaTable = ({
               fontSize: 7,
               fontFamily: "Courier",
               borderRightWidth: 1,
-              borderRightColor: "#cccccc",
+              borderRightColor: "#e5e7eb",
             }}
           >
             {row[0]}
@@ -116,7 +123,7 @@ const SchemaTable = ({
               padding: 3,
               fontSize: 7,
               borderRightWidth: 1,
-              borderRightColor: "#cccccc",
+              borderRightColor: "#e5e7eb",
             }}
           >
             {row[1]}
@@ -155,26 +162,29 @@ const EnumTable = ({
       wrap={false}
       style={{
         borderWidth: 1,
-        borderColor: "#333333",
+        borderColor: "#d1d5db",
         marginTop: 8,
         marginBottom: 4,
+        borderRadius: 2,
+        overflow: "hidden",
       }}
     >
       <View
         style={{
           flexDirection: "row",
-          backgroundColor: "#e8e8e8",
+          backgroundColor: "#7c3aed",
           borderBottomWidth: 1,
-          borderBottomColor: "#333333",
+          borderBottomColor: "#6d28d9",
         }}
       >
         <Text
           style={{
             width: "100%",
-            padding: 4,
+            padding: 5,
             fontSize: 9,
             fontFamily: "Times-Bold",
             textAlign: "center",
+            color: "#ffffff",
           }}
         >
           {enumName}
@@ -183,9 +193,9 @@ const EnumTable = ({
       <View
         style={{
           flexDirection: "row",
-          backgroundColor: "#f0f0f0",
+          backgroundColor: "#f5f3ff",
           borderBottomWidth: 1,
-          borderBottomColor: "#333333",
+          borderBottomColor: "#ddd6fe",
         }}
       >
         <Text
@@ -195,7 +205,8 @@ const EnumTable = ({
             fontSize: 9,
             fontFamily: "Times-Bold",
             borderRightWidth: 1,
-            borderRightColor: "#333333",
+            borderRightColor: "#ddd6fe",
+            color: "#6d28d9",
           }}
         >
           Value
@@ -206,6 +217,7 @@ const EnumTable = ({
             padding: 4,
             fontSize: 9,
             fontFamily: "Times-Bold",
+            color: "#6d28d9",
           }}
         >
           Description
@@ -217,7 +229,8 @@ const EnumTable = ({
           style={{
             flexDirection: "row",
             borderBottomWidth: i < values.length - 1 ? 1 : 0,
-            borderBottomColor: "#cccccc",
+            borderBottomColor: "#e5e7eb",
+            backgroundColor: i % 2 === 0 ? "#ffffff" : "#faf5ff",
           }}
         >
           <Text
@@ -227,7 +240,7 @@ const EnumTable = ({
               fontSize: 7,
               fontFamily: "Courier",
               borderRightWidth: 1,
-              borderRightColor: "#cccccc",
+              borderRightColor: "#e5e7eb",
             }}
           >
             {row[0]}
@@ -271,7 +284,7 @@ const GroupHeading = ({ children }: { children: string }) => (
 export default function DatabaseSchemaSection() {
   return (
     <View>
-      <Text style={styles.h3}>6.6.1 Complete Database Schema</Text>
+      <Text style={styles.h3}>7.6.1 Complete Database Schema</Text>
       <Text style={styles.paragraphIndent}>
         The following tables define the complete database schema for the
         Flowgent platform, organized by functional domain. Each table includes
@@ -284,7 +297,7 @@ export default function DatabaseSchemaSection() {
 
       <SchemaTable
         tableName="User"
-        tableNum="6.4"
+        tableNum="7.4"
         fields={[
           ["id", "String", "PK, Default: cuid()"],
           ["email", "String", "Unique, Not Null"],
@@ -298,7 +311,7 @@ export default function DatabaseSchemaSection() {
 
       <SchemaTable
         tableName="Session"
-        tableNum="6.5"
+        tableNum="7.5"
         fields={[
           ["id", "String", "PK, Default: cuid()"],
           ["expiresAt", "DateTime", "Not Null"],
@@ -313,7 +326,7 @@ export default function DatabaseSchemaSection() {
 
       <SchemaTable
         tableName="Account"
-        tableNum="6.6"
+        tableNum="7.6"
         fields={[
           ["id", "String", "PK, Default: cuid()"],
           ["accountId", "String", "Not Null"],
@@ -333,7 +346,7 @@ export default function DatabaseSchemaSection() {
 
       <SchemaTable
         tableName="Verification"
-        tableNum="6.7"
+        tableNum="7.7"
         fields={[
           ["id", "String", "PK, Default: cuid()"],
           ["identifier", "String", "Not Null"],
@@ -349,7 +362,7 @@ export default function DatabaseSchemaSection() {
 
       <SchemaTable
         tableName="Workflow"
-        tableNum="6.8"
+        tableNum="7.8"
         fields={[
           ["id", "String", "PK, Default: cuid()"],
           ["name", "String", "Not Null"],
@@ -376,7 +389,7 @@ export default function DatabaseSchemaSection() {
 
       <SchemaTable
         tableName="Execution"
-        tableNum="6.9"
+        tableNum="7.9"
         fields={[
           ["id", "String", "PK, Default: cuid()"],
           ["status", "ExecutionStatus", "Not Null, Enum, Default: PENDING"],
@@ -397,7 +410,7 @@ export default function DatabaseSchemaSection() {
 
       <SchemaTable
         tableName="AuditLog"
-        tableNum="6.10"
+        tableNum="7.10"
         fields={[
           ["id", "String", "PK, Default: cuid()"],
           ["action", "String", "Not Null"],
@@ -416,7 +429,7 @@ export default function DatabaseSchemaSection() {
 
       <SchemaTable
         tableName="Credential"
-        tableNum="6.11"
+        tableNum="7.11"
         fields={[
           ["id", "String", "PK, Default: cuid()"],
           ["name", "String", "Not Null"],
@@ -436,7 +449,7 @@ export default function DatabaseSchemaSection() {
 
       <SchemaTable
         tableName="Schedule"
-        tableNum="6.12"
+        tableNum="7.12"
         fields={[
           ["id", "String", "PK, Default: cuid()"],
           ["cronExpression", "String", "Not Null"],
@@ -452,7 +465,7 @@ export default function DatabaseSchemaSection() {
 
       <SchemaTable
         tableName="WebhookEndpoint"
-        tableNum="6.13"
+        tableNum="7.13"
         fields={[
           ["id", "String", "PK, Default: cuid()"],
           ["path", "String", "Unique, Not Null"],
@@ -472,7 +485,7 @@ export default function DatabaseSchemaSection() {
 
       <SchemaTable
         tableName="Team"
-        tableNum="6.14"
+        tableNum="7.14"
         fields={[
           ["id", "String", "PK, Default: cuid()"],
           ["name", "String", "Not Null"],
@@ -487,7 +500,7 @@ export default function DatabaseSchemaSection() {
 
       <SchemaTable
         tableName="Invitation"
-        tableNum="6.15"
+        tableNum="7.15"
         fields={[
           ["id", "String", "PK, Default: cuid()"],
           ["email", "String", "Not Null"],
@@ -501,7 +514,7 @@ export default function DatabaseSchemaSection() {
 
       <SchemaTable
         tableName="TeamMember"
-        tableNum="6.16"
+        tableNum="7.16"
         fields={[
           ["id", "String", "PK, Default: cuid()"],
           ["role", "TeamRole", "Not Null, Enum, Default: MEMBER"],
@@ -516,7 +529,7 @@ export default function DatabaseSchemaSection() {
 
       <SchemaTable
         tableName="WorkflowVersion"
-        tableNum="6.17"
+        tableNum="7.17"
         fields={[
           ["id", "String", "PK, Default: cuid()"],
           ["versionNum", "Int", "Not Null"],
@@ -531,8 +544,8 @@ export default function DatabaseSchemaSection() {
         ]}
       />
 
-      {/* ─── 6.6.2 Enumerations ────────────────────────────────────── */}
-      <Text style={styles.h3}>6.6.2 Enumerations</Text>
+      {/* ─── 7.6.2 Enumerations ────────────────────────────────────── */}
+      <Text style={styles.h3}>7.6.2 Enumerations</Text>
       <Text style={styles.paragraphIndent}>
         The following enumerated types define the valid values for key
         categorical fields in the database schema.
@@ -540,7 +553,7 @@ export default function DatabaseSchemaSection() {
 
       <EnumTable
         enumName="ExecutionStatus"
-        tableNum="6.18"
+        tableNum="7.18"
         values={[
           ["PENDING", "Execution is queued and awaiting processing"],
           ["RUNNING", "Execution is currently in progress"],
@@ -553,7 +566,7 @@ export default function DatabaseSchemaSection() {
 
       <EnumTable
         enumName="ExecutionMode"
-        tableNum="6.19"
+        tableNum="7.19"
         values={[
           ["MANUAL", "Triggered manually by a user"],
           ["SCHEDULED", "Triggered by a cron schedule"],
@@ -565,7 +578,7 @@ export default function DatabaseSchemaSection() {
 
       <EnumTable
         enumName="HttpMethod"
-        tableNum="6.20"
+        tableNum="7.20"
         values={[
           ["GET", "HTTP GET request (read-only)"],
           ["POST", "HTTP POST request (create resource)"],
@@ -577,7 +590,7 @@ export default function DatabaseSchemaSection() {
 
       <EnumTable
         enumName="TeamRole"
-        tableNum="6.21"
+        tableNum="7.21"
         values={[
           ["OWNER", "Full control including team deletion and billing"],
           ["ADMIN", "Manage members, workflows, and settings"],
@@ -589,7 +602,7 @@ export default function DatabaseSchemaSection() {
       {/* ─── F. Entity Relationship Summary ─────────────────────────── */}
       <GroupHeading>F. Entity Relationship Summary</GroupHeading>
       <Text style={styles.paragraphIndent}>
-        Table 6.22 provides a consolidated view of all foreign key relationships
+        Table 7.22 provides a consolidated view of all foreign key relationships
         between database entities, including cardinality and referential
         integrity constraints configured in the Prisma schema.
       </Text>
@@ -783,7 +796,7 @@ export default function DatabaseSchemaSection() {
             marginBottom: 8,
           }}
         >
-          Table 6.22: Entity Relationship Summary
+          Table 7.22: Entity Relationship Summary
         </Text>
       </View>
     </View>

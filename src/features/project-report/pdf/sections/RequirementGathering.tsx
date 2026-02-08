@@ -9,9 +9,9 @@ import BookPageLayout from "../components/BookPageLayout";
  */
 export default function RequirementGathering() {
   return (
-    <BookPageLayout chapterTitle="SDLC" chapterNum="05">
+    <BookPageLayout chapterTitle="SDLC" chapterNum="06">
       {/* Section Title */}
-      <Text style={styles.h2}>5.3 Requirement Gathering</Text>
+      <Text style={styles.h2}>6.3 Requirement Gathering</Text>
       <Text style={styles.paragraphIndent}>
         Requirement gathering is the foundational phase of the software
         development life cycle, where the needs, expectations, and constraints
@@ -28,8 +28,8 @@ export default function RequirementGathering() {
         but also implicit expectations and industry best practices.
       </Text>
 
-      {/* 5.3.1 Requirement Gathering Methods */}
-      <Text style={styles.h3}>5.3.1 Requirement Gathering Methods</Text>
+      {/* 6.3.1 Requirement Gathering Methods */}
+      <Text style={styles.h3}>6.3.1 Requirement Gathering Methods</Text>
       <Text style={styles.paragraphIndent}>
         Three primary methods were utilized to gather requirements for the
         Flowgent platform:
@@ -53,8 +53,8 @@ export default function RequirementGathering() {
         </Text>
       </View>
 
-      {/* 5.3.2 Questionnaire Method */}
-      <Text style={styles.h3}>5.3.2 Questionnaire Method</Text>
+      {/* 6.3.2 Questionnaire Method */}
+      <Text style={styles.h3}>6.3.2 Questionnaire Method</Text>
       <Text style={styles.paragraphIndent}>
         A comprehensive questionnaire was designed and distributed to potential
         users of workflow automation platforms. The questionnaire aimed to
@@ -210,11 +210,11 @@ export default function RequirementGathering() {
           marginBottom: 16,
         }}
       >
-        Figure 5.3: User Requirements Questionnaire
+        Figure 6.3: User Requirements Questionnaire
       </Text>
 
-      {/* 5.3.3 Interview Method */}
-      <Text style={styles.h3}>5.3.3 Interview Method</Text>
+      {/* 6.3.3 Interview Method */}
+      <Text style={styles.h3}>6.3.3 Interview Method</Text>
       <Text style={styles.paragraphIndent}>
         Following the questionnaire analysis, in-depth interviews were conducted
         with 8 key stakeholders representing different user personas. These
@@ -375,7 +375,7 @@ export default function RequirementGathering() {
           marginBottom: 12,
         }}
       >
-        Table 5.6: Interview Participants and Use Cases
+        Table 6.6: Interview Participants and Use Cases
       </Text>
 
       <Text style={styles.paragraph}>
@@ -403,8 +403,8 @@ export default function RequirementGathering() {
         </Text>
       </View>
 
-      {/* 5.3.4 Questionnaire Results */}
-      <Text style={styles.h3}>5.3.4 Questionnaire Results Analysis</Text>
+      {/* 6.3.4 Questionnaire Results */}
+      <Text style={styles.h3}>6.3.4 Questionnaire Results Analysis</Text>
       <Text style={styles.paragraphIndent}>
         The questionnaire responses were analyzed to identify patterns and
         priorities. The following tables summarize key findings from the survey.
@@ -531,7 +531,7 @@ export default function RequirementGathering() {
           marginBottom: 12,
         }}
       >
-        Table 5.7: Questionnaire Respondent Demographics
+        Table 6.7: Questionnaire Respondent Demographics
       </Text>
 
       <Text style={styles.paragraph}>
@@ -650,11 +650,11 @@ export default function RequirementGathering() {
           marginBottom: 16,
         }}
       >
-        Table 5.8: Current Tool Usage and Satisfaction Levels
+        Table 6.8: Current Tool Usage and Satisfaction Levels
       </Text>
 
-      {/* 5.3.5 Key Findings */}
-      <Text style={styles.h3}>5.3.5 Key Findings</Text>
+      {/* 6.3.5 Key Findings */}
+      <Text style={styles.h3}>6.3.5 Key Findings</Text>
       <Text style={styles.paragraphIndent}>
         Analysis of the questionnaire responses and interview transcripts
         revealed several significant findings that shaped the Flowgent
@@ -735,8 +735,8 @@ export default function RequirementGathering() {
         reinforced the visual-first design approach.
       </Text>
 
-      {/* 5.3.6 Use Case Identification */}
-      <Text style={styles.h3}>5.3.6 Use Case Identification</Text>
+      {/* 6.3.6 Use Case Identification */}
+      <Text style={styles.h3}>6.3.6 Use Case Identification</Text>
       <Text style={styles.paragraphIndent}>
         Based on the requirement gathering activities, the following primary use
         cases were identified for the Flowgent platform:
@@ -898,11 +898,11 @@ export default function RequirementGathering() {
           marginBottom: 8,
         }}
       >
-        Table 5.9: Primary Use Cases Identified
+        Table 6.9: Primary Use Cases Identified
       </Text>
 
-      {/* 5.3.7 Stakeholder Analysis */}
-      <Text style={styles.h3}>5.3.7 Stakeholder Analysis</Text>
+      {/* 6.3.7 Stakeholder Analysis */}
+      <Text style={styles.h3}>6.3.7 Stakeholder Analysis</Text>
       <Text style={styles.paragraphIndent}>
         Understanding the various stakeholders and their perspectives was
         crucial for prioritizing requirements. The following analysis identifies
@@ -1036,12 +1036,12 @@ export default function RequirementGathering() {
           marginBottom: 16,
         }}
       >
-        Table 5.10: Stakeholder Analysis
+        Table 6.10: Stakeholder Analysis
       </Text>
 
-      {/* 5.3.8 Requirement Prioritization */}
+      {/* 6.3.8 Requirement Prioritization */}
       <Text style={styles.h3}>
-        5.3.8 Requirement Prioritization (MoSCoW Method)
+        6.3.8 Requirement Prioritization (MoSCoW Method)
       </Text>
       <Text style={styles.paragraphIndent}>
         Requirements were prioritized using the MoSCoW method, which categorizes
@@ -1143,8 +1143,8 @@ export default function RequirementGathering() {
         </View>
       </View>
 
-      {/* 5.3.9 Requirements Traceability Matrix */}
-      <Text style={styles.h3}>5.3.9 Requirements Traceability Matrix</Text>
+      {/* 6.3.9 Requirements Traceability Matrix */}
+      <Text style={styles.h3}>6.3.9 Requirements Traceability Matrix</Text>
       <Text style={styles.paragraphIndent}>
         A Requirements Traceability Matrix (RTM) was created to map requirements
         to their sources and to the components that implement them. This matrix
@@ -1353,12 +1353,12 @@ export default function RequirementGathering() {
           marginBottom: 8,
         }}
       >
-        Table 5.11: Requirements Traceability Matrix (Q=Questionnaire,
+        Table 6.11: Requirements Traceability Matrix (Q=Questionnaire,
         I=Interview)
       </Text>
 
-      {/* 5.3.10 Validation of Requirements */}
-      <Text style={styles.h3}>5.3.10 Validation of Requirements</Text>
+      {/* 6.3.10 Validation of Requirements */}
+      <Text style={styles.h3}>6.3.10 Validation of Requirements</Text>
       <Text style={styles.paragraphIndent}>
         Requirements were validated using multiple techniques to ensure they
         were complete, consistent, and feasible:
@@ -1386,8 +1386,8 @@ export default function RequirementGathering() {
         </Text>
       </View>
 
-      {/* 5.3.11 Challenges in Requirement Gathering */}
-      <Text style={styles.h3}>5.3.11 Challenges in Requirement Gathering</Text>
+      {/* 6.3.11 Challenges in Requirement Gathering */}
+      <Text style={styles.h3}>6.3.11 Challenges in Requirement Gathering</Text>
       <Text style={styles.paragraphIndent}>
         Several challenges were encountered during the requirement gathering
         process:
@@ -1417,8 +1417,8 @@ export default function RequirementGathering() {
         </Text>
       </View>
 
-      {/* 5.3.12 Requirements Documentation */}
-      <Text style={styles.h3}>5.3.12 Requirements Documentation</Text>
+      {/* 6.3.12 Requirements Documentation */}
+      <Text style={styles.h3}>6.3.12 Requirements Documentation</Text>
       <Text style={styles.paragraphIndent}>
         The requirement gathering phase produced the following documentation
         artifacts:
@@ -1448,8 +1448,8 @@ export default function RequirementGathering() {
         throughout the project and were updated as requirements evolved.
       </Text>
 
-      {/* 5.3.13 Summary */}
-      <Text style={styles.h3}>5.3.13 Summary</Text>
+      {/* 6.3.13 Summary */}
+      <Text style={styles.h3}>6.3.13 Summary</Text>
       <Text style={styles.paragraphIndent}>
         The requirement gathering phase employed a comprehensive multi-method
         approach combining questionnaires (47 responses), stakeholder interviews

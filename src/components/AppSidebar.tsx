@@ -141,8 +141,8 @@ export function AppSidebar() {
                       isActive={isActive}
                       asChild
                       className={`h-10 px-3 gap-3 rounded-none transition-all duration-200 font-mono text-xs uppercase tracking-wider border-l-2 ${isActive
-                        ? "bg-(--arch-fg)/10 text-(--arch-fg) font-bold border-(--arch-fg)"
-                        : "text-(--arch-muted) border-transparent hover:text-(--arch-fg) hover:bg-(--arch-fg)/5"
+                        ? "bg-[rgba(var(--arch-fg-rgb)/0.1)] text-(--arch-fg) font-bold border-(--arch-fg)"
+                        : "text-(--arch-muted) border-transparent hover:text-(--arch-fg) hover:bg-[rgba(var(--arch-fg-rgb)/0.05)]"
                         }`}
                     >
                       <Link href={item.href} prefetch>
@@ -169,7 +169,7 @@ export function AppSidebar() {
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton
                   tooltip={user?.name || "Access"}
-                  className="h-12 px-2 gap-3 rounded-none hover:bg-(--arch-fg)/10 border border-transparent hover:border-(--arch-border) transition-all"
+                  className="h-12 px-2 gap-3 rounded-none hover:bg-[rgba(var(--arch-fg-rgb)/0.1)] border border-transparent hover:border-(--arch-border) transition-all"
                 >
                   <Avatar className="w-8 h-8 rounded-none border border-(--arch-fg)">
                     <AvatarImage

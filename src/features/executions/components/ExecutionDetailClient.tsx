@@ -213,12 +213,12 @@ export function ExecutionDetailClient({
                   <div
                     className={`p-4 rounded-none border ${
                       execution.status === "SUCCESS"
-                        ? "bg-(--arch-fg)/10 text-(--arch-fg) border-(--arch-fg)"
+                        ? "bg-[rgba(var(--arch-fg-rgb)/0.1)] text-(--arch-fg) border-(--arch-fg)"
                         : execution.status === "ERROR"
-                          ? "bg-(--arch-fg)/10 text-(--arch-fg) border-(--arch-fg)"
+                          ? "bg-[rgba(var(--arch-fg-rgb)/0.1)] text-(--arch-fg) border-(--arch-fg)"
                           : execution.status === "RUNNING"
-                            ? "bg-(--arch-fg)/10 text-(--arch-fg) border-(--arch-fg)"
-                            : "bg-(--arch-muted)/10 text-(--arch-muted) border-(--arch-muted)"
+                            ? "bg-[rgba(var(--arch-fg-rgb)/0.1)] text-(--arch-fg) border-(--arch-fg)"
+                            : "bg-[rgba(var(--arch-muted-rgb)/0.1)] text-(--arch-muted) border-(--arch-muted)"
                     }`}
                   >
                     <StatusIcon
@@ -275,7 +275,7 @@ export function ExecutionDetailClient({
                   </span>
                   <Badge
                     variant="secondary"
-                    className="font-mono text-[10px] uppercase rounded-none bg-(--arch-fg)/10 text-(--arch-fg)"
+                    className="font-mono text-[10px] uppercase rounded-none bg-[rgba(var(--arch-fg-rgb)/0.1)] text-(--arch-fg)"
                   >
                     {execution.mode}
                   </Badge>
@@ -349,7 +349,7 @@ export function ExecutionDetailClient({
                     variant="default"
                     size="sm"
                     asChild
-                    className="bg-(--arch-fg) text-(--arch-bg) hover:bg-(--arch-fg)/80 rounded-none font-mono uppercase text-xs h-8"
+                    className="bg-(--arch-fg) text-(--arch-bg) hover:bg-[rgba(var(--arch-fg-rgb)/0.8)] rounded-none font-mono uppercase text-xs h-8"
                   >
                     <Link href={`/workflows/${execution.workflow.id}`}>
                       Open Workflow

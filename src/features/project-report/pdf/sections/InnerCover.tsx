@@ -522,17 +522,23 @@ function ArchBox({
 
 /* ─── Feature Item ─── */
 function FeatureItem({
-  icon,
   label,
   color,
 }: {
-  icon: string;
+  icon?: string;
   label: string;
   color: string;
 }) {
   return (
     <View style={{ alignItems: "center", gap: 3 }}>
-      <Text style={{ fontSize: 8, color }}>{icon}</Text>
+      <View
+        style={{
+          width: 8,
+          height: 8,
+          borderRadius: 4,
+          backgroundColor: color,
+        }}
+      />
       <Text
         style={{
           fontSize: 7.5,

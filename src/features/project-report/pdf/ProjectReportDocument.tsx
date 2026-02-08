@@ -13,6 +13,7 @@ import TableOfContents from "./sections/TableOfContents";
 import ListOfFigures from "./sections/ListOfFigures";
 import ListOfTables from "./sections/ListOfTables";
 import Acronyms from "./sections/Acronyms";
+import PlagiarismReport from "./sections/PlagiarismReport";
 
 // Content sections (Arabic numerals)
 import Introduction from "./sections/Introduction";
@@ -27,6 +28,7 @@ import DesignDiagrams from "./sections/DesignDiagrams";
 import COCOMOEstimation from "./sections/COCOMOEstimation";
 import Implementation from "./sections/Implementation";
 import Testing from "./sections/Testing";
+import UserManual from "./sections/UserManual";
 import OutputScreens from "./sections/OutputScreens";
 import Conclusions from "./sections/Conclusions";
 import References from "./sections/References";
@@ -45,14 +47,14 @@ import InnerCover from "./sections/InnerCover";
  * - Chapter 1 (Introduction): 7 pages (1-7)
  * - Chapter 2 (Problem Statement): 7 pages (8-14)
  * - Chapter 3 (Objectives): 5 pages (15-19)
- * - Chapter 4 (SDLC): 33 pages
- *   - 4.1 Overview: 4 pages (20-23)
- *   - 4.2 Process Model: 5 pages (24-28)
- *   - 4.3 Requirement Gathering: 7 pages (29-35)
- *   - 4.4 SRS: 10 pages (36-45)
- *   - 4.5 Feasibility: 7 pages (46-52)
- * - Chapter 5 (Design): 6 pages (53-58)
- * - Chapter 6 (COCOMO): 5 pages (59-63)
+ * - Chapter 4 (Feasibility): 7 pages
+ * - Chapter 5 (Estimation/COCOMO): 5 pages
+ * - Chapter 6 (SDLC): 26 pages
+ *   - 6.1 Overview
+ *   - 6.2 Process Model
+ *   - 6.3 Requirement Gathering
+ *   - 6.4 SRS
+ * - Chapter 7 (Design): 6 pages
  * - Chapter 7 (Testing): 7 pages (64-70)
  * - Chapter 8 (Conclusions): 4 pages (71-74)
  * - References: 2 pages (75-76)
@@ -74,10 +76,11 @@ export default function ProjectReportDocument() {
       <Acknowledgement pageNumber={3} />
       <Preface pageNumber={4} />
       <Abstract pageNumber={5} />
-      <TableOfContents startPage={6} />
-      <ListOfFigures pageNumber={11} />
-      <ListOfTables startPage={12} />
-      <Acronyms startPage={16} />
+      <PlagiarismReport pageNumber={6} />
+      <TableOfContents startPage={7} />
+      <ListOfFigures startPage={13} />
+      <ListOfTables startPage={15} />
+      <Acronyms startPage={19} />
 
       {/* ========== Content Pages (Arabic Numerals) ========== */}
 
@@ -90,23 +93,20 @@ export default function ProjectReportDocument() {
       {/* Chapter 3: Objectives */}
       <Objectives />
 
-      {/* Chapter 4: SDLC */}
-      {/* 4.1 Feasibility Study (moved earlier - assessed before development begins) */}
+      {/* Chapter 4: Feasibility Study */}
       <FeasibilityStudy />
-      {/* 4.2 SDLC Overview */}
+
+      {/* Chapter 5: Estimation & Planning (COCOMO) */}
+      <COCOMOEstimation />
+
+      {/* Chapter 6: SDLC */}
       <SDLCOverview />
-      {/* 4.3 Process Model */}
       <ProcessModel />
-      {/* 4.4 Requirement Gathering */}
       <RequirementGathering />
-      {/* 4.5 SRS */}
       <SRS />
 
-      {/* Chapter 5: System Design */}
+      {/* Chapter 7: System Design */}
       <DesignDiagrams />
-
-      {/* Chapter 6: Estimation & Planning */}
-      <COCOMOEstimation />
 
       {/* Chapter 7: Implementation */}
       <Implementation />
@@ -114,10 +114,13 @@ export default function ProjectReportDocument() {
       {/* Chapter 8: Testing */}
       <Testing />
 
-      {/* Chapter 9: Output & Screenshots */}
+      {/* Chapter 9 (Testing) ends, Chapter 10: User Manual */}
+      <UserManual />
+
+      {/* Chapter 11: Output & Screenshots */}
       <OutputScreens />
 
-      {/* Chapter 10: Conclusions */}
+      {/* Chapter 12: Conclusions & Future Scope */}
       <Conclusions />
 
       {/* References */}

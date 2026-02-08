@@ -322,8 +322,30 @@ body {
 
 /* 6. The Architect (Precision Engineering) */
 
+/* Light mode Architect variables (default) */
 :root {
-  /* Default Theme: Terminal (Phosphor Green) */
+  /* Light theme values for the Architect design system (green accents) */
+  --arch-bg: #ffffff;
+  --arch-bg-secondary: #f6fff7;
+  --arch-fg: #064e16; /* green-900 */
+  --arch-muted: #166534; /* green-700 */
+  --arch-border: rgba(34, 197, 94, 0.06);
+  --arch-grid: rgba(34, 197, 94, 0.03);
+  --arch-accent: #16a34a; /* green-600 */
+  --arch-accent-dim: rgba(16, 163, 74, 0.08);
+  --arch-focus: #16a34a;
+
+  /* RGB helpers for rgba(var(--arch-...)) usage */
+  --arch-bg-rgb: 255 255 255;
+  --arch-bg-secondary-rgb: 246 255 247;
+  --arch-fg-rgb: 6 78 22;
+  --arch-muted-rgb: 22 101 52;
+  --arch-border-rgb: 34 197 94;
+  --arch-accent-rgb: 16 163 74;
+}
+
+/* Dark mode overrides for the Architect (Terminal / Phosphor Green) */
+.dark {
   --arch-bg: #020a02;
   --arch-bg-secondary: #051405;
   --arch-fg: #4ade80;
@@ -333,6 +355,14 @@ body {
   --arch-accent: #22c55e;
   --arch-accent-dim: rgba(74, 222, 128, 0.1);
   --arch-focus: #16a34a;
+
+  /* RGB helpers for rgba(var(--arch-...)) usage */
+  --arch-bg-rgb: 2 10 2;
+  --arch-bg-secondary-rgb: 5 20 5;
+  --arch-fg-rgb: 74 222 128;
+  --arch-muted-rgb: 21 128 61;
+  --arch-border-rgb: 74 222 128;
+  --arch-accent-rgb: 34 197 94;
 }
 
 @utility bg-grid {

@@ -52,7 +52,7 @@ export function WorkflowCard({
 }: WorkflowCardProps) {
   return (
     <Card className="group bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) shadow-none rounded-none border hover:border-(--arch-fg) transition-all duration-300 relative overflow-hidden">
-      <div className="absolute top-0 right-0 p-20 bg-(--arch-fg)/5 rounded-bl-full -mr-10 -mt-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+      <div className="absolute top-0 right-0 p-20 bg-[rgba(var(--arch-fg-rgb)/0.05)] rounded-bl-full -mr-10 -mt-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
       <CardHeader className="pb-4 relative z-10">
         <div className="flex items-start justify-between gap-4">
@@ -76,8 +76,8 @@ export function WorkflowCard({
               variant="outline"
               className={
                 workflow.isActive
-                  ? "bg-(--arch-fg)/10 text-(--arch-fg) border-(--arch-fg) px-2.5 py-0.5 rounded-none font-mono uppercase text-xs"
-                  : "bg-(--arch-muted)/10 text-(--arch-muted) border-(--arch-muted) px-2.5 py-0.5 rounded-none font-mono uppercase text-xs"
+                  ? "bg-[rgba(var(--arch-fg-rgb)/0.1)] text-(--arch-fg) border-(--arch-fg) px-2.5 py-0.5 rounded-none font-mono uppercase text-xs"
+                  : "bg-[rgba(var(--arch-muted-rgb)/0.1)] text-(--arch-muted) border-(--arch-muted) px-2.5 py-0.5 rounded-none font-mono uppercase text-xs"
               }
             >
               <span
@@ -94,7 +94,7 @@ export function WorkflowCard({
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="h-8 w-8 hover:bg-(--arch-fg)/10 text-(--arch-muted) hover:text-(--arch-fg) rounded-none"
+                  className="h-8 w-8 hover:bg-[rgba(var(--arch-fg-rgb)/0.1)] text-(--arch-muted) hover:text-(--arch-fg) rounded-none"
                 >
                   <MoreVertical className="h-4 w-4" />
                 </Button>
@@ -149,7 +149,7 @@ export function WorkflowCard({
         </div>
       </CardHeader>
       <CardContent className="pt-0 relative z-10">
-        <div className="flex items-center justify-between text-xs font-mono text-(--arch-muted) bg-(--arch-fg)/5 p-3 border-t border-(--arch-border)">
+        <div className="flex items-center justify-between text-xs font-mono text-(--arch-muted) bg-[rgba(var(--arch-fg-rgb)/0.05)] p-3 border-t border-(--arch-border)">
           <div className="flex items-center gap-4">
             <span className="flex items-center gap-1.5 uppercase">
               UPDATED{" "}

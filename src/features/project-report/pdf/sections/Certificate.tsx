@@ -21,9 +21,13 @@ export default function Certificate({ pageNumber }: CertificateProps) {
         <View style={{ alignItems: "center", marginBottom: 24 }}>
           <Text style={styles.h1}>CERTIFICATE</Text>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <View style={{ width: 64, height: 2, backgroundColor: "#000000" }} />
+            <View
+              style={{ width: 64, height: 2, backgroundColor: "#000000" }}
+            />
             <Text style={{ marginHorizontal: 16 }}>*</Text>
-            <View style={{ width: 64, height: 2, backgroundColor: "#000000" }} />
+            <View
+              style={{ width: 64, height: 2, backgroundColor: "#000000" }}
+            />
           </View>
         </View>
 
@@ -89,7 +93,9 @@ export default function Certificate({ pageNumber }: CertificateProps) {
             <Text style={{ fontSize: 12, fontFamily: "Times-Bold" }}>
               Mr. Anshuman Sharma
             </Text>
-            <Text style={{ fontSize: 10, color: "#666666" }}>Project Guide</Text>
+            <Text style={{ fontSize: 10, color: "#666666" }}>
+              Project Guide
+            </Text>
           </View>
 
           <View style={{ alignItems: "center" }}>
@@ -104,7 +110,9 @@ export default function Certificate({ pageNumber }: CertificateProps) {
             <Text style={{ fontSize: 12, fontFamily: "Times-Bold" }}>
               Dr. Sunny Sharma
             </Text>
-            <Text style={{ fontSize: 10, color: "#666666" }}>Project Guide</Text>
+            <Text style={{ fontSize: 10, color: "#666666" }}>
+              Project Guide
+            </Text>
           </View>
         </View>
 
@@ -132,7 +140,7 @@ export default function Certificate({ pageNumber }: CertificateProps) {
               Head of Department
             </Text>
             <Text style={{ fontSize: 9, color: "#888888" }}>
-              Dept. of Computer Applications
+              PG Department of Computer Science & Applications
             </Text>
           </View>
 
@@ -145,7 +153,9 @@ export default function Certificate({ pageNumber }: CertificateProps) {
                 marginBottom: 4,
               }}
             />
-            <Text style={{ fontSize: 12, fontFamily: "Times-Bold", marginTop: 16 }}>
+            <Text
+              style={{ fontSize: 12, fontFamily: "Times-Bold", marginTop: 16 }}
+            >
               External Examiner
             </Text>
           </View>
@@ -165,7 +175,9 @@ export default function Certificate({ pageNumber }: CertificateProps) {
               alignItems: "center",
             }}
           >
-            <Text style={{ fontSize: 8, color: "#999999", textAlign: "center" }}>
+            <Text
+              style={{ fontSize: 8, color: "#999999", textAlign: "center" }}
+            >
               College{"\n"}Seal
             </Text>
           </View>

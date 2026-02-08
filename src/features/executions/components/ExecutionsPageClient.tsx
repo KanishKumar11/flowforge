@@ -79,10 +79,10 @@ function formatDurationMs(ms: number | null | undefined): string {
 const StatusIconWrapper = ({ status, Icon }: { status: ExecutionStatus; Icon: React.ComponentType<{ className?: string }> }) => {
   const getStatusClasses = (s: ExecutionStatus) => {
     switch (s) {
-      case "SUCCESS": return "bg-(--arch-fg)/10 text-(--arch-fg) border-(--arch-fg)";
-      case "ERROR": return "bg-(--arch-fg)/10 text-(--arch-fg) border-(--arch-fg)";
-      case "RUNNING": return "bg-(--arch-fg)/10 text-(--arch-fg) border-(--arch-fg)";
-      default: return "bg-(--arch-muted)/10 text-(--arch-muted) border-(--arch-muted)";
+      case "SUCCESS": return "bg-[rgba(var(--arch-fg-rgb)/0.1)] text-(--arch-fg) border-(--arch-fg)";
+      case "ERROR": return "bg-[rgba(var(--arch-fg-rgb)/0.1)] text-(--arch-fg) border-(--arch-fg)";
+      case "RUNNING": return "bg-[rgba(var(--arch-fg-rgb)/0.1)] text-(--arch-fg) border-(--arch-fg)";
+      default: return "bg-[rgba(var(--arch-muted-rgb)/0.1)] text-(--arch-muted) border-(--arch-muted)";
     }
   };
 
@@ -166,7 +166,7 @@ export function ExecutionsPageClient() {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
               <div className="p-6 border border-(--arch-border) bg-(--arch-bg) group hover:border-(--arch-fg) transition-colors">
                 <div className="flex items-center gap-4">
-                  <div className="p-3 bg-(--arch-fg)/10 text-(--arch-fg) border border-(--arch-border)">
+                  <div className="p-3 bg-[rgba(var(--arch-fg-rgb)/0.1)] text-(--arch-fg) border border-(--arch-border)">
                     <History className="h-6 w-6" />
                   </div>
                   <div>
@@ -181,7 +181,7 @@ export function ExecutionsPageClient() {
               </div>
               <div className="p-6 border border-(--arch-border) bg-(--arch-bg) group hover:border-(--arch-fg) transition-colors">
                 <div className="flex items-center gap-4">
-                  <div className="p-3 bg-(--arch-fg)/10 text-(--arch-fg) border border-(--arch-border)">
+                  <div className="p-3 bg-[rgba(var(--arch-fg-rgb)/0.1)] text-(--arch-fg) border border-(--arch-border)">
                     <CheckCircle2 className="h-6 w-6" />
                   </div>
                   <div>
@@ -196,7 +196,7 @@ export function ExecutionsPageClient() {
               </div>
               <div className="p-6 border border-(--arch-border) bg-(--arch-bg) group hover:border-(--arch-fg) transition-colors">
                 <div className="flex items-center gap-4">
-                  <div className="p-3 bg-(--arch-fg)/10 text-(--arch-fg) border border-(--arch-border)">
+                  <div className="p-3 bg-[rgba(var(--arch-fg-rgb)/0.1)] text-(--arch-fg) border border-(--arch-border)">
                     <AlertCircle className="h-6 w-6" />
                   </div>
                   <div>
@@ -211,7 +211,7 @@ export function ExecutionsPageClient() {
               </div>
               <div className="p-6 border border-(--arch-border) bg-(--arch-bg) group hover:border-(--arch-fg) transition-colors">
                 <div className="flex items-center gap-4">
-                  <div className="p-3 bg-(--arch-fg)/10 text-(--arch-fg) border border-(--arch-border)">
+                  <div className="p-3 bg-[rgba(var(--arch-fg-rgb)/0.1)] text-(--arch-fg) border border-(--arch-border)">
                     <Clock className="h-6 w-6" />
                   </div>
                   <div>
@@ -283,12 +283,12 @@ export function ExecutionsPageClient() {
                   key={i}
                   className="p-6 border border-(--arch-border) rounded-none flex items-center gap-4 bg-(--arch-bg)"
                 >
-                  <Skeleton className="h-10 w-10 rounded-none bg-(--arch-muted)/20" />
+                  <Skeleton className="h-10 w-10 rounded-none bg-[rgba(var(--arch-muted-rgb)/0.2)]" />
                   <div className="flex-1 space-y-2">
-                    <Skeleton className="h-4 w-48 bg-(--arch-muted)/20" />
-                    <Skeleton className="h-3 w-32 bg-(--arch-muted)/20" />
+                    <Skeleton className="h-4 w-48 bg-[rgba(var(--arch-muted-rgb)/0.2)]" />
+                    <Skeleton className="h-3 w-32 bg-[rgba(var(--arch-muted-rgb)/0.2)]" />
                   </div>
-                  <Skeleton className="h-6 w-20 bg-(--arch-muted)/20" />
+                  <Skeleton className="h-6 w-20 bg-[rgba(var(--arch-muted-rgb)/0.2)]" />
                 </div>
               ))}
             </div>
@@ -297,7 +297,7 @@ export function ExecutionsPageClient() {
           {/* Empty State */}
           {!isLoading && executions.length === 0 && (
             <div className="flex flex-col items-center justify-center p-12 border border-(--arch-border) border-dashed bg-(--arch-bg)">
-              <div className="flex items-center justify-center w-20 h-20 bg-(--arch-fg)/5 mb-6">
+              <div className="flex items-center justify-center w-20 h-20 bg-[rgba(var(--arch-fg-rgb)/0.05)] mb-6">
                 <History className="w-10 h-10 text-(--arch-fg)" />
               </div>
               <h3 className="text-xl font-bold font-mono uppercase text-(--arch-fg) tracking-widest text-center">
@@ -312,7 +312,7 @@ export function ExecutionsPageClient() {
                 <Button
                   asChild
                   size="lg"
-                  className="gap-2 bg-(--arch-fg) text-(--arch-bg) hover:bg-(--arch-fg)/90 rounded-none font-mono uppercase text-xs"
+                  className="gap-2 bg-(--arch-fg) text-(--arch-bg) hover:bg-[rgba(var(--arch-fg-rgb)/0.9)] rounded-none font-mono uppercase text-xs"
                 >
                   <Link href="/workflows">
                     <Play className="w-4 h-4" />
@@ -415,7 +415,7 @@ const ExecutionCard = ({
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="h-8 w-8 text-(--arch-muted) hover:text-(--arch-fg) hover:bg-(--arch-fg)/10 rounded-none"
+                  className="h-8 w-8 text-(--arch-muted) hover:text-(--arch-fg) hover:bg-[rgba(var(--arch-fg-rgb)/0.1)] rounded-none"
                 >
                   <MoreVertical className="h-4 w-4" />
                 </Button>

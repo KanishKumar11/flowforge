@@ -4,6 +4,7 @@ import { View, Text } from "@react-pdf/renderer";
 import { styles } from "../styles";
 import BookPageLayout from "../components/BookPageLayout";
 import MarketGrowthChart from "../diagrams/MarketGrowthChart";
+import ComparisonRadar from "../diagrams/ComparisonRadar";
 
 /**
  * Chapter 2: Problem Statement (7 pages)
@@ -616,7 +617,7 @@ export default function ProblemStatement() {
             "Advanced",
           ],
           ["Self-Hosted", "No", "Yes", "No", "No", "Yes"],
-          ["Open Source", "No", "Yes", "No", "No", "Yes"],
+          ["Open Source", "No", "Yes", "No", "No", "No"],
           [
             "Native AI",
             "Limited",
@@ -740,6 +741,198 @@ export default function ProblemStatement() {
         Platforms
       </Text>
 
+      <Text style={styles.h3}>2.5.1 Detailed Comparison: Flowgent vs n8n</Text>
+      <Text style={styles.paragraphIndent}>
+        Since n8n is the closest competitor to Flowgent in terms of self-hosting
+        capability and visual editor approach, a detailed feature-by-feature
+        comparison is presented below.
+      </Text>
+      <View
+        wrap={false}
+        style={{
+          borderWidth: 1,
+          borderColor: "#333333",
+          marginTop: 8,
+          marginBottom: 8,
+        }}
+      >
+        <View
+          style={{
+            flexDirection: "row",
+            backgroundColor: "#f0f0f0",
+            borderBottomWidth: 1,
+            borderBottomColor: "#333333",
+          }}
+        >
+          <Text
+            style={{
+              width: "30%",
+              padding: 5,
+              fontSize: 9,
+              fontFamily: "Times-Bold",
+              borderRightWidth: 1,
+              borderRightColor: "#333333",
+            }}
+          >
+            Feature
+          </Text>
+          <Text
+            style={{
+              width: "35%",
+              padding: 5,
+              fontSize: 9,
+              fontFamily: "Times-Bold",
+              borderRightWidth: 1,
+              borderRightColor: "#333333",
+            }}
+          >
+            n8n
+          </Text>
+          <Text
+            style={{
+              width: "35%",
+              padding: 5,
+              fontSize: 9,
+              fontFamily: "Times-Bold",
+            }}
+          >
+            Flowgent
+          </Text>
+        </View>
+        {[
+          [
+            "Technology Stack",
+            "Vue.js, TypeScript, SQLite/Postgres",
+            "Next.js 16, React 19, TypeScript, PostgreSQL",
+          ],
+          ["API Architecture", "REST API", "tRPC (end-to-end type safety)"],
+          [
+            "Execution Engine",
+            "Built-in, in-process",
+            "Inngest (durable, serverless, auto-retry)",
+          ],
+          [
+            "Authentication",
+            "Community Edition: basic\nEnterprise: SSO",
+            "Better Auth (OAuth, MFA, session mgmt)",
+          ],
+          [
+            "AI Integration",
+            "Requires LangChain plugin install",
+            "Native multi-provider (OpenAI, Anthropic, Google)",
+          ],
+          [
+            "Team Collaboration",
+            "Enterprise plan only",
+            "Built-in RBAC (Owner/Admin/Member)",
+          ],
+          [
+            "Visual Editor",
+            "Proprietary canvas",
+            "React Flow (MIT, extensible)",
+          ],
+          ["State Management", "Vuex/Pinia", "Zustand (minimal boilerplate)"],
+          [
+            "Node Types",
+            "400+ (community)",
+            "24 core (curated, production-ready)",
+          ],
+          ["Credential Storage", "AES-256 encryption", "AES-256 encryption"],
+          ["Scheduling", "Cron-based", "Cron + natural language parsing"],
+          [
+            "Workflow Versioning",
+            "Enterprise only",
+            "Built-in version history",
+          ],
+          ["Deployment", "Docker, npm, cloud", "Netlify serverless, Docker"],
+          [
+            "Monitoring",
+            "Built-in execution log",
+            "Sentry + built-in audit logging",
+          ],
+          [
+            "Licensing",
+            "Sustainable Use License (v1.x)",
+            "Proprietary (SaaS planned)",
+          ],
+          [
+            "Learning Curve",
+            "Steep (complex UI)",
+            "Moderate (guided onboarding)",
+          ],
+        ].map((row, i) => (
+          <View
+            key={i}
+            style={{
+              flexDirection: "row",
+              borderBottomWidth: i < 15 ? 1 : 0,
+              borderBottomColor: "#cccccc",
+            }}
+          >
+            <Text
+              style={{
+                width: "30%",
+                padding: 4,
+                fontSize: 7.5,
+                fontFamily: "Times-Bold",
+                borderRightWidth: 1,
+                borderRightColor: "#cccccc",
+              }}
+            >
+              {row[0]}
+            </Text>
+            <Text
+              style={{
+                width: "35%",
+                padding: 4,
+                fontSize: 7.5,
+                borderRightWidth: 1,
+                borderRightColor: "#cccccc",
+              }}
+            >
+              {row[1]}
+            </Text>
+            <Text
+              style={{
+                width: "35%",
+                padding: 4,
+                fontSize: 7.5,
+                fontFamily: "Times-Bold",
+              }}
+            >
+              {row[2]}
+            </Text>
+          </View>
+        ))}
+      </View>
+      <Text
+        style={{
+          fontSize: 9,
+          fontFamily: "Times-Italic",
+          textAlign: "center",
+          marginBottom: 16,
+        }}
+      >
+        Table 2.2: Detailed Feature Comparison — Flowgent vs n8n
+      </Text>
+
+      <View
+        wrap={false}
+        style={{ alignItems: "center", marginTop: 8, marginBottom: 8 }}
+      >
+        <ComparisonRadar />
+      </View>
+      <Text
+        style={{
+          fontSize: 9,
+          fontFamily: "Times-Italic",
+          textAlign: "center",
+          marginBottom: 12,
+        }}
+      >
+        Figure 2.2: Feature Comparison Radar — Flowgent vs n8n
+      </Text>
+
       {/* 2.6 Gap Analysis */}
       <Text style={styles.h2}>2.6 Gap Analysis</Text>
       <Text style={styles.paragraphIndent}>
@@ -831,10 +1024,11 @@ export default function ProblemStatement() {
           (OpenAI, Anthropic, Google) through consistent, easy-to-use nodes.
         </Text>
         <Text style={{ fontSize: 11, marginBottom: 6, lineHeight: 1.5 }}>
-          <Text style={styles.bold}>4. Open and Extensible:</Text> As an
-          open-source project, Flowgent allows organizations to run on their own
-          infrastructure, customize functionality, and contribute improvements
-          back to the community.
+          <Text style={styles.bold}>4. Self-Hosted and Extensible:</Text>
+          Flowgent supports self-hosted deployment, allowing organizations to
+          run on their own infrastructure with full data sovereignty. The
+          modular architecture enables customization and future feature
+          expansion.
         </Text>
       </View>
 
@@ -888,7 +1082,7 @@ export default function ProblemStatement() {
       <Text style={styles.h3}>2.8.1 Unique Value Proposition</Text>
       <Text style={styles.paragraphIndent}>
         No existing solution combines all the following characteristics:
-        open-source licensing, modern technology stack, native AI integration,
+        affordable pricing, modern technology stack, native AI integration,
         self-hosting capability, and team collaboration features accessible to
         small businesses. Flowgent aims to be the first platform to offer this
         complete package.
@@ -914,10 +1108,14 @@ export default function ProblemStatement() {
 
       <Text style={styles.h3}>2.8.4 Community Contribution</Text>
       <Text style={styles.paragraphIndent}>
-        By developing Flowgent as an open-source project, the work contributes
-        to the broader developer community. Organizations seeking alternatives
-        to proprietary solutions will have access to a capable, modern platform
-        that they can customize to their needs.
+        Flowgent is developed as an academic project with a long-term vision of
+        evolving into a commercially viable SaaS product. While the current
+        version serves as a proof-of-concept built during the BCA programme, the
+        architecture and technology stack have been deliberately chosen to
+        support future scalability and monetization. Organizations seeking
+        modern workflow automation solutions would benefit from a platform built
+        on contemporary, production-grade technologies that can be deployed and
+        scaled as a startup offering.
       </Text>
 
       {/* 2.9 Summary */}

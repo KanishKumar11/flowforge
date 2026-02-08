@@ -91,7 +91,7 @@ export function WorkflowSearch() {
                     key={workflow.id}
                     href={`/workflows/${workflow.id}`}
                     onClick={() => setIsOpen(false)}
-                    className="flex items-start gap-3 p-2 hover:bg-(--arch-fg)/10 transition-colors group"
+                    className="flex items-start gap-3 p-2 hover:bg-[rgba(var(--arch-fg-rgb)/0.1)] transition-colors group"
                   >
                     <Workflow className="h-5 w-5 text-(--arch-muted) group-hover:text-(--arch-fg) mt-0.5" />
                     <div className="flex-1 min-w-0">
@@ -116,7 +116,7 @@ export function WorkflowSearch() {
                           <Badge
                             key={tag}
                             variant="secondary"
-                            className="text-[10px] rounded-none bg-(--arch-fg)/10 text-(--arch-fg)"
+                            className="text-[10px] rounded-none bg-[rgba(var(--arch-fg-rgb)/0.1)] text-(--arch-fg)"
                           >
                             <Tag className="h-2 w-2 mr-1" />
                             {tag}

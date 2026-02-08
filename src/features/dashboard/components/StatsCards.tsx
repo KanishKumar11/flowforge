@@ -107,7 +107,7 @@ export function StatsCards({
 
       {/* Execution Stats Logic - Extracted into this component to keep parent clean */}
       {stats && stats.error > 0 && (
-        <Card className="border-(--arch-accent)/50 bg-(--arch-accent)/5 text-(--arch-fg) rounded-none">
+        <Card className="border-[rgba(var(--arch-accent-rgb)/0.5)] bg-[rgba(var(--arch-accent-rgb)/0.05)] text-(--arch-fg) rounded-none">
           <CardHeader>
             <CardTitle className="text-lg flex items-center gap-2 text-(--arch-accent) font-mono uppercase tracking-tight">
               <AlertCircle className="h-5 w-5" />

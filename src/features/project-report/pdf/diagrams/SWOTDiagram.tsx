@@ -9,10 +9,10 @@ export default function SWOTDiagram() {
   const height = 370;
   const cx = width / 2;
 
-  const quadW = 225;
+  const quadW = 210;
   const quadH = 140;
   const gap = 4;
-  const startX = (width - 2 * quadW - gap) / 2;
+  const startX = 55;
   const startY = 50;
 
   const quadrants = [
@@ -26,9 +26,9 @@ export default function SWOTDiagram() {
         "Modern technology stack (Next.js 16, React 19)",
         "Visual-first drag-and-drop design",
         "Native AI integration (3 providers)",
-        "Open-source model, MIT license",
         "Cloud-native serverless architecture",
         "Type-safe end-to-end (TypeScript + tRPC)",
+        "Self-hosted deployment capability",
       ],
     },
     {
@@ -54,9 +54,9 @@ export default function SWOTDiagram() {
       items: [
         "Growing automation market ($46B by 2030)",
         "AI adoption rapidly accelerating",
-        "Open-source community contribution",
         "SaaS business model potential",
         "API economy growth",
+        "Enterprise workflow digitization trend",
       ],
     },
     {
@@ -97,7 +97,7 @@ export default function SWOTDiagram() {
 
       {/* Row labels */}
       <SvgText
-        x={startX - 5}
+        x={startX - 8}
         y={startY + quadH / 2}
         textAnchor="end"
         style={{ fontSize: 7, fontFamily: "Times-Bold", fill: "#059669" }}
@@ -105,7 +105,7 @@ export default function SWOTDiagram() {
         POSITIVE
       </SvgText>
       <SvgText
-        x={startX - 5}
+        x={startX - 8}
         y={startY + quadH + gap + quadH / 2}
         textAnchor="end"
         style={{ fontSize: 7, fontFamily: "Times-Bold", fill: "#dc2626" }}

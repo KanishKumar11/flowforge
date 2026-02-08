@@ -31,7 +31,7 @@ export function EmptyWorkflows({ onCreateClick }: EmptyWorkflowsProps) {
       <div className="mt-8">
         <Button
           onClick={onCreateClick}
-          className="h-10 px-6 bg-(--arch-fg) text-(--arch-bg) hover:bg-(--arch-fg)/90 rounded-none font-mono uppercase text-xs tracking-wider transition-all hover:scale-105"
+          className="h-10 px-6 bg-(--arch-fg) text-(--arch-bg) hover:bg-[rgba(var(--arch-fg-rgb)/0.9)] rounded-none font-mono uppercase text-xs tracking-wider transition-all hover:scale-105"
         >
           Initialize Workflow
         </Button>

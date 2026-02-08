@@ -147,7 +147,7 @@ export function WorkflowsPageClient() {
           <div className="flex items-center gap-2">
             <Button
               onClick={() => setShowCreateModal(true)}
-              className="gap-2 bg-(--arch-fg) text-(--arch-bg) hover:bg-(--arch-fg)/90 rounded-none border-0 font-mono uppercase text-xs h-10 px-6 shadow-[0_0_15px_rgba(var(--arch-fg-rgb),0.3)]"
+              className="gap-2 bg-(--arch-fg) text-(--arch-bg) hover:bg-[rgba(var(--arch-fg-rgb)/0.9)] rounded-none border-0 font-mono uppercase text-xs h-10 px-6 shadow-[0_0_15px_rgba(var(--arch-fg-rgb),0.3)]"
             >
               <Plus className="h-4 w-4" />
               New Workflow
@@ -201,7 +201,7 @@ export function WorkflowsPageClient() {
                 <Workflow className="w-24 h-24 text-(--arch-fg) transform rotate-12" />
               </div>
               <div className="flex items-center gap-4 relative z-10">
-                <div className="p-3 border border-(--arch-fg) bg-(--arch-fg)/10 text-(--arch-fg)">
+                <div className="p-3 border border-(--arch-fg) bg-[rgba(var(--arch-fg-rgb)/0.1)] text-(--arch-fg)">
                   <Workflow className="h-6 w-6" />
                 </div>
                 <div>
@@ -220,7 +220,7 @@ export function WorkflowsPageClient() {
                 <div className="w-24 h-24 bg-(--arch-fg) rounded-full blur-2xl" />
               </div>
               <div className="flex items-center gap-4 relative z-10">
-                <div className="p-3 border border-(--arch-fg) bg-(--arch-fg)/10 text-(--arch-fg)">
+                <div className="p-3 border border-(--arch-fg) bg-[rgba(var(--arch-fg-rgb)/0.1)] text-(--arch-fg)">
                   <div className="h-6 w-6 flex items-center justify-center">
                     <span className="w-3 h-3 rounded-full bg-(--arch-fg) animate-pulse" />
                   </div>
@@ -241,7 +241,7 @@ export function WorkflowsPageClient() {
                 <div className="w-24 h-24 bg-(--arch-muted) rounded-full blur-2xl" />
               </div>
               <div className="flex items-center gap-4 relative z-10">
-                <div className="p-3 border border-(--arch-muted) bg-(--arch-muted)/10 text-(--arch-muted)">
+                <div className="p-3 border border-(--arch-muted) bg-[rgba(var(--arch-muted-rgb)/0.1)] text-(--arch-muted)">
                   <div className="h-6 w-6 flex items-center justify-center">
                     <span className="w-3 h-3 rounded-full bg-(--arch-muted)" />
                   </div>

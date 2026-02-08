@@ -1,23 +1,126 @@
 const tables = [
-  { number: "2.1", title: "Comparison of Existing Solutions", page: "5" },
-  { number: "4.1", title: "Functional Requirements", page: "16" },
-  { number: "4.2", title: "Non-Functional Requirements", page: "17" },
-  { number: "4.3", title: "Hardware Requirements", page: "18" },
-  { number: "4.4", title: "Software Requirements", page: "19" },
-  { number: "4.5", title: "Technical Feasibility Analysis", page: "21" },
-  { number: "4.6", title: "Economic Feasibility Analysis", page: "22" },
-  { number: "5.1", title: "User Entity Attributes", page: "31" },
-  { number: "5.2", title: "Workflow Entity Attributes", page: "31" },
-  { number: "5.3", title: "Execution Entity Attributes", page: "32" },
-  { number: "6.1", title: "COCOMO Parameters", page: "34" },
-  { number: "6.2", title: "Effort Estimation", page: "35" },
-  { number: "6.3", title: "Risk Identification Matrix", page: "37" },
-  { number: "6.4", title: "Risk Mitigation Strategies", page: "38" },
-  { number: "6.5", title: "Project Schedule", page: "41" },
-  { number: "7.1", title: "Unit Test Cases - Authentication", page: "48" },
-  { number: "7.2", title: "Unit Test Cases - Workflow CRUD", page: "49" },
-  { number: "7.3", title: "Integration Test Cases", page: "50" },
-  { number: "7.4", title: "System Test Cases", page: "51" },
+  // Chapter 1
+  { number: "1.1", title: "Technology Stack", page: "4" },
+  { number: "1.2", title: "Technology Justification", page: "5" },
+  { number: "1.3", title: "Key Features Summary", page: "6" },
+  { number: "1.4", title: "Report Organization", page: "7" },
+
+  // Chapter 2
+  {
+    number: "2.1",
+    title: "Feature Comparison of Workflow Automation Platforms",
+    page: "11",
+  },
+  {
+    number: "2.2",
+    title: "Detailed Feature Comparison \u2014 Flowgent vs n8n",
+    page: "14",
+  },
+
+  // Chapter 3
+  {
+    number: "3.1",
+    title: "Technology Stack Selection and Justification",
+    page: "17",
+  },
+
+  // Chapter 4 - Feasibility Study
+  {
+    number: "4.1",
+    title: "Technology Stack Feasibility Assessment",
+    page: "26",
+  },
+  { number: "4.2", title: "Technical Risk Analysis", page: "28" },
+  { number: "4.3", title: "Infrastructure Cost Analysis", page: "28" },
+  { number: "4.4", title: "Feasibility Summary", page: "29" },
+
+  // Chapter 5 - Estimation & Planning
+  { number: "5.1", title: "Lines of Code by Module", page: "35" },
+  { number: "5.2", title: "Risk Analysis Matrix", page: "37" },
+
+  // Chapter 6 - SDLC
+  { number: "6.1", title: "SDLC Phases and Deliverables Overview", page: "41" },
+  { number: "6.2", title: "SDLC Phase Duration and Timeline", page: "44" },
+  { number: "6.3", title: "Sprint Structure and Ceremonies", page: "47" },
+  { number: "6.4", title: "Sprint Overview and Deliverables", page: "48" },
+  {
+    number: "6.5",
+    title: "Comparison of Development Methodologies",
+    page: "50",
+  },
+  { number: "6.6", title: "Interview Participants and Use Cases", page: "53" },
+  { number: "6.7", title: "Questionnaire Respondent Demographics", page: "55" },
+  { number: "6.8", title: "Current Tool Usage and Satisfaction", page: "56" },
+  { number: "6.9", title: "Primary Use Cases Identified", page: "57" },
+  { number: "6.10", title: "Stakeholder Analysis", page: "58" },
+  { number: "6.11", title: "Requirements Traceability Matrix", page: "59" },
+  { number: "6.12", title: "Primary Data Entities", page: "63" },
+  { number: "6.13", title: "Requirements Summary by Category", page: "67" },
+  {
+    number: "6.14",
+    title: "Requirements Traceability Matrix (SRS)",
+    page: "68",
+  },
+
+  // Chapter 7 - System Design
+  { number: "7.1", title: "Context Diagram Data Flows", page: "72" },
+  { number: "7.2", title: "Use Case Specifications", page: "75" },
+  { number: "7.3", title: "Entity Relationships", page: "76" },
+  { number: "7.4", title: "User Table Schema", page: "77" },
+  { number: "7.5", title: "Session Table Schema", page: "77" },
+  { number: "7.6", title: "Account Table Schema", page: "78" },
+  { number: "7.7", title: "Verification Table Schema", page: "78" },
+  { number: "7.8", title: "Workflow Table Schema", page: "79" },
+  { number: "7.9", title: "Execution Table Schema", page: "79" },
+  { number: "7.10", title: "AuditLog Table Schema", page: "80" },
+  { number: "7.11", title: "Credential Table Schema", page: "80" },
+  { number: "7.12", title: "Schedule Table Schema", page: "81" },
+  { number: "7.13", title: "WebhookEndpoint Table Schema", page: "81" },
+  { number: "7.14", title: "Team Table Schema", page: "82" },
+  { number: "7.15", title: "Invitation Table Schema", page: "82" },
+  { number: "7.16", title: "TeamMember Table Schema", page: "83" },
+  { number: "7.17", title: "WorkflowVersion Table Schema", page: "83" },
+  { number: "7.18", title: "ExecutionStatus Enumeration", page: "84" },
+  { number: "7.19", title: "ExecutionMode Enumeration", page: "84" },
+  { number: "7.20", title: "HttpMethod Enumeration", page: "84" },
+  { number: "7.21", title: "TeamRole Enumeration", page: "84" },
+  { number: "7.22", title: "Entity Relationship Summary", page: "85" },
+
+  // Chapter 8 - Implementation
+  { number: "8.1", title: "Project Directory Structure", page: "85" },
+  { number: "8.2", title: "tRPC Router Summary", page: "87" },
+  { number: "8.3", title: "Complete Node Types Implementation", page: "89" },
+  { number: "8.4", title: "Built-in Workflow Templates", page: "92" },
+  { number: "8.5", title: "Next.js API Routes", page: "93" },
+
+  // Chapter 9 - Testing
+  { number: "9.1", title: "SOLID Principles Implementation", page: "95" },
+  { number: "9.2", title: "Design Patterns Used", page: "96" },
+  { number: "9.3", title: "Testing Levels and Coverage", page: "96" },
+  { number: "9.4", title: "Unit Test Cases", page: "97" },
+  { number: "9.5", title: "Integration Test Cases", page: "97" },
+  { number: "9.6", title: "System Test Cases", page: "98" },
+  { number: "9.7", title: "UI/UX Test Cases", page: "98" },
+  { number: "9.8", title: "Security Test Cases", page: "99" },
+  { number: "9.9", title: "Performance Test Results", page: "99" },
+  { number: "9.10", title: "Defect Tracking Log", page: "100" },
+  { number: "9.11", title: "Complete Test Results Summary", page: "100" },
+
+  // Chapter 10 - User Manual
+  { number: "10.1", title: "Common Cron Schedule Examples", page: "100" },
+  { number: "10.2", title: "Team Role Permissions Matrix", page: "100" },
+  { number: "10.3", title: "Common Issues & Resolutions", page: "101" },
+
+  // Chapter 12 - Conclusions
+  { number: "12.1", title: "Project Objectives Achievement", page: "108" },
+  { number: "12.2", title: "Current Limitations", page: "109" },
+
+  // Annexures
+  { number: "A.1", title: "Complete Prisma Database Schema", page: "110" },
+  { number: "B.1", title: "HTTP API Endpoints", page: "111" },
+  { number: "C.1", title: "tRPC Router Summary", page: "112" },
+  { number: "D.1", title: "Required Environment Variables", page: "113" },
+  { number: "E.1", title: "Complete Node Type Reference", page: "114" },
 ];
 
 export default function ListOfTables() {

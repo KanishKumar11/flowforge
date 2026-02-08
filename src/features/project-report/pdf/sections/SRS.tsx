@@ -9,8 +9,8 @@ import BookPageLayout from "../components/BookPageLayout";
  */
 export default function SRS() {
   return (
-    <BookPageLayout chapterTitle="SDLC" chapterNum="05">
-      <Text style={styles.h2}>5.4 Software Requirement Specification</Text>
+    <BookPageLayout chapterTitle="SDLC" chapterNum="06">
+      <Text style={styles.h2}>6.4 Software Requirement Specification</Text>
       <Text style={styles.paragraphIndent}>
         The Software Requirements Specification (SRS) document provides a
         comprehensive description of the intended purpose and environment for
@@ -19,7 +19,7 @@ export default function SRS() {
         SRS for the Flowgent workflow automation platform.
       </Text>
 
-      <Text style={styles.h3}>5.4.1 Purpose and Scope</Text>
+      <Text style={styles.h3}>6.4.1 Purpose and Scope</Text>
       <Text style={styles.paragraphIndent}>
         This SRS defines the functional and non-functional requirements for
         Flowgent, a visual workflow automation platform. The document serves as
@@ -47,7 +47,7 @@ export default function SRS() {
         </Text>
       </View>
 
-      <Text style={styles.h3}>5.4.2 Functional Requirements</Text>
+      <Text style={styles.h3}>6.4.2 Functional Requirements</Text>
       <Text style={styles.paragraphIndent}>
         Functional requirements specify the specific behaviors and functions the
         system must perform. These requirements are organized by feature area
@@ -632,28 +632,28 @@ export default function SRS() {
           </Text>
         </View>
         {[
-          ["FR-5.1", "System shall integrate with OpenAI GPT models", "Must"],
+          ["FR-6.1", "System shall integrate with OpenAI GPT models", "Must"],
           [
-            "FR-5.2",
+            "FR-6.2",
             "System shall integrate with Anthropic Claude models",
             "Should",
           ],
           [
-            "FR-5.3",
+            "FR-6.3",
             "System shall integrate with Google Gemini models",
             "Should",
           ],
           [
-            "FR-5.4",
+            "FR-6.4",
             "Users shall configure system prompts and parameters",
             "Must",
           ],
           [
-            "FR-5.5",
+            "FR-6.5",
             "AI responses shall be accessible to subsequent nodes",
             "Must",
           ],
-          ["FR-5.6", "System shall handle AI API rate limits", "Should"],
+          ["FR-6.6", "System shall handle AI API rate limits", "Should"],
         ].map((row, i) => (
           <View
             key={i}
@@ -935,7 +935,7 @@ export default function SRS() {
         ))}
       </View>
 
-      <Text style={styles.h3}>5.4.3 Non-Functional Requirements</Text>
+      <Text style={styles.h3}>6.4.3 Non-Functional Requirements</Text>
       <Text style={styles.paragraphIndent}>
         Non-functional requirements define the quality attributes that the
         system must exhibit. These requirements ensure the system is performant,
@@ -1358,7 +1358,7 @@ export default function SRS() {
         ))}
       </View>
 
-      <Text style={styles.h3}>5.4.4 System Requirements</Text>
+      <Text style={styles.h3}>6.4.4 System Requirements</Text>
       <Text style={styles.paragraph}>
         <Text style={styles.bold}>Hardware Requirements (Server):</Text>
       </Text>
@@ -1493,7 +1493,7 @@ export default function SRS() {
         </Text>
       </View>
 
-      <Text style={styles.h3}>5.4.5 Use Case Specifications</Text>
+      <Text style={styles.h3}>6.4.5 Use Case Specifications</Text>
       <Text style={styles.paragraphIndent}>
         This section provides detailed specifications for key use cases
         identified during requirement gathering.
@@ -1715,7 +1715,7 @@ export default function SRS() {
         </View>
       </View>
 
-      <Text style={styles.h3}>5.4.6 Data Requirements</Text>
+      <Text style={styles.h3}>6.4.6 Data Requirements</Text>
       <Text style={styles.paragraphIndent}>
         The system shall manage the following primary data entities:
       </Text>
@@ -1838,10 +1838,10 @@ export default function SRS() {
           marginBottom: 12,
         }}
       >
-        Table 5.12: Primary Data Entities
+        Table 6.12: Primary Data Entities
       </Text>
 
-      <Text style={styles.h3}>5.4.7 Interface Requirements</Text>
+      <Text style={styles.h3}>6.4.7 Interface Requirements</Text>
       <Text style={styles.paragraph}>
         <Text style={styles.bold}>User Interface:</Text>
       </Text>
@@ -1875,7 +1875,7 @@ export default function SRS() {
         </Text>
       </View>
 
-      <Text style={styles.h3}>5.4.8 Constraints</Text>
+      <Text style={styles.h3}>6.4.8 Constraints</Text>
       <Text style={styles.paragraphIndent}>
         The following constraints apply to the system design and implementation:
       </Text>
@@ -1909,7 +1909,7 @@ export default function SRS() {
           • Development timeline: 12 weeks
         </Text>
         <Text style={{ fontSize: 10, marginBottom: 4 }}>
-          • Open-source licensing required
+          • Proprietary licensing with potential SaaS model
         </Text>
         <Text style={{ fontSize: 10, marginBottom: 4 }}>
           • Must operate within free tiers during development
@@ -1931,7 +1931,7 @@ export default function SRS() {
         </Text>
       </View>
 
-      <Text style={styles.h3}>5.4.9 Assumptions and Dependencies</Text>
+      <Text style={styles.h3}>6.4.9 Assumptions and Dependencies</Text>
       <Text style={styles.paragraph}>
         <Text style={styles.bold}>Assumptions:</Text>
       </Text>
@@ -2050,7 +2050,7 @@ export default function SRS() {
         ))}
       </View>
 
-      <Text style={styles.h3}>5.4.10 Acceptance Criteria</Text>
+      <Text style={styles.h3}>6.4.10 Acceptance Criteria</Text>
       <Text style={styles.paragraphIndent}>
         The following acceptance criteria must be satisfied for the system to be
         considered complete:
@@ -2104,7 +2104,7 @@ export default function SRS() {
         </Text>
       </View>
 
-      <Text style={styles.h3}>5.4.11 Requirements Summary</Text>
+      <Text style={styles.h3}>6.4.11 Requirements Summary</Text>
       <View
         wrap={false}
         style={{
@@ -2248,10 +2248,10 @@ export default function SRS() {
           marginBottom: 8,
         }}
       >
-        Table 5.13: Requirements Summary by Category
+        Table 6.13: Requirements Summary by Category
       </Text>
 
-      <Text style={styles.h3}>5.4.12 Requirements Traceability Matrix</Text>
+      <Text style={styles.h3}>6.4.12 Requirements Traceability Matrix</Text>
       <Text style={styles.paragraphIndent}>
         The Requirements Traceability Matrix (RTM) maps each functional
         requirement to its corresponding design component, implementation
@@ -2399,13 +2399,13 @@ export default function SRS() {
             "TC-31",
           ],
           [
-            "FR-5.1",
+            "FR-6.1",
             "Team RBAC",
             "Permission System",
             "teams/router.ts",
             "TC-40, TC-41",
           ],
-          ["FR-5.2", "Role Levels", "4-tier RBAC", "TeamService.ts", "TC-42"],
+          ["FR-6.2", "Role Levels", "4-tier RBAC", "TeamService.ts", "TC-42"],
           [
             "FR-6.1",
             "Credential Store",
@@ -2496,10 +2496,10 @@ export default function SRS() {
           marginBottom: 12,
         }}
       >
-        Table 5.14: Requirements Traceability Matrix
+        Table 6.14: Requirements Traceability Matrix
       </Text>
 
-      <Text style={styles.h3}>5.4.13 Summary</Text>
+      <Text style={styles.h3}>6.4.13 Summary</Text>
       <Text style={styles.paragraphIndent}>
         This Software Requirements Specification document has provided a
         comprehensive definition of the Flowgent workflow automation platform.

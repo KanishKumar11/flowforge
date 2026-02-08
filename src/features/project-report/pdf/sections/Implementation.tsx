@@ -4,6 +4,7 @@ import { View, Text } from "@react-pdf/renderer";
 import { styles } from "../styles";
 import BookPageLayout from "../components/BookPageLayout";
 import DeploymentDiagram from "../diagrams/DeploymentDiagram";
+import AINodeFlowDiagram from "../diagrams/AINodeFlowDiagram";
 
 /**
  * Chapter 8: Implementation
@@ -202,6 +203,58 @@ export default function Implementation() {
         representation serves as the workflow definition that the execution
         engine processes.
       </Text>
+
+      <Text style={styles.paragraph}>
+        <Text style={styles.bold}>Code Snippet — React Flow Editor Hook:</Text>
+      </Text>
+      <View
+        style={{
+          backgroundColor: "#f5f5f5",
+          borderWidth: 1,
+          borderColor: "#cccccc",
+          padding: 10,
+          marginBottom: 12,
+        }}
+      >
+        <Text style={{ fontSize: 7.5, fontFamily: "Courier", lineHeight: 1.4 }}>
+          {`// src/features/editor/hooks/useWorkflowEditor.ts
+import { useCallback, useRef } from "react";
+import {
+  useNodesState, useEdgesState, addEdge,
+  type Connection, type Edge, type Node,
+} from "@xyflow/react";
+import { api } from "@/trpc/client";
+
+export function useWorkflowEditor(workflowId: string) {
+  const [nodes, setNodes, onNodesChange] = useNodesState([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const reactFlowRef = useRef<HTMLDivElement>(null);
+
+  const saveWorkflow = api.workflow.save.useMutation();
+
+  const onConnect = useCallback(
+    (connection: Connection) => {
+      setEdges((eds) => addEdge(connection, eds));
+    },
+    [setEdges]
+  );
+
+  const handleSave = useCallback(async () => {
+    await saveWorkflow.mutateAsync({
+      id: workflowId,
+      nodes: JSON.stringify(nodes),
+      edges: JSON.stringify(edges),
+    });
+  }, [nodes, edges, workflowId, saveWorkflow]);
+
+  return {
+    nodes, edges, reactFlowRef,
+    onNodesChange, onEdgesChange, onConnect,
+    handleSave, isSaving: saveWorkflow.isPending,
+  };
+}`}
+        </Text>
+      </View>
 
       <Text style={styles.h3}>8.3.2 Dashboard Interface</Text>
       <Text style={styles.paragraphIndent}>
@@ -483,6 +536,50 @@ export const protectedProcedure = t.procedure.use(async ({ ctx, next }) => {
         </Text>
       </View>
 
+      <Text style={styles.paragraph}>
+        <Text style={styles.bold}>
+          Code Snippet — tRPC Create Workflow Route:
+        </Text>
+      </Text>
+      <View
+        style={{
+          backgroundColor: "#f5f5f5",
+          borderWidth: 1,
+          borderColor: "#cccccc",
+          padding: 10,
+          marginBottom: 12,
+        }}
+      >
+        <Text style={{ fontSize: 7.5, fontFamily: "Courier", lineHeight: 1.4 }}>
+          {`// src/trpc/routers/workflow.ts
+export const workflowRouter = createTRPCRouter({
+  create: protectedProcedure
+    .input(z.object({
+      name: z.string().min(1).max(100),
+      description: z.string().optional(),
+      teamId: z.string().optional(),
+      templateId: z.string().optional(),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const workflow = await ctx.db.workflow.create({
+        data: {
+          name: input.name,
+          description: input.description ?? "",
+          userId: ctx.user.id,
+          teamId: input.teamId,
+          nodes: "[]",
+          edges: "[]",
+          viewport: JSON.stringify({ x: 0, y: 0, zoom: 1 }),
+          status: "DRAFT",
+          version: 1,
+        },
+      });
+      return { id: workflow.id, name: workflow.name };
+    }),
+});`}
+        </Text>
+      </View>
+
       <Text style={styles.h3}>8.4.2 Database Layer (Prisma ORM)</Text>
       <Text style={styles.paragraphIndent}>
         The database layer uses <Text style={styles.bold}>Prisma ORM</Text> with{" "}
@@ -648,6 +745,51 @@ export const executeWorkflow = inngest.createFunction(
         result object. A Strategy pattern is used to select the appropriate
         executor at runtime.
       </Text>
+
+      <Text style={styles.paragraph}>
+        <Text style={styles.bold}>
+          Code Snippet — HTTP Request Node Executor:
+        </Text>
+      </Text>
+      <View
+        style={{
+          backgroundColor: "#f5f5f5",
+          borderWidth: 1,
+          borderColor: "#cccccc",
+          padding: 10,
+          marginBottom: 12,
+        }}
+      >
+        <Text style={{ fontSize: 7.5, fontFamily: "Courier", lineHeight: 1.4 }}>
+          {`// src/inngest/executors/httpRequestExecutor.ts
+import type { NodeData, ExecutionResult } from "@/types";
+
+export async function executeHttpRequest(
+  node: NodeData,
+  context: Record<string, unknown>
+): Promise<ExecutionResult> {
+  const { url, method, headers, body } = node.config;
+  const resolvedUrl = resolveTemplate(url, context);
+  const resolvedBody = body ? resolveTemplate(body, context) : undefined;
+
+  const startTime = Date.now();
+  const response = await fetch(resolvedUrl, {
+    method: method || "GET",
+    headers: parseHeaders(headers, context),
+    body: resolvedBody,
+  });
+
+  const data = await response.json();
+  return {
+    success: response.ok,
+    data,
+    statusCode: response.status,
+    duration: Date.now() - startTime,
+    error: response.ok ? null : data.message ?? "Request failed",
+  };
+}`}
+        </Text>
+      </View>
 
       <Text style={styles.h3}>8.5.3 Scheduled Execution</Text>
       <Text style={styles.paragraphIndent}>
@@ -966,7 +1108,77 @@ export const pollSchedules = inngest.createFunction(
         </Text>
       </View>
 
-      <Text style={styles.h3}>8.7.3 Integration Registry</Text>
+      <Text style={styles.h3}>8.7.3 Limitations of AI Nodes</Text>
+      <Text style={styles.paragraphIndent}>
+        While the AI integration provides powerful capabilities, several
+        inherent limitations must be acknowledged for transparent system
+        documentation:
+      </Text>
+
+      <View
+        wrap={false}
+        style={{ alignItems: "center", marginTop: 8, marginBottom: 8 }}
+      >
+        <AINodeFlowDiagram />
+      </View>
+      <Text
+        style={{
+          fontSize: 9,
+          fontFamily: "Times-Italic",
+          textAlign: "center",
+          marginBottom: 12,
+        }}
+      >
+        Figure 8.2: AI Node Execution Pipeline
+      </Text>
+      <View style={{ marginLeft: 24, marginBottom: 12 }}>
+        <Text style={{ fontSize: 10, marginBottom: 6, lineHeight: 1.5 }}>
+          • <Text style={styles.bold}>API Dependency:</Text> All AI operations
+          require active internet connectivity and rely on third-party API
+          availability. Provider outages directly impact workflow execution.
+        </Text>
+        <Text style={{ fontSize: 10, marginBottom: 6, lineHeight: 1.5 }}>
+          • <Text style={styles.bold}>Cost Accumulation:</Text> Each API call
+          incurs token-based charges. Complex workflows with multiple AI nodes
+          can accumulate significant costs, especially with GPT-4o or Claude
+          Opus models.
+        </Text>
+        <Text style={{ fontSize: 10, marginBottom: 6, lineHeight: 1.5 }}>
+          • <Text style={styles.bold}>Non-Deterministic Output:</Text> LLM
+          responses are inherently non-deterministic. Identical prompts may
+          produce different outputs across executions, making workflow results
+          less predictable than traditional logic nodes.
+        </Text>
+        <Text style={{ fontSize: 10, marginBottom: 6, lineHeight: 1.5 }}>
+          • <Text style={styles.bold}>Token Limits:</Text> Each model has input
+          and output token limits (e.g., GPT-4o: 128K input, 16K output). Large
+          payloads may be truncated or rejected, requiring chunking strategies
+          not yet implemented.
+        </Text>
+        <Text style={{ fontSize: 10, marginBottom: 6, lineHeight: 1.5 }}>
+          • <Text style={styles.bold}>No Streaming Support:</Text> The current
+          implementation waits for the complete response before passing data to
+          the next node, adding latency for long-form generation tasks.
+        </Text>
+        <Text style={{ fontSize: 10, marginBottom: 6, lineHeight: 1.5 }}>
+          • <Text style={styles.bold}>Rate Limiting:</Text> API providers
+          enforce rate limits (requests per minute). High-volume workflows may
+          encounter throttling, requiring queuing logic handled by Inngest.
+        </Text>
+        <Text style={{ fontSize: 10, marginBottom: 6, lineHeight: 1.5 }}>
+          • <Text style={styles.bold}>No Fine-Tuning:</Text> The platform uses
+          models via inference APIs only. Custom model fine-tuning or training
+          on domain-specific data is not supported.
+        </Text>
+        <Text style={{ fontSize: 10, marginBottom: 6, lineHeight: 1.5 }}>
+          • <Text style={styles.bold}>Hallucination Risk:</Text> AI models may
+          generate factually incorrect outputs. No built-in fact-checking or
+          validation layer is provided — users must verify AI-generated content
+          before acting on it.
+        </Text>
+      </View>
+
+      <Text style={styles.h3}>8.7.4 Integration Registry</Text>
       <Text style={styles.paragraphIndent}>
         A centralized integration registry (src/lib/integrations/registry.ts)
         defines all available integrations with their operations, required
@@ -1250,6 +1462,53 @@ export function WorkflowEditor({ workflowId }: { workflowId: string }) {
         accessible from dedicated views.
       </Text>
 
+      <Text style={styles.paragraph}>
+        <Text style={styles.bold}>
+          Code Snippet — Team RBAC Permission Check:
+        </Text>
+      </Text>
+      <View
+        style={{
+          backgroundColor: "#f5f5f5",
+          borderWidth: 1,
+          borderColor: "#cccccc",
+          padding: 10,
+          marginBottom: 12,
+        }}
+      >
+        <Text style={{ fontSize: 7.5, fontFamily: "Courier", lineHeight: 1.4 }}>
+          {`// src/lib/auth-utils.ts
+import { db } from "./db";
+
+type TeamRole = "OWNER" | "ADMIN" | "MEMBER" | "VIEWER";
+
+const ROLE_HIERARCHY: Record<TeamRole, number> = {
+  OWNER: 4, ADMIN: 3, MEMBER: 2, VIEWER: 1,
+};
+
+export async function checkTeamPermission(
+  userId: string,
+  teamId: string,
+  requiredRole: TeamRole
+): Promise<boolean> {
+  const membership = await db.teamMember.findUnique({
+    where: { userId_teamId: { userId, teamId } },
+    select: { role: true },
+  });
+  if (!membership) return false;
+  return ROLE_HIERARCHY[membership.role as TeamRole]
+    >= ROLE_HIERARCHY[requiredRole];
+}
+
+export async function requireTeamRole(
+  userId: string, teamId: string, role: TeamRole
+) {
+  const allowed = await checkTeamPermission(userId, teamId, role);
+  if (!allowed) throw new TRPCError({ code: "FORBIDDEN" });
+}`}
+        </Text>
+      </View>
+
       {/* 8.9 API Routes */}
       <Text style={styles.h2}>8.9 API Routes</Text>
       <Text style={styles.paragraphIndent}>
@@ -1397,6 +1656,53 @@ export function WorkflowEditor({ workflowId }: { workflowId: string }) {
       >
         Table 8.5: Next.js API Routes
       </Text>
+
+      <Text style={styles.paragraph}>
+        <Text style={styles.bold}>Code Snippet — Webhook Handler Route:</Text>
+      </Text>
+      <View
+        style={{
+          backgroundColor: "#f5f5f5",
+          borderWidth: 1,
+          borderColor: "#cccccc",
+          padding: 10,
+          marginBottom: 12,
+        }}
+      >
+        <Text style={{ fontSize: 7.5, fontFamily: "Courier", lineHeight: 1.4 }}>
+          {`// src/app/api/webhook/[workflowId]/route.ts
+import { NextRequest, NextResponse } from "next/server";
+import { db } from "@/lib/db";
+import { inngest } from "@/inngest/client";
+
+export async function POST(
+  req: NextRequest,
+  { params }: { params: { workflowId: string } }
+) {
+  const workflow = await db.workflow.findUnique({
+    where: { id: params.workflowId, status: "ACTIVE" },
+    select: { id: true, userId: true, nodes: true, edges: true },
+  });
+  if (!workflow) {
+    return NextResponse.json(
+      { error: "Workflow not found" }, { status: 404 }
+    );
+  }
+
+  const payload = await req.json().catch(() => null);
+  await inngest.send({
+    name: "workflow/execute",
+    data: {
+      workflowId: workflow.id,
+      userId: workflow.userId,
+      trigger: { type: "WEBHOOK", payload },
+    },
+  });
+
+  return NextResponse.json({ success: true, executionId: workflow.id });
+}`}
+        </Text>
+      </View>
 
       {/* 8.10 Deployment */}
       <Text style={styles.h2}>8.10 Deployment</Text>

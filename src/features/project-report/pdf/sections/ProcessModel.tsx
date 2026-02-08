@@ -10,9 +10,9 @@ import AgileSprintDiagram from "../diagrams/AgileSprintDiagram";
  */
 export default function ProcessModel() {
   return (
-    <BookPageLayout chapterTitle="SDLC" chapterNum="05">
+    <BookPageLayout chapterTitle="SDLC" chapterNum="06">
       {/* Section Title */}
-      <Text style={styles.h2}>5.2 Process Model</Text>
+      <Text style={styles.h2}>6.2 Process Model</Text>
       <Text style={styles.paragraphIndent}>
         The selection of an appropriate process model is a critical decision
         that influences project organization, communication patterns, and the
@@ -22,8 +22,8 @@ export default function ProcessModel() {
         implementation.
       </Text>
 
-      {/* 5.2.1 Agile Methodology Overview */}
-      <Text style={styles.h3}>5.2.1 Agile Methodology Overview</Text>
+      {/* 6.2.1 Agile Methodology Overview */}
+      <Text style={styles.h3}>6.2.1 Agile Methodology Overview</Text>
       <Text style={styles.paragraphIndent}>
         Agile software development is a set of principles and practices that
         emphasize iterative development, customer collaboration, and
@@ -60,8 +60,8 @@ export default function ProcessModel() {
         flexibility to adapt to discoveries made during development.
       </Text>
 
-      {/* 5.2.2 Justification for Agile Selection */}
-      <Text style={styles.h3}>5.2.2 Justification for Agile Selection</Text>
+      {/* 6.2.2 Justification for Agile Selection */}
+      <Text style={styles.h3}>6.2.2 Justification for Agile Selection</Text>
       <Text style={styles.paragraphIndent}>
         Several factors influenced the decision to adopt Agile for the Flowgent
         project. Each factor addresses specific characteristics of the project
@@ -113,8 +113,8 @@ export default function ProcessModel() {
         course correction.
       </Text>
 
-      {/* 5.2.3 Sprint Structure */}
-      <Text style={styles.h3}>5.2.3 Sprint Structure</Text>
+      {/* 6.2.3 Sprint Structure */}
+      <Text style={styles.h3}>6.2.3 Sprint Structure</Text>
       <Text style={styles.paragraphIndent}>
         Development was organized into one-week sprints, providing a consistent
         rhythm for planning, execution, and review. Each sprint followed a
@@ -132,7 +132,7 @@ export default function ProcessModel() {
             marginBottom: 12,
           }}
         >
-          Figure 5.2: Agile Sprint Cycle
+          Figure 6.2: Agile Sprint Cycle
         </Text>
       </View>
 
@@ -293,11 +293,11 @@ export default function ProcessModel() {
           marginBottom: 16,
         }}
       >
-        Table 5.3: Sprint Structure and Ceremonies
+        Table 6.3: Sprint Structure and Ceremonies
       </Text>
 
-      {/* 5.2.4 Agile Artifacts */}
-      <Text style={styles.h3}>5.2.4 Agile Artifacts</Text>
+      {/* 6.2.4 Agile Artifacts */}
+      <Text style={styles.h3}>6.2.4 Agile Artifacts</Text>
       <Text style={styles.paragraphIndent}>
         Several key artifacts were maintained throughout the project to support
         the Agile process:
@@ -360,8 +360,8 @@ export default function ProcessModel() {
         sprint was at risk, scope was adjusted or blockers were addressed.
       </Text>
 
-      {/* 5.2.5 Development Sprints Overview */}
-      <Text style={styles.h3}>5.2.5 Development Sprints Overview</Text>
+      {/* 6.2.5 Development Sprints Overview */}
+      <Text style={styles.h3}>6.2.5 Development Sprints Overview</Text>
       <Text style={styles.paragraphIndent}>
         The project was executed over 12 sprints, each focusing on specific
         functional areas. The following table provides an overview of each
@@ -526,11 +526,11 @@ export default function ProcessModel() {
           marginBottom: 16,
         }}
       >
-        Table 5.4: Sprint Overview and Deliverables
+        Table 6.4: Sprint Overview and Deliverables
       </Text>
 
-      {/* 5.2.6 Detailed Sprint Descriptions */}
-      <Text style={styles.h3}>5.2.6 Detailed Sprint Descriptions</Text>
+      {/* 6.2.6 Detailed Sprint Descriptions */}
+      <Text style={styles.h3}>6.2.6 Detailed Sprint Descriptions</Text>
 
       <Text style={styles.paragraph}>
         <Text style={styles.bold}>Sprints 1-2: Foundation</Text>
@@ -616,8 +616,8 @@ export default function ProcessModel() {
         established using Sentry.
       </Text>
 
-      {/* 5.2.7 Agile Practices Adopted */}
-      <Text style={styles.h3}>5.2.7 Agile Practices Adopted</Text>
+      {/* 6.2.7 Agile Practices Adopted */}
+      <Text style={styles.h3}>6.2.7 Agile Practices Adopted</Text>
       <Text style={styles.paragraphIndent}>
         Beyond the sprint structure, several specific Agile practices were
         adopted to improve quality and productivity:
@@ -653,9 +653,9 @@ export default function ProcessModel() {
         </Text>
       </View>
 
-      {/* 5.2.8 Comparison with Alternative Methodologies */}
+      {/* 6.2.8 Comparison with Alternative Methodologies */}
       <Text style={styles.h3}>
-        5.2.8 Comparison with Alternative Methodologies
+        6.2.8 Comparison with Alternative Methodologies
       </Text>
       <Text style={styles.paragraphIndent}>
         To provide context for the Agile selection, a brief comparison with
@@ -811,7 +811,7 @@ export default function ProcessModel() {
           marginBottom: 16,
         }}
       >
-        Table 5.5: Comparison of Development Methodologies
+        Table 6.5: Comparison of Development Methodologies
       </Text>
 
       <Text style={styles.paragraphIndent}>
@@ -823,8 +823,8 @@ export default function ProcessModel() {
         analysis was unnecessary for this project's scale.
       </Text>
 
-      {/* 5.2.9 Lessons Learned */}
-      <Text style={styles.h3}>5.2.9 Lessons Learned</Text>
+      {/* 6.2.9 Lessons Learned */}
+      <Text style={styles.h3}>6.2.9 Lessons Learned</Text>
       <Text style={styles.paragraphIndent}>
         The Agile implementation yielded several valuable lessons:
       </Text>
@@ -853,8 +853,8 @@ export default function ProcessModel() {
         </Text>
       </View>
 
-      {/* 5.2.10 Summary */}
-      <Text style={styles.h3}>5.2.10 Summary</Text>
+      {/* 6.2.10 Summary */}
+      <Text style={styles.h3}>6.2.10 Summary</Text>
       <Text style={styles.paragraphIndent}>
         The Agile methodology provided an effective framework for developing the
         Flowgent platform. Through twelve one-week sprints, the project

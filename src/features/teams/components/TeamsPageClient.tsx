@@ -66,7 +66,7 @@ export function TeamsPageClient() {
         action={
           <Button
             onClick={() => setShowCreateModal(true)}
-            className="gap-2 bg-(--arch-fg) text-(--arch-bg) hover:bg-(--arch-fg)/90 rounded-none font-mono uppercase text-xs h-10 border border-(--arch-fg) shadow-none transition-all"
+            className="gap-2 bg-(--arch-fg) text-(--arch-bg) hover:bg-[rgba(var(--arch-fg-rgb)/0.9)] rounded-none font-mono uppercase text-xs h-10 border border-(--arch-fg) shadow-none transition-all"
           >
             <Plus className="h-4 w-4" />
             New Team
@@ -93,7 +93,7 @@ export function TeamsPageClient() {
         {/* Empty State */}
         {!isLoading && teams?.length === 0 && (
           <div className="empty-state border border-(--arch-border) bg-(--arch-bg) rounded-none p-12 text-center animate-fadeIn shadow-none">
-            <div className="flex items-center justify-center w-24 h-24 rounded-none bg-(--arch-fg)/5 mb-8 mx-auto border border-(--arch-fg)/20">
+            <div className="flex items-center justify-center w-24 h-24 rounded-none bg-[rgba(var(--arch-fg-rgb)/0.05)] mb-8 mx-auto border border-[rgba(var(--arch-fg-rgb)/0.2)]">
               <Users className="w-12 h-12 text-(--arch-fg)" />
             </div>
             <h3 className="text-2xl font-bold tracking-tight mb-3 font-mono uppercase text-(--arch-fg)">
@@ -106,7 +106,7 @@ export function TeamsPageClient() {
             <Button
               onClick={() => setShowCreateModal(true)}
               size="lg"
-              className="gap-2 bg-(--arch-fg) text-(--arch-bg) hover:bg-(--arch-fg)/90 rounded-none font-mono uppercase text-xs h-12 px-8"
+              className="gap-2 bg-(--arch-fg) text-(--arch-bg) hover:bg-[rgba(var(--arch-fg-rgb)/0.9)] rounded-none font-mono uppercase text-xs h-12 px-8"
             >
               <Plus className="w-5 h-5" />
               Create Your First Team
@@ -131,8 +131,8 @@ export function TeamsPageClient() {
                       className={`text-[10px] uppercase font-bold font-mono tracking-wider px-2.5 py-1 rounded-none border ${team.role === "OWNER"
                           ? "bg-(--arch-fg) text-(--arch-bg) border-(--arch-fg)"
                           : team.role === "ADMIN"
-                            ? "bg-(--arch-fg)/10 text-(--arch-fg) border-(--arch-fg)"
-                            : "bg-(--arch-muted)/10 text-(--arch-muted) border-(--arch-muted)"
+                            ? "bg-[rgba(var(--arch-fg-rgb)/0.1)] text-(--arch-fg) border-(--arch-fg)"
+                            : "bg-[rgba(var(--arch-muted-rgb)/0.1)] text-(--arch-muted) border-(--arch-muted)"
                         }`}
                     >
                       {team.role}
@@ -143,7 +143,7 @@ export function TeamsPageClient() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="relative z-10">
-                  <div className="flex items-center gap-6 text-xs font-mono text-(--arch-muted) mb-6 bg-(--arch-bg-secondary)/50 p-3 rounded-none border border-(--arch-border)">
+                  <div className="flex items-center gap-6 text-xs font-mono text-(--arch-muted) mb-6 bg-[rgba(var(--arch-bg-secondary-rgb)/0.5)] p-3 rounded-none border border-(--arch-border)">
                     <div className="flex items-center gap-2">
                       <Users className="h-4 w-4 text-(--arch-fg)" />
                       <span className="font-bold text-(--arch-fg)">
@@ -162,7 +162,7 @@ export function TeamsPageClient() {
                   <div className="flex gap-3">
                     <Button
                       variant="default"
-                      className="w-full gap-2 rounded-none font-mono uppercase text-xs h-10 bg-(--arch-fg) text-(--arch-bg) hover:bg-(--arch-fg)/90"
+                      className="w-full gap-2 rounded-none font-mono uppercase text-xs h-10 bg-(--arch-fg) text-(--arch-bg) hover:bg-[rgba(var(--arch-fg-rgb)/0.9)]"
                       asChild
                     >
                       <Link href={`/teams/${team.id}`}>
@@ -224,7 +224,7 @@ export function TeamsPageClient() {
             <Button
               onClick={handleCreate}
               disabled={!newTeam.name.trim() || createTeam.isPending}
-              className="bg-(--arch-fg) text-(--arch-bg) hover:bg-(--arch-fg)/90 rounded-none font-mono uppercase text-xs"
+              className="bg-(--arch-fg) text-(--arch-bg) hover:bg-[rgba(var(--arch-fg-rgb)/0.9)] rounded-none font-mono uppercase text-xs"
             >
               {createTeam.isPending && (
                 <Loader2 className="h-4 w-4 mr-2 animate-spin" />

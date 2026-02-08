@@ -17,7 +17,7 @@ import DatabaseSchemaSection from "../components/DatabaseSchemaSection";
  */
 export default function DesignDiagrams() {
   return (
-    <BookPageLayout chapterTitle="System Design" chapterNum="06">
+    <BookPageLayout chapterTitle="System Design" chapterNum="07">
       <View style={{ alignItems: "center", marginBottom: 24 }}>
         <Text
           style={{
@@ -44,7 +44,7 @@ export default function DesignDiagrams() {
         <View style={{ width: 60, height: 3, backgroundColor: "#000000" }} />
       </View>
 
-      <Text style={styles.h2}>6.1 Introduction</Text>
+      <Text style={styles.h2}>7.1 Introduction</Text>
       <Text style={styles.paragraphIndent}>
         System design translates the requirements specification into a detailed
         technical blueprint. This chapter presents the design artifacts for
@@ -52,14 +52,14 @@ export default function DesignDiagrams() {
         Entity-Relationship Diagrams, and System Architecture.
       </Text>
 
-      <Text style={styles.h2}>6.2 Data Flow Diagrams</Text>
+      <Text style={styles.h2}>7.2 Data Flow Diagrams</Text>
       <Text style={styles.paragraphIndent}>
         Data Flow Diagrams (DFD) represent how data moves through the system.
         They provide a visual representation of data inputs, transformations,
         and outputs at various levels of abstraction.
       </Text>
 
-      <Text style={styles.h3}>6.2.1 Context Diagram (Level 0)</Text>
+      <Text style={styles.h3}>7.2.1 Context Diagram (Level 0)</Text>
       <Text style={styles.paragraphIndent}>
         The context diagram shows Flowgent as a single process interacting with
         external entities.
@@ -76,7 +76,7 @@ export default function DesignDiagrams() {
             marginBottom: 12,
           }}
         >
-          Figure 6.1: Context Diagram (Level 0 DFD)
+          Figure 7.1: Context Diagram (Level 0 DFD)
         </Text>
       </View>
 
@@ -191,10 +191,10 @@ export default function DesignDiagrams() {
           marginBottom: 12,
         }}
       >
-        Table 6.1: Context Diagram Data Flows
+        Table 7.1: Context Diagram Data Flows
       </Text>
 
-      <Text style={styles.h3}>6.2.2 Level 1 DFD</Text>
+      <Text style={styles.h3}>7.2.2 Level 1 DFD</Text>
       <Text style={styles.paragraphIndent}>
         Level 1 decomposes the system into five major processes:
       </Text>
@@ -229,7 +229,7 @@ export default function DesignDiagrams() {
             marginBottom: 12,
           }}
         >
-          Figure 6.2: Level 1 Data Flow Diagram
+          Figure 7.2: Level 1 Data Flow Diagram
         </Text>
       </View>
 
@@ -244,11 +244,11 @@ export default function DesignDiagrams() {
             marginBottom: 12,
           }}
         >
-          Figure 6.3: Level 2 DFD - Workflow Execution Engine
+          Figure 7.3: Level 2 DFD - Workflow Execution Engine
         </Text>
       </View>
 
-      <Text style={styles.h2}>6.3 Use Case Diagrams</Text>
+      <Text style={styles.h2}>7.3 Use Case Diagrams</Text>
       <Text style={styles.paragraphIndent}>
         Use Case Diagrams illustrate interactions between actors and the system.
         Three primary actors interact with Flowgent.
@@ -265,11 +265,11 @@ export default function DesignDiagrams() {
             marginBottom: 12,
           }}
         >
-          Figure 6.4: Use Case Diagram
+          Figure 7.4: Use Case Diagram
         </Text>
       </View>
 
-      <Text style={styles.h3}>6.3.1 Actor Descriptions</Text>
+      <Text style={styles.h3}>7.3.1 Actor Descriptions</Text>
       <View
         wrap={false}
         style={{
@@ -377,7 +377,7 @@ export default function DesignDiagrams() {
         ))}
       </View>
 
-      <Text style={styles.h3}>6.3.2 Use Case Specifications</Text>
+      <Text style={styles.h3}>7.3.2 Use Case Specifications</Text>
       <View
         wrap={false}
         style={{
@@ -560,10 +560,10 @@ export default function DesignDiagrams() {
           marginBottom: 12,
         }}
       >
-        Table 6.2: Use Case Specifications
+        Table 7.2: Use Case Specifications
       </Text>
 
-      <Text style={styles.h2}>6.4 Entity-Relationship Diagram</Text>
+      <Text style={styles.h2}>7.4 Entity-Relationship Diagram</Text>
       <Text style={styles.paragraphIndent}>
         The ER Diagram represents the database schema including entities,
         attributes, and relationships.
@@ -580,11 +580,11 @@ export default function DesignDiagrams() {
             marginBottom: 12,
           }}
         >
-          Figure 6.5: Entity-Relationship Diagram
+          Figure 7.5: Entity-Relationship Diagram
         </Text>
       </View>
 
-      <Text style={styles.h3}>6.4.1 Entity Descriptions</Text>
+      <Text style={styles.h3}>7.4.1 Entity Descriptions</Text>
       <View
         wrap={false}
         style={{
@@ -704,7 +704,7 @@ export default function DesignDiagrams() {
         ))}
       </View>
 
-      <Text style={styles.h3}>6.4.2 Entity Relationships</Text>
+      <Text style={styles.h3}>7.4.2 Entity Relationships</Text>
       <View
         wrap={false}
         style={{
@@ -812,16 +812,16 @@ export default function DesignDiagrams() {
           marginBottom: 8,
         }}
       >
-        Table 6.3: Entity Relationships
+        Table 7.3: Entity Relationships
       </Text>
 
-      <Text style={styles.h2}>6.5 System Architecture</Text>
+      <Text style={styles.h2}>7.5 System Architecture</Text>
       <Text style={styles.paragraphIndent}>
         Flowgent follows a modern three-tier architecture with clear separation
         between presentation, business logic, and data layers.
       </Text>
 
-      <Text style={styles.h3}>6.5.1 Architecture Layers</Text>
+      <Text style={styles.h3}>7.5.1 Architecture Layers</Text>
       <View
         wrap={false}
         style={{
@@ -930,7 +930,7 @@ export default function DesignDiagrams() {
         ))}
       </View>
 
-      <Text style={styles.h3}>6.5.2 Component Diagram</Text>
+      <Text style={styles.h3}>7.5.2 Component Diagram</Text>
       <Text style={styles.paragraphIndent}>
         The system consists of the following major components:
       </Text>
@@ -991,11 +991,11 @@ export default function DesignDiagrams() {
             marginBottom: 12,
           }}
         >
-          Figure 6.6: Component Hierarchy Diagram
+          Figure 7.6: Component Hierarchy Diagram
         </Text>
       </View>
 
-      <Text style={styles.h2}>6.6 Database Schema</Text>
+      <Text style={styles.h2}>7.6 Database Schema</Text>
       <Text style={styles.paragraphIndent}>
         The database schema is implemented using Prisma ORM with PostgreSQL. Key
         tables and their structures are defined below.
@@ -1003,7 +1003,7 @@ export default function DesignDiagrams() {
 
       <DatabaseSchemaSection />
 
-      <Text style={styles.h2}>6.7 Design Patterns</Text>
+      <Text style={styles.h2}>7.7 Design Patterns</Text>
       <Text style={styles.paragraphIndent}>
         The system employs several design patterns to ensure maintainability and
         extensibility:
@@ -1028,7 +1028,7 @@ export default function DesignDiagrams() {
         </Text>
       </View>
 
-      <Text style={styles.h2}>6.8 Security Design</Text>
+      <Text style={styles.h2}>7.8 Security Design</Text>
       <View style={{ marginLeft: 24, marginBottom: 12 }}>
         <Text style={{ fontSize: 10, marginBottom: 4 }}>
           <Text style={styles.bold}>Authentication:</Text> Session-based auth
@@ -1050,7 +1050,7 @@ export default function DesignDiagrams() {
 
       {/* Sequence Diagram */}
       <Text style={styles.h2} break>
-        6.9 Interaction Design
+        7.9 Interaction Design
       </Text>
       <Text style={styles.paragraph}>
         The following sequence diagram illustrates the complete workflow
@@ -1068,11 +1068,11 @@ export default function DesignDiagrams() {
             marginBottom: 12,
           }}
         >
-          Figure 6.7: Workflow Execution Sequence Diagram
+          Figure 7.7: Workflow Execution Sequence Diagram
         </Text>
       </View>
 
-      <Text style={styles.h2}>6.10 Summary</Text>
+      <Text style={styles.h2}>7.10 Summary</Text>
       <Text style={styles.paragraphIndent}>
         This chapter presented the comprehensive system design for Flowgent.
         Data Flow Diagrams illustrated how data moves through the system at

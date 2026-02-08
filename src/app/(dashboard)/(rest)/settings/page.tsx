@@ -38,7 +38,7 @@ export default function SettingsPage() {
           <Button
             onClick={handleSave}
             disabled={isSaving}
-            className="gap-2 bg-(--arch-fg) text-(--arch-bg) hover:bg-(--arch-fg)/90 rounded-none border-0 font-mono uppercase text-xs h-10 px-6 shadow-[0_0_15px_rgba(var(--arch-fg-rgb),0.3)]"
+            className="gap-2 bg-(--arch-fg) text-(--arch-bg) hover:bg-[rgba(var(--arch-fg-rgb)/0.9)] rounded-none border-0 font-mono uppercase text-xs h-10 px-6 shadow-[0_0_15px_rgba(var(--arch-fg-rgb),0.3)]"
           >
             {isSaving && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
             Save Changes
@@ -138,7 +138,7 @@ export default function SettingsPage() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6 p-6">
-                  <div className="flex items-center justify-between p-4 border border-(--arch-border) bg-(--arch-bg-secondary)/50">
+                  <div className="flex items-center justify-between p-4 border border-(--arch-border) bg-[rgba(var(--arch-bg-secondary-rgb)/0.5)]">
                     <div className="space-y-0.5">
                       <Label className="text-base font-bold font-mono text-(--arch-fg)">Workflow Errors</Label>
                       <p className="text-xs text-(--arch-muted) font-mono">
@@ -151,7 +151,7 @@ export default function SettingsPage() {
                     />
                   </div>
 
-                  <div className="flex items-center justify-between p-4 border border-(--arch-border) bg-(--arch-bg-secondary)/50">
+                  <div className="flex items-center justify-between p-4 border border-(--arch-border) bg-[rgba(var(--arch-bg-secondary-rgb)/0.5)]">
                     <div className="space-y-0.5">
                       <Label className="text-base font-bold font-mono text-(--arch-fg)">Execution Completed</Label>
                       <p className="text-xs text-(--arch-muted) font-mono">
@@ -161,7 +161,7 @@ export default function SettingsPage() {
                     <Switch className="data-[state=checked]:bg-(--arch-accent)" />
                   </div>
 
-                  <div className="flex items-center justify-between p-4 border border-(--arch-border) bg-(--arch-bg-secondary)/50">
+                  <div className="flex items-center justify-between p-4 border border-(--arch-border) bg-[rgba(var(--arch-bg-secondary-rgb)/0.5)]">
                     <div className="space-y-0.5">
                       <Label className="text-base font-bold font-mono text-(--arch-fg)">Weekly Reports</Label>
                       <p className="text-xs text-(--arch-muted) font-mono">
@@ -174,7 +174,7 @@ export default function SettingsPage() {
                     />
                   </div>
 
-                  <div className="flex items-center justify-between p-4 border border-(--arch-border) bg-(--arch-bg-secondary)/50">
+                  <div className="flex items-center justify-between p-4 border border-(--arch-border) bg-[rgba(var(--arch-bg-secondary-rgb)/0.5)]ndary-rgb)/0.5)]">
                     <div className="space-y-0.5">
                       <Label className="text-base font-bold font-mono text-(--arch-fg)">Product Updates</Label>
                       <p className="text-xs text-(--arch-muted) font-mono">
@@ -199,7 +199,7 @@ export default function SettingsPage() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6 p-6">
-                  <div className="flex items-center justify-between p-4 border border-(--arch-border) bg-(--arch-bg-secondary)/50">
+                  <div className="flex items-center justify-between p-4 border border-(--arch-border) bg-[rgba(var(--arch-bg-secondary-rgb)/0.5)]">
                     <div className="space-y-0.5">
                       <div className="flex items-center gap-2">
                         <Moon className="h-4 w-4 text-(--arch-accent)" />
@@ -215,7 +215,7 @@ export default function SettingsPage() {
                     />
                   </div>
 
-                  <div className="flex items-center justify-between p-4 border border-(--arch-border) bg-(--arch-bg-secondary)/50">
+                  <div className="flex items-center justify-between p-4 border border-(--arch-border) bg-[rgba(var(--arch-bg-secondary-rgb)/0.5)]">
                     <div className="space-y-0.5">
                       <Label className="text-base font-bold font-mono text-(--arch-fg)">Reduced Motion</Label>
                       <p className="text-xs text-(--arch-muted) font-mono">
@@ -225,7 +225,7 @@ export default function SettingsPage() {
                     <Switch className="data-[state=checked]:bg-(--arch-accent)" />
                   </div>
 
-                  <div className="flex items-center justify-between p-4 border border-(--arch-border) bg-(--arch-bg-secondary)/50">
+                  <div className="flex items-center justify-between p-4 border border-(--arch-border) bg-[rgba(var(--arch-bg-secondary-rgb)/0.5)]">
                     <div className="space-y-0.5">
                       <Label className="text-base font-bold font-mono text-(--arch-fg)">Compact Mode</Label>
                       <p className="text-xs text-(--arch-muted) font-mono">

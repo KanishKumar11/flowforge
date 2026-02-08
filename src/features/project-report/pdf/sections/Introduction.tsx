@@ -335,10 +335,10 @@ export default function Introduction() {
         1.7 Technology Stack
       </Text>
       <Text style={styles.paragraphIndent}>
-        Flowgent is built entirely on open-source technologies, ensuring
-        transparency, community support, and zero licensing costs for the core
-        platform. The following table details each technology, its role, and its
-        open-source license.
+        Flowgent is built using industry-standard technologies, ensuring
+        reliability, community support, and minimal licensing costs during
+        development. The following table details each technology, its role, and
+        its license.
       </Text>
       <View style={{ borderWidth: 1, borderColor: "#333333", marginTop: 12 }}>
         <View
@@ -938,18 +938,18 @@ export default function Introduction() {
           ],
           [
             "Chapter 5",
-            "SDLC",
-            "Covers software development lifecycle, process model selection, requirement gathering methodology, and software requirements specification.",
+            "Project Estimation & Planning",
+            "COCOMO analysis, effort estimation, risk assessment",
           ],
           [
             "Chapter 6",
-            "System Design",
-            "DFD, ER diagrams, architecture, database schema",
+            "SOFTWARE DEVELOPMENT LIFE CYCLE",
+            "Covers software development lifecycle, process model selection, requirement gathering methodology, and software requirements specification.",
           ],
           [
             "Chapter 7",
-            "Estimation",
-            "COCOMO analysis, effort estimation, risk assessment",
+            "System Design",
+            "DFD, ER diagrams, architecture, database schema",
           ],
           [
             "Chapter 8",

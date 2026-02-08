@@ -11,7 +11,7 @@ import GanttChart from "../diagrams/GanttChart";
  */
 export default function COCOMOEstimation() {
   return (
-    <BookPageLayout chapterTitle="Project Estimation" chapterNum="07">
+    <BookPageLayout chapterTitle="Project Estimation" chapterNum="05">
       <View style={{ alignItems: "center", marginBottom: 24 }}>
         <Text
           style={{
@@ -38,13 +38,15 @@ export default function COCOMOEstimation() {
         <View style={{ width: 60, height: 3, backgroundColor: "#000000" }} />
       </View>
 
-      <Text style={styles.h2}>7.1 Introduction to COCOMO</Text>
+      <Text style={styles.h2}>5.1 Introduction to COCOMO</Text>
       <Text style={styles.paragraphIndent}>
         The Constructive Cost Model (COCOMO) is a procedural software cost
-        estimation model developed by Barry Boehm. It uses a regression formula
-        with parameters derived from historical project data. This chapter
-        applies the Basic COCOMO and Intermediate COCOMO models to estimate
-        Flowgent's development effort.
+        estimation model developed by Barry Boehm in 1981. This chapter uses
+        COCOMO I (also known as COCOMO 81), specifically the Basic and
+        Intermediate variants, to estimate Flowgent's development effort. COCOMO
+        I uses a regression formula with parameters derived from historical
+        project data and remains widely used in academic software engineering
+        coursework.
       </Text>
       <Text style={styles.paragraphIndent}>
         Flowgent is classified as an Organic project - characterized by a small
@@ -53,7 +55,7 @@ export default function COCOMOEstimation() {
         coefficients used in calculations.
       </Text>
 
-      <Text style={styles.h2}>7.2 Lines of Code Estimation</Text>
+      <Text style={styles.h2}>5.2 Lines of Code Estimation</Text>
       <Text style={styles.paragraphIndent}>
         LOC estimation forms the foundation of COCOMO calculations. The
         following table breaks down the estimated lines of code by module.
@@ -232,16 +234,16 @@ export default function COCOMOEstimation() {
           marginBottom: 12,
         }}
       >
-        Table 7.1: Lines of Code by Module
+        Table 5.1: Lines of Code by Module
       </Text>
 
-      <Text style={styles.h2}>7.3 Basic COCOMO Model</Text>
+      <Text style={styles.h2}>5.3 Basic COCOMO Model</Text>
       <Text style={styles.paragraphIndent}>
         The Basic COCOMO model computes effort as a function of program size
         expressed in KLOC.
       </Text>
 
-      <Text style={styles.h3}>7.3.1 COCOMO Project Types</Text>
+      <Text style={styles.h3}>5.3.1 COCOMO Project Types</Text>
       <View
         wrap={false}
         style={{
@@ -337,7 +339,7 @@ export default function COCOMOEstimation() {
         ))}
       </View>
 
-      <Text style={styles.h3}>7.3.2 Effort Calculation</Text>
+      <Text style={styles.h3}>5.3.2 Effort Calculation</Text>
       <View
         style={{
           backgroundColor: "#f0f8ff",
@@ -366,7 +368,7 @@ export default function COCOMOEstimation() {
         </Text>
       </View>
 
-      <Text style={styles.h3}>7.3.3 Development Time Calculation</Text>
+      <Text style={styles.h3}>5.3.3 Development Time Calculation</Text>
       <View
         style={{
           backgroundColor: "#f0f8ff",
@@ -396,7 +398,7 @@ export default function COCOMOEstimation() {
         </Text>
       </View>
 
-      <Text style={styles.h3}>7.3.4 Team Size Calculation</Text>
+      <Text style={styles.h3}>5.3.4 Team Size Calculation</Text>
       <View
         style={{
           backgroundColor: "#f0f8ff",
@@ -421,17 +423,17 @@ export default function COCOMOEstimation() {
         <Text
           style={{ fontSize: 10, fontFamily: "Times-Bold", color: "#006600" }}
         >
-          Team Size ≈ 5 persons
+          {"Team Size = ~5 persons"}
         </Text>
       </View>
 
-      <Text style={styles.h2}>7.4 Intermediate COCOMO Model</Text>
+      <Text style={styles.h2}>5.4 Intermediate COCOMO Model</Text>
       <Text style={styles.paragraphIndent}>
         The Intermediate COCOMO model adds cost drivers to refine the effort
         estimate. Fifteen cost drivers are grouped into four categories.
       </Text>
 
-      <Text style={styles.h3}>7.4.1 Cost Driver Ratings</Text>
+      <Text style={styles.h3}>5.4.1 Cost Driver Ratings</Text>
       <View
         wrap={false}
         style={{
@@ -595,7 +597,7 @@ export default function COCOMOEstimation() {
         </View>
       </View>
 
-      <Text style={styles.h3}>7.4.2 Adjusted Effort Calculation</Text>
+      <Text style={styles.h3}>5.4.2 Adjusted Effort Calculation</Text>
       <View
         style={{
           backgroundColor: "#f0fff0",
@@ -624,7 +626,7 @@ export default function COCOMOEstimation() {
         </Text>
       </View>
 
-      <Text style={styles.h2}>7.5 Risk Analysis</Text>
+      <Text style={styles.h2}>5.5 Risk Analysis</Text>
       <Text style={styles.paragraphIndent}>
         Risk analysis identifies potential issues that could impact project
         success and defines mitigation strategies.
@@ -641,7 +643,7 @@ export default function COCOMOEstimation() {
             marginBottom: 12,
           }}
         >
-          Figure 7.1: Risk Assessment Matrix
+          Figure 5.1: Risk Assessment Matrix
         </Text>
       </View>
 
@@ -806,10 +808,10 @@ export default function COCOMOEstimation() {
           marginBottom: 12,
         }}
       >
-        Table 7.2: Risk Analysis Matrix
+        Table 5.2: Risk Analysis Matrix
       </Text>
 
-      <Text style={styles.h2}>7.6 Actual vs Estimated Comparison</Text>
+      <Text style={styles.h2}>5.6 Actual vs Estimated Comparison</Text>
       <Text style={styles.paragraphIndent}>
         As a single-developer project, actual effort differs significantly from
         COCOMO predictions. The following factors contributed to reduced actual
@@ -827,7 +829,7 @@ export default function COCOMOEstimation() {
             marginBottom: 12,
           }}
         >
-          Figure 7.2: Project Timeline - Gantt Chart
+          Figure 5.2: Project Timeline - Gantt Chart
         </Text>
       </View>
 
@@ -942,7 +944,7 @@ export default function COCOMOEstimation() {
         ))}
       </View>
 
-      <Text style={styles.h2}>7.7 Summary</Text>
+      <Text style={styles.h2}>5.7 Summary</Text>
       <Text style={styles.paragraphIndent}>
         This chapter applied COCOMO estimation models to the Flowgent project.
         The Basic COCOMO model estimated 52.3 person-months of effort over 10.8

@@ -126,11 +126,15 @@ export default function Introduction() {
             <tr className="border-b"><td className="py-2 px-3 font-bold border-r border-gray-400">Chapter 1</td><td className="py-2 px-3">Introduction to the project and its scope</td></tr>
             <tr className="border-b"><td className="py-2 px-3 font-bold border-r border-gray-400">Chapter 2</td><td className="py-2 px-3">Problem Statement and existing system analysis</td></tr>
             <tr className="border-b"><td className="py-2 px-3 font-bold border-r border-gray-400">Chapter 3</td><td className="py-2 px-3">Project Objectives (primary, secondary, technical)</td></tr>
-            <tr className="border-b"><td className="py-2 px-3 font-bold border-r border-gray-400">Chapter 4</td><td className="py-2 px-3">SDLC, SRS, and Feasibility Study</td></tr>
-            <tr className="border-b"><td className="py-2 px-3 font-bold border-r border-gray-400">Chapter 5</td><td className="py-2 px-3">System Design (DFD, Use Case, ER diagrams)</td></tr>
-            <tr className="border-b"><td className="py-2 px-3 font-bold border-r border-gray-400">Chapter 6</td><td className="py-2 px-3">Estimation & Planning (COCOMO, Risk, Timeline)</td></tr>
-            <tr className="border-b"><td className="py-2 px-3 font-bold border-r border-gray-400">Chapter 7</td><td className="py-2 px-3">Implementation (Code, Testing, UI)</td></tr>
-            <tr><td className="py-2 px-3 font-bold border-r border-gray-400">Chapter 8</td><td className="py-2 px-3">Conclusions and Future Work</td></tr>
+            <tr className="border-b"><td className="py-2 px-3 font-bold border-r border-gray-400">Chapter 4</td><td className="py-2 px-3">Feasibility Study: technical, economic, operational, schedule, legal, SWOT</td></tr>
+            <tr className="border-b"><td className="py-2 px-3 font-bold border-r border-gray-400">Chapter 5</td><td className="py-2 px-3">Project Estimation & Planning (COCOMO, effort estimation, risk assessment)</td></tr>
+            <tr className="border-b"><td className="py-2 px-3 font-bold border-r border-gray-400">Chapter 6</td><td className="py-2 px-3">Software Development Life Cycle (SDLC, requirement gathering, SRS)</td></tr>
+            <tr className="border-b"><td className="py-2 px-3 font-bold border-r border-gray-400">Chapter 7</td><td className="py-2 px-3">System Design (DFD, Use Case, ER diagrams, architecture, DB schema)</td></tr>
+            <tr className="border-b"><td className="py-2 px-3 font-bold border-r border-gray-400">Chapter 8</td><td className="py-2 px-3">Implementation (code architecture, frontend, backend, deployment)</td></tr>
+            <tr className="border-b"><td className="py-2 px-3 font-bold border-r border-gray-400">Chapter 9</td><td className="py-2 px-3">Testing (strategy, unit/integration/UI/security/performance)</td></tr>
+            <tr className="border-b"><td className="py-2 px-3 font-bold border-r border-gray-400">Chapter 10</td><td className="py-2 px-3">User Manual (getting started, dashboards, workflow creation)</td></tr>
+            <tr className="border-b"><td className="py-2 px-3 font-bold border-r border-gray-400">Chapter 11</td><td className="py-2 px-3">Output & Screenshots (application screens and walkthroughs)</td></tr>
+            <tr><td className="py-2 px-3 font-bold border-r border-gray-400">Chapter 12</td><td className="py-2 px-3">Conclusions & Future Scope</td></tr>
           </tbody>
         </table>
       </div>

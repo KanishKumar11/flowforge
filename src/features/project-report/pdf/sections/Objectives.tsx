@@ -680,9 +680,9 @@ export default function Objectives() {
           both individual users and team environments.
         </Text>
         <Text style={{ fontSize: 11, marginBottom: 6, lineHeight: 1.5 }}>
-          <Text style={styles.bold}>4. Open-Source Contribution:</Text> A
-          codebase published under an open-source license, contributing to the
-          developer community and enabling customization.
+          <Text style={styles.bold}>4. Production-Ready Codebase:</Text> A
+          well-structured codebase built with modern best practices, designed
+          for future scalability as a commercial SaaS product.
         </Text>
         <Text style={{ fontSize: 11, marginBottom: 6, lineHeight: 1.5 }}>
           <Text style={styles.bold}>5. Academic Demonstration:</Text> A

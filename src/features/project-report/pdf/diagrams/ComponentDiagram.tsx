@@ -14,7 +14,7 @@ import {
 
 export default function ComponentDiagram() {
   const width = 495;
-  const height = 440;
+  const height = 470;
 
   const colors = {
     text: "#1a1a1a",
@@ -456,13 +456,13 @@ export default function ComponentDiagram() {
         "Sheet",
         "Tooltip",
       ].map((name, i) => {
-        const bx = 15 + i * 47;
+        const bx = 12 + i * 47;
         return (
           <G key={i}>
             <Rect
               x={bx}
               y={346}
-              width={42}
+              width={43}
               height={18}
               rx={2}
               fill={colors.uiLight}
@@ -470,7 +470,7 @@ export default function ComponentDiagram() {
               strokeWidth={0.5}
             />
             <SvgText
-              x={bx + 21}
+              x={bx + 21.5}
               y={357}
               textAnchor="middle"
               style={{
@@ -512,13 +512,13 @@ export default function ComponentDiagram() {
         "useExecution",
         "useTRPC",
       ].map((name, i) => {
-        const bx = 25 + i * 75;
+        const bx = 22 + i * 76;
         return (
           <G key={i}>
             <Rect
               x={bx}
               y={394}
-              width={68}
+              width={70}
               height={18}
               rx={2}
               fill={colors.hookLight}
@@ -526,7 +526,7 @@ export default function ComponentDiagram() {
               strokeWidth={0.5}
             />
             <SvgText
-              x={bx + 34}
+              x={bx + 35}
               y={405}
               textAnchor="middle"
               style={{
@@ -544,7 +544,7 @@ export default function ComponentDiagram() {
       {/* Legend */}
       <SvgText
         x={15}
-        y={430}
+        y={450}
         style={{ fontSize: 5.5, fontFamily: "Times-Bold", fill: colors.label }}
       >
         Legend:
@@ -560,7 +560,7 @@ export default function ComponentDiagram() {
         <G key={i}>
           <Rect
             x={item.x}
-            y={423}
+            y={443}
             width={10}
             height={10}
             rx={1}
@@ -570,7 +570,7 @@ export default function ComponentDiagram() {
           />
           <SvgText
             x={item.x + 14}
-            y={431}
+            y={451}
             style={{
               fontSize: 5.5,
               fontFamily: "Times-Roman",

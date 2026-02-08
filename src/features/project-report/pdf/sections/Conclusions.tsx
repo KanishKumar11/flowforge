@@ -5,11 +5,11 @@ import { styles } from "../styles";
 import BookPageLayout from "../components/BookPageLayout";
 
 /**
- * Chapter 11: Conclusions & Future Scope (4 pages)
+ * Chapter 12: Conclusions & Future Scope (4 pages)
  */
 export default function Conclusions() {
   return (
-    <BookPageLayout chapterTitle="Conclusions" chapterNum="11">
+    <BookPageLayout chapterTitle="Conclusions" chapterNum="12">
       <View style={{ alignItems: "center", marginBottom: 24 }}>
         <Text
           style={{
@@ -20,7 +20,7 @@ export default function Conclusions() {
             marginBottom: 8,
           }}
         >
-          CHAPTER 11
+          CHAPTER 12
         </Text>
         <Text
           style={{
@@ -36,7 +36,7 @@ export default function Conclusions() {
         <View style={{ width: 60, height: 3, backgroundColor: "#000000" }} />
       </View>
 
-      <Text style={styles.h2}>11.1 Project Summary</Text>
+      <Text style={styles.h2}>12.1 Project Summary</Text>
       <Text style={styles.paragraphIndent}>
         Flowgent 1.0 has been successfully developed as a comprehensive visual
         workflow automation platform. The project achieved its primary
@@ -52,7 +52,7 @@ export default function Conclusions() {
         team-based workflow automation.
       </Text>
 
-      <Text style={styles.h2}>11.2 Key Achievements</Text>
+      <Text style={styles.h2}>12.2 Key Achievements</Text>
       <View
         wrap={false}
         style={{
@@ -194,10 +194,10 @@ export default function Conclusions() {
           marginBottom: 12,
         }}
       >
-        Table 11.1: Project Objectives Achievement
+        Table 12.1: Project Objectives Achievement
       </Text>
 
-      <Text style={styles.h2}>11.3 Technical Accomplishments</Text>
+      <Text style={styles.h2}>12.3 Technical Accomplishments</Text>
       <View style={{ marginLeft: 24, marginBottom: 8 }}>
         <Text style={{ fontSize: 10, marginBottom: 4 }}>
           <Text style={styles.bold}>Frontend:</Text> Modern React 19 with
@@ -225,7 +225,7 @@ export default function Conclusions() {
         </Text>
       </View>
 
-      <Text style={styles.h2}>11.4 Limitations</Text>
+      <Text style={styles.h2}>12.4 Limitations</Text>
       <Text style={styles.paragraphIndent}>
         While Flowgent 1.0 successfully delivers core functionality, several
         limitations have been identified that represent opportunities for future
@@ -356,10 +356,10 @@ export default function Conclusions() {
           marginBottom: 12,
         }}
       >
-        Table 11.2: Current Limitations
+        Table 12.2: Current Limitations
       </Text>
 
-      <Text style={styles.h2}>11.5 Lessons Learned</Text>
+      <Text style={styles.h2}>12.5 Lessons Learned</Text>
       <View style={{ marginLeft: 24, marginBottom: 12 }}>
         <Text style={{ fontSize: 10, marginBottom: 6 }}>
           <Text style={styles.bold}>Technology Selection:</Text> Choosing
@@ -385,13 +385,13 @@ export default function Conclusions() {
         </Text>
       </View>
 
-      <Text style={styles.h2}>11.6 Future Scope</Text>
+      <Text style={styles.h2}>12.6 Future Scope</Text>
       <Text style={styles.paragraphIndent}>
         The following enhancements are planned for future versions of Flowgent
         to address current limitations and expand platform capabilities.
       </Text>
 
-      <Text style={styles.h3}>11.6.1 Short-Term Roadmap (v1.1 - v1.5)</Text>
+      <Text style={styles.h3}>12.6.1 Short-Term Roadmap (v1.1 - v1.5)</Text>
       <View
         wrap={false}
         style={{
@@ -544,7 +544,7 @@ export default function Conclusions() {
         ))}
       </View>
 
-      <Text style={styles.h3}>11.6.2 Long-Term Vision (v2.0+)</Text>
+      <Text style={styles.h3}>12.6.2 Long-Term Vision (v2.0+)</Text>
       <View style={{ marginLeft: 24, marginBottom: 12 }}>
         <Text style={{ fontSize: 10, marginBottom: 6 }}>
           <Text style={styles.bold}>AI Workflow Builder:</Text> Natural language
@@ -572,7 +572,7 @@ export default function Conclusions() {
         </Text>
       </View>
 
-      <Text style={styles.h3}>11.6.3 Commercial Potential</Text>
+      <Text style={styles.h3}>12.6.3 Commercial Potential</Text>
       <Text style={styles.paragraphIndent}>
         Flowgent has significant commercial potential in the growing workflow
         automation market. The freemium SaaS model with tiered pricing (Free,
@@ -580,7 +580,7 @@ export default function Conclusions() {
         accessibility for individual users and small teams.
       </Text>
 
-      <Text style={styles.h2}>11.7 Conclusion</Text>
+      <Text style={styles.h2}>12.7 Conclusion</Text>
       <Text style={styles.paragraphIndent}>
         The development of Flowgent 1.0 has been a comprehensive journey through
         modern full-stack web development, from requirements gathering through

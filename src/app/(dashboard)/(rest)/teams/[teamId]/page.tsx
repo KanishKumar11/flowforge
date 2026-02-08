@@ -150,7 +150,7 @@ export default function TeamDetailPage() {
           <Card className="bg-(--arch-bg) border-(--arch-border) shadow-none rounded-none group">
             <CardContent className="pt-6 relative z-10">
               <div className="flex items-center gap-4">
-                <div className="p-3 bg-(--arch-fg)/10 border border-(--arch-fg)/20 rounded-none">
+                <div className="p-3 bg-[rgba(var(--arch-fg-rgb)/0.1)] border border-[rgba(var(--arch-fg-rgb)/0.2)] rounded-none">
                   <Users className="h-8 w-8 text-(--arch-fg)" />
                 </div>
                 <div>
@@ -167,7 +167,7 @@ export default function TeamDetailPage() {
           <Card className="bg-(--arch-bg) border-(--arch-border) shadow-none rounded-none group">
             <CardContent className="pt-6 relative z-10">
               <div className="flex items-center gap-4">
-                <div className="p-3 bg-(--arch-fg)/10 border border-(--arch-fg)/20 rounded-none">
+                <div className="p-3 bg-[rgba(var(--arch-fg-rgb)/0.1)] border border-[rgba(var(--arch-fg-rgb)/0.2)] rounded-none">
                   <Workflow className="h-8 w-8 text-(--arch-fg)" />
                 </div>
                 <div>
@@ -200,7 +200,7 @@ export default function TeamDetailPage() {
                 <DialogTrigger asChild>
                   <Button
                     size="sm"
-                    className="shadow-none bg-(--arch-fg) text-(--arch-bg) hover:bg-(--arch-fg)/90 rounded-none font-mono uppercase text-xs h-8 border border-(--arch-fg)"
+                    className="shadow-none bg-(--arch-fg) text-(--arch-bg) hover:bg-[rgba(var(--arch-fg-rgb)/0.9)] rounded-none font-mono uppercase text-xs h-8 border border-(--arch-fg)"
                   >
                     <UserPlus className="h-4 w-4 mr-2" />
                     Invite Member
@@ -240,7 +240,7 @@ export default function TeamDetailPage() {
                       </Select>
                     </div>
                     <Button
-                      className="w-full bg-(--arch-fg) text-(--arch-bg) hover:bg-(--arch-fg)/90 rounded-none font-mono uppercase text-xs"
+                      className="w-full bg-(--arch-fg) text-(--arch-bg) hover:bg-[rgba(var(--arch-fg-rgb)/0.9)] rounded-none font-mono uppercase text-xs"
                       onClick={() =>
                         inviteMember.mutate({
                           teamId,
@@ -262,12 +262,12 @@ export default function TeamDetailPage() {
               {team.members.map((member) => (
                 <div
                   key={member.id}
-                  className="flex items-center justify-between p-4 border border-(--arch-border) bg-(--arch-bg-secondary)/20 hover:border-(--arch-fg) transition-colors group rounded-none"
+                  className="flex items-center justify-between p-4 border border-(--arch-border) bg-[rgba(var(--arch-bg-secondary-rgb)/0.2)] hover:border-(--arch-fg) transition-colors group rounded-none"
                 >
                   <div className="flex items-center gap-4">
                     <Avatar className="h-10 w-10 ring-1 ring-(--arch-border) rounded-none">
                       <AvatarImage src={member.user.image || undefined} className="rounded-none" />
-                      <AvatarFallback className="bg-(--arch-fg)/10 text-(--arch-fg) font-mono rounded-none">
+                      <AvatarFallback className="bg-[rgba(var(--arch-fg-rgb)/0.1)] text-(--arch-fg) font-mono rounded-none">
                         {member.user.name?.[0] || member.user.email[0]}
                       </AvatarFallback>
                     </Avatar>
@@ -304,7 +304,7 @@ export default function TeamDetailPage() {
                     ) : (
                       <Badge
                         variant="secondary"
-                        className="font-mono text-[10px] px-2.5 py-0.5 bg-(--arch-fg)/10 text-(--arch-fg) border border-(--arch-fg)/20 rounded-none uppercase"
+                        className="font-mono text-[10px] px-2.5 py-0.5 bg-[rgba(var(--arch-fg-rgb)/0.1)] text-(--arch-fg) border border-[rgba(var(--arch-fg-rgb)/0.2)] rounded-none uppercase"
                       >
                         {member.role}
                       </Badge>

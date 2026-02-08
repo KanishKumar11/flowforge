@@ -14,7 +14,7 @@ import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
  */
 export async function addPageNumbers(
   pdfBytes: ArrayBuffer | Uint8Array,
-  preliminaryPageCount = 19,
+  preliminaryPageCount = 22,
 ): Promise<Uint8Array> {
   const pdfDoc = await PDFDocument.load(pdfBytes);
   const timesRomanFont = await pdfDoc.embedFont(StandardFonts.TimesRoman);

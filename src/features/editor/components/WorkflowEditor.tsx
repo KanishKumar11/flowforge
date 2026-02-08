@@ -366,7 +366,7 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
                 {workflow.name}
               </span>
               {isSaving && (
-                <span className="flex items-center gap-1.5 text-xs text-(--arch-fg) bg-(--arch-fg)/10 px-2 py-0.5 rounded-none font-mono uppercase">
+                <span className="flex items-center gap-1.5 text-xs text-(--arch-fg) bg-[rgba(var(--arch-fg-rgb)/0.1)] px-2 py-0.5 rounded-none font-mono uppercase">
                   <div className="h-1.5 w-1.5 bg-(--arch-fg) animate-pulse" />
                   Saving...
                 </span>
@@ -415,7 +415,7 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
                 size="sm"
                 onClick={handleExecute}
                 disabled={executeWorkflow.isPending}
-                className="bg-(--arch-fg) text-(--arch-bg) hover:bg-(--arch-fg)/90 border-0 h-8 rounded-none font-mono uppercase text-xs disabled:opacity-70 transition-all min-w-[100px]"
+                className="bg-(--arch-fg) text-(--arch-bg) hover:bg-[rgba(var(--arch-fg-rgb)/0.9)] border-0 h-8 rounded-none font-mono uppercase text-xs disabled:opacity-70 transition-all min-w-[100px]"
               >
                 {executeWorkflow.isPending ? (
                   <>
@@ -434,7 +434,7 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
 
           {/* Keyboard Shortcuts Hint */}
           <Panel position="bottom-left" className="m-4">
-            <div className="bg-(--arch-bg)/80 backdrop-blur-sm px-3 py-1.5 text-xs font-mono text-(--arch-muted) border border-(--arch-border) uppercase">
+            <div className="bg-[rgba(var(--arch-bg-rgb)/0.8)] backdrop-blur-sm px-3 py-1.5 text-xs font-mono text-(--arch-muted) border border-(--arch-border) uppercase">
               ⌘S Save • ⌘Z Undo • ⌘⇧Z Redo • ⌫ Delete
             </div>
           </Panel>

@@ -20,6 +20,11 @@ const tables = [
     title: "Feature Comparison of Workflow Automation Platforms",
     page: "11",
   },
+  {
+    number: "2.2",
+    title: "Detailed Feature Comparison \u2014 Flowgent vs n8n",
+    page: "14",
+  },
 
   // Chapter 3
   {
@@ -38,57 +43,57 @@ const tables = [
   { number: "4.3", title: "Infrastructure Cost Analysis", page: "28" },
   { number: "4.4", title: "Feasibility Summary", page: "29" },
 
-  // Chapter 5 - SDLC
-  { number: "5.1", title: "SDLC Phases and Deliverables Overview", page: "36" },
-  { number: "5.2", title: "SDLC Phase Duration and Timeline", page: "39" },
-  { number: "5.3", title: "Sprint Structure and Ceremonies", page: "42" },
-  { number: "5.4", title: "Sprint Overview and Deliverables", page: "43" },
+  // Chapter 5 - Estimation & Planning
+  { number: "5.1", title: "Lines of Code by Module", page: "35" },
+  { number: "5.2", title: "Risk Analysis Matrix", page: "37" },
+
+  // Chapter 6 - SDLC
+  { number: "6.1", title: "SDLC Phases and Deliverables Overview", page: "41" },
+  { number: "6.2", title: "SDLC Phase Duration and Timeline", page: "44" },
+  { number: "6.3", title: "Sprint Structure and Ceremonies", page: "47" },
+  { number: "6.4", title: "Sprint Overview and Deliverables", page: "48" },
   {
-    number: "5.5",
+    number: "6.5",
     title: "Comparison of Development Methodologies",
-    page: "45",
+    page: "50",
   },
-  { number: "5.6", title: "Interview Participants and Use Cases", page: "48" },
-  { number: "5.7", title: "Questionnaire Respondent Demographics", page: "50" },
-  { number: "5.8", title: "Current Tool Usage and Satisfaction", page: "51" },
-  { number: "5.9", title: "Primary Use Cases Identified", page: "52" },
-  { number: "5.10", title: "Stakeholder Analysis", page: "53" },
-  { number: "5.11", title: "Requirements Traceability Matrix", page: "54" },
-  { number: "5.12", title: "Primary Data Entities", page: "58" },
-  { number: "5.13", title: "Requirements Summary by Category", page: "62" },
+  { number: "6.6", title: "Interview Participants and Use Cases", page: "53" },
+  { number: "6.7", title: "Questionnaire Respondent Demographics", page: "55" },
+  { number: "6.8", title: "Current Tool Usage and Satisfaction", page: "56" },
+  { number: "6.9", title: "Primary Use Cases Identified", page: "57" },
+  { number: "6.10", title: "Stakeholder Analysis", page: "58" },
+  { number: "6.11", title: "Requirements Traceability Matrix", page: "59" },
+  { number: "6.12", title: "Primary Data Entities", page: "63" },
+  { number: "6.13", title: "Requirements Summary by Category", page: "67" },
   {
-    number: "5.14",
+    number: "6.14",
     title: "Requirements Traceability Matrix (SRS)",
-    page: "63",
+    page: "68",
   },
 
-  // Chapter 6 - System Design
-  { number: "6.1", title: "Context Diagram Data Flows", page: "67" },
-  { number: "6.2", title: "Use Case Specifications", page: "70" },
-  { number: "6.3", title: "Entity Relationships", page: "71" },
-  { number: "6.4", title: "User Table Schema", page: "72" },
-  { number: "6.5", title: "Session Table Schema", page: "72" },
-  { number: "6.6", title: "Account Table Schema", page: "73" },
-  { number: "6.7", title: "Verification Table Schema", page: "73" },
-  { number: "6.8", title: "Workflow Table Schema", page: "74" },
-  { number: "6.9", title: "Execution Table Schema", page: "74" },
-  { number: "6.10", title: "AuditLog Table Schema", page: "75" },
-  { number: "6.11", title: "Credential Table Schema", page: "75" },
-  { number: "6.12", title: "Schedule Table Schema", page: "76" },
-  { number: "6.13", title: "WebhookEndpoint Table Schema", page: "76" },
-  { number: "6.14", title: "Team Table Schema", page: "77" },
-  { number: "6.15", title: "Invitation Table Schema", page: "77" },
-  { number: "6.16", title: "TeamMember Table Schema", page: "78" },
-  { number: "6.17", title: "WorkflowVersion Table Schema", page: "78" },
-  { number: "6.18", title: "ExecutionStatus Enumeration", page: "79" },
-  { number: "6.19", title: "ExecutionMode Enumeration", page: "79" },
-  { number: "6.20", title: "HttpMethod Enumeration", page: "79" },
-  { number: "6.21", title: "TeamRole Enumeration", page: "79" },
-  { number: "6.22", title: "Entity Relationship Summary", page: "80" },
-
-  // Chapter 7 - Estimation
-  { number: "7.1", title: "Lines of Code by Module", page: "80" },
-  { number: "7.2", title: "Risk Analysis Matrix", page: "82" },
+  // Chapter 7 - System Design
+  { number: "7.1", title: "Context Diagram Data Flows", page: "72" },
+  { number: "7.2", title: "Use Case Specifications", page: "75" },
+  { number: "7.3", title: "Entity Relationships", page: "76" },
+  { number: "7.4", title: "User Table Schema", page: "77" },
+  { number: "7.5", title: "Session Table Schema", page: "77" },
+  { number: "7.6", title: "Account Table Schema", page: "78" },
+  { number: "7.7", title: "Verification Table Schema", page: "78" },
+  { number: "7.8", title: "Workflow Table Schema", page: "79" },
+  { number: "7.9", title: "Execution Table Schema", page: "79" },
+  { number: "7.10", title: "AuditLog Table Schema", page: "80" },
+  { number: "7.11", title: "Credential Table Schema", page: "80" },
+  { number: "7.12", title: "Schedule Table Schema", page: "81" },
+  { number: "7.13", title: "WebhookEndpoint Table Schema", page: "81" },
+  { number: "7.14", title: "Team Table Schema", page: "82" },
+  { number: "7.15", title: "Invitation Table Schema", page: "82" },
+  { number: "7.16", title: "TeamMember Table Schema", page: "83" },
+  { number: "7.17", title: "WorkflowVersion Table Schema", page: "83" },
+  { number: "7.18", title: "ExecutionStatus Enumeration", page: "84" },
+  { number: "7.19", title: "ExecutionMode Enumeration", page: "84" },
+  { number: "7.20", title: "HttpMethod Enumeration", page: "84" },
+  { number: "7.21", title: "TeamRole Enumeration", page: "84" },
+  { number: "7.22", title: "Entity Relationship Summary", page: "85" },
 
   // Chapter 8 - Implementation
   { number: "8.1", title: "Project Directory Structure", page: "85" },
@@ -110,9 +115,14 @@ const tables = [
   { number: "9.10", title: "Defect Tracking Log", page: "100" },
   { number: "9.11", title: "Complete Test Results Summary", page: "100" },
 
-  // Chapter 11 - Conclusions
-  { number: "11.1", title: "Project Objectives Achievement", page: "106" },
-  { number: "11.2", title: "Current Limitations", page: "107" },
+  // Chapter 10 - User Manual
+  { number: "10.1", title: "Common Cron Schedule Examples", page: "100" },
+  { number: "10.2", title: "Team Role Permissions Matrix", page: "100" },
+  { number: "10.3", title: "Common Issues & Resolutions", page: "101" },
+
+  // Chapter 12 - Conclusions
+  { number: "12.1", title: "Project Objectives Achievement", page: "108" },
+  { number: "12.2", title: "Current Limitations", page: "109" },
 
   // Annexures
   { number: "A.1", title: "Complete Prisma Database Schema", page: "110" },
@@ -123,7 +133,7 @@ const tables = [
 ];
 
 // Split items across pages
-const ITEMS_PER_PAGE_1 = 18; // First page (with header)
+const ITEMS_PER_PAGE_1 = 22; // First page (with header)
 const ITEMS_PER_PAGE_N = 22; // Continuation pages
 
 const page1Items = tables.slice(0, ITEMS_PER_PAGE_1);

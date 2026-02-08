@@ -64,7 +64,7 @@ export function NodeConfigPanel({
         <Button
           variant="ghost"
           size="icon"
-          className="h-8 w-8 hover:bg-(--arch-fg)/10 text-(--arch-fg) rounded-none"
+          className="h-8 w-8 hover:bg-[rgba(var(--arch-fg-rgb)/0.1)] text-(--arch-fg) rounded-none"
           onClick={onClose}
         >
           <X className="h-4 w-4" />

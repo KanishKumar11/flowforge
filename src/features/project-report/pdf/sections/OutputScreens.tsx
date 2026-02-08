@@ -5,14 +5,14 @@ import { styles, PAGE_MARGINS } from "../styles";
 import BookPageLayout from "../components/BookPageLayout";
 
 /**
- * Chapter 10: Output & Screenshots
+ * Chapter 11: Output & Screenshots
  * Describes each screen/page of the application with textual descriptions.
  */
 export default function OutputScreens() {
   const CONTENT_WIDTH = 595 - PAGE_MARGINS.left - PAGE_MARGINS.right; // A4 width minus margins
 
   return (
-    <BookPageLayout chapterTitle="Output & Screenshots" chapterNum="10">
+    <BookPageLayout chapterTitle="Output & Screenshots" chapterNum="11">
       {/* Chapter Title */}
       <View style={{ alignItems: "center", marginBottom: 24 }}>
         <Text
@@ -24,7 +24,7 @@ export default function OutputScreens() {
             marginBottom: 8,
           }}
         >
-          CHAPTER 10
+          CHAPTER 11
         </Text>
         <Text
           style={{
@@ -50,9 +50,9 @@ export default function OutputScreens() {
       </Text>
 
       {/* Screen 1: Login */}
-      <Text style={styles.h2}>10.1 Authentication Screens</Text>
+      <Text style={styles.h2}>11.1 Authentication Screens</Text>
 
-      <Text style={styles.h3}>10.1.1 Login Page</Text>
+      <Text style={styles.h3}>11.1.1 Login Page</Text>
       <View
         wrap={false}
         style={{
@@ -94,7 +94,7 @@ export default function OutputScreens() {
         <Image src="/outputs/login.png" style={{ width: CONTENT_WIDTH }} />
       </View>
 
-      <Text style={styles.h3}>10.1.2 Sign Up Page</Text>
+      <Text style={styles.h3}>11.1.2 Sign Up Page</Text>
       <View
         wrap={false}
         style={{
@@ -130,7 +130,7 @@ export default function OutputScreens() {
       </View>
 
       {/* Screen 2: Dashboard */}
-      <Text style={styles.h2}>10.2 Dashboard</Text>
+      <Text style={styles.h2}>11.2 Dashboard</Text>
       <View
         wrap={false}
         style={{
@@ -179,7 +179,7 @@ export default function OutputScreens() {
       </View>
 
       {/* Screen 3: Workflow Editor */}
-      <Text style={styles.h2}>10.3 Visual Workflow Editor</Text>
+      <Text style={styles.h2}>11.3 Visual Workflow Editor</Text>
       <View
         wrap={false}
         style={{
@@ -248,7 +248,7 @@ export default function OutputScreens() {
       </View>
 
       {/* Screen 4: Workflows List */}
-      <Text style={styles.h2}>10.4 Workflows Management</Text>
+      <Text style={styles.h2}>11.4 Workflows Management</Text>
       <View
         wrap={false}
         style={{
@@ -291,7 +291,7 @@ export default function OutputScreens() {
       </View>
 
       {/* Screen 5: Execution History */}
-      <Text style={styles.h2}>10.5 Execution History</Text>
+      <Text style={styles.h2}>11.5 Execution History</Text>
       <View
         wrap={false}
         style={{
@@ -336,7 +336,7 @@ export default function OutputScreens() {
       </View>
 
       {/* Screen 6: Credentials */}
-      <Text style={styles.h2}>10.6 Credential Management</Text>
+      <Text style={styles.h2}>11.6 Credential Management</Text>
       <View
         wrap={false}
         style={{
@@ -378,7 +378,7 @@ export default function OutputScreens() {
       </View>
 
       {/* Screen 7: Teams */}
-      <Text style={styles.h2}>10.7 Team Management</Text>
+      <Text style={styles.h2}>11.7 Team Management</Text>
       <View
         wrap={false}
         style={{
@@ -415,7 +415,7 @@ export default function OutputScreens() {
       </View>
 
       {/* Screen 8: Schedules */}
-      <Text style={styles.h2}>10.8 Schedule Configuration</Text>
+      <Text style={styles.h2}>11.8 Schedule Configuration</Text>
       <View
         wrap={false}
         style={{
@@ -448,7 +448,7 @@ export default function OutputScreens() {
       </View>
 
       {/* Screen 9: Version History */}
-      <Text style={styles.h2}>10.9 Version History</Text>
+      <Text style={styles.h2}>11.9 Version History</Text>
       <View
         wrap={false}
         style={{
@@ -475,7 +475,7 @@ export default function OutputScreens() {
       </View>
 
       {/* Screen 10: Webhook Docs */}
-      <Text style={styles.h2}>10.10 Webhook Documentation</Text>
+      <Text style={styles.h2}>11.10 Webhook Documentation</Text>
       <View
         wrap={false}
         style={{
@@ -501,8 +501,8 @@ export default function OutputScreens() {
         </Text>
       </View>
 
-      {/* 10.11 Summary */}
-      <Text style={styles.h2}>10.11 Summary</Text>
+      {/* 11.11 Summary */}
+      <Text style={styles.h2}>11.11 Summary</Text>
       <Text style={styles.paragraphIndent}>
         Flowgent 1.0 provides a comprehensive set of user interfaces covering
         all aspects of the workflow automation lifecycle — from authentication
