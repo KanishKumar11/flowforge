@@ -1,6 +1,15 @@
 "use client";
 
-import { Page, View, Text, Svg, Rect, Line, Circle, G } from "@react-pdf/renderer";
+import {
+  Page,
+  View,
+  Text,
+  Svg,
+  Rect,
+  Line,
+  Circle,
+  G,
+} from "@react-pdf/renderer";
 
 /**
  * Creative Inner Cover Page
@@ -62,47 +71,190 @@ export default function InnerCover() {
         }}
       >
         {/* Central node - Execution Engine */}
-        <Rect x={180} y={130} width={115} height={46} rx={4} fill="#1e3a5f" stroke="#3b82f6" strokeWidth={1.5} />
-        <Text x={237} y={158} style={{ fontSize: 8, fontFamily: "Courier", fill: "#94a3b8", textAnchor: "middle" as const }}>
+        <Rect
+          x={180}
+          y={130}
+          width={115}
+          height={46}
+          rx={4}
+          fill="#1e3a5f"
+          stroke="#3b82f6"
+          strokeWidth={1.5}
+        />
+        <Text
+          x={237}
+          y={158}
+          style={{
+            fontSize: 8,
+            fontFamily: "Courier",
+            fill: "#94a3b8",
+            textAnchor: "middle" as const,
+          }}
+        >
           EXECUTION ENGINE
         </Text>
 
         {/* Top node - React Frontend */}
-        <Rect x={180} y={20} width={115} height={40} rx={4} fill="#1e3a5f" stroke="#3b82f6" strokeWidth={1} />
-        <Text x={237} y={44} style={{ fontSize: 8, fontFamily: "Courier", fill: "#94a3b8", textAnchor: "middle" as const }}>
+        <Rect
+          x={180}
+          y={20}
+          width={115}
+          height={40}
+          rx={4}
+          fill="#1e3a5f"
+          stroke="#3b82f6"
+          strokeWidth={1}
+        />
+        <Text
+          x={237}
+          y={44}
+          style={{
+            fontSize: 8,
+            fontFamily: "Courier",
+            fill: "#94a3b8",
+            textAnchor: "middle" as const,
+          }}
+        >
           REACT FRONTEND
         </Text>
 
         {/* Left node - tRPC API */}
-        <Rect x={30} y={130} width={100} height={40} rx={4} fill="#1e3a5f" stroke="#3b82f6" strokeWidth={1} />
-        <Text x={80} y={154} style={{ fontSize: 8, fontFamily: "Courier", fill: "#94a3b8", textAnchor: "middle" as const }}>
+        <Rect
+          x={30}
+          y={130}
+          width={100}
+          height={40}
+          rx={4}
+          fill="#1e3a5f"
+          stroke="#3b82f6"
+          strokeWidth={1}
+        />
+        <Text
+          x={80}
+          y={154}
+          style={{
+            fontSize: 8,
+            fontFamily: "Courier",
+            fill: "#94a3b8",
+            textAnchor: "middle" as const,
+          }}
+        >
           tRPC API
         </Text>
 
         {/* Right node - Integrations */}
-        <Rect x={345} y={130} width={100} height={40} rx={4} fill="#1e3a5f" stroke="#3b82f6" strokeWidth={1} />
-        <Text x={395} y={154} style={{ fontSize: 8, fontFamily: "Courier", fill: "#94a3b8", textAnchor: "middle" as const }}>
+        <Rect
+          x={345}
+          y={130}
+          width={100}
+          height={40}
+          rx={4}
+          fill="#1e3a5f"
+          stroke="#3b82f6"
+          strokeWidth={1}
+        />
+        <Text
+          x={395}
+          y={154}
+          style={{
+            fontSize: 8,
+            fontFamily: "Courier",
+            fill: "#94a3b8",
+            textAnchor: "middle" as const,
+          }}
+        >
           INTEGRATIONS
         </Text>
 
         {/* Bottom left - PostgreSQL */}
-        <Rect x={70} y={250} width={105} height={40} rx={4} fill="#1e3a5f" stroke="#3b82f6" strokeWidth={1} />
-        <Text x={122} y={274} style={{ fontSize: 8, fontFamily: "Courier", fill: "#94a3b8", textAnchor: "middle" as const }}>
+        <Rect
+          x={70}
+          y={250}
+          width={105}
+          height={40}
+          rx={4}
+          fill="#1e3a5f"
+          stroke="#3b82f6"
+          strokeWidth={1}
+        />
+        <Text
+          x={122}
+          y={274}
+          style={{
+            fontSize: 8,
+            fontFamily: "Courier",
+            fill: "#94a3b8",
+            textAnchor: "middle" as const,
+          }}
+        >
           POSTGRESQL
         </Text>
 
         {/* Bottom right - Auth */}
-        <Rect x={300} y={250} width={105} height={40} rx={4} fill="#1e3a5f" stroke="#3b82f6" strokeWidth={1} />
-        <Text x={352} y={274} style={{ fontSize: 8, fontFamily: "Courier", fill: "#94a3b8", textAnchor: "middle" as const }}>
+        <Rect
+          x={300}
+          y={250}
+          width={105}
+          height={40}
+          rx={4}
+          fill="#1e3a5f"
+          stroke="#3b82f6"
+          strokeWidth={1}
+        />
+        <Text
+          x={352}
+          y={274}
+          style={{
+            fontSize: 8,
+            fontFamily: "Courier",
+            fill: "#94a3b8",
+            textAnchor: "middle" as const,
+          }}
+        >
           BETTER AUTH
         </Text>
 
         {/* Connecting lines */}
-        <Line x1={237} y1={60} x2={237} y2={130} stroke="#334155" strokeWidth={1} />
-        <Line x1={130} y1={150} x2={180} y2={150} stroke="#334155" strokeWidth={1} />
-        <Line x1={295} y1={150} x2={345} y2={150} stroke="#334155" strokeWidth={1} />
-        <Line x1={200} y1={176} x2={140} y2={250} stroke="#334155" strokeWidth={1} />
-        <Line x1={270} y1={176} x2={335} y2={250} stroke="#334155" strokeWidth={1} />
+        <Line
+          x1={237}
+          y1={60}
+          x2={237}
+          y2={130}
+          stroke="#334155"
+          strokeWidth={1}
+        />
+        <Line
+          x1={130}
+          y1={150}
+          x2={180}
+          y2={150}
+          stroke="#334155"
+          strokeWidth={1}
+        />
+        <Line
+          x1={295}
+          y1={150}
+          x2={345}
+          y2={150}
+          stroke="#334155"
+          strokeWidth={1}
+        />
+        <Line
+          x1={200}
+          y1={176}
+          x2={140}
+          y2={250}
+          stroke="#334155"
+          strokeWidth={1}
+        />
+        <Line
+          x1={270}
+          y1={176}
+          x2={335}
+          y2={250}
+          stroke="#334155"
+          strokeWidth={1}
+        />
 
         {/* Data flow dots */}
         <Circle cx={237} cy={95} r={2.5} fill="#3b82f6" opacity={0.6} />
@@ -112,8 +264,24 @@ export default function InnerCover() {
         <Circle cx={302} cy={213} r={2.5} fill="#3b82f6" opacity={0.6} />
 
         {/* Accent glow circles */}
-        <Circle cx={237} cy={153} r={6} fill="none" stroke="#3b82f6" strokeWidth={0.5} opacity={0.3} />
-        <Circle cx={237} cy={153} r={12} fill="none" stroke="#3b82f6" strokeWidth={0.3} opacity={0.15} />
+        <Circle
+          cx={237}
+          cy={153}
+          r={6}
+          fill="none"
+          stroke="#3b82f6"
+          strokeWidth={0.5}
+          opacity={0.3}
+        />
+        <Circle
+          cx={237}
+          cy={153}
+          r={12}
+          fill="none"
+          stroke="#3b82f6"
+          strokeWidth={0.3}
+          opacity={0.15}
+        />
       </Svg>
 
       {/* Top accent line */}

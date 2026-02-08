@@ -126,7 +126,9 @@ describe("Credentials Router", () => {
         userId: mockUser.id,
       });
 
-      (prisma.credential.create as any).mockResolvedValue(mockCreatedCredential);
+      (prisma.credential.create as any).mockResolvedValue(
+        mockCreatedCredential,
+      );
 
       const caller = credentialsRouter.createCaller({});
       const result = await caller.create(newCredential);
@@ -167,7 +169,9 @@ describe("Credentials Router", () => {
       const existingCredential = createMockCredential({ userId: mockUser.id });
       const updatedName = "Updated Name";
 
-      (prisma.credential.findFirst as any).mockResolvedValue(existingCredential);
+      (prisma.credential.findFirst as any).mockResolvedValue(
+        existingCredential,
+      );
       (prisma.credential.update as any).mockResolvedValue({
         ...existingCredential,
         name: updatedName,
@@ -241,9 +245,9 @@ describe("Credentials Router", () => {
 
       const caller = credentialsRouter.createCaller({});
 
-      await expect(
-        caller.getDecrypted({ id: "non-existent" }),
-      ).rejects.toThrow("Credential not found");
+      await expect(caller.getDecrypted({ id: "non-existent" })).rejects.toThrow(
+        "Credential not found",
+      );
     });
 
     it("should update lastUsedAt when getting decrypted data", async () => {

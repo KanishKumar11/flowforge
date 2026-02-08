@@ -79,7 +79,9 @@ describe("OAuth Connect Route", () => {
 
       expect(response.status).toBe(307);
       const location = response.headers.get("location");
-      expect(location).toContain("https://accounts.google.com/o/oauth2/v2/auth");
+      expect(location).toContain(
+        "https://accounts.google.com/o/oauth2/v2/auth",
+      );
       expect(location).toContain("client_id=test-google-client");
       expect(location).toContain("access_type=offline");
       expect(location).toContain("prompt=consent");

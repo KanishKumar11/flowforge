@@ -589,9 +589,9 @@ export default function DatabaseSchemaSection() {
       {/* ─── F. Entity Relationship Summary ─────────────────────────── */}
       <GroupHeading>F. Entity Relationship Summary</GroupHeading>
       <Text style={styles.paragraphIndent}>
-        Table 6.22 provides a consolidated view of all foreign key
-        relationships between database entities, including cardinality and
-        referential integrity constraints configured in the Prisma schema.
+        Table 6.22 provides a consolidated view of all foreign key relationships
+        between database entities, including cardinality and referential
+        integrity constraints configured in the Prisma schema.
       </Text>
 
       <View style={{ marginBottom: 4 }}>

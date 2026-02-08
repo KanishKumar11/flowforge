@@ -173,9 +173,7 @@ describe("useIsMobile", () => {
         value: i % 2 === 0 ? 375 : 1024,
       });
 
-      listeners.forEach((listener) =>
-        listener({ matches: i % 2 === 0 }),
-      );
+      listeners.forEach((listener) => listener({ matches: i % 2 === 0 }));
       rerender();
     }
 
