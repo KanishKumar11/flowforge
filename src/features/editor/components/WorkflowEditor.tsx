@@ -91,7 +91,8 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
         duration: 5000,
         action: {
           label: "VIEW LOGS",
-          onClick: () => window.open(`/executions/${data.executionId}`, "_blank"),
+          onClick: () =>
+            window.open(`/executions/${data.executionId}`, "_blank"),
         },
       });
     },

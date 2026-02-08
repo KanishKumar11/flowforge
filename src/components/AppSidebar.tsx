@@ -85,11 +85,11 @@ export function AppSidebar() {
 
   const initials = user?.name
     ? user.name
-      .split(" ")
-      .map((n) => n[0])
-      .join("")
-      .toUpperCase()
-      .slice(0, 2)
+        .split(" ")
+        .map((n) => n[0])
+        .join("")
+        .toUpperCase()
+        .slice(0, 2)
     : "U";
 
   return (
@@ -140,10 +140,11 @@ export function AppSidebar() {
                       tooltip={item.label}
                       isActive={isActive}
                       asChild
-                      className={`h-10 px-3 gap-3 rounded-none transition-all duration-200 font-mono text-xs uppercase tracking-wider border-l-2 ${isActive
-                        ? "bg-[rgba(var(--arch-fg-rgb)/0.1)] text-(--arch-fg) font-bold border-(--arch-fg)"
-                        : "text-(--arch-muted) border-transparent hover:text-(--arch-fg) hover:bg-[rgba(var(--arch-fg-rgb)/0.05)]"
-                        }`}
+                      className={`h-10 px-3 gap-3 rounded-none transition-all duration-200 font-mono text-xs uppercase tracking-wider border-l-2 ${
+                        isActive
+                          ? "bg-[rgba(var(--arch-fg-rgb)/0.1)] text-(--arch-fg) font-bold border-(--arch-fg)"
+                          : "text-(--arch-muted) border-transparent hover:text-(--arch-fg) hover:bg-[rgba(var(--arch-fg-rgb)/0.05)]"
+                      }`}
                     >
                       <Link href={item.href} prefetch>
                         <item.icon
@@ -276,21 +277,22 @@ function ThemeToggle() {
 
   return (
     <div className="flex gap-1 w-full border border-(--arch-border) p-0.5 bg-(--arch-bg-secondary)">
-      {['light', 'dark', 'system'].map((mode) => (
+      {["light", "dark", "system"].map((mode) => (
         <button
           key={mode}
           onClick={() => setTheme(mode)}
-          className={`flex-1 flex items-center justify-center p-1.5 transition-all text-[10px] uppercase font-mono ${theme === mode
-            ? 'bg-(--arch-fg) text-(--arch-bg) font-bold'
-            : 'text-(--arch-muted) hover:text-(--arch-fg)'
-            }`}
+          className={`flex-1 flex items-center justify-center p-1.5 transition-all text-[10px] uppercase font-mono ${
+            theme === mode
+              ? "bg-(--arch-fg) text-(--arch-bg) font-bold"
+              : "text-(--arch-muted) hover:text-(--arch-fg)"
+          }`}
           title={`Switch to ${mode} mode`}
         >
-          {mode === 'light' && "LGT"}
-          {mode === 'dark' && "DRK"}
-          {mode === 'system' && "SYS"}
+          {mode === "light" && "LGT"}
+          {mode === "dark" && "DRK"}
+          {mode === "system" && "SYS"}
         </button>
       ))}
     </div>
-  )
+  );
 }

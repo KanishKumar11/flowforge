@@ -30,18 +30,23 @@ export const TriggerNode = memo(function TriggerNode({
 
   return (
     <div
-      className={`px-4 py-3 rounded-none bg-(--arch-bg) border border-(--arch-border) shadow-sm min-w-[180px] group transition-all duration-300 ${selected
+      className={`px-4 py-3 rounded-none bg-(--arch-bg) border border-(--arch-border) shadow-sm min-w-[180px] group transition-all duration-300 ${
+        selected
           ? "ring-1 ring-(--arch-fg) border-(--arch-fg)"
           : "hover:border-(--arch-fg) hover:ring-1 hover:ring-[rgba(var(--arch-fg-rgb)/0.1)]"
-        }`}
+      }`}
     >
       <div className="flex items-center gap-3">
         <div className="p-1.5 rounded-none bg-emerald-500/10 text-emerald-500 border border-(--arch-border) transition-colors duration-300 group-hover:border-(--arch-fg)">
           <Play className="w-4 h-4" />
         </div>
         <div>
-          <div className="text-xs font-bold text-(--arch-fg) font-mono tracking-wide uppercase">{data.label}</div>
-          <div className="text-[10px] text-(--arch-muted) font-mono uppercase tracking-wider mt-0.5">TRIGGER</div>
+          <div className="text-xs font-bold text-(--arch-fg) font-mono tracking-wide uppercase">
+            {data.label}
+          </div>
+          <div className="text-[10px] text-(--arch-muted) font-mono uppercase tracking-wider mt-0.5">
+            TRIGGER
+          </div>
         </div>
       </div>
 

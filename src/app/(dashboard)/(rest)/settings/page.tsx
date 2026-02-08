@@ -94,7 +94,12 @@ export default function SettingsPage() {
                 <CardContent className="space-y-8 p-6">
                   <div className="grid gap-6 md:grid-cols-2">
                     <div className="space-y-2">
-                      <Label htmlFor="name" className="text-(--arch-fg) font-mono uppercase text-xs">Display Name</Label>
+                      <Label
+                        htmlFor="name"
+                        className="text-(--arch-fg) font-mono uppercase text-xs"
+                      >
+                        Display Name
+                      </Label>
                       <Input
                         id="name"
                         placeholder="Your name"
@@ -102,7 +107,12 @@ export default function SettingsPage() {
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="email" className="text-(--arch-fg) font-mono uppercase text-xs">Email Address</Label>
+                      <Label
+                        htmlFor="email"
+                        className="text-(--arch-fg) font-mono uppercase text-xs"
+                      >
+                        Email Address
+                      </Label>
                       <Input
                         id="email"
                         type="email"
@@ -112,7 +122,12 @@ export default function SettingsPage() {
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="timezone" className="text-(--arch-fg) font-mono uppercase text-xs">Timezone</Label>
+                    <Label
+                      htmlFor="timezone"
+                      className="text-(--arch-fg) font-mono uppercase text-xs"
+                    >
+                      Timezone
+                    </Label>
                     <Input
                       id="timezone"
                       placeholder="UTC"
@@ -140,7 +155,9 @@ export default function SettingsPage() {
                 <CardContent className="space-y-6 p-6">
                   <div className="flex items-center justify-between p-4 border border-(--arch-border) bg-[rgba(var(--arch-bg-secondary-rgb)/0.5)]">
                     <div className="space-y-0.5">
-                      <Label className="text-base font-bold font-mono text-(--arch-fg)">Workflow Errors</Label>
+                      <Label className="text-base font-bold font-mono text-(--arch-fg)">
+                        Workflow Errors
+                      </Label>
                       <p className="text-xs text-(--arch-muted) font-mono">
                         Get notified immediately when a workflow fails
                       </p>
@@ -153,7 +170,9 @@ export default function SettingsPage() {
 
                   <div className="flex items-center justify-between p-4 border border-(--arch-border) bg-[rgba(var(--arch-bg-secondary-rgb)/0.5)]">
                     <div className="space-y-0.5">
-                      <Label className="text-base font-bold font-mono text-(--arch-fg)">Execution Completed</Label>
+                      <Label className="text-base font-bold font-mono text-(--arch-fg)">
+                        Execution Completed
+                      </Label>
                       <p className="text-xs text-(--arch-muted) font-mono">
                         Notify when long-running executions complete
                       </p>
@@ -163,7 +182,9 @@ export default function SettingsPage() {
 
                   <div className="flex items-center justify-between p-4 border border-(--arch-border) bg-[rgba(var(--arch-bg-secondary-rgb)/0.5)]">
                     <div className="space-y-0.5">
-                      <Label className="text-base font-bold font-mono text-(--arch-fg)">Weekly Reports</Label>
+                      <Label className="text-base font-bold font-mono text-(--arch-fg)">
+                        Weekly Reports
+                      </Label>
                       <p className="text-xs text-(--arch-muted) font-mono">
                         Receive a weekly summary of your workflow activity
                       </p>
@@ -176,7 +197,9 @@ export default function SettingsPage() {
 
                   <div className="flex items-center justify-between p-4 border border-(--arch-border) bg-[rgba(var(--arch-bg-secondary-rgb)/0.5)]ndary-rgb)/0.5)]">
                     <div className="space-y-0.5">
-                      <Label className="text-base font-bold font-mono text-(--arch-fg)">Product Updates</Label>
+                      <Label className="text-base font-bold font-mono text-(--arch-fg)">
+                        Product Updates
+                      </Label>
                       <p className="text-xs text-(--arch-muted) font-mono">
                         News about new features and improvements
                       </p>
@@ -203,7 +226,9 @@ export default function SettingsPage() {
                     <div className="space-y-0.5">
                       <div className="flex items-center gap-2">
                         <Moon className="h-4 w-4 text-(--arch-accent)" />
-                        <Label className="text-base font-bold font-mono text-(--arch-fg)">Dark Mode</Label>
+                        <Label className="text-base font-bold font-mono text-(--arch-fg)">
+                          Dark Mode
+                        </Label>
                       </div>
                       <p className="text-xs text-(--arch-muted) font-mono">
                         Use dark theme for the interface
@@ -217,7 +242,9 @@ export default function SettingsPage() {
 
                   <div className="flex items-center justify-between p-4 border border-(--arch-border) bg-[rgba(var(--arch-bg-secondary-rgb)/0.5)]">
                     <div className="space-y-0.5">
-                      <Label className="text-base font-bold font-mono text-(--arch-fg)">Reduced Motion</Label>
+                      <Label className="text-base font-bold font-mono text-(--arch-fg)">
+                        Reduced Motion
+                      </Label>
                       <p className="text-xs text-(--arch-muted) font-mono">
                         Minimize animations throughout the app
                       </p>
@@ -227,7 +254,9 @@ export default function SettingsPage() {
 
                   <div className="flex items-center justify-between p-4 border border-(--arch-border) bg-[rgba(var(--arch-bg-secondary-rgb)/0.5)]">
                     <div className="space-y-0.5">
-                      <Label className="text-base font-bold font-mono text-(--arch-fg)">Compact Mode</Label>
+                      <Label className="text-base font-bold font-mono text-(--arch-fg)">
+                        Compact Mode
+                      </Label>
                       <p className="text-xs text-(--arch-muted) font-mono">
                         Use smaller spacing in lists and tables
                       </p>
@@ -252,7 +281,12 @@ export default function SettingsPage() {
                 <CardContent className="space-y-8 p-6">
                   <div className="space-y-6">
                     <div className="space-y-2">
-                      <Label htmlFor="current-password" className="text-(--arch-fg) font-mono uppercase text-xs">Current Password</Label>
+                      <Label
+                        htmlFor="current-password"
+                        className="text-(--arch-fg) font-mono uppercase text-xs"
+                      >
+                        Current Password
+                      </Label>
                       <Input
                         id="current-password"
                         type="password"
@@ -261,7 +295,12 @@ export default function SettingsPage() {
                     </div>
                     <div className="grid gap-6 md:grid-cols-2">
                       <div className="space-y-2">
-                        <Label htmlFor="new-password" className="text-(--arch-fg) font-mono uppercase text-xs">New Password</Label>
+                        <Label
+                          htmlFor="new-password"
+                          className="text-(--arch-fg) font-mono uppercase text-xs"
+                        >
+                          New Password
+                        </Label>
                         <Input
                           id="new-password"
                           type="password"
@@ -269,7 +308,10 @@ export default function SettingsPage() {
                         />
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="confirm-password" className="text-(--arch-fg) font-mono uppercase text-xs">
+                        <Label
+                          htmlFor="confirm-password"
+                          className="text-(--arch-fg) font-mono uppercase text-xs"
+                        >
                           Confirm Password
                         </Label>
                         <Input
@@ -291,7 +333,9 @@ export default function SettingsPage() {
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
                       <div>
-                        <h4 className="font-bold font-mono text-(--arch-fg)">API Keys</h4>
+                        <h4 className="font-bold font-mono text-(--arch-fg)">
+                          API Keys
+                        </h4>
                         <p className="text-xs text-(--arch-muted) font-mono">
                           Manage API keys for external integrations
                         </p>

@@ -61,7 +61,11 @@ export function TeamsPageClient() {
   return (
     <div className="flex flex-col h-full space-y-8 animate-fadeIn">
       <DashboardHeader
-        title={<span className="text-(--arch-fg) font-mono uppercase tracking-widest">Teams</span>}
+        title={
+          <span className="text-(--arch-fg) font-mono uppercase tracking-widest">
+            Teams
+          </span>
+        }
         description="Collaborate with your organization members."
         action={
           <Button
@@ -79,7 +83,10 @@ export function TeamsPageClient() {
         {isLoading && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[...Array(3)].map((_, i) => (
-              <div key={i} className="p-8 border border-(--arch-border) bg-(--arch-bg) rounded-none space-y-4">
+              <div
+                key={i}
+                className="p-8 border border-(--arch-border) bg-(--arch-bg) rounded-none space-y-4"
+              >
                 <Skeleton className="h-8 w-48 bg-(--arch-border)" />
                 <Skeleton className="h-4 w-64 bg-(--arch-border)" />
                 <div className="flex gap-4 pt-4">
@@ -128,12 +135,13 @@ export function TeamsPageClient() {
                       {team.name}
                     </CardTitle>
                     <span
-                      className={`text-[10px] uppercase font-bold font-mono tracking-wider px-2.5 py-1 rounded-none border ${team.role === "OWNER"
+                      className={`text-[10px] uppercase font-bold font-mono tracking-wider px-2.5 py-1 rounded-none border ${
+                        team.role === "OWNER"
                           ? "bg-(--arch-fg) text-(--arch-bg) border-(--arch-fg)"
                           : team.role === "ADMIN"
                             ? "bg-[rgba(var(--arch-fg-rgb)/0.1)] text-(--arch-fg) border-(--arch-fg)"
                             : "bg-[rgba(var(--arch-muted-rgb)/0.1)] text-(--arch-muted) border-(--arch-muted)"
-                        }`}
+                      }`}
                     >
                       {team.role}
                     </span>
@@ -182,14 +190,21 @@ export function TeamsPageClient() {
       <Dialog open={showCreateModal} onOpenChange={setShowCreateModal}>
         <DialogContent className="bg-(--arch-bg) border-(--arch-border) rounded-none max-w-lg">
           <DialogHeader>
-            <DialogTitle className="font-mono uppercase text-(--arch-fg)">Create New Team</DialogTitle>
+            <DialogTitle className="font-mono uppercase text-(--arch-fg)">
+              Create New Team
+            </DialogTitle>
             <DialogDescription className="font-mono text-xs text-(--arch-muted)">
               Create a team to collaborate on workflows with others.
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 py-4">
             <div className="space-y-2">
-              <Label htmlFor="name" className="text-(--arch-fg) font-mono uppercase text-xs">Team Name</Label>
+              <Label
+                htmlFor="name"
+                className="text-(--arch-fg) font-mono uppercase text-xs"
+              >
+                Team Name
+              </Label>
               <Input
                 id="name"
                 placeholder="MY_TEAM"
@@ -201,7 +216,12 @@ export function TeamsPageClient() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="description" className="text-(--arch-fg) font-mono uppercase text-xs">Description (Optional)</Label>
+              <Label
+                htmlFor="description"
+                className="text-(--arch-fg) font-mono uppercase text-xs"
+              >
+                Description (Optional)
+              </Label>
               <Input
                 id="description"
                 placeholder="What does this team work on?"

@@ -131,7 +131,7 @@ export function WorkflowsPageClient() {
     await createWorkflow.mutateAsync(data);
   };
 
-  const handleCreateFromTemplate = async (template: typeof TEMPLATES[0]) => {
+  const handleCreateFromTemplate = async (template: (typeof TEMPLATES)[0]) => {
     await createWorkflow.mutateAsync({
       name: template.name,
       description: template.description,
@@ -157,7 +157,6 @@ export function WorkflowsPageClient() {
       />
 
       <div className="flex-1 p-8 overflow-auto">
-
         {/* Templates Section */}
         {!isLoading && (!workflows || workflows.length === 0) && (
           <div className="mb-12">

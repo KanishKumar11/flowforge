@@ -208,11 +208,15 @@ export default function TeamDetailPage() {
                 </DialogTrigger>
                 <DialogContent className="bg-(--arch-bg) border-(--arch-border) rounded-none sm:max-w-[425px]">
                   <DialogHeader>
-                    <DialogTitle className="font-mono uppercase text-(--arch-fg)">Invite Team Member</DialogTitle>
+                    <DialogTitle className="font-mono uppercase text-(--arch-fg)">
+                      Invite Team Member
+                    </DialogTitle>
                   </DialogHeader>
                   <div className="space-y-4 pt-4">
                     <div className="space-y-2">
-                      <Label className="text-(--arch-fg) font-mono uppercase text-xs">Email Address</Label>
+                      <Label className="text-(--arch-fg) font-mono uppercase text-xs">
+                        Email Address
+                      </Label>
                       <Input
                         type="email"
                         placeholder="member@example.com"
@@ -222,7 +226,9 @@ export default function TeamDetailPage() {
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label className="text-(--arch-fg) font-mono uppercase text-xs">Role</Label>
+                      <Label className="text-(--arch-fg) font-mono uppercase text-xs">
+                        Role
+                      </Label>
                       <Select
                         value={inviteRole}
                         onValueChange={(v) =>
@@ -233,9 +239,24 @@ export default function TeamDetailPage() {
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent className="bg-(--arch-bg) border-(--arch-border) rounded-none">
-                          <SelectItem value="ADMIN" className="font-mono text-xs focus:bg-(--arch-fg) focus:text-(--arch-bg)">ADMIN</SelectItem>
-                          <SelectItem value="MEMBER" className="font-mono text-xs focus:bg-(--arch-fg) focus:text-(--arch-bg)">MEMBER</SelectItem>
-                          <SelectItem value="VIEWER" className="font-mono text-xs focus:bg-(--arch-fg) focus:text-(--arch-bg)">VIEWER</SelectItem>
+                          <SelectItem
+                            value="ADMIN"
+                            className="font-mono text-xs focus:bg-(--arch-fg) focus:text-(--arch-bg)"
+                          >
+                            ADMIN
+                          </SelectItem>
+                          <SelectItem
+                            value="MEMBER"
+                            className="font-mono text-xs focus:bg-(--arch-fg) focus:text-(--arch-bg)"
+                          >
+                            MEMBER
+                          </SelectItem>
+                          <SelectItem
+                            value="VIEWER"
+                            className="font-mono text-xs focus:bg-(--arch-fg) focus:text-(--arch-bg)"
+                          >
+                            VIEWER
+                          </SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
@@ -266,7 +287,10 @@ export default function TeamDetailPage() {
                 >
                   <div className="flex items-center gap-4">
                     <Avatar className="h-10 w-10 ring-1 ring-(--arch-border) rounded-none">
-                      <AvatarImage src={member.user.image || undefined} className="rounded-none" />
+                      <AvatarImage
+                        src={member.user.image || undefined}
+                        className="rounded-none"
+                      />
                       <AvatarFallback className="bg-[rgba(var(--arch-fg-rgb)/0.1)] text-(--arch-fg) font-mono rounded-none">
                         {member.user.name?.[0] || member.user.email[0]}
                       </AvatarFallback>
@@ -296,9 +320,24 @@ export default function TeamDetailPage() {
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent className="bg-(--arch-bg) border-(--arch-border) rounded-none">
-                          <SelectItem value="ADMIN" className="font-mono text-xs focus:bg-(--arch-fg) focus:text-(--arch-bg)">ADMIN</SelectItem>
-                          <SelectItem value="MEMBER" className="font-mono text-xs focus:bg-(--arch-fg) focus:text-(--arch-bg)">MEMBER</SelectItem>
-                          <SelectItem value="VIEWER" className="font-mono text-xs focus:bg-(--arch-fg) focus:text-(--arch-bg)">VIEWER</SelectItem>
+                          <SelectItem
+                            value="ADMIN"
+                            className="font-mono text-xs focus:bg-(--arch-fg) focus:text-(--arch-bg)"
+                          >
+                            ADMIN
+                          </SelectItem>
+                          <SelectItem
+                            value="MEMBER"
+                            className="font-mono text-xs focus:bg-(--arch-fg) focus:text-(--arch-bg)"
+                          >
+                            MEMBER
+                          </SelectItem>
+                          <SelectItem
+                            value="VIEWER"
+                            className="font-mono text-xs focus:bg-(--arch-fg) focus:text-(--arch-bg)"
+                          >
+                            VIEWER
+                          </SelectItem>
                         </SelectContent>
                       </Select>
                     ) : (
@@ -335,7 +374,9 @@ export default function TeamDetailPage() {
         {isOwner && (
           <Card className="border-destructive/50 bg-destructive/5 shadow-none rounded-none">
             <CardHeader className="border-b border-destructive/20">
-              <CardTitle className="text-destructive font-mono uppercase">Danger Zone</CardTitle>
+              <CardTitle className="text-destructive font-mono uppercase">
+                Danger Zone
+              </CardTitle>
             </CardHeader>
             <CardContent className="p-6">
               <Button

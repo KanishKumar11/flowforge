@@ -728,7 +728,118 @@ function getNextNodes(
     .filter(Boolean) as WorkflowNode[];
 }
 
-// Main workflow execution function
+// Direct workflow execution (no Inngest dependency)
+// Used as a fallback when Inngest is unavailable or for direct invocation
+export async function executeWorkflowDirect(
+  workflowId: string,
+  executionId: string,
+  triggerData: Record<string, unknown> = {},
+): Promise<{ success: boolean; executionId: string; results: Record<string, unknown> }> {
+  // Update execution status to running
+  await prisma.execution.update({
+    where: { id: executionId },
+    data: {
+      status: "RUNNING",
+      startedAt: new Date(),
+    },
+  });
+
+  try {
+    // Fetch workflow
+    const workflow = await prisma.workflow.findUnique({
+      where: { id: workflowId },
+    });
+
+    if (!workflow) {
+      throw new Error(`Workflow ${workflowId} not found`);
+    }
+
+    const nodes = (workflow.nodes as unknown as WorkflowNode[]) || [];
+    const edges = (workflow.edges as unknown as WorkflowEdge[]) || [];
+
+    if (nodes.length === 0) {
+      throw new Error("Workflow has no nodes");
+    }
+
+    // Find trigger node (entry point)
+    const triggerNode = nodes.find((n) => n.type === "trigger");
+    if (!triggerNode) {
+      throw new Error("Workflow has no trigger node");
+    }
+
+    // Execution context
+    const context: ExecutionContext = {
+      workflowId,
+      executionId,
+      triggerData,
+      nodeResults: {},
+    };
+
+    // Execute nodes in order (BFS traversal)
+    const executed = new Set<string>();
+    const queue: WorkflowNode[] = [triggerNode];
+
+    while (queue.length > 0) {
+      const currentNode = queue.shift()!;
+
+      if (executed.has(currentNode.id)) {
+        continue;
+      }
+
+      // Execute the node
+      const result = await executeNode(currentNode, context);
+
+      // Handle wait nodes
+      if (currentNode.data.type === "wait") {
+        const waitMs = (currentNode.data.config.duration as number) || 1000;
+        await new Promise((resolve) => setTimeout(resolve, waitMs));
+      }
+
+      // Store result
+      context.nodeResults[currentNode.id] = result;
+      executed.add(currentNode.id);
+
+      // Get and queue next nodes
+      const nextNodes = getNextNodes(currentNode.id, edges, nodes);
+      for (const nextNode of nextNodes) {
+        if (!executed.has(nextNode.id)) {
+          queue.push(nextNode);
+        }
+      }
+    }
+
+    // Update execution status to success
+    await prisma.execution.update({
+      where: { id: executionId },
+      data: {
+        status: "SUCCESS",
+        finishedAt: new Date(),
+        outputData: context.nodeResults as Record<string, never>,
+        nodeResults: context.nodeResults as Record<string, never>,
+      },
+    });
+
+    return {
+      success: true,
+      executionId,
+      results: context.nodeResults,
+    };
+  } catch (error) {
+    // Update execution status to error
+    await prisma.execution.update({
+      where: { id: executionId },
+      data: {
+        status: "ERROR",
+        finishedAt: new Date(),
+        error: (error as Error).message,
+      },
+    });
+
+    throw error;
+  }
+}
+
+// Main workflow execution function (Inngest-managed)
 export const executeWorkflow = inngest.createFunction(
   {
     id: "execute-workflow",
@@ -898,18 +1009,15 @@ export const scheduledWorkflow = inngest.createFunction(
           },
         });
 
-        // Send event to execute workflow
-        await inngest.send({
-          name: "workflow/execute",
-          data: {
-            workflowId: schedule.workflowId,
-            executionId: execution.id,
-            triggerData: {
-              scheduleId: schedule.id,
-              triggeredAt: new Date().toISOString(),
-            },
+        // Execute workflow directly
+        await executeWorkflowDirect(
+          schedule.workflowId,
+          execution.id,
+          {
+            scheduleId: schedule.id,
+            triggeredAt: new Date().toISOString(),
           },
-        });
+        );
 
         // Update next run time based on cron
         // In production, use a proper cron parser

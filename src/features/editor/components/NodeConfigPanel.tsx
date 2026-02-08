@@ -438,10 +438,10 @@ export function NodeConfigPanel({
                     {(!credentials ||
                       credentials.filter((c) => c.provider === "slack")
                         .length === 0) && (
-                        <SelectItem value="" disabled>
-                          No Slack credentials found
-                        </SelectItem>
-                      )}
+                      <SelectItem value="" disabled>
+                        No Slack credentials found
+                      </SelectItem>
+                    )}
                   </SelectContent>
                 </Select>
               </div>
@@ -602,29 +602,29 @@ export function NodeConfigPanel({
               </div>
               {(node.data.config as Record<string, string>)?.operation ===
                 "append_row" && (
-                  <div className="space-y-2">
-                    <Label htmlFor="values">Values (JSON Array)</Label>
-                    <Textarea
-                      id="values"
-                      placeholder='["Value 1", "Value 2"]'
-                      rows={3}
-                      value={JSON.stringify(
-                        (node.data.config as Record<string, unknown>)?.values ||
+                <div className="space-y-2">
+                  <Label htmlFor="values">Values (JSON Array)</Label>
+                  <Textarea
+                    id="values"
+                    placeholder='["Value 1", "Value 2"]'
+                    rows={3}
+                    value={JSON.stringify(
+                      (node.data.config as Record<string, unknown>)?.values ||
                         [],
-                        null,
-                        2,
-                      )}
-                      onChange={(e) => {
-                        try {
-                          const values = JSON.parse(e.target.value);
-                          handleConfigChange("values", values);
-                        } catch (err) {
-                          // Allow typing
-                        }
-                      }}
-                    />
-                  </div>
-                )}
+                      null,
+                      2,
+                    )}
+                    onChange={(e) => {
+                      try {
+                        const values = JSON.parse(e.target.value);
+                        handleConfigChange("values", values);
+                      } catch (err) {
+                        // Allow typing
+                      }
+                    }}
+                  />
+                </div>
+              )}
             </>
           )}
 
@@ -898,7 +898,7 @@ export function NodeConfigPanel({
                   </SelectTrigger>
                   <SelectContent className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) rounded-none font-mono z-50">
                     {(node.data.config as Record<string, string>)?.provider ===
-                      "anthropic" ? (
+                    "anthropic" ? (
                       <>
                         <SelectItem
                           value="claude-sonnet-4-5"
@@ -920,7 +920,7 @@ export function NodeConfigPanel({
                         </SelectItem>
                       </>
                     ) : (node.data.config as Record<string, string>)
-                      ?.provider === "google" ? (
+                        ?.provider === "google" ? (
                       <>
                         <SelectItem
                           value="gemini-3-pro-preview"

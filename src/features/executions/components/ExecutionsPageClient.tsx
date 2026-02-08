@@ -76,35 +76,59 @@ function formatDurationMs(ms: number | null | undefined): string {
 }
 
 // Helper component defined outside
-const StatusIconWrapper = ({ status, Icon }: { status: ExecutionStatus; Icon: React.ComponentType<{ className?: string }> }) => {
+const StatusIconWrapper = ({
+  status,
+  Icon,
+}: {
+  status: ExecutionStatus;
+  Icon: React.ComponentType<{ className?: string }>;
+}) => {
   const getStatusClasses = (s: ExecutionStatus) => {
     switch (s) {
-      case "SUCCESS": return "bg-[rgba(var(--arch-fg-rgb)/0.1)] text-(--arch-fg) border-(--arch-fg)";
-      case "ERROR": return "bg-[rgba(var(--arch-fg-rgb)/0.1)] text-(--arch-fg) border-(--arch-fg)";
-      case "RUNNING": return "bg-[rgba(var(--arch-fg-rgb)/0.1)] text-(--arch-fg) border-(--arch-fg)";
-      default: return "bg-[rgba(var(--arch-muted-rgb)/0.1)] text-(--arch-muted) border-(--arch-muted)";
+      case "SUCCESS":
+        return "bg-[rgba(var(--arch-fg-rgb)/0.1)] text-(--arch-fg) border-(--arch-fg)";
+      case "ERROR":
+        return "bg-[rgba(var(--arch-fg-rgb)/0.1)] text-(--arch-fg) border-(--arch-fg)";
+      case "RUNNING":
+        return "bg-[rgba(var(--arch-fg-rgb)/0.1)] text-(--arch-fg) border-(--arch-fg)";
+      default:
+        return "bg-[rgba(var(--arch-muted-rgb)/0.1)] text-(--arch-muted) border-(--arch-muted)";
     }
   };
 
   return (
     <div className={`p-3 rounded-none border ${getStatusClasses(status)}`}>
-      <Icon className={`h-5 w-5 ${status === "RUNNING" ? "animate-spin" : ""}`} />
+      <Icon
+        className={`h-5 w-5 ${status === "RUNNING" ? "animate-spin" : ""}`}
+      />
     </div>
   );
 };
 
 // Helper component to fix type instantiation depth issues
-const StatusBadge = ({ status, classes }: { status: ExecutionStatus; classes: string }) => {
+const StatusBadge = ({
+  status,
+  classes,
+}: {
+  status: ExecutionStatus;
+  classes: string;
+}) => {
   return (
     <Badge
       variant="outline"
       className={`${classes} border px-2.5 py-0.5 text-xs font-semibold`}
     >
-      {status === "SUCCESS" ? "Success" :
-        status === "ERROR" ? "Failed" :
-          status === "RUNNING" ? "Running" :
-            status === "PENDING" ? "Pending" :
-              status === "CANCELLED" ? "Cancelled" : "Waiting"}
+      {status === "SUCCESS"
+        ? "Success"
+        : status === "ERROR"
+          ? "Failed"
+          : status === "RUNNING"
+            ? "Running"
+            : status === "PENDING"
+              ? "Pending"
+              : status === "CANCELLED"
+                ? "Cancelled"
+                : "Waiting"}
     </Badge>
   );
 };
@@ -119,7 +143,8 @@ export function ExecutionsPageClient() {
     refetch,
   } = useQuery(
     trpc.executions.list.queryOptions({
-      status: statusFilter !== "all" ? (statusFilter as ExecutionStatus) : undefined,
+      status:
+        statusFilter !== "all" ? (statusFilter as ExecutionStatus) : undefined,
       limit: 50,
     }),
   );
@@ -356,13 +381,14 @@ const ExecutionCard = ({
   const StatusIcon = status.icon;
 
   return (
-    <Card
-      className="group border-(--arch-border) bg-(--arch-bg) shadow-none rounded-none hover:border-(--arch-fg) transition-all duration-300"
-    >
+    <Card className="group border-(--arch-border) bg-(--arch-bg) shadow-none rounded-none hover:border-(--arch-fg) transition-all duration-300">
       <CardHeader className="p-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-6">
-            <StatusIconWrapper status={execution.status as ExecutionStatus} Icon={StatusIcon} />
+            <StatusIconWrapper
+              status={execution.status as ExecutionStatus}
+              Icon={StatusIcon}
+            />
             <div>
               <div className="flex items-center gap-3">
                 <Link
@@ -371,24 +397,24 @@ const ExecutionCard = ({
                 >
                   {execution.workflow.name}
                 </Link>
-                <StatusBadge status={execution.status as ExecutionStatus} classes={status.classes} />
+                <StatusBadge
+                  status={execution.status as ExecutionStatus}
+                  classes={status.classes}
+                />
               </div>
               <div className="flex items-center gap-4 mt-1.5 text-xs text-(--arch-muted) font-mono">
                 <span className="flex items-center gap-1.5">
                   <Clock className="w-3.5 h-3.5" />
-                  {formatDistanceToNow(
-                    new Date(execution.startedAt),
-                    { addSuffix: true },
-                  )}
+                  {formatDistanceToNow(new Date(execution.startedAt), {
+                    addSuffix: true,
+                  })}
                 </span>
                 <span>|</span>
                 <span>{execution.mode}</span>
                 {execution.duration && (
                   <>
                     <span>|</span>
-                    <span>
-                      {formatDurationMs(execution.duration)}
-                    </span>
+                    <span>{formatDurationMs(execution.duration)}</span>
                   </>
                 )}
               </div>
@@ -397,19 +423,17 @@ const ExecutionCard = ({
           <div className="flex items-center gap-2">
             {(execution.status === "ERROR" ||
               execution.status === "CANCELLED") && (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() =>
-                    retryExecution.mutate({ id: execution.id })
-                  }
-                  disabled={retryExecution.isPending}
-                  className="border-(--arch-border) text-(--arch-fg) hover:bg-(--arch-fg) hover:text-(--arch-bg) rounded-none font-mono uppercase text-xs h-8"
-                >
-                  <RefreshCw className="h-3 w-3 mr-1.5" />
-                  Retry
-                </Button>
-              )}
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => retryExecution.mutate({ id: execution.id })}
+                disabled={retryExecution.isPending}
+                className="border-(--arch-border) text-(--arch-fg) hover:bg-(--arch-fg) hover:text-(--arch-bg) rounded-none font-mono uppercase text-xs h-8"
+              >
+                <RefreshCw className="h-3 w-3 mr-1.5" />
+                Retry
+              </Button>
+            )}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
@@ -428,15 +452,11 @@ const ExecutionCard = ({
                   asChild
                   className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer font-mono text-xs uppercase"
                 >
-                  <Link href={`/executions/${execution.id}`}>
-                    View Details
-                  </Link>
+                  <Link href={`/executions/${execution.id}`}>View Details</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   className="text-red-500 focus:bg-red-500 focus:text-white cursor-pointer font-mono text-xs uppercase"
-                  onClick={() =>
-                    deleteExecution.mutate({ id: execution.id })
-                  }
+                  onClick={() => deleteExecution.mutate({ id: execution.id })}
                 >
                   <Trash2 className="mr-2 h-4 w-4" />
                   Delete
