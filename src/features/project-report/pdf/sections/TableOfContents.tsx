@@ -27,9 +27,15 @@ const tocItems = [
   { chapter: "", title: "1.5 Project Objectives", page: "3", type: "sub" },
   { chapter: "", title: "1.6 Proposed Solution", page: "4", type: "sub" },
   { chapter: "", title: "1.7 Technology Stack", page: "4", type: "sub" },
-  { chapter: "", title: "1.8 Scope of the Project", page: "5", type: "sub" },
-  { chapter: "", title: "1.9 Key Features Summary", page: "5", type: "sub" },
-  { chapter: "", title: "1.10 Report Organization", page: "6", type: "sub" },
+  {
+    chapter: "",
+    title: "1.8 Technology Justification",
+    page: "5",
+    type: "sub",
+  },
+  { chapter: "", title: "1.9 Scope of the Project", page: "6", type: "sub" },
+  { chapter: "", title: "1.10 Key Features Summary", page: "6", type: "sub" },
+  { chapter: "", title: "1.11 Report Organization", page: "7", type: "sub" },
 
   // Chapter 2
   { chapter: "02", title: "PROBLEM STATEMENT", page: "7", type: "main" },

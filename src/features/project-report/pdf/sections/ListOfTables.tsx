@@ -10,8 +10,9 @@ interface ListOfTablesProps {
 const tables = [
   // Chapter 1
   { number: "1.1", title: "Technology Stack", page: "4" },
-  { number: "1.2", title: "Key Features Summary", page: "5" },
-  { number: "1.3", title: "Report Organization", page: "6" },
+  { number: "1.2", title: "Technology Justification", page: "5" },
+  { number: "1.3", title: "Key Features Summary", page: "6" },
+  { number: "1.4", title: "Report Organization", page: "7" },
 
   // Chapter 2
   {

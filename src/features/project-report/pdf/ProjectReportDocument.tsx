@@ -4,7 +4,6 @@ import { Document } from "@react-pdf/renderer";
 
 // Preliminary sections (Roman numerals)
 import TitlePage from "./sections/TitlePage";
-import InnerCover from "./sections/InnerCover";
 import Declaration from "./sections/Declaration";
 import Certificate from "./sections/Certificate";
 import Acknowledgement from "./sections/Acknowledgement";
@@ -32,6 +31,7 @@ import OutputScreens from "./sections/OutputScreens";
 import Conclusions from "./sections/Conclusions";
 import References from "./sections/References";
 import Annexures from "./sections/Annexures";
+import InnerCover from "./sections/InnerCover";
 
 /**
  * Main Project Report PDF Document

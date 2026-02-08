@@ -17,7 +17,8 @@ vi.mock("next/headers", () => ({
 }));
 
 const mockGetSession = vi.fn();
-vi.mocked(await import("@/lib/auth")).auth.api.getSession = mockGetSession;
+const authModule = await import("@/lib/auth");
+(vi.mocked(authModule).auth.api as any).getSession = mockGetSession;
 
 describe("OAuth Connect Route", () => {
   beforeEach(() => {

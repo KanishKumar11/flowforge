@@ -123,6 +123,7 @@ describe("Credentials Router", () => {
 
       const mockCreatedCredential = createMockCredential({
         ...newCredential,
+        data: JSON.stringify(newCredential.data as any),
         userId: mockUser.id,
       });
 

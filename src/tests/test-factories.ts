@@ -11,7 +11,6 @@ export function createMockUser(overrides?: Partial<User>): User {
     image: null,
     createdAt: new Date(),
     updatedAt: new Date(),
-    plan: "free",
     ...overrides,
   };
 }

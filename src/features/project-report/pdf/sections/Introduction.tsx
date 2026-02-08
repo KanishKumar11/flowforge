@@ -542,13 +542,178 @@ export default function Introduction() {
         </Text>
       </View>
 
-      <Text style={styles.h2}>1.8 Scope of the Project</Text>
+      <Text style={styles.h2}>1.8 Technology Justification</Text>
+      <Text style={styles.paragraphIndent}>
+        Each technology in the Flowgent stack was selected after evaluating
+        alternatives based on type safety, developer experience, community
+        support, and architectural fit. The following table presents the
+        justification for each choice.
+      </Text>
+
+      <View
+        style={{ borderWidth: 1, borderColor: "#333333", marginTop: 12 }}
+        break
+      >
+        <View
+          style={{
+            flexDirection: "row",
+            backgroundColor: "#f0f0f0",
+            borderBottomWidth: 1,
+            borderBottomColor: "#333333",
+          }}
+        >
+          <Text
+            style={{
+              width: "20%",
+              padding: 5,
+              fontSize: 9,
+              fontFamily: "Times-Bold",
+              borderRightWidth: 1,
+              borderRightColor: "#333333",
+            }}
+          >
+            Technology
+          </Text>
+          <Text
+            style={{
+              width: "25%",
+              padding: 5,
+              fontSize: 9,
+              fontFamily: "Times-Bold",
+              borderRightWidth: 1,
+              borderRightColor: "#333333",
+            }}
+          >
+            Alternatives Considered
+          </Text>
+          <Text
+            style={{
+              width: "55%",
+              padding: 5,
+              fontSize: 9,
+              fontFamily: "Times-Bold",
+            }}
+          >
+            Reason for Selection
+          </Text>
+        </View>
+        {[
+          [
+            "Next.js 16",
+            "Create React App, Vite, Remix",
+            "Built-in SSR/SSG, API routes, middleware support, and file-based routing eliminate the need for a separate backend server. Turbopack provides fast HMR during development.",
+          ],
+          [
+            "React 19",
+            "Vue.js, Angular, Svelte",
+            "Largest ecosystem, extensive component libraries (shadcn/ui, React Flow), server components for reduced client bundle, and strong TypeScript support.",
+          ],
+          [
+            "TypeScript 5",
+            "JavaScript, Flow",
+            "Compile-time type checking catches errors before runtime, enhances IDE autocomplete, and enables end-to-end type safety with tRPC and Prisma.",
+          ],
+          [
+            "tRPC",
+            "REST, GraphQL (Apollo)",
+            "Zero-schema API development with automatic type inference from backend to frontend. No code generation step required unlike GraphQL. Simpler than REST with built-in validation via Zod.",
+          ],
+          [
+            "PostgreSQL 16",
+            "MySQL, MongoDB, SQLite",
+            "Advanced features like JSONB for flexible node configs, row-level security, robust transaction support, and mature ecosystem. ACID compliance critical for workflow execution state.",
+          ],
+          [
+            "Prisma ORM",
+            "Drizzle, TypeORM, Knex",
+            "Type-safe database client generated from schema, declarative migrations, visual database browser (Prisma Studio), and excellent Next.js integration.",
+          ],
+          [
+            "Inngest",
+            "BullMQ, Temporal, AWS Step Functions",
+            "Durable workflow execution with automatic retries, step functions, and event-driven architecture. No infrastructure to manage unlike BullMQ (requires Redis). Built-in observability dashboard.",
+          ],
+          [
+            "Better Auth",
+            "NextAuth, Clerk, Auth0",
+            "Self-hosted with full data ownership, built-in OAuth providers, session management, and RBAC. No vendor lock-in or per-user pricing unlike Clerk/Auth0.",
+          ],
+          [
+            "Zustand",
+            "Redux, Jotai, MobX",
+            "Minimal boilerplate with a simple hook-based API. No providers or reducers needed. Ideal for managing workflow editor canvas state without prop drilling.",
+          ],
+          [
+            "Tailwind CSS v4",
+            "styled-components, CSS Modules, Sass",
+            "Utility-first approach enables rapid prototyping, consistent design tokens, zero CSS file management, and excellent tree-shaking for small production bundles.",
+          ],
+          [
+            "React Flow",
+            "JointJS, GoJS, D3.js",
+            "Purpose-built for node-based editors with built-in zoom, pan, minimap, and edge routing. MIT licensed with active maintenance and React-native integration.",
+          ],
+          [
+            "Zod",
+            "Yup, Joi, io-ts",
+            "TypeScript-first schema validation that integrates directly with tRPC for API input validation and with React Hook Form for client-side form validation.",
+          ],
+        ].map((row, i) => (
+          <View
+            key={i}
+            style={{
+              flexDirection: "row",
+              borderBottomWidth: i < 11 ? 1 : 0,
+              borderBottomColor: "#cccccc",
+            }}
+          >
+            <Text
+              style={{
+                width: "20%",
+                padding: 4,
+                fontSize: 8,
+                fontFamily: "Times-Bold",
+                borderRightWidth: 1,
+                borderRightColor: "#cccccc",
+              }}
+            >
+              {row[0]}
+            </Text>
+            <Text
+              style={{
+                width: "25%",
+                padding: 4,
+                fontSize: 8,
+                borderRightWidth: 1,
+                borderRightColor: "#cccccc",
+              }}
+            >
+              {row[1]}
+            </Text>
+            <Text style={{ width: "55%", padding: 4, fontSize: 8 }}>
+              {row[2]}
+            </Text>
+          </View>
+        ))}
+      </View>
+      <Text
+        style={{
+          fontSize: 9,
+          fontFamily: "Times-Italic",
+          textAlign: "center",
+          marginTop: 4,
+        }}
+      >
+        Table 1.2: Technology Justification
+      </Text>
+
+      <Text style={styles.h2}>1.9 Scope of the Project</Text>
       <Text style={styles.paragraphIndent}>
         The scope defines the boundaries of the current release (v1.0) and sets
         clear expectations for what is included and excluded.
       </Text>
 
-      <Text style={styles.h3}>1.8.1 In Scope</Text>
+      <Text style={styles.h3}>1.9.1 In Scope</Text>
       <View style={{ paddingLeft: 12, marginBottom: 12, marginTop: 8 }}>
         <Text style={{ fontSize: 10, marginBottom: 4 }}>
           • <Text style={styles.bold}>Authentication & User Profile:</Text>{" "}
@@ -580,7 +745,7 @@ export default function Introduction() {
         </Text>
       </View>
 
-      <Text style={styles.h3}>1.8.2 Out of Scope</Text>
+      <Text style={styles.h3}>1.9.2 Out of Scope</Text>
       <View style={{ paddingLeft: 12, marginBottom: 12, marginTop: 8 }}>
         <Text style={{ fontSize: 10, marginBottom: 4 }}>
           • <Text style={styles.bold}>Native Mobile Application:</Text> The
@@ -604,7 +769,7 @@ export default function Introduction() {
         </Text>
       </View>
 
-      <Text style={styles.h2}>1.9 Key Features Summary</Text>
+      <Text style={styles.h2}>1.10 Key Features Summary</Text>
       <View
         wrap={false}
         style={{ borderWidth: 1, borderColor: "#333333", marginTop: 12 }}
@@ -694,10 +859,10 @@ export default function Introduction() {
           marginTop: 4,
         }}
       >
-        Table 1.2: Key Features Summary
+        Table 1.3: Key Features Summary
       </Text>
 
-      <Text style={styles.h2}>1.10 Report Organization</Text>
+      <Text style={styles.h2}>1.11 Report Organization</Text>
       <Text style={styles.paragraphIndent}>
         This report is organized into eight chapters, each addressing a specific
         aspect of the project development lifecycle.
@@ -848,7 +1013,7 @@ export default function Introduction() {
           marginTop: 4,
         }}
       >
-        Table 1.3: Report Organization
+        Table 1.4: Report Organization
       </Text>
 
       <View
