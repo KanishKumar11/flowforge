@@ -37,8 +37,10 @@ export const TriggerNode = memo(function TriggerNode({
       }`}
     >
       <div className="flex items-center gap-3">
-        <div className="p-1.5 rounded-none bg-emerald-500/10 text-emerald-500 border border-(--arch-border) transition-colors duration-300 group-hover:border-(--arch-fg)">
-          <Play className="w-4 h-4" />
+        <div
+          className={`p-1.5 rounded-none border border-(--arch-border) transition-colors duration-300 group-hover:border-(--arch-fg) ${colorMap[data.type] || "bg-emerald-500/10 text-emerald-500"}`}
+        >
+          <Icon className="w-4 h-4" />
         </div>
         <div>
           <div className="text-xs font-bold text-(--arch-fg) font-mono tracking-wide uppercase">
@@ -53,7 +55,7 @@ export const TriggerNode = memo(function TriggerNode({
       <Handle
         type="source"
         position={Position.Bottom}
-        className="w-2.5! h-2.5! rounded-none! bg-[#0A160A]! border! border-(--arch-fg)! bottom-[-6px]! transition-all duration-300 group-hover:border-(--arch-fg)! group-hover:bg-(--arch-fg)!"
+        className="w-2.5! h-2.5! rounded-none! bg-(--arch-fg)! border! border-(--arch-fg)! bottom-[-6px]! transition-all duration-300 group-hover:border-(--arch-fg)! group-hover:bg-(--arch-fg)!"
       />
     </div>
   );

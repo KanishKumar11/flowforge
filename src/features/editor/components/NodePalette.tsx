@@ -3,19 +3,28 @@
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
+  ArrowUpDown,
+  BookOpen,
+  Brain,
   Calendar,
   Code,
   CreditCard,
   Database,
-  FileText,
   Filter,
-  GripVertical,
+  Github,
   GitBranch,
+  GitFork,
   Globe,
   Mail,
+  Merge,
+  MessageCircle,
   MessageSquare,
   MousePointer,
+  Phone,
+  Repeat,
   Search,
+  Sheet,
+  SquarePen,
   Timer,
   Webhook,
   Workflow,
@@ -77,31 +86,31 @@ const actionNodes = [
   {
     type: "switch",
     label: "Switch",
-    icon: GitBranch,
+    icon: GitFork,
     color: "text-violet-500",
   },
-  { type: "loop", label: "Loop", icon: Timer, color: "text-blue-600" },
+  { type: "loop", label: "Loop", icon: Repeat, color: "text-blue-600" },
   { type: "filter", label: "Filter", icon: Filter, color: "text-violet-500" },
-  { type: "set", label: "Set", icon: Database, color: "text-blue-500" },
-  { type: "sort", label: "Sort", icon: Timer, color: "text-orange-500" },
+  { type: "set", label: "Set", icon: SquarePen, color: "text-sky-500" },
+  { type: "sort", label: "Sort", icon: ArrowUpDown, color: "text-orange-500" },
   {
     type: "openai",
-    label: "OpenAI",
-    icon: MessageSquare,
+    label: "AI / LLM",
+    icon: Brain,
     color: "text-emerald-500",
   },
   {
     type: "google_sheets",
     label: "Google Sheets",
-    icon: Database,
+    icon: Sheet,
     color: "text-green-600",
   },
-  { type: "github", label: "GitHub", icon: GitBranch, color: "text-gray-700" },
+  { type: "github", label: "GitHub", icon: Github, color: "text-gray-700" },
   {
     type: "notion",
     label: "Notion",
-    icon: FileText,
-    color: "text-neutral-800",
+    icon: BookOpen,
+    color: "text-neutral-700",
   },
   { type: "wait", label: "Wait", icon: Timer, color: "text-amber-500" },
   {
@@ -113,7 +122,7 @@ const actionNodes = [
   {
     type: "twilio",
     label: "Twilio SMS",
-    icon: MessageSquare,
+    icon: Phone,
     color: "text-red-600",
   },
   {
@@ -122,11 +131,11 @@ const actionNodes = [
     icon: Workflow,
     color: "text-indigo-600",
   },
-  { type: "merge", label: "Merge", icon: GitBranch, color: "text-teal-500" },
+  { type: "merge", label: "Merge", icon: Merge, color: "text-teal-500" },
   {
     type: "comment",
     label: "Comment",
-    icon: MessageSquare,
+    icon: MessageCircle,
     color: "text-slate-500",
   },
 ];
@@ -193,7 +202,9 @@ export function NodePalette({ onAddNode }: NodePaletteProps) {
                     className="w-full flex items-center gap-3 p-2.5 rounded-none border border-(--arch-border) bg-(--arch-bg-secondary) hover:bg-(--arch-fg) hover:text-(--arch-bg) text-(--arch-fg) transition-colors duration-200 text-left group cursor-grab active:cursor-grabbing font-mono uppercase text-xs shadow-sm hover:shadow-none"
                   >
                     <div className="p-1">
-                      <node.icon className="h-4 w-4 text-(--arch-fg) group-hover:text-(--arch-bg)" />
+                      <node.icon
+                        className={`h-4 w-4 ${node.color} group-hover:text-(--arch-bg)`}
+                      />
                     </div>
                     <div>
                       <span className="font-bold">{node.label}</span>
@@ -220,7 +231,9 @@ export function NodePalette({ onAddNode }: NodePaletteProps) {
                     className="w-full flex items-center gap-3 p-2.5 rounded-none border border-(--arch-border) bg-(--arch-bg-secondary) hover:bg-(--arch-fg) hover:text-(--arch-bg) text-(--arch-fg) transition-colors duration-200 text-left group cursor-grab active:cursor-grabbing font-mono uppercase text-xs shadow-sm hover:shadow-none"
                   >
                     <div className="p-1">
-                      <node.icon className="h-4 w-4 text-(--arch-fg) group-hover:text-(--arch-bg)" />
+                      <node.icon
+                        className={`h-4 w-4 ${node.color} group-hover:text-(--arch-bg)`}
+                      />
                     </div>
                     <div>
                       <span className="font-bold">{node.label}</span>

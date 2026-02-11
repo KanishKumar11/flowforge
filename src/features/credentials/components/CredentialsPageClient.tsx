@@ -289,6 +289,11 @@ export function CredentialsPageClient() {
                   icon: Github,
                   href: "/api/oauth/github/connect",
                 },
+                {
+                  name: "Notion",
+                  icon: Globe,
+                  href: "/api/oauth/notion/connect",
+                },
               ].map((provider) => (
                 <Button
                   key={provider.name}
@@ -585,6 +590,30 @@ export function CredentialsPageClient() {
                       className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs font-mono"
                     >
                       OPENAI
+                    </SelectItem>
+                    <SelectItem
+                      value="anthropic"
+                      className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs font-mono"
+                    >
+                      ANTHROPIC
+                    </SelectItem>
+                    <SelectItem
+                      value="notion"
+                      className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs font-mono"
+                    >
+                      NOTION
+                    </SelectItem>
+                    <SelectItem
+                      value="stripe"
+                      className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs font-mono"
+                    >
+                      STRIPE
+                    </SelectItem>
+                    <SelectItem
+                      value="twilio"
+                      className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs font-mono"
+                    >
+                      TWILIO
                     </SelectItem>
                   </SelectContent>
                 </Select>

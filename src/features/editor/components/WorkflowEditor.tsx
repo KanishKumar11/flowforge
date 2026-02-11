@@ -327,8 +327,9 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
           snapToGrid
           snapGrid={[15, 15]}
           defaultEdgeOptions={{
-            style: { strokeWidth: 2, stroke: "var(--arch-border)" },
+            style: { strokeWidth: 2, stroke: "var(--arch-accent)" },
             type: "smoothstep",
+            animated: true,
           }}
           proOptions={{ hideAttribution: true }}
         >
@@ -436,16 +437,16 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
           {/* Keyboard Shortcuts Hint */}
           <Panel position="bottom-left" className="m-4">
             <div className="bg-[rgba(var(--arch-bg-rgb)/0.8)] backdrop-blur-sm px-3 py-1.5 text-xs font-mono text-(--arch-muted) border border-(--arch-border) uppercase">
-              ⌘S Save • ⌘Z Undo • ⌘⇧Z Redo • ⌫ Delete
+              Ctrl+S Save • Ctrl+Z Undo • Ctrl+Shift+Z Redo • Del Delete
             </div>
           </Panel>
         </ReactFlow>
       </div>
 
       {/* Node Config Panel */}
-      {selectedNode && (
+      {selectedNode && nodes.find((n) => n.id === selectedNode.id) && (
         <NodeConfigPanel
-          node={nodes.find((n) => n.id === selectedNode.id)!!}
+          node={nodes.find((n) => n.id === selectedNode.id)!}
           onClose={() => setSelectedNode(null)}
           onUpdate={handleNodeUpdate}
         />

@@ -440,6 +440,21 @@ enum HttpMethod { GET, POST, PUT, PATCH, DELETE }
 
 ---
 
+### OAuth & Platform Registration 🔗
+
+See the detailed step-by-step guide in `docs/OAUTH_SETUP.md` for Slack, Google, GitHub, and Notion registrations (redirect URIs, scopes, and exact env var names).
+
+**Quick checklist:**
+
+- Slack: add `SLACK_CLIENT_ID`, `SLACK_CLIENT_SECRET`, `SLACK_BOT_TOKEN`
+- Google: add `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_GENERATIVE_AI_API_KEY`
+- GitHub: add `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET`
+- Notion: add `NOTION_KEY` (or `NOTION_CLIENT_ID`/`NOTION_CLIENT_SECRET` for OAuth)
+
+Add these to `.env.local` and restart the app. If you want, I can create a PR that pre-fills the example `.env.oauth.example` with the instructions.
+
+---
+
 ## 10. Security Model
 
 ### 10.1 Authentication

@@ -1,1 +1,97 @@
-{"K:\\personal\\flowforge\\src\\instrumentation-client.ts": {"path":"K:\\personal\\flowforge\\src\\instrumentation-client.ts","all":true,"statementMap":{"0":{"start":{"line":1,"column":0},"end":{"line":1,"column":67}},"6":{"start":{"line":7,"column":0},"end":{"line":7,"column":13}},"7":{"start":{"line":8,"column":0},"end":{"line":8,"column":105}},"10":{"start":{"line":11,"column":0},"end":{"line":11,"column":45}},"13":{"start":{"line":14,"column":0},"end":{"line":14,"column":22}},"15":{"start":{"line":16,"column":0},"end":{"line":16,"column":19}},"20":{"start":{"line":21,"column":0},"end":{"line":21,"column":32}},"23":{"start":{"line":24,"column":0},"end":{"line":24,"column":32}},"27":{"start":{"line":28,"column":0},"end":{"line":28,"column":23}},"28":{"start":{"line":29,"column":0},"end":{"line":29,"column":3}},"30":{"start":{"line":31,"column":0},"end":{"line":31,"column":75}}},"s":{"0":0,"6":0,"7":0,"10":0,"13":0,"15":0,"20":0,"23":0,"27":0,"28":0,"30":0},"branchMap":{"0":{"type":"branch","line":1,"loc":{"start":{"line":1,"column":1282},"end":{"line":31,"column":75}},"locations":[{"start":{"line":1,"column":1282},"end":{"line":31,"column":75}}]}},"b":{"0":[0]},"fnMap":{"0":{"name":"(empty-report)","decl":{"start":{"line":1,"column":1282},"end":{"line":31,"column":75}},"loc":{"start":{"line":1,"column":1282},"end":{"line":31,"column":75}},"line":1}},"f":{"0":0}} ... (truncated for brevity) }
+{
+  "K:\\personal\\flowforge\\src\\instrumentation-client.ts": {
+    "path": "K:\\personal\\flowforge\\src\\instrumentation-client.ts",
+    "all": true,
+    "statementMap": {
+      "0": {
+        "start": { "line": 1, "column": 0 },
+        "end": { "line": 1, "column": 67 }
+      },
+      "6": {
+        "start": { "line": 7, "column": 0 },
+        "end": { "line": 7, "column": 13 }
+      },
+      "7": {
+        "start": { "line": 8, "column": 0 },
+        "end": { "line": 8, "column": 105 }
+      },
+      "10": {
+        "start": { "line": 11, "column": 0 },
+        "end": { "line": 11, "column": 45 }
+      },
+      "13": {
+        "start": { "line": 14, "column": 0 },
+        "end": { "line": 14, "column": 22 }
+      },
+      "15": {
+        "start": { "line": 16, "column": 0 },
+        "end": { "line": 16, "column": 19 }
+      },
+      "20": {
+        "start": { "line": 21, "column": 0 },
+        "end": { "line": 21, "column": 32 }
+      },
+      "23": {
+        "start": { "line": 24, "column": 0 },
+        "end": { "line": 24, "column": 32 }
+      },
+      "27": {
+        "start": { "line": 28, "column": 0 },
+        "end": { "line": 28, "column": 23 }
+      },
+      "28": {
+        "start": { "line": 29, "column": 0 },
+        "end": { "line": 29, "column": 3 }
+      },
+      "30": {
+        "start": { "line": 31, "column": 0 },
+        "end": { "line": 31, "column": 75 }
+      }
+    },
+    "s": {
+      "0": 0,
+      "6": 0,
+      "7": 0,
+      "10": 0,
+      "13": 0,
+      "15": 0,
+      "20": 0,
+      "23": 0,
+      "27": 0,
+      "28": 0,
+      "30": 0
+    },
+    "branchMap": {
+      "0": {
+        "type": "branch",
+        "line": 1,
+        "loc": {
+          "start": { "line": 1, "column": 1282 },
+          "end": { "line": 31, "column": 75 }
+        },
+        "locations": [
+          {
+            "start": { "line": 1, "column": 1282 },
+            "end": { "line": 31, "column": 75 }
+          }
+        ]
+      }
+    },
+    "b": { "0": [0] },
+    "fnMap": {
+      "0": {
+        "name": "(empty-report)",
+        "decl": {
+          "start": { "line": 1, "column": 1282 },
+          "end": { "line": 31, "column": 75 }
+        },
+        "loc": {
+          "start": { "line": 1, "column": 1282 },
+          "end": { "line": 31, "column": 75 }
+        },
+        "line": 1
+      }
+    },
+    "f": { "0": 0 }
+  }
+}

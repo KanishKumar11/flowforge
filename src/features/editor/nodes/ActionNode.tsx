@@ -2,15 +2,28 @@
 
 import { Handle, Position, type NodeProps } from "@xyflow/react";
 import {
+  ArrowUpDown,
+  BookOpen,
+  Brain,
   Code,
+  CreditCard,
   Database,
   Filter,
   GitBranch,
+  GitFork,
   Globe,
   Mail,
+  Merge,
+  MessageCircle,
   MessageSquare,
+  Phone,
+  Repeat,
+  Sheet,
+  SquarePen,
   Timer,
+  Workflow,
   Zap,
+  Github,
 } from "lucide-react";
 import { memo } from "react";
 
@@ -23,6 +36,19 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   if: GitBranch,
   filter: Filter,
   wait: Timer,
+  switch: GitFork,
+  loop: Repeat,
+  set: SquarePen,
+  sort: ArrowUpDown,
+  openai: Brain,
+  google_sheets: Sheet,
+  github: Github,
+  notion: BookOpen,
+  stripe: CreditCard,
+  twilio: Phone,
+  "sub-workflow": Workflow,
+  merge: Merge,
+  comment: MessageCircle,
 };
 
 const colorMap: Record<string, string> = {
@@ -34,17 +60,19 @@ const colorMap: Record<string, string> = {
   if: "bg-indigo-500/10 text-indigo-500 border-indigo-500/30",
   filter: "bg-violet-500/10 text-violet-500 border-violet-500/30",
   wait: "bg-amber-500/10 text-amber-500 border-amber-500/30",
-};
-
-const descriptionMap: Record<string, string> = {
-  "http-request": "Make API calls",
-  code: "Run custom code",
-  email: "Send an email",
-  slack: "Post to Slack",
-  database: "Query database",
-  if: "Conditional logic",
-  filter: "Filter items",
-  wait: "Pause execution",
+  switch: "bg-purple-500/10 text-purple-500 border-purple-500/30",
+  loop: "bg-blue-600/10 text-blue-600 border-blue-600/30",
+  set: "bg-sky-500/10 text-sky-500 border-sky-500/30",
+  sort: "bg-orange-500/10 text-orange-500 border-orange-500/30",
+  openai: "bg-emerald-500/10 text-emerald-500 border-emerald-500/30",
+  google_sheets: "bg-green-600/10 text-green-600 border-green-600/30",
+  github: "bg-gray-600/10 text-gray-600 border-gray-600/30",
+  notion: "bg-neutral-600/10 text-neutral-600 border-neutral-600/30",
+  stripe: "bg-purple-600/10 text-purple-600 border-purple-600/30",
+  twilio: "bg-red-600/10 text-red-600 border-red-600/30",
+  "sub-workflow": "bg-indigo-600/10 text-indigo-600 border-indigo-600/30",
+  merge: "bg-teal-500/10 text-teal-500 border-teal-500/30",
+  comment: "bg-slate-500/10 text-slate-500 border-slate-500/30",
 };
 
 interface ActionNodeData {
@@ -58,7 +86,6 @@ export const ActionNode = memo(function ActionNode({
   selected,
 }: NodeProps & { data: ActionNodeData }) {
   const Icon = iconMap[data.type] || Zap;
-  const description = descriptionMap[data.type] || "CONFIGURE_ACTION";
 
   return (
     <div
@@ -71,7 +98,7 @@ export const ActionNode = memo(function ActionNode({
       <Handle
         type="target"
         position={Position.Top}
-        className="w-2.5! h-2.5! rounded-none! bg-[#0A160A]! border! border-(--arch-fg)! top-[-6px]! transition-all duration-300 group-hover:border-(--arch-fg)! group-hover:bg-(--arch-fg)!"
+        className="w-2.5! h-2.5! rounded-none! bg-(--arch-fg)! border! border-(--arch-fg)! top-[-6px]! transition-all duration-300 group-hover:border-(--arch-fg)! group-hover:bg-(--arch-fg)!"
       />
 
       <div className="flex items-center gap-3">
@@ -93,7 +120,7 @@ export const ActionNode = memo(function ActionNode({
       <Handle
         type="source"
         position={Position.Bottom}
-        className="w-2.5! h-2.5! rounded-none! bg-(--arch-bg)! border! border-(--arch-fg)! bottom-[-6px]! transition-all duration-300 group-hover:border-(--arch-fg)! group-hover:bg-(--arch-fg)!"
+        className="w-2.5! h-2.5! rounded-none! bg-(--arch-fg)! border! border-(--arch-fg)! bottom-[-6px]! transition-all duration-300 group-hover:border-(--arch-fg)! group-hover:bg-(--arch-fg)!"
       />
     </div>
   );

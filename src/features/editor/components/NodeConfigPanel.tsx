@@ -883,6 +883,41 @@ export function NodeConfigPanel({
               </div>
 
               <div className="space-y-2">
+                <Label>Credential (optional)</Label>
+                <Select
+                  value={
+                    (node.data.config as Record<string, string>)
+                      ?.credentialId || ""
+                  }
+                  onValueChange={(value) =>
+                    handleConfigChange("credentialId", value)
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select an API credential (OpenAI or Google)" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {credentials
+                      ?.filter(
+                        (c) =>
+                          c.provider === "openai" ||
+                          c.provider === "google" ||
+                          c.provider === "anthropic",
+                      )
+                      .map((cred) => (
+                        <SelectItem key={cred.id} value={cred.id}>
+                          {cred.name}
+                        </SelectItem>
+                      ))}
+                  </SelectContent>
+                </Select>
+                <p className="text-xs text-muted-foreground">
+                  If set, the node will use the selected credential's key
+                  (apiKey/key/token). Otherwise it will use env vars.
+                </p>
+              </div>
+
+              <div className="space-y-2">
                 <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider mb-1 block">
                   Model
                 </Label>
@@ -1194,6 +1229,40 @@ export function NodeConfigPanel({
           {node.data.type === "stripe" && (
             <>
               <div className="space-y-2">
+                <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider">
+                  Credential
+                </Label>
+                <Select
+                  value={
+                    (node.data.config as Record<string, string>)
+                      ?.credentialId || ""
+                  }
+                  onValueChange={(value) =>
+                    handleConfigChange("credentialId", value)
+                  }
+                >
+                  <SelectTrigger className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) rounded-none font-mono text-xs h-9 focus:ring-1 focus:ring-(--arch-fg)">
+                    <SelectValue placeholder="Select a Stripe credential" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) rounded-none font-mono z-50">
+                    {credentials
+                      ?.filter(
+                        (c) =>
+                          c.provider === "stripe" || c.provider === "custom",
+                      )
+                      .map((cred) => (
+                        <SelectItem
+                          key={cred.id}
+                          value={cred.id}
+                          className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer font-mono text-xs"
+                        >
+                          {cred.name}
+                        </SelectItem>
+                      ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
                 <Label>Operation</Label>
                 <Select
                   value={
@@ -1256,6 +1325,40 @@ export function NodeConfigPanel({
 
           {node.data.type === "twilio" && (
             <>
+              <div className="space-y-2">
+                <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider">
+                  Credential
+                </Label>
+                <Select
+                  value={
+                    (node.data.config as Record<string, string>)
+                      ?.credentialId || ""
+                  }
+                  onValueChange={(value) =>
+                    handleConfigChange("credentialId", value)
+                  }
+                >
+                  <SelectTrigger className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) rounded-none font-mono text-xs h-9 focus:ring-1 focus:ring-(--arch-fg)">
+                    <SelectValue placeholder="Select a Twilio credential" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) rounded-none font-mono z-50">
+                    {credentials
+                      ?.filter(
+                        (c) =>
+                          c.provider === "twilio" || c.provider === "custom",
+                      )
+                      .map((cred) => (
+                        <SelectItem
+                          key={cred.id}
+                          value={cred.id}
+                          className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer font-mono text-xs"
+                        >
+                          {cred.name}
+                        </SelectItem>
+                      ))}
+                  </SelectContent>
+                </Select>
+              </div>
               <div className="space-y-2">
                 <Label htmlFor="to">To Phone Number</Label>
                 <Input

@@ -21,6 +21,8 @@ interface WorkflowEdge {
   id: string;
   source: string;
   target: string;
+  sourceHandle?: string;
+  label?: string;
 }
 
 interface ExecutionContext {
@@ -28,6 +30,43 @@ interface ExecutionContext {
   executionId: string;
   triggerData: Record<string, unknown>;
   nodeResults: Record<string, unknown>;
+}
+
+// ── Shared credential-resolution helper ──────────────────────────────
+// Resolves an API key / token from: env var → inline config → stored Credential
+async function resolveCredential(
+  config: Record<string, unknown>,
+  envValue: string | undefined,
+): Promise<string | undefined> {
+  if (envValue) return envValue;
+  if (config.apiKey && typeof config.apiKey === "string") return config.apiKey;
+
+  const credId = config.credentialId as string | undefined;
+  if (credId) {
+    try {
+      const cred = await prisma.credential.findFirst({ where: { id: credId } });
+      if (cred) {
+        try {
+          const data = JSON.parse(cred.data || "{}");
+          return (
+            data.apiKey ||
+            data.accessToken ||
+            data.access_token ||
+            data.key ||
+            data.token ||
+            data.secret ||
+            data.client_secret
+          );
+        } catch {
+          // data is not valid JSON – ignore
+        }
+      }
+    } catch (err) {
+      console.warn("Error fetching credential for execution:", err);
+    }
+  }
+
+  return undefined;
 }
 
 // Node executor functions
@@ -198,7 +237,7 @@ async function executeSlack(
 ): Promise<unknown> {
   const channel = config.channel as string;
   const message = config.message as string;
-  const token = process.env.SLACK_BOT_TOKEN; // In production, fetch from Credential model
+  const token = await resolveCredential(config, process.env.SLACK_BOT_TOKEN);
 
   if (token) {
     const slack = new WebClient(token);
@@ -206,9 +245,16 @@ async function executeSlack(
     return { sent: true, channel, message, provider: "slack_api" };
   }
 
-  // Fallback / Mock
-  console.log(`[Slack] Sending to ${channel}: ${message}`);
-  return { sent: true, channel, message, provider: "mock" };
+  // No credential available – return error instead of silent mock
+  console.warn(`[Slack] No token found for channel ${channel}`);
+  return {
+    sent: false,
+    channel,
+    message,
+    provider: "mock",
+    warning:
+      "No Slack token configured. Add a Slack credential or set SLACK_BOT_TOKEN env var.",
+  };
 }
 
 async function executeDatabase(
@@ -238,13 +284,61 @@ async function executeGoogleSheets(
   const operation = config.operation as string;
   const spreadsheetId = config.spreadsheetId as string;
   const range = config.range as string;
+  const token = await resolveCredential(config, process.env.GOOGLE_API_KEY);
 
-  console.log(
-    `[Google Sheets] ${operation} on ${spreadsheetId} range ${range}`,
-  );
+  if (!token) {
+    console.warn("[Google Sheets] No credential found");
+    return {
+      success: false,
+      operation,
+      spreadsheetId,
+      range,
+      warning:
+        "No Google credential configured. Connect Google via OAuth or add an API credential.",
+    };
+  }
 
-  // Full implementation would use googleapis or google-spreadsheet
-  return { success: true, operation, spreadsheetId, range };
+  const baseUrl = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}`;
+  const headers: Record<string, string> = {
+    Authorization: `Bearer ${token}`,
+    "Content-Type": "application/json",
+  };
+
+  try {
+    switch (operation) {
+      case "read_rows": {
+        const res = await fetch(
+          `${baseUrl}/values/${encodeURIComponent(range)}`,
+          { headers },
+        );
+        if (!res.ok) throw new Error(`Sheets API error: ${await res.text()}`);
+        const data = await res.json();
+        return { success: true, operation, values: data.values || [], range };
+      }
+      case "append_row": {
+        const values = (config.values as unknown[]) || [];
+        const res = await fetch(
+          `${baseUrl}/values/${encodeURIComponent(range)}:append?valueInputOption=USER_ENTERED`,
+          {
+            method: "POST",
+            headers,
+            body: JSON.stringify({ values: [values] }),
+          },
+        );
+        if (!res.ok) throw new Error(`Sheets API error: ${await res.text()}`);
+        return { success: true, operation, appended: values };
+      }
+      default:
+        return {
+          success: false,
+          error: `Unknown Sheets operation: ${operation}`,
+        };
+    }
+  } catch (error) {
+    throw new Error(
+      `Google Sheets execution failed: ${(error as Error).message}`,
+    );
+  }
 }
 
 async function executeGitHub(
@@ -254,11 +348,65 @@ async function executeGitHub(
   const operation = config.operation as string;
   const owner = config.owner as string;
   const repo = config.repo as string;
+  const token = await resolveCredential(config, process.env.GITHUB_TOKEN);
 
-  console.log(`[GitHub] ${operation} on ${owner}/${repo}`);
+  if (!token) {
+    console.warn(`[GitHub] No credential found for ${owner}/${repo}`);
+    return {
+      success: false,
+      operation,
+      repo: `${owner}/${repo}`,
+      warning:
+        "No GitHub token configured. Connect GitHub via OAuth or add a credential.",
+    };
+  }
 
-  // Full implementation would use octokit or fetch to https://api.github.com
-  return { success: true, operation, repo: `${owner}/${repo}` };
+  const headers: Record<string, string> = {
+    Authorization: `Bearer ${token}`,
+    Accept: "application/vnd.github+json",
+    "X-GitHub-Api-Version": "2022-11-28",
+  };
+
+  try {
+    switch (operation) {
+      case "list_issues": {
+        const res = await fetch(
+          `https://api.github.com/repos/${owner}/${repo}/issues`,
+          { headers },
+        );
+        if (!res.ok) throw new Error(`GitHub API error: ${await res.text()}`);
+        return { success: true, operation, issues: await res.json() };
+      }
+      case "create_issue": {
+        const title = config.title as string;
+        const body = config.body as string;
+        const res = await fetch(
+          `https://api.github.com/repos/${owner}/${repo}/issues`,
+          {
+            method: "POST",
+            headers,
+            body: JSON.stringify({ title, body }),
+          },
+        );
+        if (!res.ok) throw new Error(`GitHub API error: ${await res.text()}`);
+        return { success: true, operation, issue: await res.json() };
+      }
+      case "list_repos": {
+        const res = await fetch(`https://api.github.com/users/${owner}/repos`, {
+          headers,
+        });
+        if (!res.ok) throw new Error(`GitHub API error: ${await res.text()}`);
+        return { success: true, operation, repos: await res.json() };
+      }
+      default:
+        return {
+          success: false,
+          error: `Unknown GitHub operation: ${operation}`,
+        };
+    }
+  } catch (error) {
+    throw new Error(`GitHub execution failed: ${(error as Error).message}`);
+  }
 }
 
 async function executeNotion(
@@ -267,17 +415,53 @@ async function executeNotion(
 ): Promise<unknown> {
   const operation = config.operation as string;
   const databaseId = config.databaseId as string;
-  const token = process.env.NOTION_KEY; // In production, fetch from Credential
+  const token = await resolveCredential(config, process.env.NOTION_KEY);
 
-  if (token && operation === "create_page") {
-    const notion = new NotionClient({ auth: token });
-    // Simplified create page logic
-    // await notion.pages.create({ ... });
-    return { success: true, provider: "notion_api", operation };
+  if (!token) {
+    console.warn("[Notion] No credential found");
+    return {
+      success: false,
+      operation,
+      databaseId,
+      warning:
+        "No Notion token configured. Connect Notion via OAuth or set NOTION_KEY env var.",
+    };
   }
 
-  console.log(`[Notion] ${operation} on db ${databaseId}`);
-  return { success: true, operation, databaseId, provider: "mock" };
+  const notion = new NotionClient({ auth: token });
+
+  try {
+    switch (operation) {
+      case "create_page": {
+        const title = (config.title as string) || "Untitled";
+        const page = await notion.pages.create({
+          parent: { database_id: databaseId },
+          properties: {
+            title: { title: [{ text: { content: title } }] },
+          },
+        });
+        return { success: true, provider: "notion_api", operation, page };
+      }
+      case "query_database": {
+        const result = await notion.databases.query({
+          database_id: databaseId,
+        });
+        return {
+          success: true,
+          provider: "notion_api",
+          operation,
+          results: result.results,
+        };
+      }
+      default:
+        return {
+          success: false,
+          error: `Unknown Notion operation: ${operation}`,
+        };
+    }
+  } catch (error) {
+    throw new Error(`Notion execution failed: ${(error as Error).message}`);
+  }
 }
 
 // Loop executor - iterates over an array and returns results
@@ -347,7 +531,10 @@ async function executeOpenAI(
 
   // Provider-specific execution
   if (provider === "anthropic") {
-    const apiKey = process.env.ANTHROPIC_API_KEY || (config.apiKey as string);
+    const apiKey = await resolveCredential(
+      config,
+      process.env.ANTHROPIC_API_KEY,
+    );
     if (!apiKey) {
       console.log("[Anthropic] No API key found, returning mock response");
       return {
@@ -391,7 +578,10 @@ async function executeOpenAI(
   }
 
   if (provider === "google") {
-    const apiKey = process.env.GOOGLE_API_KEY || (config.apiKey as string);
+    const apiKey = await resolveCredential(
+      config,
+      process.env.GOOGLE_GENERATIVE_AI_API_KEY,
+    );
     if (!apiKey) {
       console.log("[Gemini] No API key found, returning mock response");
       return {
@@ -438,7 +628,7 @@ async function executeOpenAI(
   }
 
   // Default: OpenAI
-  const apiKey = process.env.OPENAI_API_KEY || (config.apiKey as string);
+  const apiKey = await resolveCredential(config, process.env.OPENAI_API_KEY);
   if (!apiKey) {
     console.log("[OpenAI] No API key found, returning mock response");
     return {
@@ -562,12 +752,17 @@ async function executeStripe(
   config: Record<string, unknown>,
   context: ExecutionContext,
 ): Promise<unknown> {
-  const apiKey = process.env.STRIPE_SECRET_KEY || (config.apiKey as string);
+  const apiKey = await resolveCredential(config, process.env.STRIPE_SECRET_KEY);
   const operation = (config.operation as string) || "create_payment_intent";
 
   if (!apiKey) {
-    console.log("[Stripe] No API key found, returning mock response");
-    return { mock: true, operation, message: "API key not configured" };
+    console.warn("[Stripe] No API key found");
+    return {
+      mock: true,
+      operation,
+      warning:
+        "No Stripe API key configured. Add a Stripe credential or set STRIPE_SECRET_KEY env var.",
+    };
   }
 
   try {
@@ -588,12 +783,20 @@ async function executeStripe(
           },
         );
 
+        if (!response.ok) {
+          const error = await response.text();
+          throw new Error(`Stripe API error: ${error}`);
+        }
         return await response.json();
       }
       case "list_customers": {
         const response = await fetch("https://api.stripe.com/v1/customers", {
           headers: { Authorization: `Bearer ${apiKey}` },
         });
+        if (!response.ok) {
+          const error = await response.text();
+          throw new Error(`Stripe API error: ${error}`);
+        }
         return await response.json();
       }
       default:
@@ -609,21 +812,47 @@ async function executeTwilio(
   config: Record<string, unknown>,
   context: ExecutionContext,
 ): Promise<unknown> {
-  const accountSid =
+  // Twilio needs accountSid + authToken; try resolving via credential
+  let accountSid =
     process.env.TWILIO_ACCOUNT_SID || (config.accountSid as string);
-  const authToken =
-    process.env.TWILIO_AUTH_TOKEN || (config.authToken as string);
+  let authToken = process.env.TWILIO_AUTH_TOKEN || (config.authToken as string);
+
+  // If not found in env/config, try credential
+  if (!accountSid || !authToken) {
+    const credId = config.credentialId as string | undefined;
+    if (credId) {
+      try {
+        const cred = await prisma.credential.findFirst({
+          where: { id: credId },
+        });
+        if (cred) {
+          const data = JSON.parse(cred.data || "{}");
+          accountSid = accountSid || data.accountSid || data.account_sid;
+          authToken =
+            authToken ||
+            data.authToken ||
+            data.auth_token ||
+            data.apiKey ||
+            data.token;
+        }
+      } catch {
+        /* ignore */
+      }
+    }
+  }
+
   const from = (config.from as string) || process.env.TWILIO_PHONE_NUMBER;
   const to = config.to as string;
   const body = config.body as string;
 
   if (!accountSid || !authToken) {
-    console.log("[Twilio] Credentials not found, returning mock response");
+    console.warn("[Twilio] Credentials not found");
     return {
       mock: true,
       to,
       body,
-      message: "Twilio credentials not configured",
+      warning:
+        "No Twilio credentials configured. Add a Twilio credential or set TWILIO_ACCOUNT_SID/TWILIO_AUTH_TOKEN env vars.",
     };
   }
 
@@ -643,6 +872,11 @@ async function executeTwilio(
         body: `To=${encodeURIComponent(to)}&From=${encodeURIComponent(from || "")}&Body=${encodeURIComponent(body)}`,
       },
     );
+
+    if (!response.ok) {
+      const error = await response.text();
+      throw new Error(`Twilio API error: ${error}`);
+    }
 
     return await response.json();
   } catch (error) {
@@ -716,13 +950,29 @@ async function executeNode(
   }
 }
 
-// Get next nodes in the execution order
+// Get next nodes in the execution order, optionally filtering by branch
 function getNextNodes(
   currentNodeId: string,
   edges: WorkflowEdge[],
   nodes: WorkflowNode[],
+  branchFilter?: string,
 ): WorkflowNode[] {
-  const outgoingEdges = edges.filter((e) => e.source === currentNodeId);
+  let outgoingEdges = edges.filter((e) => e.source === currentNodeId);
+
+  // If a branch filter is specified, only follow edges matching that branch
+  if (branchFilter !== undefined) {
+    const filtered = outgoingEdges.filter(
+      (e) =>
+        e.sourceHandle === branchFilter ||
+        e.label === branchFilter ||
+        (e.sourceHandle || "").toLowerCase() === branchFilter.toLowerCase(),
+    );
+    // If we found matching edges use them; otherwise fall through to all edges
+    if (filtered.length > 0) {
+      outgoingEdges = filtered;
+    }
+  }
+
   return outgoingEdges
     .map((edge) => nodes.find((n) => n.id === edge.target))
     .filter(Boolean) as WorkflowNode[];
@@ -803,8 +1053,29 @@ export async function executeWorkflowDirect(
       context.nodeResults[currentNode.id] = result;
       executed.add(currentNode.id);
 
-      // Get and queue next nodes
-      const nextNodes = getNextNodes(currentNode.id, edges, nodes);
+      // Determine branch filter for conditional nodes
+      let branchFilter: string | undefined;
+      if (currentNode.data.type === "if") {
+        const ifResult = result as { condition: boolean; branch: string };
+        branchFilter = ifResult.branch; // "true" or "false"
+      } else if (currentNode.data.type === "switch") {
+        const switchResult = result as {
+          matched: boolean;
+          case?: unknown;
+          output?: unknown;
+        };
+        branchFilter = switchResult.matched
+          ? String(switchResult.case)
+          : "default";
+      }
+
+      // Get and queue next nodes (filtered by branch for IF/Switch)
+      const nextNodes = getNextNodes(
+        currentNode.id,
+        edges,
+        nodes,
+        branchFilter,
+      );
       for (const nextNode of nextNodes) {
         if (!executed.has(nextNode.id)) {
           queue.push(nextNode);
@@ -926,15 +1197,29 @@ export const executeWorkflow = inngest.createFunction(
         context.nodeResults[currentNode.id] = result;
         executed.add(currentNode.id);
 
-        // Handle conditional branching for IF nodes
+        // Determine branch filter for conditional nodes
+        let branchFilter: string | undefined;
         if (currentNode.data.type === "if") {
           const ifResult = result as { condition: boolean; branch: string };
-          // In a full implementation, we'd filter edges by branch label
-          // For now, we continue to all connected nodes
+          branchFilter = ifResult.branch; // "true" or "false"
+        } else if (currentNode.data.type === "switch") {
+          const switchResult = result as {
+            matched: boolean;
+            case?: unknown;
+            output?: unknown;
+          };
+          branchFilter = switchResult.matched
+            ? String(switchResult.case)
+            : "default";
         }
 
-        // Get and queue next nodes
-        const nextNodes = getNextNodes(currentNode.id, edges, nodes);
+        // Get and queue next nodes (filtered by branch for IF/Switch)
+        const nextNodes = getNextNodes(
+          currentNode.id,
+          edges,
+          nodes,
+          branchFilter,
+        );
         for (const nextNode of nextNodes) {
           if (!executed.has(nextNode.id)) {
             queue.push(nextNode);

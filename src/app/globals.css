@@ -329,7 +329,7 @@ body {
   --arch-bg-secondary: #f6fff7;
   --arch-fg: #064e16; /* green-900 */
   --arch-muted: #166534; /* green-700 */
-  --arch-border: rgba(34, 197, 94, 0.06);
+  --arch-border: rgba(34, 197, 94, 0.15);
   --arch-grid: rgba(34, 197, 94, 0.03);
   --arch-accent: #16a34a; /* green-600 */
   --arch-accent-dim: rgba(16, 163, 74, 0.08);
@@ -385,7 +385,7 @@ body {
 }
 
 @utility input-tech {
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: var(--arch-bg-secondary);
   border: 1px solid var(--arch-border);
   color: var(--arch-fg);
   font-family: var(--font-mono);
@@ -397,12 +397,12 @@ body {
 
   &:hover {
     border-color: var(--arch-muted);
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: var(--arch-accent-dim);
   }
 
   &:focus {
     border-color: var(--arch-accent);
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: var(--arch-bg);
     outline: none;
     box-shadow:
       0 0 0 1px var(--arch-accent),
