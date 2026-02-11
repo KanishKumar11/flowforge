@@ -44,9 +44,9 @@ import InnerCover from "./sections/InnerCover";
  * - Content pages: Arabic numerals (1, 2, 3...) - ~85 pages
  *
  * Page Distribution:
- * - Chapter 1 (Introduction): 7 pages (1-7)
- * - Chapter 2 (Problem Statement): 7 pages (8-14)
- * - Chapter 3 (Objectives): 5 pages (15-19)
+ * - Chapter 1 (Introduction): 7 pages
+ * - Chapter 2 (Problem Statement): 7 pages
+ * - Chapter 3 (Objectives): 5 pages
  * - Chapter 4 (Feasibility): 7 pages
  * - Chapter 5 (Estimation/COCOMO): 5 pages
  * - Chapter 6 (SDLC): 26 pages
@@ -54,13 +54,18 @@ import InnerCover from "./sections/InnerCover";
  *   - 6.2 Process Model
  *   - 6.3 Requirement Gathering
  *   - 6.4 SRS
- * - Chapter 7 (Design): 6 pages
- * - Chapter 7 (Testing): 7 pages (64-70)
- * - Chapter 8 (Conclusions): 4 pages (71-74)
- * - References: 2 pages (75-76)
- * Total Content: ~76 pages + 12 preliminary = ~88 pages
+ * - Chapter 7 (System Design): 6 pages
+ * - Chapter 8 (Implementation): 8 pages
+ * - Chapter 9 (Testing): 7 pages
+ * - Chapter 10 (User Manual): 5 pages
+ * - Chapter 11 (Output & Screenshots): 4 pages
+ * - Chapter 12 (Conclusions & Future Scope): 4 pages
+ * - References: 2 pages
+ * - Annexures: 2 pages
  */
-export default function ProjectReportDocument() {
+export default function ProjectReportDocument({
+  coverageData,
+}: { coverageData?: any } = {}) {
   return (
     <Document
       title="Flowgent 1.0 - Project Report"
@@ -76,11 +81,11 @@ export default function ProjectReportDocument() {
       <Acknowledgement pageNumber={3} />
       <Preface pageNumber={4} />
       <Abstract pageNumber={5} />
-      <PlagiarismReport pageNumber={6} />
-      <TableOfContents startPage={7} />
-      <ListOfFigures startPage={13} />
-      <ListOfTables startPage={15} />
-      <Acronyms startPage={19} />
+      {/* <PlagiarismReport pageNumber={6} />*/}
+      <TableOfContents startPage={6} />
+      <ListOfFigures startPage={12} />
+      <ListOfTables startPage={14} />
+      <Acronyms startPage={18} />
 
       {/* ========== Content Pages (Arabic Numerals) ========== */}
 
@@ -108,13 +113,13 @@ export default function ProjectReportDocument() {
       {/* Chapter 7: System Design */}
       <DesignDiagrams />
 
-      {/* Chapter 7: Implementation */}
+      {/* Chapter 8: Implementation */}
       <Implementation />
 
-      {/* Chapter 8: Testing */}
-      <Testing />
+      {/* Chapter 9: Testing */}
+      <Testing coverageData={coverageData} />
 
-      {/* Chapter 9 (Testing) ends, Chapter 10: User Manual */}
+      {/* Chapter 10: User Manual */}
       <UserManual />
 
       {/* Chapter 11: Output & Screenshots */}

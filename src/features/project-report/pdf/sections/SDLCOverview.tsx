@@ -4,9 +4,11 @@ import { View, Text } from "@react-pdf/renderer";
 import { styles } from "../styles";
 import BookPageLayout from "../components/BookPageLayout";
 import SDLCDiagram from "../diagrams/SDLCDiagram";
+import SDLCEffortPieChart from "../diagrams/SDLCEffortPieChart";
+import SurveyResultsChart from "../diagrams/SurveyResultsChart";
 
 /**
- * Chapter 5: Software Development Life Cycle Overview (4 pages)
+ * Chapter 6: Software Development Life Cycle Overview (4 pages)
  */
 export default function SDLCOverview() {
   return (
@@ -22,7 +24,7 @@ export default function SDLCOverview() {
             marginBottom: 8,
           }}
         >
-          CHAPTER 5
+          CHAPTER 6
         </Text>
         <Text
           style={{
@@ -133,7 +135,7 @@ export default function SDLCOverview() {
             marginBottom: 12,
           }}
         >
-          Figure 5.1: SDLC Phases Flow Diagram
+          Figure 6.1: SDLC Phases Flow Diagram
         </Text>
       </View>
 
@@ -150,7 +152,7 @@ export default function SDLCOverview() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -270,7 +272,7 @@ export default function SDLCOverview() {
           marginBottom: 16,
         }}
       >
-        Table 5.1: SDLC Phases and Deliverables Overview
+        Table 6.1: SDLC Phases and Deliverables Overview
       </Text>
 
       {/* 6.1.3 Phase Descriptions */}
@@ -327,6 +329,21 @@ export default function SDLCOverview() {
       >
         Detailed coverage: Section 6.3 (Requirement Gathering), Section 6.4
         (SRS)
+      </Text>
+
+      <View style={{ marginTop: 12, marginBottom: 4 }}>
+        <SurveyResultsChart />
+      </View>
+      <Text
+        style={{
+          fontSize: 9,
+          fontFamily: "Times-Italic",
+          textAlign: "center",
+          marginBottom: 12,
+        }}
+      >
+        Figure 6.2: Requirements Survey — Respondent Demographics & Tool
+        Satisfaction
       </Text>
 
       {/* Phase 2: Feasibility */}
@@ -579,7 +596,7 @@ export default function SDLCOverview() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -704,7 +721,21 @@ export default function SDLCOverview() {
           marginBottom: 12,
         }}
       >
-        Table 5.2: SDLC Phase Duration and Timeline
+        Table 6.2: SDLC Phase Duration and Timeline
+      </Text>
+
+      <View style={{ marginTop: 12, marginBottom: 4 }}>
+        <SDLCEffortPieChart />
+      </View>
+      <Text
+        style={{
+          fontSize: 9,
+          fontFamily: "Times-Italic",
+          textAlign: "center",
+          marginBottom: 12,
+        }}
+      >
+        Figure 6.3: SDLC Phase — Effort Distribution
       </Text>
 
       {/* 6.1.5 Summary */}

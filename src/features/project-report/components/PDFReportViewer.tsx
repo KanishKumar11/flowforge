@@ -35,12 +35,23 @@ export default function PDFReportViewer() {
       // Dynamically import pdf() to avoid SSR issues
       const { pdf } = await import("@react-pdf/renderer");
 
-      // Step 1: Generate raw PDF blob from react-pdf
-      const blob = await pdf(<ProjectReportDocument />).toBlob();
+      // Step 1a: Try to fetch coverage data (synchronously) so the PDF render has it available
+      let coverageData = undefined;
+      try {
+        const resp = await fetch("/coverage/coverage-final.json");
+        if (resp.ok) coverageData = await resp.json();
+      } catch (e) {
+        coverageData = undefined;
+      }
+
+      // Step 1b: Generate raw PDF blob from react-pdf (pass coverageData for consistent rendering)
+      const blob = await pdf(
+        <ProjectReportDocument coverageData={coverageData} />,
+      ).toBlob();
       const arrayBuffer = await blob.arrayBuffer();
 
       // Step 2: Post-process with pdf-lib to add page numbers
-      const processedBytes = await addPageNumbers(arrayBuffer, 24);
+      const processedBytes = await addPageNumbers(arrayBuffer, 21);
 
       // Step 3: Create blob URL for display/download
       const processedBlob = new Blob([processedBytes as BlobPart], {

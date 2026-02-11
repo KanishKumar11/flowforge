@@ -798,7 +798,7 @@ export default function Annexures() {
               style={{
                 width: "18%",
                 padding: 2,
-                fontSize: 6.5,
+                fontSize: 7,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
                 borderRightColor: "#cccccc",
@@ -810,14 +810,14 @@ export default function Annexures() {
               style={{
                 width: "25%",
                 padding: 2,
-                fontSize: 6.5,
+                fontSize: 7,
                 borderRightWidth: 1,
                 borderRightColor: "#cccccc",
               }}
             >
               {row[1]}
             </Text>
-            <Text style={{ width: "57%", padding: 2, fontSize: 6.5 }}>
+            <Text style={{ width: "57%", padding: 2, fontSize: 7 }}>
               {row[2]}
             </Text>
           </View>

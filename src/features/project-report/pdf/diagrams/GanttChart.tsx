@@ -51,7 +51,7 @@ export default function GanttChart() {
             x2={chartX + i * weekW}
             y2={chartY + chartH}
             stroke="#e5e5e5"
-            strokeWidth={0.5}
+            strokeWidth={0.8}
           />
           {/* Week label */}
           <SvgText
@@ -72,7 +72,7 @@ export default function GanttChart() {
         x2={chartX + chartW}
         y2={chartY + chartH}
         stroke="#e5e5e5"
-        strokeWidth={0.5}
+        strokeWidth={0.8}
       />
 
       {/* Header separator */}
@@ -178,7 +178,7 @@ export default function GanttChart() {
         x={chartX + 2 * weekW}
         y={chartY + chartH + 15}
         textAnchor="middle"
-        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#888" }}
+        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#555555" }}
       >
         Month 1
       </SvgText>
@@ -186,7 +186,7 @@ export default function GanttChart() {
         x={chartX + 6 * weekW}
         y={chartY + chartH + 15}
         textAnchor="middle"
-        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#888" }}
+        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#555555" }}
       >
         Month 2
       </SvgText>
@@ -194,7 +194,7 @@ export default function GanttChart() {
         x={chartX + 10 * weekW}
         y={chartY + chartH + 15}
         textAnchor="middle"
-        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#888" }}
+        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#555555" }}
       >
         Month 3
       </SvgText>

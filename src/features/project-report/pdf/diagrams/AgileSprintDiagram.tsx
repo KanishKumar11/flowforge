@@ -158,7 +158,7 @@ export default function AgileSprintDiagram() {
         rx={3}
         fill="#f0fdf4"
         stroke="#059669"
-        strokeWidth={0.5}
+        strokeWidth={0.8}
       />
       <SvgText
         x={399}
@@ -174,7 +174,7 @@ export default function AgileSprintDiagram() {
         x={82}
         y={95}
         textAnchor="middle"
-        style={{ fontSize: 6.5, fontFamily: "Times-Italic", fill: "#888" }}
+        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#555555" }}
       >
         Prioritized Items
       </SvgText>
@@ -182,7 +182,7 @@ export default function AgileSprintDiagram() {
         x={410}
         y={148}
         textAnchor="middle"
-        style={{ fontSize: 6.5, fontFamily: "Times-Italic", fill: "#888" }}
+        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#555555" }}
       >
         Working Software
       </SvgText>
@@ -190,7 +190,7 @@ export default function AgileSprintDiagram() {
         x={302}
         y={295}
         textAnchor="middle"
-        style={{ fontSize: 6.5, fontFamily: "Times-Italic", fill: "#888" }}
+        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#555555" }}
       >
         Feedback
       </SvgText>
@@ -198,7 +198,7 @@ export default function AgileSprintDiagram() {
         x={142}
         y={295}
         textAnchor="middle"
-        style={{ fontSize: 6.5, fontFamily: "Times-Italic", fill: "#888" }}
+        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#555555" }}
       >
         Improvements
       </SvgText>

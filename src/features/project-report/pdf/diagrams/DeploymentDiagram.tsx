@@ -80,7 +80,7 @@ export default function DeploymentDiagram() {
           y={y + 30 + i * 12}
           textAnchor="middle"
           style={{
-            fontSize: 6.5,
+            fontSize: 7,
             fontFamily: "Times-Roman",
             fill: colors.text,
           }}
@@ -127,7 +127,7 @@ export default function DeploymentDiagram() {
           y={labelY || (y1 + y2) / 2 - 4}
           textAnchor="middle"
           style={{
-            fontSize: 5.5,
+            fontSize: 7,
             fontFamily: "Times-Italic",
             fill: colors.label,
           }}
@@ -164,7 +164,7 @@ export default function DeploymentDiagram() {
         x2={487}
         y2={45}
         stroke="#dddddd"
-        strokeWidth={0.5}
+        strokeWidth={0.8}
       />
 
       <SvgText
@@ -180,7 +180,7 @@ export default function DeploymentDiagram() {
         x2={487}
         y2={135}
         stroke="#dddddd"
-        strokeWidth={0.5}
+        strokeWidth={0.8}
       />
 
       <SvgText
@@ -196,7 +196,7 @@ export default function DeploymentDiagram() {
         x2={487}
         y2={225}
         stroke="#dddddd"
-        strokeWidth={0.5}
+        strokeWidth={0.8}
       />
 
       <SvgText
@@ -212,7 +212,7 @@ export default function DeploymentDiagram() {
         x2={487}
         y2={335}
         stroke="#dddddd"
-        strokeWidth={0.5}
+        strokeWidth={0.8}
       />
 
       {/* Client Tier */}

@@ -154,7 +154,7 @@ export default function UseCaseDiagram() {
           x2={useCases[idx].x - ucRx}
           y2={useCases[idx].y}
           stroke="#aaa"
-          strokeWidth={0.6}
+          strokeWidth={0.8}
         />
       ))}
 
@@ -167,7 +167,7 @@ export default function UseCaseDiagram() {
           x2={useCases[idx].x - ucRx}
           y2={useCases[idx].y}
           stroke="#aaa"
-          strokeWidth={0.6}
+          strokeWidth={0.8}
         />
       ))}
 
@@ -180,7 +180,7 @@ export default function UseCaseDiagram() {
           x2={useCases[idx].x + ucRx}
           y2={useCases[idx].y}
           stroke="#aaa"
-          strokeWidth={0.6}
+          strokeWidth={0.8}
         />
       ))}
 
@@ -197,7 +197,7 @@ export default function UseCaseDiagram() {
       <SvgText
         x={305}
         y={155}
-        style={{ fontSize: 5.5, fontFamily: "Times-Italic", fill: "#666" }}
+        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#666" }}
       >
         {"<<include>>"}
       </SvgText>
@@ -214,7 +214,7 @@ export default function UseCaseDiagram() {
       <SvgText
         x={325}
         y={305}
-        style={{ fontSize: 5.5, fontFamily: "Times-Italic", fill: "#666" }}
+        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#666" }}
       >
         {"<<include>>"}
       </SvgText>
@@ -231,7 +231,7 @@ export default function UseCaseDiagram() {
       <SvgText
         x={275}
         y={420}
-        style={{ fontSize: 5.5, fontFamily: "Times-Italic", fill: "#666" }}
+        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#666" }}
       >
         {"<<extend>>"}
       </SvgText>
@@ -242,7 +242,7 @@ export default function UseCaseDiagram() {
         x={182}
         y={52}
         textAnchor="middle"
-        style={{ fontSize: 6, fontFamily: "Times-Bold", fill: "#0369a1" }}
+        style={{ fontSize: 7, fontFamily: "Times-Bold", fill: "#0369a1" }}
       >
         Authentication
       </SvgText>
@@ -252,7 +252,7 @@ export default function UseCaseDiagram() {
         x={177}
         y={132}
         textAnchor="middle"
-        style={{ fontSize: 6, fontFamily: "Times-Bold", fill: "#059669" }}
+        style={{ fontSize: 7, fontFamily: "Times-Bold", fill: "#059669" }}
       >
         Workflows
       </SvgText>
@@ -262,7 +262,7 @@ export default function UseCaseDiagram() {
         x={175}
         y={282}
         textAnchor="middle"
-        style={{ fontSize: 6, fontFamily: "Times-Bold", fill: "#a16207" }}
+        style={{ fontSize: 7, fontFamily: "Times-Bold", fill: "#a16207" }}
       >
         Execution
       </SvgText>
@@ -272,7 +272,7 @@ export default function UseCaseDiagram() {
         x={174}
         y={398}
         textAnchor="middle"
-        style={{ fontSize: 6, fontFamily: "Times-Bold", fill: "#dc2626" }}
+        style={{ fontSize: 7, fontFamily: "Times-Bold", fill: "#dc2626" }}
       >
         Teams
       </SvgText>

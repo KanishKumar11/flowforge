@@ -61,7 +61,7 @@ export default function RiskMatrix() {
             height={cellH}
             fill={getCellColor(row, col)}
             stroke="#ccc"
-            strokeWidth={0.5}
+            strokeWidth={0.8}
           />
         )),
       )}
@@ -164,7 +164,7 @@ export default function RiskMatrix() {
                   x={rx + 8}
                   y={ry - 2}
                   style={{
-                    fontSize: 5.5,
+                    fontSize: 7,
                     fontFamily: "Times-Bold",
                     fill: "#333",
                   }}
@@ -175,7 +175,7 @@ export default function RiskMatrix() {
                   x={rx + 8}
                   y={ry + 7}
                   style={{
-                    fontSize: 5.5,
+                    fontSize: 7,
                     fontFamily: "Times-Bold",
                     fill: "#333",
                   }}
@@ -188,7 +188,7 @@ export default function RiskMatrix() {
                 x={rx + 8}
                 y={ry + 3}
                 style={{
-                  fontSize: 5.5,
+                  fontSize: 7,
                   fontFamily: "Times-Bold",
                   fill: "#333",
                 }}
@@ -209,12 +209,12 @@ export default function RiskMatrix() {
           height={12}
           fill="#dcfce7"
           stroke="#ccc"
-          strokeWidth={0.5}
+          strokeWidth={0.8}
         />
         <SvgText
           x={gridX + cols * cellW + 32}
           y={gridY + 10}
-          style={{ fontSize: 6, fontFamily: "Times-Roman", fill: "#555" }}
+          style={{ fontSize: 7, fontFamily: "Times-Roman", fill: "#555" }}
         >
           Low Risk
         </SvgText>
@@ -225,12 +225,12 @@ export default function RiskMatrix() {
           height={12}
           fill="#fef9c3"
           stroke="#ccc"
-          strokeWidth={0.5}
+          strokeWidth={0.8}
         />
         <SvgText
           x={gridX + cols * cellW + 32}
           y={gridY + 28}
-          style={{ fontSize: 6, fontFamily: "Times-Roman", fill: "#555" }}
+          style={{ fontSize: 7, fontFamily: "Times-Roman", fill: "#555" }}
         >
           Medium
         </SvgText>
@@ -241,12 +241,12 @@ export default function RiskMatrix() {
           height={12}
           fill="#fed7aa"
           stroke="#ccc"
-          strokeWidth={0.5}
+          strokeWidth={0.8}
         />
         <SvgText
           x={gridX + cols * cellW + 32}
           y={gridY + 46}
-          style={{ fontSize: 6, fontFamily: "Times-Roman", fill: "#555" }}
+          style={{ fontSize: 7, fontFamily: "Times-Roman", fill: "#555" }}
         >
           High Risk
         </SvgText>
@@ -257,12 +257,12 @@ export default function RiskMatrix() {
           height={12}
           fill="#fecaca"
           stroke="#ccc"
-          strokeWidth={0.5}
+          strokeWidth={0.8}
         />
         <SvgText
           x={gridX + cols * cellW + 32}
           y={gridY + 64}
-          style={{ fontSize: 6, fontFamily: "Times-Roman", fill: "#555" }}
+          style={{ fontSize: 7, fontFamily: "Times-Roman", fill: "#555" }}
         >
           Critical
         </SvgText>

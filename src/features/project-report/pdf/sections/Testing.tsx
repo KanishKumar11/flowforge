@@ -4,12 +4,15 @@ import { View, Text } from "@react-pdf/renderer";
 import { styles } from "../styles";
 import BookPageLayout from "../components/BookPageLayout";
 import TestingPyramid from "../diagrams/TestingPyramid";
+import TestResultsChart from "../diagrams/TestResultsChart";
+import PerformanceMetricsChart from "../diagrams/PerformanceMetricsChart";
+import CoverageChart from "../diagrams/CoverageChart";
 
 /**
  * Chapter 9: Testing (8 pages)
  * Includes SOLID/DRY principles, detailed testing methodology
  */
-export default function Testing() {
+export default function Testing({ coverageData }: { coverageData?: any } = {}) {
   return (
     <BookPageLayout chapterTitle="Testing" chapterNum="09">
       <View style={{ alignItems: "center", marginBottom: 24 }}>
@@ -59,7 +62,7 @@ export default function Testing() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -231,7 +234,7 @@ export default function Testing() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -376,7 +379,7 @@ export default function Testing() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -530,7 +533,7 @@ export default function Testing() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -678,7 +681,7 @@ export default function Testing() {
               style={{
                 width: "10%",
                 padding: 3,
-                fontSize: 6,
+                fontSize: 7,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
                 borderRightColor: "#cccccc",
@@ -690,7 +693,7 @@ export default function Testing() {
               style={{
                 width: "20%",
                 padding: 3,
-                fontSize: 6,
+                fontSize: 7,
                 borderRightWidth: 1,
                 borderRightColor: "#cccccc",
               }}
@@ -701,7 +704,7 @@ export default function Testing() {
               style={{
                 width: "32%",
                 padding: 3,
-                fontSize: 6,
+                fontSize: 7,
                 borderRightWidth: 1,
                 borderRightColor: "#cccccc",
               }}
@@ -712,7 +715,7 @@ export default function Testing() {
               style={{
                 width: "26%",
                 padding: 3,
-                fontSize: 6,
+                fontSize: 7,
                 borderRightWidth: 1,
                 borderRightColor: "#cccccc",
               }}
@@ -723,7 +726,7 @@ export default function Testing() {
               style={{
                 width: "12%",
                 padding: 3,
-                fontSize: 6,
+                fontSize: 7,
                 textAlign: "center",
                 color: "#006600",
               }}
@@ -784,7 +787,7 @@ export default function Testing() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -918,7 +921,7 @@ export default function Testing() {
               style={{
                 width: "10%",
                 padding: 3,
-                fontSize: 6,
+                fontSize: 7,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
                 borderRightColor: "#cccccc",
@@ -930,7 +933,7 @@ export default function Testing() {
               style={{
                 width: "25%",
                 padding: 3,
-                fontSize: 6,
+                fontSize: 7,
                 borderRightWidth: 1,
                 borderRightColor: "#cccccc",
               }}
@@ -941,7 +944,7 @@ export default function Testing() {
               style={{
                 width: "32%",
                 padding: 3,
-                fontSize: 6,
+                fontSize: 7,
                 borderRightWidth: 1,
                 borderRightColor: "#cccccc",
               }}
@@ -952,7 +955,7 @@ export default function Testing() {
               style={{
                 width: "21%",
                 padding: 3,
-                fontSize: 6,
+                fontSize: 7,
                 borderRightWidth: 1,
                 borderRightColor: "#cccccc",
               }}
@@ -963,7 +966,7 @@ export default function Testing() {
               style={{
                 width: "12%",
                 padding: 3,
-                fontSize: 6,
+                fontSize: 7,
                 textAlign: "center",
                 color: "#006600",
               }}
@@ -1003,7 +1006,7 @@ export default function Testing() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -1116,7 +1119,7 @@ export default function Testing() {
               style={{
                 width: "10%",
                 padding: 3,
-                fontSize: 6,
+                fontSize: 7,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
                 borderRightColor: "#cccccc",
@@ -1128,7 +1131,7 @@ export default function Testing() {
               style={{
                 width: "28%",
                 padding: 3,
-                fontSize: 6,
+                fontSize: 7,
                 borderRightWidth: 1,
                 borderRightColor: "#cccccc",
               }}
@@ -1139,7 +1142,7 @@ export default function Testing() {
               style={{
                 width: "35%",
                 padding: 3,
-                fontSize: 6,
+                fontSize: 7,
                 borderRightWidth: 1,
                 borderRightColor: "#cccccc",
               }}
@@ -1150,7 +1153,7 @@ export default function Testing() {
               style={{
                 width: "15%",
                 padding: 3,
-                fontSize: 6,
+                fontSize: 7,
                 borderRightWidth: 1,
                 borderRightColor: "#cccccc",
               }}
@@ -1161,7 +1164,7 @@ export default function Testing() {
               style={{
                 width: "12%",
                 padding: 3,
-                fontSize: 6,
+                fontSize: 7,
                 textAlign: "center",
                 color: "#006600",
               }}
@@ -1195,7 +1198,7 @@ export default function Testing() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -1315,7 +1318,7 @@ export default function Testing() {
               style={{
                 width: "10%",
                 padding: 3,
-                fontSize: 6,
+                fontSize: 7,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
                 borderRightColor: "#cccccc",
@@ -1327,7 +1330,7 @@ export default function Testing() {
               style={{
                 width: "22%",
                 padding: 3,
-                fontSize: 6,
+                fontSize: 7,
                 borderRightWidth: 1,
                 borderRightColor: "#cccccc",
               }}
@@ -1338,7 +1341,7 @@ export default function Testing() {
               style={{
                 width: "35%",
                 padding: 3,
-                fontSize: 6,
+                fontSize: 7,
                 borderRightWidth: 1,
                 borderRightColor: "#cccccc",
               }}
@@ -1349,7 +1352,7 @@ export default function Testing() {
               style={{
                 width: "21%",
                 padding: 3,
-                fontSize: 6,
+                fontSize: 7,
                 borderRightWidth: 1,
                 borderRightColor: "#cccccc",
               }}
@@ -1360,7 +1363,7 @@ export default function Testing() {
               style={{
                 width: "12%",
                 padding: 3,
-                fontSize: 6,
+                fontSize: 7,
                 textAlign: "center",
                 color: "#006600",
               }}
@@ -1394,7 +1397,7 @@ export default function Testing() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -1528,7 +1531,7 @@ export default function Testing() {
               style={{
                 width: "10%",
                 padding: 3,
-                fontSize: 6,
+                fontSize: 7,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
                 borderRightColor: "#cccccc",
@@ -1540,7 +1543,7 @@ export default function Testing() {
               style={{
                 width: "20%",
                 padding: 3,
-                fontSize: 6,
+                fontSize: 7,
                 borderRightWidth: 1,
                 borderRightColor: "#cccccc",
               }}
@@ -1551,7 +1554,7 @@ export default function Testing() {
               style={{
                 width: "35%",
                 padding: 3,
-                fontSize: 6,
+                fontSize: 7,
                 borderRightWidth: 1,
                 borderRightColor: "#cccccc",
               }}
@@ -1562,7 +1565,7 @@ export default function Testing() {
               style={{
                 width: "23%",
                 padding: 3,
-                fontSize: 6,
+                fontSize: 7,
                 borderRightWidth: 1,
                 borderRightColor: "#cccccc",
               }}
@@ -1573,7 +1576,7 @@ export default function Testing() {
               style={{
                 width: "12%",
                 padding: 3,
-                fontSize: 6,
+                fontSize: 7,
                 textAlign: "center",
                 color: "#006600",
               }}
@@ -1612,7 +1615,7 @@ export default function Testing() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -1783,6 +1786,35 @@ export default function Testing() {
         Table 9.9: Performance Test Results
       </Text>
 
+      <View style={{ marginTop: 12, marginBottom: 4 }}>
+        <PerformanceMetricsChart />
+      </View>
+      <Text
+        style={{
+          fontSize: 9,
+          fontFamily: "Times-Italic",
+          textAlign: "center",
+          marginBottom: 12,
+        }}
+      >
+        Figure 9.2: Performance Metrics — Target vs Actual
+      </Text>
+
+      <View style={{ marginTop: 8, marginBottom: 6 }}>
+        <CoverageChart initialData={coverageData} />
+        <Text
+          style={{
+            fontSize: 9,
+            fontFamily: "Times-Italic",
+            textAlign: "center",
+            marginTop: 6,
+            marginBottom: 12,
+          }}
+        >
+          Figure 9.3: Test Coverage — Overall Summary
+        </Text>
+      </View>
+
       <Text style={styles.h2}>9.9 Defect Tracking</Text>
       <View
         wrap={false}
@@ -1796,7 +1828,7 @@ export default function Testing() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -1988,7 +2020,7 @@ export default function Testing() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -2208,6 +2240,20 @@ export default function Testing() {
         }}
       >
         Table 9.11: Complete Test Results Summary
+      </Text>
+
+      <View style={{ marginTop: 12, marginBottom: 4 }}>
+        <TestResultsChart />
+      </View>
+      <Text
+        style={{
+          fontSize: 9,
+          fontFamily: "Times-Italic",
+          textAlign: "center",
+          marginBottom: 12,
+        }}
+      >
+        Figure 9.3: Test Results Summary — 98 Tests, 100% Pass Rate
       </Text>
 
       <Text style={styles.h2}>9.11 Testing Conclusion</Text>

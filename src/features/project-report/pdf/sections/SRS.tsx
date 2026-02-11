@@ -69,7 +69,7 @@ export default function SRS() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -211,7 +211,7 @@ export default function SRS() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -343,7 +343,7 @@ export default function SRS() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -468,7 +468,7 @@ export default function SRS() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -591,7 +591,7 @@ export default function SRS() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -715,7 +715,7 @@ export default function SRS() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -836,7 +836,7 @@ export default function SRS() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -957,7 +957,7 @@ export default function SRS() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -1065,7 +1065,7 @@ export default function SRS() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -1170,7 +1170,7 @@ export default function SRS() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -1273,7 +1273,7 @@ export default function SRS() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -1392,7 +1392,7 @@ export default function SRS() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -1732,7 +1732,7 @@ export default function SRS() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -1965,7 +1965,7 @@ export default function SRS() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -2117,7 +2117,7 @@ export default function SRS() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -2185,7 +2185,7 @@ export default function SRS() {
               flexDirection: "row",
               borderBottomWidth: i < 7 ? 1 : 0,
               borderBottomColor: "#cccccc",
-              backgroundColor: i === 7 ? "#f0f0f0" : "transparent",
+              backgroundColor: i === 7 ? "#D9E2F3" : "transparent",
             }}
           >
             <Text
@@ -2263,7 +2263,7 @@ export default function SRS() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}

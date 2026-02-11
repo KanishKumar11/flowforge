@@ -107,7 +107,7 @@ export default function Level2DFD() {
             x={p.x}
             y={p.y + 4}
             textAnchor="middle"
-            style={{ fontSize: 6.5, fontFamily: "Times-Bold", fill: "white" }}
+            style={{ fontSize: 7, fontFamily: "Times-Bold", fill: "white" }}
           >
             {p.label.split("\n")[0]}
           </SvgText>
@@ -115,7 +115,7 @@ export default function Level2DFD() {
             x={p.x}
             y={p.y + 13}
             textAnchor="middle"
-            style={{ fontSize: 6.5, fontFamily: "Times-Bold", fill: "white" }}
+            style={{ fontSize: 7, fontFamily: "Times-Bold", fill: "white" }}
           >
             {p.label.split("\n")[1]}
           </SvgText>
@@ -155,13 +155,13 @@ export default function Level2DFD() {
             x2={s.x + 22}
             y2={s.y + storeH}
             stroke="#333"
-            strokeWidth={0.6}
+            strokeWidth={0.8}
           />
           <SvgText
             x={s.x + 11}
             y={s.y + 14}
             textAnchor="middle"
-            style={{ fontSize: 6, fontFamily: "Times-Bold", fill: "#333" }}
+            style={{ fontSize: 7, fontFamily: "Times-Bold", fill: "#333" }}
           >
             {s.id}
           </SvgText>
@@ -190,7 +190,7 @@ export default function Level2DFD() {
         x={455}
         y={367}
         textAnchor="middle"
-        style={{ fontSize: 6.5, fontFamily: "Times-Bold", fill: "#333" }}
+        style={{ fontSize: 7, fontFamily: "Times-Bold", fill: "#333" }}
       >
         AI Provider
       </SvgText>
@@ -204,13 +204,13 @@ export default function Level2DFD() {
         rx={3}
         fill="#f0fdf4"
         stroke="#059669"
-        strokeWidth={0.5}
+        strokeWidth={0.8}
       />
       <SvgText
         x={350}
         y={116}
         textAnchor="middle"
-        style={{ fontSize: 6, fontFamily: "Times-Bold", fill: "#059669" }}
+        style={{ fontSize: 7, fontFamily: "Times-Bold", fill: "#059669" }}
       >
         via Inngest
       </SvgText>
@@ -223,7 +223,7 @@ export default function Level2DFD() {
       <SvgText
         x={50}
         y={108}
-        style={{ fontSize: 5.5, fontFamily: "Times-Italic", fill: "#888" }}
+        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#555555" }}
       >
         Workflow JSON
       </SvgText>
@@ -234,7 +234,7 @@ export default function Level2DFD() {
       <SvgText
         x={200}
         y={43}
-        style={{ fontSize: 5.5, fontFamily: "Times-Italic", fill: "#888" }}
+        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#555555" }}
       >
         Parsed nodes
       </SvgText>
@@ -245,7 +245,7 @@ export default function Level2DFD() {
       <SvgText
         x={355}
         y={105}
-        style={{ fontSize: 5.5, fontFamily: "Times-Italic", fill: "#888" }}
+        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#555555" }}
       >
         Ordered queue
       </SvgText>
@@ -256,7 +256,7 @@ export default function Level2DFD() {
       <SvgText
         x={415}
         y={230}
-        style={{ fontSize: 5.5, fontFamily: "Times-Italic", fill: "#888" }}
+        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#555555" }}
       >
         AI nodes
       </SvgText>
@@ -271,7 +271,7 @@ export default function Level2DFD() {
       <SvgText
         x={260}
         y={245}
-        style={{ fontSize: 5.5, fontFamily: "Times-Italic", fill: "#888" }}
+        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#555555" }}
       >
         Node results
       </SvgText>
@@ -282,7 +282,7 @@ export default function Level2DFD() {
       <SvgText
         x={100}
         y={332}
-        style={{ fontSize: 5.5, fontFamily: "Times-Italic", fill: "#888" }}
+        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#555555" }}
       >
         Exec logs
       </SvgText>
@@ -301,7 +301,7 @@ export default function Level2DFD() {
       <SvgText
         x={330}
         y={198}
-        style={{ fontSize: 5.5, fontFamily: "Times-Italic", fill: "#dc2626" }}
+        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#dc2626" }}
       >
         On error
       </SvgText>
@@ -320,7 +320,7 @@ export default function Level2DFD() {
       <SvgText
         x={310}
         y={180}
-        style={{ fontSize: 5.5, fontFamily: "Times-Italic", fill: "#dc2626" }}
+        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#dc2626" }}
       >
         Retry
       </SvgText>
@@ -338,7 +338,7 @@ export default function Level2DFD() {
       <SvgText
         x={210}
         y={200}
-        style={{ fontSize: 5.5, fontFamily: "Times-Italic", fill: "#888" }}
+        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#555555" }}
       >
         Decrypted credentials
       </SvgText>

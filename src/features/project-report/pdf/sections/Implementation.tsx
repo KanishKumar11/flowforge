@@ -5,6 +5,7 @@ import { styles } from "../styles";
 import BookPageLayout from "../components/BookPageLayout";
 import DeploymentDiagram from "../diagrams/DeploymentDiagram";
 import AINodeFlowDiagram from "../diagrams/AINodeFlowDiagram";
+import BFSFlowchart from "../diagrams/BFSFlowchart";
 
 /**
  * Chapter 8: Implementation
@@ -83,7 +84,7 @@ export default function Implementation() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -312,7 +313,7 @@ export function useWorkflowEditor(workflowId: string) {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -428,7 +429,7 @@ export function useWorkflowEditor(workflowId: string) {
             </Text>
           </View>
         ))}
-        <View style={{ flexDirection: "row", backgroundColor: "#f0f0f0" }}>
+        <View style={{ flexDirection: "row", backgroundColor: "#D9E2F3" }}>
           <Text
             style={{
               width: "20%",
@@ -737,6 +738,20 @@ export const executeWorkflow = inngest.createFunction(
         </Text>
       </View>
 
+      <View style={{ marginTop: 12, marginBottom: 4 }} break>
+        <BFSFlowchart />
+      </View>
+      <Text
+        style={{
+          fontSize: 9,
+          fontFamily: "Times-Italic",
+          textAlign: "center",
+          marginBottom: 12,
+        }}
+      >
+        Figure 8.1: BFS Workflow Execution Algorithm — Flowchart
+      </Text>
+
       <Text style={styles.h3}>8.5.2 Node Executors</Text>
       <Text style={styles.paragraphIndent}>
         Each of the 24 node types has a dedicated executor function that handles
@@ -870,7 +885,7 @@ export const pollSchedules = inngest.createFunction(
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -1324,7 +1339,7 @@ export function WorkflowEditor({ workflowId }: { workflowId: string }) {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -1529,7 +1544,7 @@ export async function requireTeamRole(
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -1721,7 +1736,7 @@ export async function POST(
             marginBottom: 12,
           }}
         >
-          Figure 8.1: Deployment Architecture
+          Figure 8.3: Deployment Architecture
         </Text>
       </View>
       <View style={{ marginLeft: 24, marginBottom: 12 }}>

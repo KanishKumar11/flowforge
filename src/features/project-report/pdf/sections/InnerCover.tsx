@@ -412,7 +412,7 @@ export default function InnerCover() {
                 textAlign: "center",
               }}
             >
-              Next.js 15 · React 19 · TypeScript · tRPC · PostgreSQL · Prisma
+              Next.js 16 · React 19 · TypeScript · tRPC · PostgreSQL · Prisma
               ORM · Inngest · Better Auth
             </Text>
           </View>

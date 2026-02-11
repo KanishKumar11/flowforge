@@ -120,7 +120,7 @@ export default function SWOTDiagram() {
         x2={startX + 2 * quadW + gap}
         y2={30}
         stroke="#ddd"
-        strokeWidth={0.5}
+        strokeWidth={0.8}
       />
 
       {/* Quadrants */}
@@ -156,8 +156,8 @@ export default function SWOTDiagram() {
             x2={q.x + quadW - 8}
             y2={q.y + 22}
             stroke={q.color}
-            strokeWidth={0.5}
-            opacity={0.4}
+            strokeWidth={0.8}
+            opacity={1}
           />
           {/* Items */}
           {q.items.map((item, j) => (

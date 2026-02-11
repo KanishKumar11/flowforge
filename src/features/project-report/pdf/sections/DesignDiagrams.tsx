@@ -10,10 +10,11 @@ import UseCaseDiagram from "../diagrams/UseCaseDiagram";
 import ERDiagram from "../diagrams/ERDiagram";
 import ComponentDiagram from "../diagrams/ComponentDiagram";
 import SequenceDiagram from "../diagrams/SequenceDiagram";
+import ActivityDiagram from "../diagrams/ActivityDiagram";
 import DatabaseSchemaSection from "../components/DatabaseSchemaSection";
 
 /**
- * Chapter 6: System Design (6 pages)
+ * Chapter 7: System Design (6 pages)
  */
 export default function DesignDiagrams() {
   return (
@@ -28,7 +29,7 @@ export default function DesignDiagrams() {
             marginBottom: 8,
           }}
         >
-          CHAPTER 6
+          CHAPTER 7
         </Text>
         <Text
           style={{
@@ -92,7 +93,7 @@ export default function DesignDiagrams() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -282,7 +283,7 @@ export default function DesignDiagrams() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -390,7 +391,7 @@ export default function DesignDiagrams() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -597,7 +598,7 @@ export default function DesignDiagrams() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -717,7 +718,7 @@ export default function DesignDiagrams() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -834,7 +835,7 @@ export default function DesignDiagrams() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -1049,15 +1050,13 @@ export default function DesignDiagrams() {
       </View>
 
       {/* Sequence Diagram */}
-      <Text style={styles.h2} break>
-        7.9 Interaction Design
-      </Text>
+      <Text style={styles.h2}>7.9 Interaction Design</Text>
       <Text style={styles.paragraph}>
         The following sequence diagram illustrates the complete workflow
         execution process, showing the interaction between system components
         from user trigger through BFS node execution to completion notification.
       </Text>
-      <View style={{ marginTop: 16, marginBottom: 8 }}>
+      <View style={{ marginTop: 16, marginBottom: 8 }} break>
         <SequenceDiagram />
         <Text
           style={{
@@ -1072,7 +1071,30 @@ export default function DesignDiagrams() {
         </Text>
       </View>
 
-      <Text style={styles.h2}>7.10 Summary</Text>
+      <Text style={styles.paragraphIndent}>
+        The following activity diagram models the same workflow execution
+        process using UML activity notation with swim lanes, fork/join bars for
+        parallel credential loading, and decision nodes for validation and loop
+        control.
+      </Text>
+      <View style={{ marginTop: 16, marginBottom: 8 }}>
+        <ActivityDiagram />
+        <Text
+          style={{
+            fontSize: 10,
+            fontFamily: "Times-Italic",
+            textAlign: "center",
+            marginTop: 8,
+            marginBottom: 12,
+          }}
+        >
+          Figure 7.8: Workflow Execution Activity Diagram
+        </Text>
+      </View>
+
+      <Text style={styles.h2} break>
+        7.10 Summary
+      </Text>
       <Text style={styles.paragraphIndent}>
         This chapter presented the comprehensive system design for Flowgent.
         Data Flow Diagrams illustrated how data moves through the system at

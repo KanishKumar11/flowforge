@@ -5,16 +5,15 @@ import { StyleSheet, Font } from "@react-pdf/renderer";
 // A4 dimensions: 210mm x 297mm = 595pt x 842pt
 // Premium report margins - consistent across ALL pages
 export const PAGE_MARGINS = {
-  top: 70,      // Space for header
-  bottom: 60,   // Space for footer
-  left: 50,     // Generous side margins for premium feel
+  top: 70, // Space for header
+  bottom: 60, // Space for footer
+  left: 50, // Generous side margins for premium feel
   right: 50,
 };
 
 // Header/Footer positioning
 export const HEADER_TOP = 25;
 export const FOOTER_BOTTOM = 30;
-
 
 // Roman numeral converter
 export const toRoman = (num: number): string => {
@@ -181,7 +180,7 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     borderBottomWidth: 1.5,
     borderBottomColor: "#222222",
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#D9E2F3",
     fontFamily: "Times-Bold",
   },
   tableCell: {

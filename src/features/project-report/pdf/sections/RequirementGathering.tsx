@@ -210,7 +210,7 @@ export default function RequirementGathering() {
           marginBottom: 16,
         }}
       >
-        Figure 6.3: User Requirements Questionnaire
+        Figure 6.5: User Requirements Questionnaire
       </Text>
 
       {/* 6.3.3 Interview Method */}
@@ -237,7 +237,7 @@ export default function RequirementGathering() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -425,7 +425,7 @@ export default function RequirementGathering() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -549,7 +549,7 @@ export default function RequirementGathering() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -754,7 +754,7 @@ export default function RequirementGathering() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -921,7 +921,7 @@ export default function RequirementGathering() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -1164,7 +1164,7 @@ export default function RequirementGathering() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}

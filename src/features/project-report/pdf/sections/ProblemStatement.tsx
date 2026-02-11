@@ -5,6 +5,7 @@ import { styles } from "../styles";
 import BookPageLayout from "../components/BookPageLayout";
 import MarketGrowthChart from "../diagrams/MarketGrowthChart";
 import ComparisonRadar from "../diagrams/ComparisonRadar";
+import ProblemAnalysisDiagram from "../diagrams/ProblemAnalysisDiagram";
 
 /**
  * Chapter 2: Problem Statement (7 pages)
@@ -275,6 +276,21 @@ export default function ProblemStatement() {
         </Text>
       </View>
 
+      <View style={{ marginTop: 16, marginBottom: 8 }}>
+        <ProblemAnalysisDiagram />
+        <Text
+          style={{
+            fontSize: 9,
+            fontFamily: "Times-Italic",
+            textAlign: "center",
+            marginTop: 4,
+            marginBottom: 12,
+          }}
+        >
+          Figure 2.1: Problem Analysis — Challenges & Solutions
+        </Text>
+      </View>
+
       {/* 2.3 Market Demand & Industry Trends */}
       <Text style={styles.h2}>2.3 Market Demand & Industry Trends</Text>
       <Text style={styles.paragraphIndent}>
@@ -313,7 +329,7 @@ export default function ProblemStatement() {
             marginBottom: 12,
           }}
         >
-          Figure 2.1: Workflow Automation Market Growth Projection (2022-2030)
+          Figure 2.2: Workflow Automation Market Growth Projection (2022-2030)
         </Text>
       </View>
 
@@ -530,7 +546,7 @@ export default function ProblemStatement() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -759,7 +775,7 @@ export default function ProblemStatement() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -930,7 +946,7 @@ export default function ProblemStatement() {
           marginBottom: 12,
         }}
       >
-        Figure 2.2: Feature Comparison Radar — Flowgent vs n8n
+        Figure 2.3: Feature Comparison Radar — Flowgent vs n8n
       </Text>
 
       {/* 2.6 Gap Analysis */}

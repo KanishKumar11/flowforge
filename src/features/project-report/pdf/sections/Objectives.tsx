@@ -3,6 +3,7 @@
 import { View, Text } from "@react-pdf/renderer";
 import { styles } from "../styles";
 import BookPageLayout from "../components/BookPageLayout";
+import ObjectivesHierarchy from "../diagrams/ObjectivesHierarchy";
 
 /**
  * Chapter 3: Project Objectives (5 pages)
@@ -61,6 +62,26 @@ export default function Objectives() {
         objective are defined to enable objective evaluation upon project
         completion.
       </Text>
+
+      <Text style={styles.paragraphIndent}>
+        Figure 3.1 presents the objectives hierarchy, illustrating how the three
+        categories relate to specific sub-objectives that collectively define
+        the project scope.
+      </Text>
+      <View style={{ marginTop: 16, marginBottom: 8 }}>
+        <ObjectivesHierarchy />
+        <Text
+          style={{
+            fontSize: 10,
+            fontFamily: "Times-Italic",
+            textAlign: "center",
+            marginTop: 8,
+            marginBottom: 12,
+          }}
+        >
+          Figure 3.1: Project Objectives Hierarchy
+        </Text>
+      </View>
 
       {/* 3.2 Primary Objectives */}
       <Text style={styles.h2}>3.2 Primary Objectives</Text>
@@ -462,7 +483,7 @@ export default function Objectives() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}

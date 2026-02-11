@@ -132,7 +132,7 @@ export default function ProcessModel() {
             marginBottom: 12,
           }}
         >
-          Figure 6.2: Agile Sprint Cycle
+          Figure 6.4: Agile Sprint Cycle
         </Text>
       </View>
 
@@ -149,7 +149,7 @@ export default function ProcessModel() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -381,7 +381,7 @@ export default function ProcessModel() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -675,7 +675,7 @@ export default function ProcessModel() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}

@@ -68,7 +68,7 @@ export default function SequenceDiagram() {
             y={topY - boxH + 10 + i * 10}
             textAnchor="middle"
             style={{
-              fontSize: 6.5,
+              fontSize: 7,
               fontFamily: "Times-Bold",
               fill: colors.text,
             }}
@@ -137,7 +137,7 @@ export default function SequenceDiagram() {
           y={y - 4}
           textAnchor="middle"
           style={{
-            fontSize: 5.5,
+            fontSize: 7,
             fontFamily: "Times-Roman",
             fill: colors.text,
           }}
@@ -195,9 +195,9 @@ export default function SequenceDiagram() {
           y={y - 4}
           textAnchor="middle"
           style={{
-            fontSize: 5.5,
+            fontSize: 7,
             fontFamily: "Times-Italic",
-            fill: colors.return,
+            fill: "#555555",
           }}
         >
           {label}
@@ -223,7 +223,7 @@ export default function SequenceDiagram() {
       height={y2 - y1}
       fill={colors.activation}
       stroke={colors.activationBorder}
-      strokeWidth={0.5}
+      strokeWidth={0.8}
     />
   );
 
@@ -238,13 +238,13 @@ export default function SequenceDiagram() {
         rx={2}
         fill={colors.note}
         stroke={colors.noteBorder}
-        strokeWidth={0.5}
+        strokeWidth={0.8}
       />
       <SvgText
         x={x + 35}
         y={y + 10}
         textAnchor="middle"
-        style={{ fontSize: 5, fontFamily: "Times-Italic", fill: colors.label }}
+        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: colors.label }}
       >
         {text}
       </SvgText>
@@ -283,14 +283,14 @@ export default function SequenceDiagram() {
         height={12}
         fill={colors.alt}
         stroke={colors.altBorder}
-        strokeWidth={0.5}
+        strokeWidth={0.8}
       />
       <SvgText
         x={x + 20}
         y={y + 8}
         textAnchor="middle"
         style={{
-          fontSize: 5.5,
+          fontSize: 7,
           fontFamily: "Times-Bold",
           fill: colors.altBorder,
         }}
@@ -329,12 +329,12 @@ export default function SequenceDiagram() {
       <Activation partIdx={2} y1={180} y2={215} />
       <Activation partIdx={4} y1={192} y2={210} />
 
-      <Activation partIdx={4} y1={240} y2={395} />
-      <Activation partIdx={5} y1={260} y2={310} />
-      <Activation partIdx={3} y1={275} y2={305} />
+      <Activation partIdx={4} y1={240} y2={405} />
+      <Activation partIdx={5} y1={266} y2={316} />
+      <Activation partIdx={3} y1={281} y2={311} />
 
-      <Activation partIdx={5} y1={335} y2={385} />
-      <Activation partIdx={3} y1={350} y2={380} />
+      <Activation partIdx={5} y1={341} y2={391} />
+      <Activation partIdx={3} y1={356} y2={386} />
 
       <Activation partIdx={2} y1={410} y2={460} />
       <Activation partIdx={3} y1={420} y2={440} />
@@ -345,7 +345,7 @@ export default function SequenceDiagram() {
         x={8}
         y={62}
         style={{
-          fontSize: 5.5,
+          fontSize: 7,
           fontFamily: "Times-Bold",
           fill: colors.altBorder,
         }}
@@ -363,7 +363,7 @@ export default function SequenceDiagram() {
         x={8}
         y={122}
         style={{
-          fontSize: 5.5,
+          fontSize: 7,
           fontFamily: "Times-Bold",
           fill: colors.altBorder,
         }}
@@ -381,7 +381,7 @@ export default function SequenceDiagram() {
         x={8}
         y={182}
         style={{
-          fontSize: 5.5,
+          fontSize: 7,
           fontFamily: "Times-Bold",
           fill: colors.altBorder,
         }}
@@ -399,12 +399,12 @@ export default function SequenceDiagram() {
       <Note x={10} y={215} text="Async processing begins" />
 
       {/* Phase 4: BFS Execution Loop */}
-      <Fragment x={355} y={232} w={130} h={170} label="LOOP" />
+      <Fragment x={355} y={232} w={130} h={180} label="LOOP" />
       <SvgText
         x={360}
         y={250}
         style={{
-          fontSize: 5,
+          fontSize: 7,
           fontFamily: "Times-Italic",
           fill: colors.altBorder,
         }}
@@ -412,24 +412,24 @@ export default function SequenceDiagram() {
         For each node (BFS order)
       </SvgText>
 
-      <SolidArrow from={4} to={5} y={265} label="executeNode(node)" />
-      <SolidArrow from={5} to={3} y={280} label="Fetch credentials" />
-      <DashedArrow from={3} to={5} y={293} label="Decrypted creds" />
-      <DashedArrow from={5} to={4} y={308} label="Node result" />
+      <SolidArrow from={4} to={5} y={271} label="executeNode(node)" />
+      <SolidArrow from={5} to={3} y={286} label="Fetch credentials" />
+      <DashedArrow from={3} to={5} y={299} label="Decrypted creds" />
+      <DashedArrow from={5} to={4} y={314} label="Node result" />
 
-      <Note x={360} y={315} text="Next node in BFS queue" />
+      <Note x={330} y={325} text="Next node in BFS queue" />
 
-      <SolidArrow from={4} to={5} y={340} label="executeNode(nextNode)" />
-      <SolidArrow from={5} to={3} y={355} label="Call external API" />
-      <DashedArrow from={3} to={5} y={368} label="API response" />
-      <DashedArrow from={5} to={4} y={383} label="Node result" />
+      <SolidArrow from={4} to={5} y={346} label="executeNode(nextNode)" />
+      <SolidArrow from={5} to={3} y={361} label="Call external API" />
+      <DashedArrow from={3} to={5} y={374} label="API response" />
+      <DashedArrow from={5} to={4} y={389} label="Node result" />
 
       {/* Phase 5: Complete */}
       <SvgText
         x={8}
         y={412}
         style={{
-          fontSize: 5.5,
+          fontSize: 7,
           fontFamily: "Times-Bold",
           fill: colors.altBorder,
         }}

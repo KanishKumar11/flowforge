@@ -62,7 +62,7 @@ export default function UserJourneyDiagram() {
         x={width / 2}
         y={34}
         textAnchor="middle"
-        style={{ fontSize: 7, fill: "#888" }}
+        style={{ fontSize: 7, fill: "#555555" }}
       >
         Primary Flow (top) and Advanced Features (bottom)
       </SvgText>
@@ -158,7 +158,7 @@ export default function UserJourneyDiagram() {
         x={width / 2}
         y={175}
         textAnchor="middle"
-        style={{ fontSize: 7, fontFamily: "Times-Bold", fill: "#999" }}
+        style={{ fontSize: 7, fontFamily: "Times-Bold", fill: "#555555" }}
       >
         — ADVANCED FEATURES —
       </SvgText>
@@ -168,7 +168,7 @@ export default function UserJourneyDiagram() {
         x2={width - 60}
         y2={180}
         stroke="#e5e7eb"
-        strokeWidth={0.5}
+        strokeWidth={0.8}
       />
 
       {/* Connector lines from primary flow to features */}
@@ -178,7 +178,7 @@ export default function UserJourneyDiagram() {
         x2={width / 2}
         y2={featY}
         stroke="#e5e7eb"
-        strokeWidth={0.5}
+        strokeWidth={0.8}
         strokeDasharray="3,3"
       />
 
@@ -225,7 +225,7 @@ export default function UserJourneyDiagram() {
         x={width / 2}
         y={height - 20}
         textAnchor="middle"
-        style={{ fontSize: 7, fill: "#999" }}
+        style={{ fontSize: 7, fill: "#555555" }}
       >
         All features accessible via the web browser — no installation required
       </SvgText>

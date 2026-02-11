@@ -224,7 +224,7 @@ export default function SDLCDiagram() {
         x={width / 2}
         y={height - 48}
         textAnchor="middle"
-        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#999999" }}
+        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#555555" }}
       >
         Feedback & Iteration Loop
       </SvgText>
@@ -246,7 +246,7 @@ export default function SDLCDiagram() {
           style={{
             fontSize: 7,
             fontFamily: "Times-Italic",
-            fill: "#888888",
+            fill: "#555555",
           }}
         >
           {label}

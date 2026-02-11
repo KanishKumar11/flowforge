@@ -137,63 +137,90 @@ export default function TestingPyramid() {
               strokeWidth={1.5}
             />
             {/* Layer label (centered) */}
-            <SvgText
-              x={cx}
-              y={y + layerH / 2 - 2}
-              textAnchor="middle"
-              style={{ fontSize: 8, fontFamily: "Times-Bold", fill: l.color }}
-            >
-              {l.label}
-            </SvgText>
-            <SvgText
-              x={cx}
-              y={y + layerH / 2 + 10}
-              textAnchor="middle"
-              style={{
-                fontSize: 6,
-                fontFamily: "Times-Roman",
-                fill: colors.text,
-              }}
-            >
-              {l.count}
-            </SvgText>
+            {(() => {
+              const isBottom = idx === 0;
+              const labelY = isBottom ? y + layerH / 2 - 8 : y + layerH / 2 - 2;
+              const countY = isBottom
+                ? y + layerH / 2 + 6
+                : y + layerH / 2 + 10;
+              return (
+                <G>
+                  <SvgText
+                    x={cx}
+                    y={labelY}
+                    textAnchor="middle"
+                    style={{
+                      fontSize: 8,
+                      fontFamily: "Times-Bold",
+                      fill: l.color,
+                    }}
+                  >
+                    {l.label}
+                  </SvgText>
+                  <SvgText
+                    x={cx}
+                    y={countY}
+                    textAnchor="middle"
+                    style={{
+                      fontSize: 7,
+                      fontFamily: "Times-Roman",
+                      fill: colors.text,
+                    }}
+                  >
+                    {l.count}
+                  </SvgText>
+                </G>
+              );
+            })()}
 
             {/* Right side: tools label */}
-            <Line
-              x1={x2Top}
-              y1={y + layerH / 2}
-              x2={x2Top + 15}
-              y2={y + layerH / 2}
-              stroke={l.color}
-              strokeWidth={0.5}
-            />
-            <SvgText
-              x={x2Top + 18}
-              y={y + layerH / 2 - 3}
-              textAnchor="start"
-              style={{ fontSize: 5.5, fontFamily: "Times-Bold", fill: l.color }}
-            >
-              {l.tools}
-            </SvgText>
-            <SvgText
-              x={x2Top + 18}
-              y={y + layerH / 2 + 6}
-              textAnchor="start"
-              style={{
-                fontSize: 5.5,
-                fontFamily: "Times-Roman",
-                fill: colors.label,
-              }}
-            >
-              Coverage: {l.coverage}
-            </SvgText>
+            {(() => {
+              const isBottom = idx === 0;
+              const lineY = isBottom ? y + layerH / 2 - 4 : y + layerH / 2;
+              return (
+                <G>
+                  <Line
+                    x1={x2Top}
+                    y1={lineY}
+                    x2={x2Top + 15}
+                    y2={lineY}
+                    stroke={l.color}
+                    strokeWidth={0.8}
+                  />
+                  <SvgText
+                    x={x2Top + 18}
+                    y={lineY - 3}
+                    textAnchor="start"
+                    style={{
+                      fontSize: 7,
+                      fontFamily: "Times-Bold",
+                      fill: l.color,
+                    }}
+                  >
+                    {l.tools}
+                  </SvgText>
+                  <SvgText
+                    x={x2Top + 18}
+                    y={lineY + 6}
+                    textAnchor="start"
+                    style={{
+                      fontSize: 7,
+                      fontFamily: "Times-Roman",
+                      fill: colors.label,
+                    }}
+                  >
+                    Coverage: {l.coverage}
+                  </SvgText>
+                </G>
+              );
+            })()}
 
             {/* Left side: count indicator bar */}
             {(() => {
               const barMaxW = 60;
               const pct = parseInt(l.coverage) / 100;
               const barW = barMaxW * pct;
-              const barY = y + layerH / 2 - 4;
+              const barY = idx === 0 ? y + layerH / 2 - 6 : y + layerH / 2 - 4;
               const barX = x1Top - barMaxW - 12;
               return (
                 <G>
@@ -205,7 +232,7 @@ export default function TestingPyramid() {
                     rx={2}
                     fill="#f0f0f0"
                     stroke="#dddddd"
-                    strokeWidth={0.5}
+                    strokeWidth={0.8}
                   />
                   <Rect
                     x={barX}
@@ -221,7 +248,7 @@ export default function TestingPyramid() {
                     y={barY + 6}
                     textAnchor="middle"
                     style={{
-                      fontSize: 5,
+                      fontSize: 7,
                       fontFamily: "Times-Bold",
                       fill: "#ffffff",
                     }}
@@ -239,7 +266,7 @@ export default function TestingPyramid() {
       <SvgText
         x={30}
         y={340}
-        style={{ fontSize: 6, fontFamily: "Times-Bold", fill: colors.label }}
+        style={{ fontSize: 7, fontFamily: "Times-Bold", fill: colors.label }}
       >
         More Tests
       </SvgText>
@@ -271,7 +298,7 @@ export default function TestingPyramid() {
       <SvgText
         x={30}
         y={352}
-        style={{ fontSize: 6, fontFamily: "Times-Bold", fill: colors.label }}
+        style={{ fontSize: 7, fontFamily: "Times-Bold", fill: colors.label }}
       >
         Faster Execution
       </SvgText>
@@ -280,7 +307,7 @@ export default function TestingPyramid() {
         x={width - 30}
         y={340}
         textAnchor="end"
-        style={{ fontSize: 6, fontFamily: "Times-Bold", fill: colors.label }}
+        style={{ fontSize: 7, fontFamily: "Times-Bold", fill: colors.label }}
       >
         Fewer Tests
       </SvgText>
@@ -288,7 +315,7 @@ export default function TestingPyramid() {
         x={width - 30}
         y={352}
         textAnchor="end"
-        style={{ fontSize: 6, fontFamily: "Times-Bold", fill: colors.label }}
+        style={{ fontSize: 7, fontFamily: "Times-Bold", fill: colors.label }}
       >
         Higher Confidence
       </SvgText>

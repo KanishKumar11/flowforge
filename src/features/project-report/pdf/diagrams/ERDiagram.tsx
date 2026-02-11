@@ -201,9 +201,9 @@ export default function ERDiagram() {
               x={entity.x + 5}
               y={entity.y + headerH + 10}
               style={{
-                fontSize: 5,
+                fontSize: 7,
                 fontFamily: "Times-Bold",
-                fill: "#999",
+                fill: "#555555",
               }}
             >
               Field
@@ -213,9 +213,9 @@ export default function ERDiagram() {
               y={entity.y + headerH + 10}
               textAnchor="end"
               style={{
-                fontSize: 5,
+                fontSize: 7,
                 fontFamily: "Times-Bold",
-                fill: "#999",
+                fill: "#555555",
               }}
             >
               Type
@@ -226,7 +226,7 @@ export default function ERDiagram() {
               x2={entity.x + entity.w - 3}
               y2={entity.y + headerH + 13}
               stroke="#eee"
-              strokeWidth={0.5}
+              strokeWidth={0.8}
             />
             {/* Attributes */}
             {entity.attrs.map((attr, j) => (
@@ -235,7 +235,7 @@ export default function ERDiagram() {
                   x={entity.x + 5}
                   y={entity.y + headerH + 23 + j * attrLineH}
                   style={{
-                    fontSize: 6,
+                    fontSize: 7,
                     fontFamily: attr.pk
                       ? "Times-Bold"
                       : "fk" in attr && attr.fk
@@ -256,9 +256,9 @@ export default function ERDiagram() {
                   y={entity.y + headerH + 23 + j * attrLineH}
                   textAnchor="end"
                   style={{
-                    fontSize: 5.5,
+                    fontSize: 7,
                     fontFamily: "Times-Italic",
-                    fill: "#888",
+                    fill: "#555555",
                   }}
                 >
                   {attr.type}
@@ -308,14 +308,14 @@ export default function ERDiagram() {
               rx={2}
               fill="white"
               stroke="#ddd"
-              strokeWidth={0.5}
+              strokeWidth={0.8}
             />
             <SvgText
               x={midX}
               y={midY + 2}
               textAnchor="middle"
               style={{
-                fontSize: 5.5,
+                fontSize: 7,
                 fontFamily: "Times-Italic",
                 fill: "#666",
               }}
@@ -328,7 +328,7 @@ export default function ERDiagram() {
               y={sy + Math.sin(angle) * 12 - 3}
               textAnchor="middle"
               style={{
-                fontSize: 6,
+                fontSize: 7,
                 fontFamily: "Times-Bold",
                 fill: "#333",
               }}
@@ -340,7 +340,7 @@ export default function ERDiagram() {
               y={ey - Math.sin(angle) * 12 - 3}
               textAnchor="middle"
               style={{
-                fontSize: 6,
+                fontSize: 7,
                 fontFamily: "Times-Bold",
                 fill: "#333",
               }}
@@ -360,19 +360,19 @@ export default function ERDiagram() {
         rx={3}
         fill="#f9f9f9"
         stroke="#ddd"
-        strokeWidth={0.5}
+        strokeWidth={0.8}
       />
       <SvgText
         x={18}
         y={height - 34}
-        style={{ fontSize: 6, fontFamily: "Times-Bold", fill: "#333" }}
+        style={{ fontSize: 7, fontFamily: "Times-Bold", fill: "#333" }}
       >
         Legend:
       </SvgText>
       <SvgText
         x={50}
         y={height - 34}
-        style={{ fontSize: 6, fontFamily: "Times-Roman", fill: "#333" }}
+        style={{ fontSize: 7, fontFamily: "Times-Roman", fill: "#333" }}
       >
         PK = Primary Key | FK = Foreign Key
       </SvgText>
@@ -387,14 +387,14 @@ export default function ERDiagram() {
       <SvgText
         x={55}
         y={height - 19}
-        style={{ fontSize: 6, fontFamily: "Times-Roman", fill: "#333" }}
+        style={{ fontSize: 7, fontFamily: "Times-Roman", fill: "#333" }}
       >
         1 — N Relationship
       </SvgText>
       <SvgText
         x={120}
         y={height - 19}
-        style={{ fontSize: 6, fontFamily: "Times-Italic", fill: "#888" }}
+        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#555555" }}
       >
         ? = Nullable
       </SvgText>

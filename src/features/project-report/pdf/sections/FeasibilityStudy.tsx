@@ -60,7 +60,7 @@ export default function FeasibilityStudy() {
         project viability assessment.
       </Text>
 
-      <Text style={styles.h3}>4.2 Technical Feasibility</Text>
+      <Text style={styles.h2}>4.2 Technical Feasibility</Text>
       <Text style={styles.paragraphIndent}>
         Technical feasibility assesses whether the project can be accomplished
         with available technology, tools, and expertise. For Flowgent, this
@@ -83,7 +83,7 @@ export default function FeasibilityStudy() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -233,7 +233,7 @@ export default function FeasibilityStudy() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -365,7 +365,7 @@ export default function FeasibilityStudy() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -565,7 +565,7 @@ export default function FeasibilityStudy() {
         Figure 4.1: Technical Feasibility Radar Assessment
       </Text>
 
-      <Text style={styles.h3}>4.3 Economic Feasibility</Text>
+      <Text style={styles.h2}>4.3 Economic Feasibility</Text>
       <Text style={styles.paragraphIndent}>
         Economic feasibility analyzes the costs and benefits of the project to
         determine whether it provides positive value. For an academic project,
@@ -588,7 +588,7 @@ export default function FeasibilityStudy() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -631,27 +631,36 @@ export default function FeasibilityStudy() {
         {[
           [
             "Development Labor",
-            "12 weeks × 40 hrs × INR500/hr (imputed)",
-            "INR2,40,000 (imputed)",
+            "12 weeks × 30 hrs/week × INR 400/hr (imputed)",
+            "INR 1,50,000 (imputed)",
           ],
           [
             "Hardware",
-            "Laptop (one-time, amortized over project)",
-            "INR65,000 (one-time)",
+            "Laptop (amortized over project duration)",
+            "INR 45,000",
+          ],
+          ["Cloud & Hosting", "Vercel Pro, Neon DB, Domain", "INR 15,000/year"],
+          [
+            "Internet & Utilities",
+            "Broadband, electricity (12 weeks)",
+            "INR 15,000",
           ],
           [
-            "Development Tools",
-            "VS Code, Git, Browser DevTools",
-            "INR0 (Free)",
+            "Misc & Contingency",
+            "Plugins, resources, contingency",
+            "INR 10,000",
           ],
-          ["Design Tools", "Figma (free tier)", "INR0 (Free)"],
-          ["Testing Tools", "Vitest, Playwright", "INR0 (Open source)"],
+          [
+            "Dev & Design Tools",
+            "VS Code, Git, Figma, Vitest (all free/OSS)",
+            "INR 0",
+          ],
         ].map((row, i) => (
           <View
             key={i}
             style={{
               flexDirection: "row",
-              borderBottomWidth: i < 4 ? 1 : 0,
+              borderBottomWidth: i < 5 ? 1 : 0,
               borderBottomColor: "#cccccc",
             }}
           >
@@ -707,7 +716,7 @@ export default function FeasibilityStudy() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -823,7 +832,7 @@ export default function FeasibilityStudy() {
             </Text>
           </View>
         ))}
-        <View style={{ flexDirection: "row", backgroundColor: "#f0f0f0" }}>
+        <View style={{ flexDirection: "row", backgroundColor: "#D9E2F3" }}>
           <Text
             style={{
               width: "50%",
@@ -888,7 +897,7 @@ export default function FeasibilityStudy() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -1012,7 +1021,9 @@ export default function FeasibilityStudy() {
         Figure 4.2: Project Cost Breakdown
       </Text>
 
-      <Text style={styles.h3}>4.4 Operational Feasibility</Text>
+      <Text style={styles.h2} break>
+        4.4 Operational Feasibility
+      </Text>
       <Text style={styles.paragraphIndent}>
         Operational feasibility evaluates whether the system will work
         effectively in its intended environment and whether users will adopt and
@@ -1035,7 +1046,7 @@ export default function FeasibilityStudy() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -1224,7 +1235,9 @@ export default function FeasibilityStudy() {
         </Text>
       </View>
 
-      <Text style={styles.h3}>4.5 Schedule Feasibility</Text>
+      <Text style={styles.h2} break>
+        4.5 Schedule Feasibility
+      </Text>
       <Text style={styles.paragraphIndent}>
         Schedule feasibility assesses whether the project can be completed
         within the required timeframe. The project timeline is 12 weeks, which
@@ -1246,7 +1259,7 @@ export default function FeasibilityStudy() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -1426,7 +1439,7 @@ export default function FeasibilityStudy() {
         Figure 4.3: 12-Week Project Schedule Timeline
       </Text>
 
-      <Text style={styles.h3}>4.6 Legal Feasibility</Text>
+      <Text style={styles.h2}>4.6 Legal Feasibility</Text>
       <Text style={styles.paragraphIndent}>
         Legal feasibility examines regulatory, licensing, and compliance
         considerations that may impact the project.
@@ -1447,7 +1460,7 @@ export default function FeasibilityStudy() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -1610,7 +1623,7 @@ export default function FeasibilityStudy() {
         </Text>
       </View>
 
-      <Text style={styles.h3}>4.7 SWOT Analysis</Text>
+      <Text style={[styles.h2, { marginTop: 20 }]}>4.7 SWOT Analysis</Text>
       <Text style={styles.paragraphIndent}>
         A SWOT analysis provides a strategic view of the project's position by
         examining Strengths, Weaknesses, Opportunities, and Threats.
@@ -1631,7 +1644,9 @@ export default function FeasibilityStudy() {
         </Text>
       </View>
 
-      <Text style={styles.h3}>4.8 Feasibility Summary</Text>
+      <Text style={styles.h2} break>
+        4.8 Feasibility Summary
+      </Text>
       <View
         wrap={false}
         style={{
@@ -1644,7 +1659,7 @@ export default function FeasibilityStudy() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -1765,7 +1780,7 @@ export default function FeasibilityStudy() {
         Figure 4.5: Feasibility Assessment Scorecard
       </Text>
 
-      <Text style={styles.h3}>4.9 Conclusion</Text>
+      <Text style={styles.h2}>4.9 Conclusion</Text>
       <Text style={styles.paragraphIndent}>
         The comprehensive feasibility study conducted for the Flowgent workflow
         automation platform concludes that the project is viable across all five

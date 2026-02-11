@@ -14,7 +14,7 @@ import {
 
 export default function ComponentDiagram() {
   const width = 495;
-  const height = 470;
+  const height = 530;
 
   const colors = {
     text: "#1a1a1a",
@@ -72,7 +72,7 @@ export default function ComponentDiagram() {
           x={x + w / 2}
           y={y + 9}
           textAnchor="middle"
-          style={{ fontSize: 5, fontFamily: "Times-Italic", fill: color }}
+          style={{ fontSize: 7, fontFamily: "Times-Italic", fill: color }}
         >
           {"<<" + stereotype + ">>"}
         </SvgText>
@@ -81,7 +81,7 @@ export default function ComponentDiagram() {
         x={x + w / 2}
         y={stereotype ? y + 19 : y + 12}
         textAnchor="middle"
-        style={{ fontSize: 6.5, fontFamily: "Times-Bold", fill: color }}
+        style={{ fontSize: 7, fontFamily: "Times-Bold", fill: color }}
       >
         {label}
       </SvgText>
@@ -90,7 +90,7 @@ export default function ComponentDiagram() {
           x={x + w / 2}
           y={stereotype ? y + 28 : y + 22}
           textAnchor="middle"
-          style={{ fontSize: 5, fontFamily: "Times-Roman", fill: colors.label }}
+          style={{ fontSize: 7, fontFamily: "Times-Roman", fill: colors.label }}
         >
           {sublabel}
         </SvgText>
@@ -161,7 +161,7 @@ export default function ComponentDiagram() {
         x={30}
         y={80}
         w={100}
-        h={28}
+        h={36}
         label="ThemeProvider"
         sublabel="next-themes"
         color={colors.provider}
@@ -172,7 +172,7 @@ export default function ComponentDiagram() {
         x={150}
         y={80}
         w={100}
-        h={28}
+        h={36}
         label="TRPCProvider"
         sublabel="@trpc/react-query"
         color={colors.provider}
@@ -183,7 +183,7 @@ export default function ComponentDiagram() {
         x={270}
         y={80}
         w={100}
-        h={28}
+        h={36}
         label="SessionProvider"
         sublabel="better-auth"
         color={colors.provider}
@@ -194,7 +194,7 @@ export default function ComponentDiagram() {
         x={390}
         y={80}
         w={100}
-        h={28}
+        h={36}
         label="Toaster"
         sublabel="sonner"
         color={colors.provider}
@@ -208,12 +208,12 @@ export default function ComponentDiagram() {
       <VLine x={440} y1={75} y2={80} />
 
       {/* Level 2: Layout Groups */}
-      <VLine x={247} y1={108} y2={125} />
-      <HLine x1={100} x2={400} y={125} />
+      <VLine x={247} y1={116} y2={133} />
+      <HLine x1={100} x2={400} y={133} />
 
       <Comp
         x={40}
-        y={130}
+        y={138}
         w={120}
         h={30}
         label="(auth)/layout"
@@ -224,7 +224,7 @@ export default function ComponentDiagram() {
       />
       <Comp
         x={188}
-        y={130}
+        y={138}
         w={120}
         h={30}
         label="(dashboard)/layout"
@@ -235,7 +235,7 @@ export default function ComponentDiagram() {
       />
       <Comp
         x={340}
-        y={130}
+        y={138}
         w={120}
         h={30}
         label="(print)/layout"
@@ -245,20 +245,20 @@ export default function ComponentDiagram() {
         stereotype="group"
       />
 
-      <VLine x={100} y1={125} y2={130} />
-      <VLine x={248} y1={125} y2={130} />
-      <VLine x={400} y1={125} y2={130} />
+      <VLine x={100} y1={133} y2={138} />
+      <VLine x={248} y1={133} y2={138} />
+      <VLine x={400} y1={133} y2={138} />
 
       {/* Level 3: Dashboard sub-components */}
-      <VLine x={248} y1={160} y2={175} />
-      <HLine x1={60} x2={440} y={175} />
+      <VLine x={248} y1={168} y2={183} />
+      <HLine x1={60} x2={440} y={183} />
 
       {/* Dashboard children */}
       <Comp
         x={10}
-        y={180}
+        y={188}
         w={100}
-        h={28}
+        h={46}
         label="AppSidebar"
         sublabel="Navigation"
         color={colors.feature}
@@ -267,9 +267,9 @@ export default function ComponentDiagram() {
       />
       <Comp
         x={120}
-        y={180}
+        y={188}
         w={100}
-        h={28}
+        h={46}
         label="AppHeader"
         sublabel="Top Bar"
         color={colors.feature}
@@ -278,9 +278,9 @@ export default function ComponentDiagram() {
       />
       <Comp
         x={230}
-        y={180}
+        y={188}
         w={100}
-        h={28}
+        h={46}
         label="DashboardHeader"
         sublabel="Page Header"
         color={colors.feature}
@@ -289,9 +289,9 @@ export default function ComponentDiagram() {
       />
       <Comp
         x={340}
-        y={180}
+        y={188}
         w={100}
-        h={28}
+        h={46}
         label="NotificationCenter"
         sublabel="Alerts"
         color={colors.feature}
@@ -299,18 +299,18 @@ export default function ComponentDiagram() {
         stereotype="component"
       />
 
-      <VLine x={60} y1={175} y2={180} />
-      <VLine x={170} y1={175} y2={180} />
-      <VLine x={280} y1={175} y2={180} />
-      <VLine x={390} y1={175} y2={180} />
+      <VLine x={60} y1={183} y2={188} />
+      <VLine x={170} y1={183} y2={188} />
+      <VLine x={280} y1={183} y2={188} />
+      <VLine x={390} y1={183} y2={188} />
 
       {/* Level 4: Feature Pages */}
-      <VLine x={248} y1={208} y2={225} />
-      <HLine x1={50} x2={450} y={225} />
+      <VLine x={248} y1={216} y2={233} />
+      <HLine x1={50} x2={450} y={233} />
 
       <Comp
         x={10}
-        y={230}
+        y={238}
         w={85}
         h={32}
         label="DashboardPage"
@@ -321,7 +321,7 @@ export default function ComponentDiagram() {
       />
       <Comp
         x={105}
-        y={230}
+        y={238}
         w={85}
         h={32}
         label="WorkflowsPage"
@@ -332,7 +332,7 @@ export default function ComponentDiagram() {
       />
       <Comp
         x={200}
-        y={230}
+        y={238}
         w={85}
         h={32}
         label="EditorPage"
@@ -343,7 +343,7 @@ export default function ComponentDiagram() {
       />
       <Comp
         x={295}
-        y={230}
+        y={238}
         w={85}
         h={32}
         label="ExecutionsPage"
@@ -354,7 +354,7 @@ export default function ComponentDiagram() {
       />
       <Comp
         x={390}
-        y={230}
+        y={238}
         w={85}
         h={32}
         label="SettingsPage"
@@ -364,21 +364,21 @@ export default function ComponentDiagram() {
         stereotype="page"
       />
 
-      <VLine x={50} y1={225} y2={230} />
-      <VLine x={147} y1={225} y2={230} />
-      <VLine x={243} y1={225} y2={230} />
-      <VLine x={337} y1={225} y2={230} />
-      <VLine x={432} y1={225} y2={230} />
+      <VLine x={50} y1={233} y2={238} />
+      <VLine x={147} y1={233} y2={238} />
+      <VLine x={243} y1={233} y2={238} />
+      <VLine x={337} y1={233} y2={238} />
+      <VLine x={432} y1={233} y2={238} />
 
       {/* Level 5: Editor Sub-components (detailed) */}
-      <VLine x={243} y1={262} y2={278} />
-      <HLine x1={80} x2={420} y={278} />
+      <VLine x={243} y1={270} y2={286} />
+      <HLine x1={80} x2={420} y={286} />
 
       <Comp
         x={30}
-        y={282}
+        y={290}
         w={100}
-        h={32}
+        h={46}
         label="ReactFlowCanvas"
         sublabel="Node Graph Editor"
         color={colors.feature}
@@ -387,9 +387,9 @@ export default function ComponentDiagram() {
       />
       <Comp
         x={145}
-        y={282}
+        y={290}
         w={100}
-        h={32}
+        h={46}
         label="NodePanel"
         sublabel="Add/Configure Nodes"
         color={colors.feature}
@@ -398,9 +398,9 @@ export default function ComponentDiagram() {
       />
       <Comp
         x={260}
-        y={282}
+        y={290}
         w={100}
-        h={32}
+        h={46}
         label="ExecutionPanel"
         sublabel="Run Results"
         color={colors.feature}
@@ -409,9 +409,9 @@ export default function ComponentDiagram() {
       />
       <Comp
         x={375}
-        y={282}
+        y={290}
         w={100}
-        h={32}
+        h={46}
         label="VersionHistory"
         sublabel="Workflow Versions"
         color={colors.feature}
@@ -419,15 +419,15 @@ export default function ComponentDiagram() {
         stereotype="component"
       />
 
-      <VLine x={80} y1={278} y2={282} />
-      <VLine x={195} y1={278} y2={282} />
-      <VLine x={310} y1={278} y2={282} />
-      <VLine x={425} y1={278} y2={282} />
+      <VLine x={80} y1={286} y2={290} />
+      <VLine x={195} y1={286} y2={290} />
+      <VLine x={310} y1={286} y2={290} />
+      <VLine x={425} y1={286} y2={290} />
 
       {/* Level 6: UI Components */}
       <SvgText
         x={width / 2}
-        y={335}
+        y={346}
         textAnchor="middle"
         style={{ fontSize: 7, fontFamily: "Times-Bold", fill: colors.ui }}
       >
@@ -435,11 +435,11 @@ export default function ComponentDiagram() {
       </SvgText>
       <Line
         x1={30}
-        y1={340}
+        y1={351}
         x2={465}
-        y2={340}
+        y2={351}
         stroke={colors.ui}
-        strokeWidth={0.5}
+        strokeWidth={0.8}
         strokeDasharray="4,2"
       />
 
@@ -461,20 +461,20 @@ export default function ComponentDiagram() {
           <G key={i}>
             <Rect
               x={bx}
-              y={346}
+              y={357}
               width={43}
               height={18}
               rx={2}
               fill={colors.uiLight}
               stroke={colors.ui}
-              strokeWidth={0.5}
+              strokeWidth={0.8}
             />
             <SvgText
               x={bx + 21.5}
-              y={357}
+              y={368}
               textAnchor="middle"
               style={{
-                fontSize: 5.5,
+                fontSize: 7,
                 fontFamily: "Times-Roman",
                 fill: colors.ui,
               }}
@@ -488,7 +488,7 @@ export default function ComponentDiagram() {
       {/* Hooks row */}
       <SvgText
         x={width / 2}
-        y={383}
+        y={398}
         textAnchor="middle"
         style={{ fontSize: 7, fontFamily: "Times-Bold", fill: colors.hook }}
       >
@@ -496,11 +496,11 @@ export default function ComponentDiagram() {
       </SvgText>
       <Line
         x1={30}
-        y1={388}
+        y1={403}
         x2={465}
-        y2={388}
+        y2={403}
         stroke={colors.hook}
-        strokeWidth={0.5}
+        strokeWidth={0.8}
         strokeDasharray="4,2"
       />
 
@@ -517,20 +517,20 @@ export default function ComponentDiagram() {
           <G key={i}>
             <Rect
               x={bx}
-              y={394}
+              y={409}
               width={70}
               height={18}
               rx={2}
               fill={colors.hookLight}
               stroke={colors.hook}
-              strokeWidth={0.5}
+              strokeWidth={0.8}
             />
             <SvgText
               x={bx + 35}
-              y={405}
+              y={420}
               textAnchor="middle"
               style={{
-                fontSize: 5.5,
+                fontSize: 7,
                 fontFamily: "Times-Roman",
                 fill: colors.hook,
               }}
@@ -544,8 +544,8 @@ export default function ComponentDiagram() {
       {/* Legend */}
       <SvgText
         x={15}
-        y={450}
-        style={{ fontSize: 5.5, fontFamily: "Times-Bold", fill: colors.label }}
+        y={508}
+        style={{ fontSize: 7, fontFamily: "Times-Bold", fill: colors.label }}
       >
         Legend:
       </SvgText>
@@ -560,7 +560,7 @@ export default function ComponentDiagram() {
         <G key={i}>
           <Rect
             x={item.x}
-            y={443}
+            y={501}
             width={10}
             height={10}
             rx={1}
@@ -570,9 +570,9 @@ export default function ComponentDiagram() {
           />
           <SvgText
             x={item.x + 14}
-            y={451}
+            y={509}
             style={{
-              fontSize: 5.5,
+              fontSize: 7,
               fontFamily: "Times-Roman",
               fill: colors.label,
             }}

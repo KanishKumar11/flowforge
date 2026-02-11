@@ -43,7 +43,7 @@ export default function ScheduleTimeline() {
             x={chartLeft + i * weekWidth + weekWidth / 2}
             y={chartTop - 5}
             textAnchor="middle"
-            style={{ fontSize: 6, fill: "#666" }}
+            style={{ fontSize: 7, fill: "#666" }}
           >
             W{i + 1}
           </SvgText>
@@ -54,7 +54,7 @@ export default function ScheduleTimeline() {
             x2={chartLeft + i * weekWidth}
             y2={chartTop + phases.length * rowHeight}
             stroke="#e5e7eb"
-            strokeWidth={0.5}
+            strokeWidth={0.8}
           />
         </G>
       ))}
@@ -65,7 +65,7 @@ export default function ScheduleTimeline() {
         x2={chartRight}
         y2={chartTop + phases.length * rowHeight}
         stroke="#e5e7eb"
-        strokeWidth={0.5}
+        strokeWidth={0.8}
       />
 
       {/* Horizontal grid lines */}
@@ -77,7 +77,7 @@ export default function ScheduleTimeline() {
           x2={chartRight}
           y2={chartTop + i * rowHeight}
           stroke="#e5e7eb"
-          strokeWidth={0.5}
+          strokeWidth={0.8}
         />
       ))}
       <Line
@@ -86,7 +86,7 @@ export default function ScheduleTimeline() {
         x2={chartRight}
         y2={chartTop + phases.length * rowHeight}
         stroke="#e5e7eb"
-        strokeWidth={0.5}
+        strokeWidth={0.8}
       />
 
       {/* Phase bars */}
@@ -123,7 +123,7 @@ export default function ScheduleTimeline() {
               y={y + rowHeight / 2 + 3}
               textAnchor="middle"
               style={{
-                fontSize: 6,
+                fontSize: 7,
                 fontFamily: "Times-Bold",
                 fill: "#ffffff",
               }}
@@ -139,7 +139,7 @@ export default function ScheduleTimeline() {
         x={width / 2}
         y={height - 18}
         textAnchor="middle"
-        style={{ fontSize: 6.5, fill: "#666" }}
+        style={{ fontSize: 7, fill: "#666" }}
       >
         Note: Testing overlaps with Development (continuous integration testing
         from Week 10)
@@ -152,13 +152,13 @@ export default function ScheduleTimeline() {
         x2={chartRight}
         y2={height - 30}
         stroke="#cbd5e1"
-        strokeWidth={0.5}
+        strokeWidth={0.8}
       />
       <SvgText
         x={chartLeft + weekWidth * 2}
         y={height - 34}
         textAnchor="middle"
-        style={{ fontSize: 6, fill: "#999" }}
+        style={{ fontSize: 7, fill: "#555555" }}
       >
         Month 1
       </SvgText>
@@ -166,7 +166,7 @@ export default function ScheduleTimeline() {
         x={chartLeft + weekWidth * 6}
         y={height - 34}
         textAnchor="middle"
-        style={{ fontSize: 6, fill: "#999" }}
+        style={{ fontSize: 7, fill: "#555555" }}
       >
         Month 2
       </SvgText>
@@ -174,7 +174,7 @@ export default function ScheduleTimeline() {
         x={chartLeft + weekWidth * 10}
         y={height - 34}
         textAnchor="middle"
-        style={{ fontSize: 6, fill: "#999" }}
+        style={{ fontSize: 7, fill: "#555555" }}
       >
         Month 3
       </SvgText>

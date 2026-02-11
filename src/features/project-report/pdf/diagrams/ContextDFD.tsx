@@ -281,7 +281,7 @@ export default function ContextDFD() {
               y={labelY}
               textAnchor="middle"
               style={{
-                fontSize: 6,
+                fontSize: 7,
                 fontFamily: "Times-Italic",
                 fill: "#475569",
               }}

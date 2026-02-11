@@ -5,11 +5,27 @@ import { styles } from "../styles";
 import BookPageLayout from "../components/BookPageLayout";
 import RiskMatrix from "../diagrams/RiskMatrix";
 import GanttChart from "../diagrams/GanttChart";
+import LOCDistributionChart from "../diagrams/LOCDistributionChart";
+import ActualVsEstimatedChart from "../diagrams/ActualVsEstimatedChart";
 
 /**
- * Chapter 7: COCOMO Estimation (5 pages)
+ * Chapter 5: COCOMO Estimation (5 pages)
  */
 export default function COCOMOEstimation() {
+  const eBasic = 49.9;
+  const eAdjusted = 28.7;
+
+  // Cost estimation based on Indian fresher developer rates
+  const hourlyRateINR = 188; // INR per hour (fresher/student level)
+  const hoursPerMonth = 160; // standard working hours per month
+  const monthlyRateINR = hourlyRateINR * hoursPerMonth; // ~INR 30,000/month
+  const laborCostINR = Math.round(eAdjusted * monthlyRateINR); // 28.7 × 30,080
+  const overheadMultiplier = 1.25; // 25% overhead (tools, hosting, misc)
+  const totalCostINR = Math.round(laborCostINR * overheadMultiplier);
+
+  // Actual project cost (solo developer, student project)
+  const actualCostINR = 235000; // INR 2,35,000 all-inclusive
+
   return (
     <BookPageLayout chapterTitle="Project Estimation" chapterNum="05">
       <View style={{ alignItems: "center", marginBottom: 24 }}>
@@ -22,7 +38,7 @@ export default function COCOMOEstimation() {
             marginBottom: 8,
           }}
         >
-          CHAPTER 7
+          CHAPTER 5
         </Text>
         <Text
           style={{
@@ -73,7 +89,7 @@ export default function COCOMOEstimation() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -184,7 +200,7 @@ export default function COCOMOEstimation() {
             </Text>
           </View>
         ))}
-        <View style={{ flexDirection: "row", backgroundColor: "#f0f0f0" }}>
+        <View style={{ flexDirection: "row", backgroundColor: "#D9E2F3" }}>
           <Text
             style={{
               width: "45%",
@@ -237,6 +253,30 @@ export default function COCOMOEstimation() {
         Table 5.1: Lines of Code by Module
       </Text>
 
+      <Text style={{ fontSize: 10, fontFamily: "Times-Bold", marginBottom: 6 }}>
+        KLOC (Kilo Lines of Code): 18.0
+      </Text>
+      <Text style={styles.paragraphIndent}>
+        The LOC estimates above are used as the canonical project size for the
+        COCOMO calculations in this chapter. (A smaller LOC breakdown is used in
+        some web-facing materials for sensitivity analysis, but this report uses
+        the 18.0 KLOC assumption for the primary estimates.)
+      </Text>
+
+      <View style={{ marginTop: 12, marginBottom: 4 }}>
+        <LOCDistributionChart />
+      </View>
+      <Text
+        style={{
+          fontSize: 9,
+          fontFamily: "Times-Italic",
+          textAlign: "center",
+          marginBottom: 12,
+        }}
+      >
+        Figure 5.1: LOC Distribution by Module
+      </Text>
+
       <Text style={styles.h2}>5.3 Basic COCOMO Model</Text>
       <Text style={styles.paragraphIndent}>
         The Basic COCOMO model computes effort as a function of program size
@@ -256,7 +296,7 @@ export default function COCOMOEstimation() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -364,7 +404,7 @@ export default function COCOMOEstimation() {
         <Text
           style={{ fontSize: 10, fontFamily: "Times-Bold", color: "#006600" }}
         >
-          E = 52.3 person-months
+          E = 49.9 person-months
         </Text>
       </View>
 
@@ -389,12 +429,12 @@ export default function COCOMOEstimation() {
           For Organic: c=2.5, d=0.38
         </Text>
         <Text style={{ fontSize: 10, marginBottom: 4 }}>
-          TDEV = 2.5 × (52.3)^0.38
+          TDEV = 2.5 × (49.9)^0.38
         </Text>
         <Text
           style={{ fontSize: 10, fontFamily: "Times-Bold", color: "#006600" }}
         >
-          TDEV = 10.8 months
+          TDEV = 11.0 months
         </Text>
       </View>
 
@@ -418,7 +458,7 @@ export default function COCOMOEstimation() {
           Team Size = E / TDEV
         </Text>
         <Text style={{ fontSize: 10, marginBottom: 4 }}>
-          Team Size = 52.3 / 10.8
+          Team Size = 49.9 / 11.0
         </Text>
         <Text
           style={{ fontSize: 10, fontFamily: "Times-Bold", color: "#006600" }}
@@ -446,7 +486,7 @@ export default function COCOMOEstimation() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -570,7 +610,7 @@ export default function COCOMOEstimation() {
             </Text>
           </View>
         ))}
-        <View style={{ flexDirection: "row", backgroundColor: "#f0f0f0" }}>
+        <View style={{ flexDirection: "row", backgroundColor: "#D9E2F3" }}>
           <Text
             style={{
               width: "60%",
@@ -598,6 +638,9 @@ export default function COCOMOEstimation() {
       </View>
 
       <Text style={styles.h3}>5.4.2 Adjusted Effort Calculation</Text>
+      <Text style={styles.paragraphIndent}>
+        {`The cost estimation uses an hourly rate of INR ${hourlyRateINR}/hour, which is the standard rate for a fresher-level developer in India. Assuming ${hoursPerMonth} working hours per month (8 hours/day × 20 working days), the monthly rate comes to INR ${monthlyRateINR.toLocaleString("en-IN")}. This monthly rate is multiplied by the adjusted effort (in person-months) to arrive at the labor cost, with an additional 25% overhead for tools, hosting, and miscellaneous expenses.`}
+      </Text>
       <View
         style={{
           backgroundColor: "#f0fff0",
@@ -617,13 +660,48 @@ export default function COCOMOEstimation() {
           E_adjusted = E_basic × EAF
         </Text>
         <Text style={{ fontSize: 10, marginBottom: 4 }}>
-          E_adjusted = 52.3 × 0.58
+          E_adjusted = 49.9 × 0.58
         </Text>
         <Text
           style={{ fontSize: 10, fontFamily: "Times-Bold", color: "#006600" }}
         >
-          E_adjusted = 30.3 person-months
+          E_adjusted = 28.7 person-months
         </Text>
+
+        <View
+          style={{
+            marginTop: 12,
+            borderTopWidth: 1,
+            borderTopColor: "#cccccc",
+            paddingTop: 8,
+          }}
+        >
+          <Text
+            style={{ fontSize: 10, fontFamily: "Times-Bold", marginBottom: 8 }}
+          >
+            Estimated Cost Calculation:
+          </Text>
+          <Text style={{ fontSize: 10, marginBottom: 4 }}>
+            {`Hourly Rate (Indian fresher/student): INR ${hourlyRateINR}/hour`}
+          </Text>
+          <Text style={{ fontSize: 10, marginBottom: 4 }}>
+            {`Working Hours per Month: ${hoursPerMonth} hours`}
+          </Text>
+          <Text style={{ fontSize: 10, marginBottom: 4 }}>
+            {`Monthly Rate = ${hourlyRateINR} × ${hoursPerMonth} = INR ${monthlyRateINR.toLocaleString("en-IN")}/month`}
+          </Text>
+          <Text style={{ fontSize: 10, marginBottom: 4 }}>
+            {`Labor Cost = 28.7 PM × INR ${monthlyRateINR.toLocaleString("en-IN")} = INR ${laborCostINR.toLocaleString("en-IN")}`}
+          </Text>
+          <Text style={{ fontSize: 10, marginBottom: 4 }}>
+            {`Overhead (25%): INR ${Math.round(laborCostINR * 0.25).toLocaleString("en-IN")}`}
+          </Text>
+          <Text
+            style={{ fontSize: 10, fontFamily: "Times-Bold", color: "#006600" }}
+          >
+            {`Total Estimated Cost = INR ${totalCostINR.toLocaleString("en-IN")}`}
+          </Text>
+        </View>
       </View>
 
       <Text style={styles.h2}>5.5 Risk Analysis</Text>
@@ -643,7 +721,7 @@ export default function COCOMOEstimation() {
             marginBottom: 12,
           }}
         >
-          Figure 5.1: Risk Assessment Matrix
+          Figure 5.2: Risk Assessment Matrix
         </Text>
       </View>
 
@@ -659,7 +737,7 @@ export default function COCOMOEstimation() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -829,7 +907,7 @@ export default function COCOMOEstimation() {
             marginBottom: 12,
           }}
         >
-          Figure 5.2: Project Timeline - Gantt Chart
+          Figure 5.3: Project Timeline — Gantt Chart
         </Text>
       </View>
 
@@ -861,7 +939,7 @@ export default function COCOMOEstimation() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -902,15 +980,20 @@ export default function COCOMOEstimation() {
           </Text>
         </View>
         {[
-          ["Effort", "30.3 person-months", "3 person-months"],
-          ["Duration", "10.8 months", "2.5 months (Jan 6 – Mar 15, 2026)"],
+          ["Effort", "28.7 person-months", "3 person-months"],
+          ["Duration", "11.0 months", "2.5 months (Jan 6 – Mar 15, 2026)"],
           ["Team Size", "5 persons", "1 person"],
+          [
+            "Cost",
+            `INR ${totalCostINR.toLocaleString("en-IN")} (~${(totalCostINR / 100000).toFixed(1)} Lakhs)`,
+            `INR ${actualCostINR.toLocaleString("en-IN")} (~${(actualCostINR / 100000).toFixed(1)} Lakhs)`,
+          ],
         ].map((row, i) => (
           <View
             key={i}
             style={{
               flexDirection: "row",
-              borderBottomWidth: i < 2 ? 1 : 0,
+              borderBottomWidth: i < 3 ? 1 : 0,
               borderBottomColor: "#cccccc",
             }}
           >
@@ -944,13 +1027,27 @@ export default function COCOMOEstimation() {
         ))}
       </View>
 
+      <View style={{ marginTop: 12, marginBottom: 4 }}>
+        <ActualVsEstimatedChart />
+      </View>
+      <Text
+        style={{
+          fontSize: 9,
+          fontFamily: "Times-Italic",
+          textAlign: "center",
+          marginBottom: 12,
+        }}
+      >
+        Figure 5.4: COCOMO Estimated vs Actual — Comparison
+      </Text>
+
       <Text style={styles.h2}>5.7 Summary</Text>
       <Text style={styles.paragraphIndent}>
         This chapter applied COCOMO estimation models to the Flowgent project.
-        The Basic COCOMO model estimated 52.3 person-months of effort over 10.8
+        The Basic COCOMO model estimated 49.9 person-months of effort over 11.0
         months with a team of 5. The Intermediate COCOMO model, accounting for
         favorable cost drivers (high analyst/programmer capability, modern
-        tools), reduced the estimate to 30.3 person-months.
+        tools), reduced the estimate to 28.7 person-months.
       </Text>
       <Text style={styles.paragraphIndent}>
         The significant variance between COCOMO estimates and actual effort
@@ -1004,10 +1101,10 @@ export default function COCOMOEstimation() {
               <Text style={styles.bold}>Basic COCOMO:</Text>
             </Text>
             <Text style={{ fontSize: 9, marginBottom: 2 }}>
-              • Effort: 52.3 PM
+              • Effort: 49.9 PM
             </Text>
             <Text style={{ fontSize: 9, marginBottom: 2 }}>
-              • Time: 10.8 months
+              • Time: 11.0 months
             </Text>
             <Text style={{ fontSize: 9 }}>• Team: 5 persons</Text>
           </View>
@@ -1017,9 +1114,20 @@ export default function COCOMOEstimation() {
             </Text>
             <Text style={{ fontSize: 9, marginBottom: 2 }}>• EAF: 0.58</Text>
             <Text style={{ fontSize: 9, marginBottom: 2 }}>
-              • Adjusted Effort: 30.3 PM
+              • Adjusted Effort: 28.7 PM
             </Text>
-            <Text style={{ fontSize: 9 }}>• Reduction: 42%</Text>
+            <Text style={{ fontSize: 9, marginBottom: 2 }}>
+              {`• Rate: INR ${hourlyRateINR}/hr × ${hoursPerMonth} hrs`}
+            </Text>
+            <Text style={{ fontSize: 9, marginBottom: 2 }}>
+              {`• Monthly: INR ${monthlyRateINR.toLocaleString("en-IN")}`}
+            </Text>
+            <Text style={{ fontSize: 9, marginBottom: 2 }}>
+              {`• Total (with 25% OH): INR ${totalCostINR.toLocaleString("en-IN")}`}
+            </Text>
+            <Text style={{ fontSize: 9 }}>
+              {`• Actual Cost: INR ${actualCostINR.toLocaleString("en-IN")}`}
+            </Text>
           </View>
         </View>
       </View>

@@ -73,7 +73,7 @@ export default function FeasibilityScorecard() {
         x2={width - 30}
         y2={41}
         stroke="#e5e7eb"
-        strokeWidth={0.5}
+        strokeWidth={0.8}
       />
 
       {/* Rows */}
@@ -155,7 +155,7 @@ export default function FeasibilityScorecard() {
         x2={width - 30}
         y2={height - 22}
         stroke="#333"
-        strokeWidth={0.5}
+        strokeWidth={0.8}
       />
       <SvgText
         x={startX}

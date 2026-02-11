@@ -64,13 +64,17 @@ export default function MarketGrowthChart() {
               x2={chartX + chartW}
               y2={y}
               stroke="#eee"
-              strokeWidth={0.5}
+              strokeWidth={0.8}
             />
             <SvgText
               x={chartX - 6}
               y={y + 3}
               textAnchor="end"
-              style={{ fontSize: 7, fontFamily: "Times-Roman", fill: "#888" }}
+              style={{
+                fontSize: 7,
+                fontFamily: "Times-Roman",
+                fill: "#555555",
+              }}
             >
               {`$${val}B`}
             </SvgText>
@@ -123,7 +127,7 @@ export default function MarketGrowthChart() {
               rx={2}
               fill={d.projected ? "#93c5fd" : "#2563eb"}
               stroke={d.projected ? "#60a5fa" : "#1d4ed8"}
-              strokeWidth={0.5}
+              strokeWidth={0.8}
             />
             {/* Value label */}
             <SvgText
@@ -131,7 +135,7 @@ export default function MarketGrowthChart() {
               y={y - 4}
               textAnchor="middle"
               style={{
-                fontSize: 6.5,
+                fontSize: 7,
                 fontFamily: "Times-Bold",
                 fill: "#333",
               }}
@@ -165,7 +169,7 @@ export default function MarketGrowthChart() {
           rx={3}
           fill="white"
           stroke="#ddd"
-          strokeWidth={0.5}
+          strokeWidth={0.8}
         />
         <Rect
           x={chartX + chartW - 137}
@@ -178,7 +182,7 @@ export default function MarketGrowthChart() {
         <SvgText
           x={chartX + chartW - 120}
           y={chartY + 20}
-          style={{ fontSize: 6.5, fontFamily: "Times-Roman", fill: "#333" }}
+          style={{ fontSize: 7, fontFamily: "Times-Roman", fill: "#333" }}
         >
           Actual
         </SvgText>
@@ -193,7 +197,7 @@ export default function MarketGrowthChart() {
         <SvgText
           x={chartX + chartW - 63}
           y={chartY + 20}
-          style={{ fontSize: 6.5, fontFamily: "Times-Roman", fill: "#333" }}
+          style={{ fontSize: 7, fontFamily: "Times-Roman", fill: "#333" }}
         >
           Projected
         </SvgText>
@@ -201,9 +205,9 @@ export default function MarketGrowthChart() {
           x={chartX + chartW - 137}
           y={chartY + 33}
           style={{
-            fontSize: 5.5,
+            fontSize: 7,
             fontFamily: "Times-Italic",
-            fill: "#888",
+            fill: "#555555",
           }}
         >
           Source: Grand View Research, 2024

@@ -128,7 +128,7 @@ export default function ProjectStructure() {
               x={x + w / 2}
               y={y + h / 2 - 3}
               textAnchor="middle"
-              style={{ fontSize: 6.5, fontFamily: "Times-Bold", fill: "white" }}
+              style={{ fontSize: 7, fontFamily: "Times-Bold", fill: "white" }}
             >
               {lines[0]}
             </SvgText>
@@ -136,7 +136,7 @@ export default function ProjectStructure() {
               x={x + w / 2}
               y={y + h / 2 + 8}
               textAnchor="middle"
-              style={{ fontSize: 6.5, fontFamily: "Times-Bold", fill: "white" }}
+              style={{ fontSize: 7, fontFamily: "Times-Bold", fill: "white" }}
             >
               {lines[1]}
             </SvgText>
@@ -204,7 +204,7 @@ export default function ProjectStructure() {
         rx={4}
         fill="#f1f5f9"
         stroke="#cbd5e1"
-        strokeWidth={0.5}
+        strokeWidth={0.8}
       />
       <SvgText
         x={cx}

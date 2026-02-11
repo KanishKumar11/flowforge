@@ -6,10 +6,10 @@ import { Svg, G, Text as SvgText, Line, Circle } from "@react-pdf/renderer";
  */
 export default function TechFeasibilityRadar() {
   const width = 420;
-  const height = 340;
+  const height = 380;
   const cx = width / 2;
-  const cy = 170;
-  const maxR = 110;
+  const cy = 180;
+  const maxR = 100;
 
   const dimensions = [
     { label: "Technology\nMaturity", score: 9 },
@@ -63,7 +63,7 @@ export default function TechFeasibilityRadar() {
                   x2={next.x}
                   y2={next.y}
                   stroke={level === 10 ? "#cbd5e1" : "#e2e8f0"}
-                  strokeWidth={level === 10 ? 1 : 0.5}
+                  strokeWidth={level === 10 ? 1 : 0.8}
                 />
               );
             })}
@@ -71,7 +71,7 @@ export default function TechFeasibilityRadar() {
             <SvgText
               x={cx + 3}
               y={cy - (level / 10) * maxR + 3}
-              style={{ fontSize: 5, fill: "#aaa" }}
+              style={{ fontSize: 7, fill: "#555555" }}
             >
               {level}
             </SvgText>
@@ -90,7 +90,7 @@ export default function TechFeasibilityRadar() {
             x2={outer.x}
             y2={outer.y}
             stroke="#cbd5e1"
-            strokeWidth={0.5}
+            strokeWidth={0.8}
           />
         );
       })}
@@ -112,25 +112,31 @@ export default function TechFeasibilityRadar() {
       })}
 
       {/* Data points */}
-      {dataPoints.map((p, i) => (
-        <G key={`point-${i}`}>
-          <Circle cx={p.x} cy={p.y} r={4} fill="#3b82f6" />
-          <Circle cx={p.x} cy={p.y} r={2.5} fill="#ffffff" />
-          {/* Score label */}
-          <SvgText
-            x={p.x}
-            y={p.y - 7}
-            textAnchor="middle"
-            style={{ fontSize: 7, fontFamily: "Times-Bold", fill: "#3b82f6" }}
-          >
-            {dimensions[i].score}/10
-          </SvgText>
-        </G>
-      ))}
+      {dataPoints.map((p, i) => {
+        const angle = startAngle + i * angleStep;
+        // Position score labels away from center
+        const offsetX = Math.cos(angle) * 12;
+        const offsetY = Math.sin(angle) * 12;
+        return (
+          <G key={`point-${i}`}>
+            <Circle cx={p.x} cy={p.y} r={4} fill="#3b82f6" />
+            <Circle cx={p.x} cy={p.y} r={2.5} fill="#ffffff" />
+            {/* Score label */}
+            <SvgText
+              x={p.x + offsetX}
+              y={p.y + offsetY + 3}
+              textAnchor="middle"
+              style={{ fontSize: 7, fontFamily: "Times-Bold", fill: "#3b82f6" }}
+            >
+              {dimensions[i].score}/10
+            </SvgText>
+          </G>
+        );
+      })}
 
       {/* Dimension labels — pushed further out */}
       {dimensions.map((d, i) => {
-        const labelPt = getPoint(i, 13.5);
+        const labelPt = getPoint(i, 14.5);
         const lines = d.label.split("\n");
         return (
           <G key={`label-${i}`}>

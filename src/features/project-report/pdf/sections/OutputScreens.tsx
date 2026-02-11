@@ -332,7 +332,27 @@ export default function OutputScreens() {
 
       {/* Full-size screenshot: Execution / History placeholder */}
       <View style={{ marginTop: 8, marginBottom: 12, alignItems: "center" }}>
-        {/* Optional execution history screenshot omitted if not available */}
+        <View
+          style={{
+            width: CONTENT_WIDTH,
+            height: 160,
+            borderWidth: 1,
+            borderColor: "#cccccc",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 9,
+              fontFamily: "Times-Italic",
+              color: "#999999",
+            }}
+          >
+            Placeholder: Execution History screenshot — add
+            '/public/outputs/execution_history.png' to replace
+          </Text>
+        </View>
       </View>
 
       {/* Screen 6: Credentials */}

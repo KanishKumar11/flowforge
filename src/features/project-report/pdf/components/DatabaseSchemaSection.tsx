@@ -643,7 +643,7 @@ export default function DatabaseSchemaSection() {
             wrap={false}
             style={{
               flexDirection: "row",
-              backgroundColor: "#f0f0f0",
+              backgroundColor: "#D9E2F3",
               borderBottomWidth: 1,
               borderBottomColor: "#333333",
             }}

@@ -193,7 +193,7 @@ export default function Level1DFD() {
       <SvgText
         x={100}
         y={32}
-        style={{ fontSize: 5.5, fontFamily: "Times-Italic", fill: "#888" }}
+        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#555555" }}
       >
         Login/Register
       </SvgText>
@@ -204,7 +204,7 @@ export default function Level1DFD() {
       <SvgText
         x={165}
         y={48}
-        style={{ fontSize: 5.5, fontFamily: "Times-Italic", fill: "#888" }}
+        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#555555" }}
       >
         Auth token
       </SvgText>
@@ -215,7 +215,7 @@ export default function Level1DFD() {
       <SvgText
         x={40}
         y={125}
-        style={{ fontSize: 5.5, fontFamily: "Times-Italic", fill: "#888" }}
+        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#555555" }}
       >
         User data
       </SvgText>
@@ -226,7 +226,7 @@ export default function Level1DFD() {
       <SvgText
         x={255}
         y={122}
-        style={{ fontSize: 5.5, fontFamily: "Times-Italic", fill: "#888" }}
+        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#555555" }}
       >
         Workflow defs
       </SvgText>
@@ -237,7 +237,7 @@ export default function Level1DFD() {
       <SvgText
         x={340}
         y={90}
-        style={{ fontSize: 5.5, fontFamily: "Times-Italic", fill: "#888" }}
+        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#555555" }}
       >
         Trigger
       </SvgText>
@@ -248,7 +248,7 @@ export default function Level1DFD() {
       <SvgText
         x={420}
         y={215}
-        style={{ fontSize: 5.5, fontFamily: "Times-Italic", fill: "#888" }}
+        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#555555" }}
       >
         API calls
       </SvgText>
@@ -259,7 +259,7 @@ export default function Level1DFD() {
       <SvgText
         x={340}
         y={280}
-        style={{ fontSize: 5.5, fontFamily: "Times-Italic", fill: "#888" }}
+        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#555555" }}
       >
         Exec logs
       </SvgText>
@@ -278,7 +278,7 @@ export default function Level1DFD() {
       <SvgText
         x={40}
         y={345}
-        style={{ fontSize: 5.5, fontFamily: "Times-Italic", fill: "#888" }}
+        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#555555" }}
       >
         Encrypted creds
       </SvgText>
@@ -289,7 +289,7 @@ export default function Level1DFD() {
       <SvgText
         x={40}
         y={225}
-        style={{ fontSize: 5.5, fontFamily: "Times-Italic", fill: "#888" }}
+        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#555555" }}
       >
         Team data
       </SvgText>
@@ -307,7 +307,7 @@ export default function Level1DFD() {
       <SvgText
         x={245}
         y={225}
-        style={{ fontSize: 5.5, fontFamily: "Times-Italic", fill: "#888" }}
+        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#555555" }}
       >
         Fetch credentials
       </SvgText>

@@ -5,6 +5,7 @@ import { styles } from "../styles";
 import BookPageLayout from "../components/BookPageLayout";
 import SystemArchitecture from "../diagrams/SystemArchitecture";
 import ProjectStructure from "../diagrams/ProjectStructure";
+import TechStackDiagram from "../diagrams/TechStackDiagram";
 
 /**
  * Chapter 1: Introduction
@@ -25,7 +26,7 @@ export default function Introduction() {
             marginBottom: 8,
           }}
         >
-          Chapter 01
+          CHAPTER 01
         </Text>
         <Text
           style={{
@@ -344,7 +345,7 @@ export default function Introduction() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -528,7 +529,7 @@ export default function Introduction() {
       </Text>
 
       <View style={{ marginTop: 16, marginBottom: 8 }}>
-        <ProjectStructure />
+        <TechStackDiagram />
         <Text
           style={{
             fontSize: 9,
@@ -538,7 +539,7 @@ export default function Introduction() {
             marginBottom: 12,
           }}
         >
-          Figure 1.2: Project Module Structure
+          Figure 1.2: Technology Stack — Layered Architecture
         </Text>
       </View>
 
@@ -557,7 +558,7 @@ export default function Introduction() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -769,6 +770,21 @@ export default function Introduction() {
         </Text>
       </View>
 
+      <View style={{ marginTop: 16, marginBottom: 8 }} break>
+        <ProjectStructure />
+        <Text
+          style={{
+            fontSize: 9,
+            fontFamily: "Times-Italic",
+            textAlign: "center",
+            marginTop: 4,
+            marginBottom: 12,
+          }}
+        >
+          Figure 1.3: Project Module Structure
+        </Text>
+      </View>
+
       <Text style={styles.h2}>1.10 Key Features Summary</Text>
       <View
         wrap={false}
@@ -777,7 +793,7 @@ export default function Introduction() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -875,7 +891,7 @@ export default function Introduction() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}

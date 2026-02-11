@@ -51,7 +51,7 @@ export default function AINodeFlowDiagram() {
         x={cx}
         y={32}
         textAnchor="middle"
-        style={{ fontSize: 6.5, fill: "#999" }}
+        style={{ fontSize: 7, fill: "#555555" }}
       >
         Data Flow Direction →
       </SvgText>
@@ -130,13 +130,13 @@ export default function AINodeFlowDiagram() {
             x2={boxes[2].x + boxes[2].w / 2}
             y2={prov.y + 5}
             stroke="#8b5cf6"
-            strokeWidth={0.5}
+            strokeWidth={0.8}
             strokeDasharray="2,2"
           />
           <SvgText
             x={boxes[2].x + boxes[2].w / 2 + 5}
             y={prov.y + 8}
-            style={{ fontSize: 6.5, fill: "#8b5cf6" }}
+            style={{ fontSize: 7, fill: "#8b5cf6" }}
           >
             {prov.label}
           </SvgText>
@@ -150,7 +150,7 @@ export default function AINodeFlowDiagram() {
           x={boxes[3].x + boxes[3].w / 2}
           y={boxY + boxH + 14 + i * 12}
           textAnchor="middle"
-          style={{ fontSize: 5.5, fill: "#dc2626" }}
+          style={{ fontSize: 7, fill: "#dc2626" }}
         >
           ⚠ {lim}
         </SvgText>

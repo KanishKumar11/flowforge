@@ -71,7 +71,7 @@ export default function ComparisonRadar() {
                   x2={next.x}
                   y2={next.y}
                   stroke={level === 10 ? "#cbd5e1" : "#e2e8f0"}
-                  strokeWidth={level === 10 ? 1 : 0.5}
+                  strokeWidth={level === 10 ? 1 : 0.8}
                 />
               );
             })}
@@ -90,7 +90,7 @@ export default function ComparisonRadar() {
             x2={outer.x}
             y2={outer.y}
             stroke="#cbd5e1"
-            strokeWidth={0.5}
+            strokeWidth={0.8}
           />
         );
       })}
@@ -188,7 +188,7 @@ export default function ComparisonRadar() {
         x={cx}
         y={height - 8}
         textAnchor="middle"
-        style={{ fontSize: 6.5, fill: "#999" }}
+        style={{ fontSize: 7, fill: "#555555" }}
       >
         Scale: 1 (Poor) — 10 (Excellent)
       </SvgText>

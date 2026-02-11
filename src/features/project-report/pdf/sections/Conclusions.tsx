@@ -3,6 +3,7 @@
 import { View, Text } from "@react-pdf/renderer";
 import { styles } from "../styles";
 import BookPageLayout from "../components/BookPageLayout";
+import FutureRoadmap from "../diagrams/FutureRoadmap";
 
 /**
  * Chapter 12: Conclusions & Future Scope (4 pages)
@@ -65,7 +66,7 @@ export default function Conclusions() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -244,7 +245,7 @@ export default function Conclusions() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -404,7 +405,7 @@ export default function Conclusions() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#D9E2F3",
             borderBottomWidth: 1,
             borderBottomColor: "#333333",
           }}
@@ -543,6 +544,20 @@ export default function Conclusions() {
           </View>
         ))}
       </View>
+
+      <View style={{ marginTop: 12, marginBottom: 4 }}>
+        <FutureRoadmap />
+      </View>
+      <Text
+        style={{
+          fontSize: 9,
+          fontFamily: "Times-Italic",
+          textAlign: "center",
+          marginBottom: 12,
+        }}
+      >
+        Figure 12.1: Flowgent Development Roadmap — Short-Term & Long-Term
+      </Text>
 
       <Text style={styles.h3}>12.6.2 Long-Term Vision (v2.0+)</Text>
       <View style={{ marginLeft: 24, marginBottom: 12 }}>

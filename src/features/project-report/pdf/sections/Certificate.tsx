@@ -78,7 +78,7 @@ export default function Certificate({ pageNumber }: CertificateProps) {
           style={{
             flexDirection: "row",
             justifyContent: "space-around",
-            marginTop: 40,
+            marginTop: 80,
           }}
         >
           <View style={{ alignItems: "center" }}>
@@ -121,7 +121,7 @@ export default function Certificate({ pageNumber }: CertificateProps) {
           style={{
             flexDirection: "row",
             justifyContent: "space-around",
-            marginTop: 32,
+            marginTop: 56,
           }}
         >
           <View style={{ alignItems: "center" }}>
@@ -130,17 +130,20 @@ export default function Certificate({ pageNumber }: CertificateProps) {
                 width: 140,
                 borderTopWidth: 2,
                 borderTopColor: "#000000",
-                marginBottom: 4,
+                marginBottom: 8,
               }}
             />
             <Text style={{ fontSize: 12, fontFamily: "Times-Bold" }}>
               Dr. Rama Sharma
             </Text>
-            <Text style={{ fontSize: 10, color: "#666666" }}>
+            <Text style={{ fontSize: 10, color: "#666666", marginTop: 2 }}>
               Head of Department
             </Text>
-            <Text style={{ fontSize: 9, color: "#888888" }}>
-              PG Department of Computer Science & Applications
+            <Text style={{ fontSize: 9, color: "#666666", marginTop: 2 }}>
+              PG Department of
+            </Text>
+            <Text style={{ fontSize: 9, color: "#888888", marginTop: 2 }}>
+              Computer Science & Applications
             </Text>
           </View>
 
@@ -150,35 +153,13 @@ export default function Certificate({ pageNumber }: CertificateProps) {
                 width: 140,
                 borderTopWidth: 2,
                 borderTopColor: "#000000",
-                marginBottom: 4,
+                marginBottom: 8,
               }}
             />
             <Text
               style={{ fontSize: 12, fontFamily: "Times-Bold", marginTop: 16 }}
             >
               External Examiner
-            </Text>
-          </View>
-        </View>
-
-        {/* Seal Placeholder */}
-        <View style={{ alignItems: "center", marginTop: 24 }}>
-          <View
-            style={{
-              width: 64,
-              height: 64,
-              borderRadius: 32,
-              borderWidth: 2,
-              borderColor: "#cccccc",
-              borderStyle: "dashed",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Text
-              style={{ fontSize: 8, color: "#999999", textAlign: "center" }}
-            >
-              College{"\n"}Seal
             </Text>
           </View>
         </View>

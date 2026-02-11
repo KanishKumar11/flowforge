@@ -17,34 +17,49 @@ export default function CostBreakdownChart() {
   const categories = [
     {
       label: "Development Labor",
-      value: 240000,
+      value: 150000,
       color: "#3b82f6",
       note: "(imputed)",
     },
-    { label: "Hardware (Laptop)", value: 65000, color: "#8b5cf6", note: "" },
     {
-      label: "Dev Infrastructure",
-      value: 6000,
+      label: "Hardware (Laptop)",
+      value: 45000,
+      color: "#8b5cf6",
+      note: "(amortized)",
+    },
+    {
+      label: "Cloud & Hosting",
+      value: 10000,
       color: "#06b6d4",
       note: "/year",
     },
     {
-      label: "Production Infra",
-      value: 65100,
+      label: "Internet & Utilities",
+      value: 15000,
       color: "#f59e0b",
       note: "/year",
     },
     {
-      label: "Development Tools",
+      label: "Domain & Services",
+      value: 5000,
+      color: "#14b8a6",
+      note: "",
+    },
+    {
+      label: "Misc & Contingency",
+      value: 10000,
+      color: "#a855f7",
+      note: "",
+    },
+    {
+      label: "Dev & Design Tools",
       value: 0,
       color: "#10b981",
-      note: "(free)",
+      note: "(free/OSS)",
     },
-    { label: "Design Tools", value: 0, color: "#10b981", note: "(free)" },
-    { label: "Testing Tools", value: 0, color: "#10b981", note: "(free)" },
   ];
 
-  const maxValue = 240000;
+  const maxValue = 150000;
   const scale = (v: number) => (v / maxValue) * chartWidth;
 
   const gridLines = [0, 60000, 120000, 180000, 240000];
@@ -72,14 +87,14 @@ export default function CostBreakdownChart() {
             x2={chartLeft + scale(v)}
             y2={barsEndY + 5}
             stroke="#e5e7eb"
-            strokeWidth={0.5}
+            strokeWidth={0.8}
             strokeDasharray="3,3"
           />
           <SvgText
             x={chartLeft + scale(v)}
             y={chartTop - 8}
             textAnchor="middle"
-            style={{ fontSize: 6, fill: "#999" }}
+            style={{ fontSize: 7, fill: "#555555" }}
           >
             {v === 0 ? "0" : `${(v / 1000).toFixed(0)}K`}
           </SvgText>
@@ -129,7 +144,7 @@ export default function CostBreakdownChart() {
             <SvgText
               x={chartLeft + Math.max(barW, 0) + 4}
               y={y + barHeight / 2 + 3}
-              style={{ fontSize: 6.5, fontFamily: "Times-Bold", fill: "#555" }}
+              style={{ fontSize: 7, fontFamily: "Times-Bold", fill: "#555" }}
             >
               {cat.value === 0
                 ? `INR 0 ${cat.note}`
@@ -146,14 +161,14 @@ export default function CostBreakdownChart() {
         x2={chartRight}
         y2={barsEndY + 18}
         stroke="#333"
-        strokeWidth={0.5}
+        strokeWidth={0.8}
       />
       <SvgText
         x={chartLeft}
         y={barsEndY + 30}
         style={{ fontSize: 8, fontFamily: "Times-Bold", fill: "#333" }}
       >
-        Total 1st Year Cost: INR 3,76,100 (INR 2,40,000 imputed labor)
+        Total Project Cost: INR 2,35,000 (incl. labor, hardware, deployment)
       </SvgText>
     </Svg>
   );
