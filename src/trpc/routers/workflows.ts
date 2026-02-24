@@ -1,5 +1,4 @@
 import { inngest } from "@/inngest/client";
-import { executeWorkflowDirect } from "@/inngest/functions";
 import prisma from "@/lib/db";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../init";
 import { z } from "zod";
@@ -412,14 +411,22 @@ export const workflowsRouter = createTRPCRouter({
         triggeredAt: new Date().toISOString(),
       };
 
-      // Execute workflow directly for reliability
-      // Inngest's event-driven approach requires Inngest Cloud to call back
-      // the app, which can fail silently — direct execution is more reliable
+      // Execute workflow asynchronously via Inngest to prevent 502 timeouts
       try {
-        await executeWorkflowDirect(workflow.id, execution.id, triggerData);
+        await inngest.send({
+          name: "workflow/execute",
+          data: {
+            workflowId: workflow.id,
+            executionId: execution.id,
+            triggerData,
+          },
+        });
       } catch (execError) {
-        console.error("[Workflow Execute] Direct execution failed:", execError);
-        // Status is already updated to ERROR inside executeWorkflowDirect
+        console.error("[Workflow Execute] Failed to send Inngest event:", execError);
+        await prisma.execution.update({
+          where: { id: execution.id },
+          data: { status: "ERROR", error: "Failed to trigger workflow execution" },
+        });
       }
 
       // Update last executed time
