@@ -443,8 +443,8 @@ async function executeNotion(
         return { success: true, provider: "notion_api", operation, page };
       }
       case "query_database": {
-        const result = await notion.databases.query({
-          database_id: databaseId,
+        const result = await notion.dataSources.query({
+          data_source_id: databaseId,
         });
         return {
           success: true,
