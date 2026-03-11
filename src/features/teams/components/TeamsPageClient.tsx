@@ -61,11 +61,7 @@ export function TeamsPageClient() {
   return (
     <div className="flex flex-col h-full space-y-8 animate-fadeIn">
       <DashboardHeader
-        title={
-          <span className="text-(--arch-fg) font-mono uppercase tracking-widest">
-            Teams
-          </span>
-        }
+        title="Teams"
         description="Collaborate with your organization members."
         action={
           <Button

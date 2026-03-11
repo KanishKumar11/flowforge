@@ -58,12 +58,12 @@ export function DashboardHeader({
           <SidebarTrigger className="-ml-2" />
 
           {/* Title Section */}
-          <div className="flex-1 min-w-0">
-            <h1 className="text-xl font-semibold tracking-tight truncate">
+          <div className="flex-1 min-w-0 flex flex-col justify-center">
+            <h1 className="font-heading uppercase tracking-tight text-(--arch-fg) text-3xl truncate">
               {title}
             </h1>
             {description && (
-              <p className="text-sm text-muted-foreground truncate">
+              <p className="font-mono text-xs text-(--arch-muted) tracking-widest truncate mt-1">
                 {description}
               </p>
             )}

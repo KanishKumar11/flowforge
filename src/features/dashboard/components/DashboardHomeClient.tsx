@@ -24,16 +24,8 @@ export function DashboardHomeClient() {
   return (
     <div className="flex flex-col h-full space-y-8 animate-fadeIn bg-(--arch-bg) text-(--arch-fg)">
       <DashboardHeader
-        title={
-          <span className="font-heading uppercase tracking-tight text-(--arch-fg) text-3xl">
-            SYS.DASHBOARD
-          </span>
-        }
-        description={
-          <span className="font-mono text-xs text-(--arch-muted) tracking-widest">
-            // SYSTEM_OVERVIEW_MODE: ACTIVE
-          </span>
-        }
+        title="SYS.DASHBOARD"
+        description="// SYSTEM_OVERVIEW_MODE: ACTIVE"
         action={
           <Button
             asChild
