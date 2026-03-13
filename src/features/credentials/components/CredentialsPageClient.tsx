@@ -51,6 +51,11 @@ import {
   Terminal,
   Shield,
   Smartphone,
+  BookOpen,
+  CreditCard,
+  Phone,
+  Brain,
+  Mail,
 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -65,6 +70,12 @@ const providerIcons: Record<
   custom: Terminal,
   google: Globe,
   openai: Terminal,
+  anthropic: Brain,
+  notion: BookOpen,
+  stripe: CreditCard,
+  twilio: Phone,
+  smtp: Mail,
+  email: Mail,
   default: Key,
 };
 
@@ -79,6 +90,17 @@ export function CredentialsPageClient() {
     type: "apiKey" as "apiKey" | "oauth2" | "basic" | "bearer" | "custom",
     provider: "custom",
     apiKey: "",
+    // SMTP-specific fields
+    smtpHost: "",
+    smtpPort: "587",
+    smtpSecure: false,
+    smtpUser: "",
+    smtpPass: "",
+    smtpFrom: "",
+    // Twilio-specific fields
+    twilioAccountSid: "",
+    twilioAuthToken: "",
+    twilioPhoneNumber: "",
   });
 
   const trpc = useTRPC();
@@ -105,6 +127,15 @@ export function CredentialsPageClient() {
         type: "apiKey",
         provider: "custom",
         apiKey: "",
+        smtpHost: "",
+        smtpPort: "587",
+        smtpSecure: false,
+        smtpUser: "",
+        smtpPass: "",
+        smtpFrom: "",
+        twilioAccountSid: "",
+        twilioAuthToken: "",
+        twilioPhoneNumber: "",
       });
       toast.success("Credential created successfully");
     },
@@ -130,6 +161,15 @@ export function CredentialsPageClient() {
         type: "apiKey",
         provider: "custom",
         apiKey: "",
+        smtpHost: "",
+        smtpPort: "587",
+        smtpSecure: false,
+        smtpUser: "",
+        smtpPass: "",
+        smtpFrom: "",
+        twilioAccountSid: "",
+        twilioAuthToken: "",
+        twilioPhoneNumber: "",
       });
       toast.success("Credential updated successfully");
     },
@@ -159,12 +199,37 @@ export function CredentialsPageClient() {
   const handleCreateOrUpdate = async () => {
     if (!newCredential.name.trim()) return;
 
+    const isSmtp = newCredential.provider === "smtp";
+    const isTwilio = newCredential.provider === "twilio";
+    
+    let credData: Record<string, unknown>;
+    if (isSmtp) {
+      credData = {
+        host: newCredential.smtpHost || "smtp.gmail.com",
+        port: newCredential.smtpPort || "587",
+        secure: newCredential.smtpSecure,
+        user: newCredential.smtpUser,
+        pass: newCredential.smtpPass,
+        ...(newCredential.smtpFrom && { from: newCredential.smtpFrom }),
+      };
+    } else if (isTwilio) {
+      credData = {
+        accountSid: newCredential.twilioAccountSid,
+        authToken: newCredential.twilioAuthToken,
+        phoneNumber: newCredential.twilioPhoneNumber,
+      };
+    } else {
+      credData = { apiKey: newCredential.apiKey };
+    }
+
     if (editingCredentialId) {
       // Update existing credential
       await updateCredential.mutateAsync({
         id: editingCredentialId,
         name: newCredential.name,
-        ...(newCredential.apiKey && { data: { apiKey: newCredential.apiKey } }),
+        ...((isSmtp ? newCredential.smtpUser : (isTwilio ? newCredential.twilioAccountSid : newCredential.apiKey)) && {
+          data: credData,
+        }),
       });
     } else {
       // Create new credential
@@ -172,7 +237,7 @@ export function CredentialsPageClient() {
         name: newCredential.name,
         type: newCredential.type,
         provider: newCredential.provider,
-        data: { apiKey: newCredential.apiKey },
+        data: credData,
       });
     }
   };
@@ -185,6 +250,15 @@ export function CredentialsPageClient() {
       type: "apiKey",
       provider: "custom",
       apiKey: "",
+      smtpHost: "",
+      smtpPort: "587",
+      smtpSecure: false,
+      smtpUser: "",
+      smtpPass: "",
+      smtpFrom: "",
+      twilioAccountSid: "",
+      twilioAuthToken: "",
+      twilioPhoneNumber: "",
     });
   };
 
@@ -407,6 +481,15 @@ export function CredentialsPageClient() {
                                       | "custom",
                                     provider: credential.provider,
                                     apiKey: "",
+                                    smtpHost: "",
+                                    smtpPort: "587",
+                                    smtpSecure: false,
+                                    smtpUser: "",
+                                    smtpPass: "",
+                                    smtpFrom: "",
+                                    twilioAccountSid: "",
+                                    twilioAuthToken: "",
+                                    twilioPhoneNumber: "",
                                   });
                                   setEditingCredentialId(credential.id);
                                   setShowCreateModal(true);
@@ -615,28 +698,154 @@ export function CredentialsPageClient() {
                     >
                       TWILIO
                     </SelectItem>
+                    <SelectItem
+                      value="smtp"
+                      className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs font-mono"
+                    >
+                      SMTP (EMAIL)
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </div>
             </div>
-            <div className="space-y-2">
-              <Label
-                htmlFor="apiKey"
-                className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider mb-1 block"
-              >
-                Secret / Token
-              </Label>
-              <Input
-                id="apiKey"
-                type="password"
-                placeholder="**********************"
-                value={newCredential.apiKey}
-                onChange={(e) =>
-                  setNewCredential({ ...newCredential, apiKey: e.target.value })
-                }
-                className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) font-mono text-xs rounded-none h-10 placeholder:text-(--arch-muted) focus-visible:ring-1 focus-visible:ring-(--arch-fg)"
-              />
-            </div>
+            {/* SMTP-specific fields */}
+            {newCredential.provider === "smtp" ? (
+              <div className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider mb-1 block">
+                      SMTP Host
+                    </Label>
+                    <Input
+                      placeholder="smtp.gmail.com"
+                      value={newCredential.smtpHost}
+                      onChange={(e) =>
+                        setNewCredential({ ...newCredential, smtpHost: e.target.value })
+                      }
+                      className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) font-mono text-xs rounded-none h-10 placeholder:text-(--arch-muted) focus-visible:ring-1 focus-visible:ring-(--arch-fg)"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider mb-1 block">
+                      Port
+                    </Label>
+                    <Input
+                      placeholder="587"
+                      value={newCredential.smtpPort}
+                      onChange={(e) =>
+                        setNewCredential({ ...newCredential, smtpPort: e.target.value })
+                      }
+                      className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) font-mono text-xs rounded-none h-10 placeholder:text-(--arch-muted) focus-visible:ring-1 focus-visible:ring-(--arch-fg)"
+                    />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider mb-1 block">
+                    Email / Username
+                  </Label>
+                  <Input
+                    placeholder="you@gmail.com"
+                    value={newCredential.smtpUser}
+                    onChange={(e) =>
+                      setNewCredential({ ...newCredential, smtpUser: e.target.value })
+                    }
+                    className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) font-mono text-xs rounded-none h-10 placeholder:text-(--arch-muted) focus-visible:ring-1 focus-visible:ring-(--arch-fg)"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider mb-1 block">
+                    Password / App Password
+                  </Label>
+                  <Input
+                    type="password"
+                    placeholder="**********************"
+                    value={newCredential.smtpPass}
+                    onChange={(e) =>
+                      setNewCredential({ ...newCredential, smtpPass: e.target.value })
+                    }
+                    className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) font-mono text-xs rounded-none h-10 placeholder:text-(--arch-muted) focus-visible:ring-1 focus-visible:ring-(--arch-fg)"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider mb-1 block">
+                    From Name / Address (Optional)
+                  </Label>
+                  <Input
+                    placeholder='"FlowGent" <noreply@yourdomain.com>'
+                    value={newCredential.smtpFrom}
+                    onChange={(e) =>
+                      setNewCredential({ ...newCredential, smtpFrom: e.target.value })
+                    }
+                    className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) font-mono text-xs rounded-none h-10 placeholder:text-(--arch-muted) focus-visible:ring-1 focus-visible:ring-(--arch-fg)"
+                  />
+                </div>
+                <p className="text-xs text-(--arch-muted) font-mono">
+                  For Gmail: use an App Password (not your account password). Enable 2FA and create one at myaccount.google.com/apppasswords.
+                </p>
+              </div>
+            ) : newCredential.provider === "twilio" ? (
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider mb-1 block">
+                    Account SID
+                  </Label>
+                  <Input
+                    placeholder="ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                    value={newCredential.twilioAccountSid}
+                    onChange={(e) =>
+                      setNewCredential({ ...newCredential, twilioAccountSid: e.target.value })
+                    }
+                    className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) font-mono text-xs rounded-none h-10 placeholder:text-(--arch-muted) focus-visible:ring-1 focus-visible:ring-(--arch-fg)"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider mb-1 block">
+                    Auth Token
+                  </Label>
+                  <Input
+                    type="password"
+                    placeholder="********************************"
+                    value={newCredential.twilioAuthToken}
+                    onChange={(e) =>
+                      setNewCredential({ ...newCredential, twilioAuthToken: e.target.value })
+                    }
+                    className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) font-mono text-xs rounded-none h-10 placeholder:text-(--arch-muted) focus-visible:ring-1 focus-visible:ring-(--arch-fg)"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider mb-1 block">
+                    Twilio Phone Number (Optional)
+                  </Label>
+                  <Input
+                    placeholder="+1234567890"
+                    value={newCredential.twilioPhoneNumber}
+                    onChange={(e) =>
+                      setNewCredential({ ...newCredential, twilioPhoneNumber: e.target.value })
+                    }
+                    className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) font-mono text-xs rounded-none h-10 placeholder:text-(--arch-muted) focus-visible:ring-1 focus-visible:ring-(--arch-fg)"
+                  />
+                </div>
+              </div>
+            ) : (
+              <div className="space-y-2">
+                <Label
+                  htmlFor="apiKey"
+                  className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider mb-1 block"
+                >
+                  Secret / Token
+                </Label>
+                <Input
+                  id="apiKey"
+                  type="password"
+                  placeholder="**********************"
+                  value={newCredential.apiKey}
+                  onChange={(e) =>
+                    setNewCredential({ ...newCredential, apiKey: e.target.value })
+                  }
+                  className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) font-mono text-xs rounded-none h-10 placeholder:text-(--arch-muted) focus-visible:ring-1 focus-visible:ring-(--arch-fg)"
+                />
+              </div>
+            )}
           </div>
           <DialogFooter className="p-6 border-t border-(--arch-border) bg-(--arch-bg-secondary) flex justify-end gap-2">
             <Button

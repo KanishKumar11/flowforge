@@ -161,6 +161,37 @@ export function NodeConfigPanel({
                 />
               </div>
               <div className="space-y-2">
+                <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider">
+                  Auth Credential (Optional)
+                </Label>
+                <Select
+                  value={
+                    (node.data.config as Record<string, string>)
+                      ?.credentialId || ""
+                  }
+                  onValueChange={(value) =>
+                    handleConfigChange("credentialId", value === "__none__" ? "" : value)
+                  }
+                >
+                  <SelectTrigger className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) rounded-none font-mono text-xs h-9">
+                    <SelectValue placeholder="No auth (public endpoint)" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) rounded-none font-mono">
+                    <SelectItem value="__none__" className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs">
+                      No auth
+                    </SelectItem>
+                    {credentials?.map((cred) => (
+                      <SelectItem key={cred.id} value={cred.id} className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs">
+                        {cred.name} ({cred.provider})
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <p className="text-xs text-(--arch-muted) font-mono">
+                  If set, injects the credential as a Bearer Authorization header.
+                </p>
+              </div>
+              <div className="space-y-2">
                 <Label
                   htmlFor="headers"
                   className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider"
@@ -273,6 +304,43 @@ export function NodeConfigPanel({
 
           {node.data.type === "email" && (
             <>
+              <div className="space-y-2">
+                <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider">
+                  SMTP Credential
+                </Label>
+                <Select
+                  value={
+                    (node.data.config as Record<string, string>)
+                      ?.credentialId || ""
+                  }
+                  onValueChange={(value) =>
+                    handleConfigChange("credentialId", value)
+                  }
+                >
+                  <SelectTrigger className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) rounded-none font-mono text-xs h-9">
+                    <SelectValue placeholder="Select an SMTP credential" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) rounded-none font-mono">
+                    {credentials
+                      ?.filter((c) => c.provider === "smtp" || c.provider === "email")
+                      .map((cred) => (
+                        <SelectItem key={cred.id} value={cred.id} className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs">
+                          {cred.name}
+                        </SelectItem>
+                      ))}
+                    {(!credentials ||
+                      credentials.filter((c) => c.provider === "smtp" || c.provider === "email")
+                        .length === 0) && (
+                      <SelectItem value="" disabled>
+                        No SMTP credentials — add one in Credentials
+                      </SelectItem>
+                    )}
+                  </SelectContent>
+                </Select>
+                <p className="text-xs text-(--arch-muted) font-mono">
+                  Create an SMTP credential in the Credentials page with: host, port, user, pass fields.
+                </p>
+              </div>
               <div className="space-y-2">
                 <Label htmlFor="to">To</Label>
                 <Input
@@ -894,26 +962,33 @@ export function NodeConfigPanel({
                   }
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Select an API credential (OpenAI or Google)" />
+                    <SelectValue placeholder="Select an API credential" />
                   </SelectTrigger>
                   <SelectContent>
                     {credentials
-                      ?.filter(
-                        (c) =>
-                          c.provider === "openai" ||
-                          c.provider === "google" ||
-                          c.provider === "anthropic",
-                      )
+                      ?.filter((c) => {
+                        const selectedProvider = (node.data.config as Record<string, string>)?.provider || "openai";
+                        // Show credentials matching the selected AI provider, plus custom
+                        return c.provider === selectedProvider || c.provider === "custom";
+                      })
                       .map((cred) => (
                         <SelectItem key={cred.id} value={cred.id}>
-                          {cred.name}
+                          {cred.name} ({cred.provider})
                         </SelectItem>
                       ))}
+                    {(!credentials ||
+                      credentials.filter((c) => {
+                        const selectedProvider = (node.data.config as Record<string, string>)?.provider || "openai";
+                        return c.provider === selectedProvider || c.provider === "custom";
+                      }).length === 0) && (
+                      <SelectItem value="" disabled>
+                        No {((node.data.config as Record<string, string>)?.provider || "openai").toUpperCase()} credentials found
+                      </SelectItem>
+                    )}
                   </SelectContent>
                 </Select>
                 <p className="text-xs text-muted-foreground">
-                  If set, the node will use the selected credential's key
-                  (apiKey/key/token). Otherwise it will use env vars.
+                  Select a credential matching your chosen provider. Otherwise env vars will be used.
                 </p>
               </div>
 

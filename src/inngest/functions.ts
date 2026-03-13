@@ -2,6 +2,7 @@ import { inngest } from "@/inngest/client";
 import prisma from "@/lib/db";
 import { WebClient } from "@slack/web-api";
 import { Client as NotionClient } from "@notionhq/client";
+import nodemailer from "nodemailer";
 
 // Types for workflow execution
 interface NodeData {
@@ -79,12 +80,20 @@ async function executeHttpRequest(
   const headers = (config.headers as Record<string, string>) || {};
   const body = config.body as string | undefined;
 
+  // Optionally inject Authorization from a saved credential
+  const authToken = await resolveCredential(config, undefined);
+  const authHeaders: Record<string, string> = {};
+  if (authToken) {
+    authHeaders["Authorization"] = `Bearer ${authToken}`;
+  }
+
   try {
     const response = await fetch(url, {
       method,
       headers: {
         "Content-Type": "application/json",
-        ...headers,
+        ...authHeaders,
+        ...headers, // user-supplied headers override auth if present
       },
       body: method !== "GET" && body ? body : undefined,
     });
@@ -158,19 +167,95 @@ async function executeEmail(
   config: Record<string, unknown>,
   context: ExecutionContext,
 ): Promise<unknown> {
-  // In production, integrate with email service (SendGrid, Resend, etc.)
   const to = config.to as string;
   const subject = config.subject as string;
-  const body = config.body as string;
+  const body = (config.emailBody || config.body) as string;
 
-  console.log(`[Email] Would send to: ${to}, subject: ${subject}`);
+  if (!to || !subject) {
+    throw new Error("Email node requires 'to' and 'subject' fields");
+  }
 
-  return {
-    sent: true,
-    to,
-    subject,
-    timestamp: new Date().toISOString(),
-  };
+  // Resolve SMTP credentials from user's stored credential
+  const credId = config.credentialId as string | undefined;
+  let smtpConfig: {
+    host: string;
+    port: number;
+    secure: boolean;
+    user: string;
+    pass: string;
+    from?: string;
+  } | null = null;
+
+  if (credId) {
+    try {
+      const cred = await prisma.credential.findFirst({ where: { id: credId } });
+      if (cred) {
+        const data = JSON.parse(cred.data || "{}");
+        if (data.user && data.pass) {
+          smtpConfig = {
+            host: data.host || "smtp.gmail.com",
+            port: parseInt(data.port || "587"),
+            secure: data.secure === true || data.secure === "true",
+            user: data.user,
+            pass: data.pass,
+            from: data.from,
+          };
+        }
+      }
+    } catch (err) {
+      console.warn("[Email] Failed to load credential:", err);
+    }
+  }
+
+  // Fall back to env vars if no credential configured
+  if (!smtpConfig && process.env.SMTP_USER && process.env.SMTP_PASS) {
+    smtpConfig = {
+      host: process.env.SMTP_HOST || "smtp.gmail.com",
+      port: parseInt(process.env.SMTP_PORT || "587"),
+      secure: process.env.SMTP_SECURE === "true",
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASS,
+    };
+  }
+
+  if (!smtpConfig) {
+    throw new Error(
+      "Email node: No SMTP credential configured. Add an SMTP credential in the Credentials page and select it in the node config.",
+    );
+  }
+
+  try {
+    const transporter = nodemailer.createTransport({
+      host: smtpConfig.host,
+      port: smtpConfig.port,
+      secure: smtpConfig.secure,
+      auth: { user: smtpConfig.user, pass: smtpConfig.pass },
+    });
+
+    const from =
+      smtpConfig.from ||
+      process.env.SMTP_FROM ||
+      `"FlowGent" <${smtpConfig.user}>`;
+
+    const info = await transporter.sendMail({
+      from,
+      to,
+      subject,
+      html: body ? `<div style="font-family: sans-serif;">${body.replace(/\n/g, "<br>")}</div>` : undefined,
+      text: body || "",
+    });
+
+    console.log(`[Email] Sent to ${to}: messageId=${info.messageId}`);
+    return {
+      sent: true,
+      to,
+      subject,
+      messageId: info.messageId,
+      timestamp: new Date().toISOString(),
+    };
+  } catch (error) {
+    throw new Error(`Email send failed: ${(error as Error).message}`);
+  }
 }
 
 async function executeSet(
@@ -263,16 +348,15 @@ async function executeDatabase(
 ): Promise<unknown> {
   const operation = (config.operation as string) || "find";
   const collection = config.collection as string;
-  const query = config.query as string;
 
-  // Mock Database execution
-  console.log(`[Database] ${operation} on ${collection}: ${query}`);
+  console.warn(`[Database] Node is not connected to a real database. Operation: ${operation} on ${collection}`);
 
   return {
-    success: true,
+    success: false,
     operation,
     collection,
-    result: { id: "mock-id", data: "mock-data" }, // Mock data
+    warning:
+      "Database node is not connected to a real database. This node is a placeholder — use an HTTP Request node to connect to your own database API, or implement a direct DB driver integration.",
     timestamp: new Date().toISOString(),
   };
 }
@@ -443,9 +527,16 @@ async function executeNotion(
         return { success: true, provider: "notion_api", operation, page };
       }
       case "query_database": {
-        const result = await notion.dataSources.query({
-          data_source_id: databaseId,
+        const res = await fetch(`https://api.notion.com/v1/databases/${databaseId}/query`, {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Notion-Version": "2022-06-28",
+            "Content-Type": "application/json"
+          }
         });
+        if (!res.ok) throw new Error(`Notion API error: ${await res.text()}`);
+        const result = await res.json();
         return {
           success: true,
           provider: "notion_api",
