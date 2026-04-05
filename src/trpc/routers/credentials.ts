@@ -1,6 +1,7 @@
 import prisma from "@/lib/db";
 import { createTRPCRouter, protectedProcedure } from "../init";
 import { z } from "zod";
+import { encryptCredential, decryptCredential } from "@/lib/crypto";
 
 export const credentialsRouter = createTRPCRouter({
   // List all credentials for the current user
@@ -59,9 +60,8 @@ export const credentialsRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      // TODO: Implement proper AES-256 encryption
-      // For now, we'll store as JSON string (NOT PRODUCTION READY)
-      const encryptedData = JSON.stringify(input.data);
+      // Encrypt credential data with AES-256-GCM
+      const encryptedData = encryptCredential(input.data);
 
       return prisma.credential.create({
         data: {
@@ -105,8 +105,8 @@ export const credentialsRouter = createTRPCRouter({
       const data: any = {};
       if (updateData.name) data.name = updateData.name;
       if (updateData.data) {
-        // TODO: Implement proper encryption
-        data.data = JSON.stringify(updateData.data);
+        // Encrypt updated credential data
+        data.data = encryptCredential(updateData.data);
       }
 
       return prisma.credential.update({
@@ -161,8 +161,8 @@ export const credentialsRouter = createTRPCRouter({
         data: { lastUsedAt: new Date() },
       });
 
-      // TODO: Implement proper decryption
-      const decryptedData = JSON.parse(credential.data);
+      // Decrypt credential data using AES-256-GCM
+      const decryptedData = decryptCredential(credential.data);
 
       return {
         id: credential.id,

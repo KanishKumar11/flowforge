@@ -3,6 +3,8 @@ import prisma from "@/lib/db";
 import { WebClient } from "@slack/web-api";
 import { Client as NotionClient } from "@notionhq/client";
 import nodemailer from "nodemailer";
+import { decryptCredential } from "@/lib/crypto";
+import { getNextCronDate } from "@/lib/cron-helper";
 
 // Types for workflow execution
 interface NodeData {
@@ -48,18 +50,18 @@ async function resolveCredential(
       const cred = await prisma.credential.findFirst({ where: { id: credId } });
       if (cred) {
         try {
-          const data = JSON.parse(cred.data || "{}");
+          const data = decryptCredential(cred.data || "{}");
           return (
-            data.apiKey ||
-            data.accessToken ||
-            data.access_token ||
-            data.key ||
-            data.token ||
-            data.secret ||
-            data.client_secret
+            (data.apiKey as string) ||
+            (data.accessToken as string) ||
+            (data.access_token as string) ||
+            (data.key as string) ||
+            (data.token as string) ||
+            (data.secret as string) ||
+            (data.client_secret as string)
           );
         } catch {
-          // data is not valid JSON – ignore
+          // decryption or data parse failed – ignore
         }
       }
     } catch (err) {
@@ -77,7 +79,15 @@ async function executeHttpRequest(
 ): Promise<unknown> {
   const url = config.url as string;
   const method = (config.method as string) || "GET";
-  const headers = (config.headers as Record<string, string>) || {};
+  // Headers may be stored as a JSON string from the config panel textarea
+  let headers: Record<string, string> = {};
+  if (config.headers) {
+    if (typeof config.headers === "string") {
+      try { headers = JSON.parse(config.headers); } catch { /* invalid JSON, ignore */ }
+    } else {
+      headers = config.headers as Record<string, string>;
+    }
+  }
   const body = config.body as string | undefined;
 
   // Optionally inject Authorization from a saved credential
@@ -158,7 +168,9 @@ async function executeIf(
 async function executeWait(
   config: Record<string, unknown>,
 ): Promise<{ waited: number }> {
-  const duration = (config.duration as number) || 1000;
+  // Duration may arrive as a string from the config panel input
+  const raw = config.duration;
+  const duration = typeof raw === "string" ? parseInt(raw, 10) || 1000 : (raw as number) || 1000;
   // Inngest will handle this with step.sleep
   return { waited: duration };
 }
@@ -190,15 +202,15 @@ async function executeEmail(
     try {
       const cred = await prisma.credential.findFirst({ where: { id: credId } });
       if (cred) {
-        const data = JSON.parse(cred.data || "{}");
+        const data = decryptCredential(cred.data || "{}");
         if (data.user && data.pass) {
           smtpConfig = {
-            host: data.host || "smtp.gmail.com",
-            port: parseInt(data.port || "587"),
+            host: (data.host as string) || "smtp.gmail.com",
+            port: parseInt(String(data.port || "587")),
             secure: data.secure === true || data.secure === "true",
-            user: data.user,
-            pass: data.pass,
-            from: data.from,
+            user: data.user as string,
+            pass: data.pass as string,
+            from: data.from as string | undefined,
           };
         }
       }
@@ -324,22 +336,22 @@ async function executeSlack(
   const message = config.message as string;
   const token = await resolveCredential(config, process.env.SLACK_BOT_TOKEN);
 
-  if (token) {
-    const slack = new WebClient(token);
-    await slack.chat.postMessage({ channel, text: message });
-    return { sent: true, channel, message, provider: "slack_api" };
+  if (!channel) {
+    throw new Error("Slack node requires a 'channel' field (e.g. #general)");
+  }
+  if (!message) {
+    throw new Error("Slack node requires a 'message' field");
   }
 
-  // No credential available – return error instead of silent mock
-  console.warn(`[Slack] No token found for channel ${channel}`);
-  return {
-    sent: false,
-    channel,
-    message,
-    provider: "mock",
-    warning:
-      "No Slack token configured. Add a Slack credential or set SLACK_BOT_TOKEN env var.",
-  };
+  if (!token) {
+    throw new Error(
+      "Slack node: No Slack token configured. Go to Credentials → Link Slack (OAuth) or create a Slack credential with your Bot Token.",
+    );
+  }
+
+  const slack = new WebClient(token);
+  await slack.chat.postMessage({ channel, text: message });
+  return { sent: true, channel, message, provider: "slack_api" };
 }
 
 async function executeDatabase(
@@ -349,16 +361,9 @@ async function executeDatabase(
   const operation = (config.operation as string) || "find";
   const collection = config.collection as string;
 
-  console.warn(`[Database] Node is not connected to a real database. Operation: ${operation} on ${collection}`);
-
-  return {
-    success: false,
-    operation,
-    collection,
-    warning:
-      "Database node is not connected to a real database. This node is a placeholder — use an HTTP Request node to connect to your own database API, or implement a direct DB driver integration.",
-    timestamp: new Date().toISOString(),
-  };
+  throw new Error(
+    `Database node: No database connection configured. The Database node requires a connected database to perform '${operation}' on '${collection}'. Use an HTTP Request node to query your API instead, or connect a real database credential.`,
+  );
 }
 
 async function executeGoogleSheets(
@@ -371,15 +376,13 @@ async function executeGoogleSheets(
   const token = await resolveCredential(config, process.env.GOOGLE_API_KEY);
 
   if (!token) {
-    console.warn("[Google Sheets] No credential found");
-    return {
-      success: false,
-      operation,
-      spreadsheetId,
-      range,
-      warning:
-        "No Google credential configured. Connect Google via OAuth or add an API credential.",
-    };
+    throw new Error(
+      "Google Sheets node: No Google credential configured. Go to Credentials → Link Google (OAuth) to grant Sheets access, or create a Google credential with your API key.",
+    );
+  }
+
+  if (!spreadsheetId) {
+    throw new Error("Google Sheets node requires a 'Spreadsheet ID'. Find it in your Google Sheets URL.");
   }
 
   const baseUrl = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}`;
@@ -435,14 +438,13 @@ async function executeGitHub(
   const token = await resolveCredential(config, process.env.GITHUB_TOKEN);
 
   if (!token) {
-    console.warn(`[GitHub] No credential found for ${owner}/${repo}`);
-    return {
-      success: false,
-      operation,
-      repo: `${owner}/${repo}`,
-      warning:
-        "No GitHub token configured. Connect GitHub via OAuth or add a credential.",
-    };
+    throw new Error(
+      "GitHub node: No GitHub token configured. Go to Credentials → Link GitHub (OAuth) or create a GitHub credential with a Personal Access Token.",
+    );
+  }
+
+  if (!owner || !repo) {
+    throw new Error("GitHub node requires 'Owner' and 'Repo' fields.");
   }
 
   const headers: Record<string, string> = {
@@ -502,14 +504,13 @@ async function executeNotion(
   const token = await resolveCredential(config, process.env.NOTION_KEY);
 
   if (!token) {
-    console.warn("[Notion] No credential found");
-    return {
-      success: false,
-      operation,
-      databaseId,
-      warning:
-        "No Notion token configured. Connect Notion via OAuth or set NOTION_KEY env var.",
-    };
+    throw new Error(
+      "Notion node: No Notion token configured. Go to Credentials → Link Notion (OAuth) or create a Notion credential with your Integration Token.",
+    );
+  }
+
+  if (!databaseId && (operation === "create_page" || operation === "query_database")) {
+    throw new Error("Notion node requires a 'Database ID'. Find it in your Notion database URL.");
   }
 
   const notion = new NotionClient({ auth: token });
@@ -595,8 +596,13 @@ async function executeSwitch(
   context: ExecutionContext,
 ): Promise<unknown> {
   const value = config.value as unknown;
-  const cases =
-    (config.cases as Array<{ value: unknown; output: unknown }>) || [];
+  // Cases may be stored as a JSON string from the config panel textarea
+  let cases: Array<{ value: unknown; output: unknown }> = [];
+  if (typeof config.cases === "string") {
+    try { cases = JSON.parse(config.cases); } catch { /* invalid JSON */ }
+  } else if (Array.isArray(config.cases)) {
+    cases = config.cases as Array<{ value: unknown; output: unknown }>;
+  }
   const defaultOutput = config.default as unknown;
 
   // Find matching case
@@ -627,12 +633,9 @@ async function executeOpenAI(
       process.env.ANTHROPIC_API_KEY,
     );
     if (!apiKey) {
-      console.log("[Anthropic] No API key found, returning mock response");
-      return {
-        mock: true,
-        message: `[Mock Claude] Response for: ${prompt}`,
-        model,
-      };
+      throw new Error(
+        "Anthropic node: No API key configured. Go to Credentials → create an Anthropic credential with your API key, or set ANTHROPIC_API_KEY in env vars.",
+      );
     }
 
     try {
@@ -674,12 +677,9 @@ async function executeOpenAI(
       process.env.GOOGLE_GENERATIVE_AI_API_KEY,
     );
     if (!apiKey) {
-      console.log("[Gemini] No API key found, returning mock response");
-      return {
-        mock: true,
-        message: `[Mock Gemini] Response for: ${prompt}`,
-        model,
-      };
+      throw new Error(
+        "Gemini node: No API key configured. Go to Credentials → create a Google credential with your API key, or set GOOGLE_GENERATIVE_AI_API_KEY in env vars.",
+      );
     }
 
     try {
@@ -721,12 +721,9 @@ async function executeOpenAI(
   // Default: OpenAI
   const apiKey = await resolveCredential(config, process.env.OPENAI_API_KEY);
   if (!apiKey) {
-    console.log("[OpenAI] No API key found, returning mock response");
-    return {
-      mock: true,
-      message: `[Mock GPT] Response for: ${prompt}`,
-      model,
-    };
+    throw new Error(
+      "OpenAI node: No API key configured. Go to Credentials → create an OpenAI credential with your API key, or set OPENAI_API_KEY in env vars.",
+    );
   }
 
   if (!prompt) {
@@ -765,6 +762,29 @@ async function executeOpenAI(
   }
 }
 
+// Transform executor - data transformation via JavaScript expression
+async function executeTransform(
+  config: Record<string, unknown>,
+  context: ExecutionContext,
+): Promise<unknown> {
+  const expression = config.expression as string;
+  if (!expression) {
+    // No expression — pass through the trigger data
+    return context.triggerData;
+  }
+
+  try {
+    const fn = new Function(
+      "input",
+      "results",
+      `"use strict"; return ${expression};`,
+    );
+    return fn(context.triggerData, context.nodeResults);
+  } catch (error) {
+    throw new Error(`Transform expression failed: ${(error as Error).message}`);
+  }
+}
+
 // Sub-Workflow executor - execute another workflow
 async function executeSubWorkflow(
   config: Record<string, unknown>,
@@ -799,17 +819,18 @@ async function executeSubWorkflow(
     },
   });
 
-  // Note: In a real implementation, this would trigger the sub-workflow execution
-  // For now, we return a reference to track it
+  // Actually execute the sub-workflow
   console.log(
-    `[SubWorkflow] Triggered workflow ${workflowId} with execution ${execution.id}`,
+    `[SubWorkflow] Executing workflow ${workflowId} with execution ${execution.id}`,
   );
+
+  const result = await executeWorkflowDirect(workflowId, execution.id, inputData);
 
   return {
     subWorkflowId: workflowId,
     executionId: execution.id,
-    status: "triggered",
-    inputData,
+    status: result.success ? "completed" : "failed",
+    results: result.results,
   };
 }
 
@@ -819,9 +840,9 @@ async function executeMerge(
   context: ExecutionContext,
 ): Promise<unknown> {
   const mode = (config.mode as string) || "combine";
-  // In a real execution, inputs would come from multiple incoming connections
-  // For now, we use triggerData and any additional inputs
-  const inputs = (config.inputs || [context.triggerData]) as unknown[];
+  // Collect results from all parent nodes that have already executed
+  const allResults = Object.values(context.nodeResults);
+  const inputs = allResults.length > 0 ? allResults : [context.triggerData];
 
   switch (mode) {
     case "combine":
@@ -847,13 +868,9 @@ async function executeStripe(
   const operation = (config.operation as string) || "create_payment_intent";
 
   if (!apiKey) {
-    console.warn("[Stripe] No API key found");
-    return {
-      mock: true,
-      operation,
-      warning:
-        "No Stripe API key configured. Add a Stripe credential or set STRIPE_SECRET_KEY env var.",
-    };
+    throw new Error(
+      "Stripe node: No API key configured. Go to Credentials → create a Stripe credential with your Secret Key, or set STRIPE_SECRET_KEY in env vars.",
+    );
   }
 
   try {
@@ -917,14 +934,14 @@ async function executeTwilio(
           where: { id: credId },
         });
         if (cred) {
-          const data = JSON.parse(cred.data || "{}");
-          accountSid = accountSid || data.accountSid || data.account_sid;
+          const data = decryptCredential(cred.data || "{}");
+          accountSid = accountSid || (data.accountSid as string) || (data.account_sid as string);
           authToken =
             authToken ||
-            data.authToken ||
-            data.auth_token ||
-            data.apiKey ||
-            data.token;
+            (data.authToken as string) ||
+            (data.auth_token as string) ||
+            (data.apiKey as string) ||
+            (data.token as string);
         }
       } catch {
         /* ignore */
@@ -937,14 +954,9 @@ async function executeTwilio(
   const body = config.body as string;
 
   if (!accountSid || !authToken) {
-    console.warn("[Twilio] Credentials not found");
-    return {
-      mock: true,
-      to,
-      body,
-      warning:
-        "No Twilio credentials configured. Add a Twilio credential or set TWILIO_ACCOUNT_SID/TWILIO_AUTH_TOKEN env vars.",
-    };
+    throw new Error(
+      "Twilio node: No credentials configured. Go to Credentials → create a Twilio credential with your Account SID and Auth Token, or set TWILIO_ACCOUNT_SID/TWILIO_AUTH_TOKEN in env vars.",
+    );
   }
 
   if (!to || !body) {
@@ -1030,6 +1042,11 @@ async function executeNode(
       return executeMerge(config, context);
     case "comment":
       return executeComment();
+    case "transform":
+      return executeTransform(config, context);
+    case "delay":
+      // "delay" is an alias for "wait"
+      return executeWait(config);
     case "manual":
     case "webhook":
     case "schedule":
@@ -1175,11 +1192,15 @@ export async function executeWorkflowDirect(
     }
 
     // Update execution status to success
+    const finishedAt = new Date();
+    const startRecord = await prisma.execution.findUnique({ where: { id: executionId }, select: { startedAt: true } });
+    const duration = startRecord?.startedAt ? finishedAt.getTime() - startRecord.startedAt.getTime() : null;
     await prisma.execution.update({
       where: { id: executionId },
       data: {
         status: "SUCCESS",
-        finishedAt: new Date(),
+        finishedAt,
+        duration,
         outputData: context.nodeResults as Record<string, never>,
         nodeResults: context.nodeResults as Record<string, never>,
       },
@@ -1278,9 +1299,10 @@ export const executeWorkflow = inngest.createFunction(
           },
         );
 
-        // Handle wait nodes specially
-        if (currentNode.data.type === "wait") {
-          const waitMs = (currentNode.data.config.duration as number) || 1000;
+        // Handle wait/delay nodes with durable sleep
+        if (currentNode.data.type === "wait" || currentNode.data.type === "delay") {
+          const raw = currentNode.data.config.duration;
+          const waitMs = typeof raw === "string" ? parseInt(raw, 10) || 1000 : (raw as number) || 1000;
           await step.sleep(`wait-${currentNode.id}`, waitMs);
         }
 
@@ -1320,11 +1342,15 @@ export const executeWorkflow = inngest.createFunction(
 
       // Update execution status to success
       await step.run("update-status-success", async () => {
+        const finishedAt = new Date();
+        const startRecord = await prisma.execution.findUnique({ where: { id: executionId }, select: { startedAt: true } });
+        const duration = startRecord?.startedAt ? finishedAt.getTime() - startRecord.startedAt.getTime() : null;
         await prisma.execution.update({
           where: { id: executionId },
           data: {
             status: "SUCCESS",
-            finishedAt: new Date(),
+            finishedAt,
+            duration,
             outputData: context.nodeResults as Record<string, never>,
             nodeResults: context.nodeResults as Record<string, never>,
           },
@@ -1395,9 +1421,8 @@ export const scheduledWorkflow = inngest.createFunction(
           triggeredAt: new Date().toISOString(),
         });
 
-        // Update next run time based on cron
-        // In production, use a proper cron parser
-        const nextRun = new Date(Date.now() + 60000); // Default: 1 minute later
+        // Calculate real next run time from cron expression
+        const nextRun = getNextCronDate(schedule.cronExpression);
         await prisma.schedule.update({
           where: { id: schedule.id },
           data: {

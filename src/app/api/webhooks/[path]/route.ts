@@ -105,7 +105,7 @@ async function handleWebhook(request: NextRequest, { path }: { path: string }) {
       data: { lastCalledAt: new Date(), callCount: { increment: 1 } },
     });
 
-    // Send workflow execution event
+    // Queue workflow execution via Inngest for durability and retries
     await inngest.send({
       name: "workflow/execute",
       data: {
@@ -129,3 +129,4 @@ async function handleWebhook(request: NextRequest, { path }: { path: string }) {
     );
   }
 }
+

@@ -47,8 +47,8 @@ export const webhooksRouter = createTRPCRouter({
         throw new Error("Workflow not found");
       }
 
-      // Generate unique path
-      const path = `/api/webhooks/${nanoid(12)}`;
+      // Generate unique path (just the ID segment — the route handler receives this from [path])
+      const path = nanoid(12);
 
       return prisma.webhookEndpoint.create({
         data: {

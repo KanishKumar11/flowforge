@@ -227,6 +227,540 @@ export const workflowTemplates: WorkflowTemplate[] = [
     ],
     tags: ["github", "webhook", "slack", "developer"],
   },
+  {
+    id: "lead-notification-pipeline",
+    name: "Lead Notification Pipeline",
+    description:
+      "Route incoming leads to email and Slack based on lead score. Requires: Slack credential, SMTP credential.",
+    category: "Sales",
+    icon: "webhook",
+    nodes: [
+      {
+        id: "1",
+        type: "trigger",
+        position: { x: 100, y: 200 },
+        data: {
+          type: "webhook",
+          label: "Incoming Lead",
+          config: {},
+        },
+      },
+      {
+        id: "2",
+        type: "action",
+        position: { x: 350, y: 200 },
+        data: {
+          type: "if",
+          label: "High-Value Lead?",
+          config: { condition: "trigger.body.score >= 80" },
+        },
+      },
+      {
+        id: "3",
+        type: "action",
+        position: { x: 600, y: 100 },
+        data: {
+          type: "slack",
+          label: "Alert Sales Team",
+          config: {
+            channel: "#sales",
+            message:
+              "🔥 High-value lead: {{trigger.body.name}} (Score: {{trigger.body.score}})",
+          },
+        },
+      },
+      {
+        id: "4",
+        type: "action",
+        position: { x: 600, y: 300 },
+        data: {
+          type: "email",
+          label: "Send Welcome Email",
+          config: {
+            to: "{{trigger.body.email}}",
+            subject: "Thanks for your interest!",
+            body: "Hi {{trigger.body.name}}, we received your inquiry and will be in touch shortly.",
+          },
+        },
+      },
+    ],
+    edges: [
+      { id: "e1-2", source: "1", target: "2" },
+      { id: "e2-3", source: "2", target: "3" },
+      { id: "e2-4", source: "2", target: "4" },
+    ],
+    tags: ["sales", "leads", "webhook", "slack", "email"],
+  },
+  {
+    id: "ai-email-responder",
+    name: "AI Email Responder",
+    description:
+      "Generate AI-powered email drafts from prompts and send them. Requires: OpenAI/Anthropic API key, SMTP credential.",
+    category: "AI",
+    icon: "openai",
+    nodes: [
+      {
+        id: "1",
+        type: "trigger",
+        position: { x: 100, y: 150 },
+        data: { type: "manual", label: "Manual Trigger", config: {} },
+      },
+      {
+        id: "2",
+        type: "action",
+        position: { x: 350, y: 150 },
+        data: {
+          type: "openai",
+          label: "Generate Email Draft",
+          config: {
+            provider: "openai",
+            model: "gpt-4o",
+            systemPrompt:
+              "You are a professional email writer. Write concise, polite emails.",
+            prompt:
+              "Write an email about: {{trigger.topic}}\nRecipient: {{trigger.recipientName}}",
+          },
+        },
+      },
+      {
+        id: "3",
+        type: "action",
+        position: { x: 600, y: 150 },
+        data: {
+          type: "email",
+          label: "Send Email",
+          config: {
+            to: "{{trigger.to}}",
+            subject: "{{trigger.subject}}",
+            body: "{{openai.text}}",
+          },
+        },
+      },
+    ],
+    edges: [
+      { id: "e1-2", source: "1", target: "2" },
+      { id: "e2-3", source: "2", target: "3" },
+    ],
+    tags: ["ai", "email", "openai", "automation"],
+  },
+  {
+    id: "api-health-monitor",
+    name: "API Health Monitor",
+    description:
+      "Check API health every 5 minutes and alert on failure. Requires: Slack or SMTP credential.",
+    category: "DevOps",
+    icon: "http",
+    nodes: [
+      {
+        id: "1",
+        type: "trigger",
+        position: { x: 100, y: 200 },
+        data: {
+          type: "schedule",
+          label: "Every 5 Minutes",
+          config: { cron: "*/5 * * * *" },
+        },
+      },
+      {
+        id: "2",
+        type: "action",
+        position: { x: 350, y: 200 },
+        data: {
+          type: "http-request",
+          label: "Health Check",
+          config: {
+            url: "https://your-api.com/health",
+            method: "GET",
+          },
+        },
+      },
+      {
+        id: "3",
+        type: "action",
+        position: { x: 600, y: 200 },
+        data: {
+          type: "if",
+          label: "Is Down?",
+          config: { condition: "http_request.status !== 200" },
+        },
+      },
+      {
+        id: "4",
+        type: "action",
+        position: { x: 850, y: 100 },
+        data: {
+          type: "slack",
+          label: "Alert Team",
+          config: {
+            channel: "#alerts",
+            message:
+              "🚨 API Health Check FAILED! Status: {{http_request.status}}. URL: https://your-api.com/health",
+          },
+        },
+      },
+      {
+        id: "5",
+        type: "action",
+        position: { x: 850, y: 300 },
+        data: {
+          type: "email",
+          label: "Email Alert",
+          config: {
+            to: "devops@yourcompany.com",
+            subject: "⚠️ API DOWN — Health check failed",
+            body: "Your API health check returned status {{http_request.status}} at {{trigger.triggeredAt}}.",
+          },
+        },
+      },
+    ],
+    edges: [
+      { id: "e1-2", source: "1", target: "2" },
+      { id: "e2-3", source: "2", target: "3" },
+      { id: "e3-4", source: "3", target: "4" },
+      { id: "e3-5", source: "3", target: "5" },
+    ],
+    tags: ["devops", "monitoring", "health-check", "alerts"],
+  },
+  {
+    id: "content-review-pipeline",
+    name: "Content Review Pipeline",
+    description:
+      "AI reviews submitted content, saves approved items to Notion. Requires: OpenAI API key, Notion credential.",
+    category: "AI",
+    icon: "openai",
+    nodes: [
+      {
+        id: "1",
+        type: "trigger",
+        position: { x: 100, y: 200 },
+        data: { type: "webhook", label: "Content Submission", config: {} },
+      },
+      {
+        id: "2",
+        type: "action",
+        position: { x: 350, y: 200 },
+        data: {
+          type: "openai",
+          label: "AI Review",
+          config: {
+            provider: "openai",
+            model: "gpt-4o",
+            systemPrompt:
+              'You are a content reviewer. Respond with JSON: {"approved": true/false, "feedback": "..."}',
+            prompt:
+              "Review this content for quality and accuracy:\n\n{{trigger.body.content}}",
+          },
+        },
+      },
+      {
+        id: "3",
+        type: "action",
+        position: { x: 600, y: 200 },
+        data: {
+          type: "if",
+          label: "Approved?",
+          config: { condition: "openai.text.includes('\"approved\": true')" },
+        },
+      },
+      {
+        id: "4",
+        type: "action",
+        position: { x: 850, y: 100 },
+        data: {
+          type: "notion",
+          label: "Save to Notion",
+          config: {
+            operation: "create_page",
+            databaseId: "YOUR_DATABASE_ID",
+            title: "{{trigger.body.title}}",
+          },
+        },
+      },
+      {
+        id: "5",
+        type: "action",
+        position: { x: 850, y: 300 },
+        data: {
+          type: "email",
+          label: "Rejection Notice",
+          config: {
+            to: "{{trigger.body.authorEmail}}",
+            subject: "Content Review: Revision Needed",
+            body: "Your content '{{trigger.body.title}}' needs revision. Feedback: {{openai.text}}",
+          },
+        },
+      },
+    ],
+    edges: [
+      { id: "e1-2", source: "1", target: "2" },
+      { id: "e2-3", source: "2", target: "3" },
+      { id: "e3-4", source: "3", target: "4" },
+      { id: "e3-5", source: "3", target: "5" },
+    ],
+    tags: ["ai", "content", "notion", "review"],
+  },
+  {
+    id: "stripe-payment-notifier",
+    name: "Stripe Payment Notifier",
+    description:
+      "Get notified via Slack and email when Stripe payments arrive. Requires: Slack credential, SMTP credential.",
+    category: "Payments",
+    icon: "stripe",
+    nodes: [
+      {
+        id: "1",
+        type: "trigger",
+        position: { x: 100, y: 200 },
+        data: {
+          type: "webhook",
+          label: "Stripe Webhook",
+          config: {},
+        },
+      },
+      {
+        id: "2",
+        type: "action",
+        position: { x: 350, y: 200 },
+        data: {
+          type: "transform",
+          label: "Extract Payment Info",
+          config: {
+            expression:
+              '({ amount: input.body?.data?.object?.amount / 100, currency: input.body?.data?.object?.currency, customer: input.body?.data?.object?.customer, type: input.body?.type })',
+          },
+        },
+      },
+      {
+        id: "3",
+        type: "action",
+        position: { x: 600, y: 100 },
+        data: {
+          type: "slack",
+          label: "Notify on Slack",
+          config: {
+            channel: "#payments",
+            message:
+              "💰 Payment received! ${{transform.amount}} {{transform.currency}} from customer {{transform.customer}}",
+          },
+        },
+      },
+      {
+        id: "4",
+        type: "action",
+        position: { x: 600, y: 300 },
+        data: {
+          type: "email",
+          label: "Email Finance",
+          config: {
+            to: "finance@yourcompany.com",
+            subject: "New Payment: ${{transform.amount}}",
+            body: "A payment of ${{transform.amount}} {{transform.currency}} was received from customer {{transform.customer}}.",
+          },
+        },
+      },
+    ],
+    edges: [
+      { id: "e1-2", source: "1", target: "2" },
+      { id: "e2-3", source: "2", target: "3" },
+      { id: "e2-4", source: "2", target: "4" },
+    ],
+    tags: ["stripe", "payments", "slack", "email"],
+  },
+  {
+    id: "customer-onboarding",
+    name: "Customer Onboarding Sequence",
+    description:
+      "Welcome email, wait 2 days, then send follow-up. Requires: SMTP credential.",
+    category: "CRM",
+    icon: "email",
+    nodes: [
+      {
+        id: "1",
+        type: "trigger",
+        position: { x: 100, y: 200 },
+        data: {
+          type: "webhook",
+          label: "New Customer",
+          config: {},
+        },
+      },
+      {
+        id: "2",
+        type: "action",
+        position: { x: 350, y: 200 },
+        data: {
+          type: "email",
+          label: "Welcome Email",
+          config: {
+            to: "{{trigger.body.email}}",
+            subject: "Welcome to our platform! 🎉",
+            body: "Hi {{trigger.body.name}},\n\nWelcome! We're thrilled to have you.\n\nHere are some things to get you started...",
+          },
+        },
+      },
+      {
+        id: "3",
+        type: "action",
+        position: { x: 600, y: 200 },
+        data: {
+          type: "wait",
+          label: "Wait 2 Days",
+          config: { duration: "172800000" },
+        },
+      },
+      {
+        id: "4",
+        type: "action",
+        position: { x: 850, y: 200 },
+        data: {
+          type: "email",
+          label: "Follow-up Email",
+          config: {
+            to: "{{trigger.body.email}}",
+            subject: "How's it going? Need any help?",
+            body: "Hi {{trigger.body.name}},\n\nJust checking in! Have you had a chance to explore the platform?\n\nLet us know if you need any help.",
+          },
+        },
+      },
+    ],
+    edges: [
+      { id: "e1-2", source: "1", target: "2" },
+      { id: "e2-3", source: "2", target: "3" },
+      { id: "e3-4", source: "3", target: "4" },
+    ],
+    tags: ["crm", "onboarding", "email", "wait"],
+  },
+  {
+    id: "github-pr-reviewer",
+    name: "GitHub PR Reviewer",
+    description:
+      "AI-assisted pull request review — gets PR details and posts a review comment. Requires: OpenAI API key, GitHub credential.",
+    category: "Developer",
+    icon: "github",
+    nodes: [
+      {
+        id: "1",
+        type: "trigger",
+        position: { x: 100, y: 200 },
+        data: {
+          type: "webhook",
+          label: "GitHub PR Webhook",
+          config: {},
+        },
+      },
+      {
+        id: "2",
+        type: "action",
+        position: { x: 350, y: 200 },
+        data: {
+          type: "if",
+          label: "Is PR Opened?",
+          config: { condition: "trigger.body.action === 'opened'" },
+        },
+      },
+      {
+        id: "3",
+        type: "action",
+        position: { x: 600, y: 200 },
+        data: {
+          type: "openai",
+          label: "AI Code Review",
+          config: {
+            provider: "openai",
+            model: "gpt-4o",
+            systemPrompt:
+              "You are a senior code reviewer. Provide constructive feedback on the pull request. Be concise.",
+            prompt:
+              "Review this PR:\nTitle: {{trigger.body.pull_request.title}}\nDescription: {{trigger.body.pull_request.body}}\nChanged files: {{trigger.body.pull_request.changed_files}}",
+          },
+        },
+      },
+      {
+        id: "4",
+        type: "action",
+        position: { x: 850, y: 200 },
+        data: {
+          type: "github",
+          label: "Post Review Comment",
+          config: {
+            operation: "create_issue",
+            owner: "{{trigger.body.repository.owner.login}}",
+            repo: "{{trigger.body.repository.name}}",
+            title: "AI Review: {{trigger.body.pull_request.title}}",
+            body: "{{openai.text}}",
+          },
+        },
+      },
+    ],
+    edges: [
+      { id: "e1-2", source: "1", target: "2" },
+      { id: "e2-3", source: "2", target: "3" },
+      { id: "e3-4", source: "3", target: "4" },
+    ],
+    tags: ["github", "ai", "code-review", "developer"],
+  },
+  {
+    id: "scheduled-data-backup",
+    name: "Scheduled Data Backup",
+    description:
+      "Daily API data backup with transformation to Google Sheets. Requires: Google Sheets credential.",
+    category: "Operations",
+    icon: "schedule",
+    nodes: [
+      {
+        id: "1",
+        type: "trigger",
+        position: { x: 100, y: 200 },
+        data: {
+          type: "schedule",
+          label: "Daily at Midnight",
+          config: { cron: "0 0 * * *" },
+        },
+      },
+      {
+        id: "2",
+        type: "action",
+        position: { x: 350, y: 200 },
+        data: {
+          type: "http-request",
+          label: "Fetch Data",
+          config: {
+            url: "https://api.example.com/data/export",
+            method: "GET",
+          },
+        },
+      },
+      {
+        id: "3",
+        type: "action",
+        position: { x: 600, y: 200 },
+        data: {
+          type: "transform",
+          label: "Format for Sheets",
+          config: {
+            expression:
+              'Array.isArray(input) ? input.map(item => ({ id: item.id, name: item.name, date: new Date().toISOString() })) : [input]',
+          },
+        },
+      },
+      {
+        id: "4",
+        type: "action",
+        position: { x: 850, y: 200 },
+        data: {
+          type: "google_sheets",
+          label: "Save to Sheets",
+          config: { operation: "append_row" },
+        },
+      },
+    ],
+    edges: [
+      { id: "e1-2", source: "1", target: "2" },
+      { id: "e2-3", source: "2", target: "3" },
+      { id: "e3-4", source: "3", target: "4" },
+    ],
+    tags: ["schedule", "backup", "google-sheets", "data"],
+  },
 ];
 
 // Get templates by category

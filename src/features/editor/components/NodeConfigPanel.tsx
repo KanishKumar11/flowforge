@@ -253,6 +253,27 @@ export function NodeConfigPanel({
             </div>
           )}
 
+          {node.data.type === "transform" && (
+            <div className="space-y-2">
+              <Label htmlFor="expression">Transform Expression (JavaScript)</Label>
+              <Textarea
+                id="expression"
+                placeholder="({ result: input.someField * 2 })"
+                rows={5}
+                value={
+                  (node.data.config as Record<string, string>)?.expression || ""
+                }
+                onChange={(e) =>
+                  handleConfigChange("expression", e.target.value)
+                }
+                className="bg-(--arch-bg) border-(--arch-border) focus:border-(--arch-fg) text-(--arch-fg) font-mono rounded-none placeholder:text-(--arch-muted) text-xs"
+              />
+              <p className="text-xs text-muted-foreground">
+                Write a JavaScript expression that evaluates to the transformed output. The previous node's output is available as `input`.
+              </p>
+            </div>
+          )}
+
           {node.data.type === "webhook" && (
             <div className="space-y-2">
               <Label>Webhook URL</Label>
@@ -286,9 +307,9 @@ export function NodeConfigPanel({
             </div>
           )}
 
-          {node.data.type === "wait" && (
+          {(node.data.type === "wait" || node.data.type === "delay") && (
             <div className="space-y-2">
-              <Label htmlFor="duration">Wait Duration (seconds)</Label>
+              <Label htmlFor="duration">Wait Duration (milliseconds)</Label>
               <Input
                 id="duration"
                 type="number"

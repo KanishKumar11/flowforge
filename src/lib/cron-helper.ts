@@ -176,18 +176,84 @@ export function isValidCron(expression: string): boolean {
   return parts.every((part, i) => patterns[i].test(part));
 }
 
+// Check if a given date matches a single cron field value
+function matchesCronField(
+  value: number,
+  field: string,
+  min: number,
+  max: number,
+): boolean {
+  if (field === "*") return true;
+
+  // Handle step values: */5, 1-30/2
+  if (field.includes("/")) {
+    const [rangeStr, stepStr] = field.split("/");
+    const step = parseInt(stepStr, 10);
+    if (rangeStr === "*") return value % step === 0;
+    const start = parseInt(rangeStr, 10);
+    return value >= start && (value - start) % step === 0;
+  }
+
+  // Handle ranges: 1-5
+  if (field.includes("-")) {
+    const [startStr, endStr] = field.split("-");
+    return value >= parseInt(startStr, 10) && value <= parseInt(endStr, 10);
+  }
+
+  // Handle lists: 1,3,5
+  if (field.includes(",")) {
+    return field.split(",").map(Number).includes(value);
+  }
+
+  // Exact value
+  return value === parseInt(field, 10);
+}
+
+/**
+ * Calculate the next run time after `from` that matches the cron expression.
+ * Pure implementation — no external dependencies.
+ */
+export function getNextCronDate(expression: string, from: Date = new Date()): Date {
+  const parts = parseCronExpression(expression);
+  const next = new Date(from);
+  next.setSeconds(0, 0);
+  next.setMinutes(next.getMinutes() + 1); // Always at least 1 minute in the future
+
+  // Iterate minute-by-minute, up to ~1 year ahead (525600 minutes)
+  const maxIterations = 525600;
+  for (let i = 0; i < maxIterations; i++) {
+    const minute = next.getMinutes();
+    const hour = next.getHours();
+    const dayOfMonth = next.getDate();
+    const month = next.getMonth() + 1; // cron months are 1-12
+    const dayOfWeek = next.getDay(); // 0=Sunday
+
+    if (
+      matchesCronField(minute, parts.minute, 0, 59) &&
+      matchesCronField(hour, parts.hour, 0, 23) &&
+      matchesCronField(dayOfMonth, parts.dayOfMonth, 1, 31) &&
+      matchesCronField(month, parts.month, 1, 12) &&
+      matchesCronField(dayOfWeek, parts.dayOfWeek, 0, 6)
+    ) {
+      return next;
+    }
+
+    next.setMinutes(next.getMinutes() + 1);
+  }
+
+  // Fallback — should never happen with valid expressions
+  return new Date(from.getTime() + 60000);
+}
+
 // Get next N run times
 export function getNextRunTimes(expression: string, count: number = 5): Date[] {
-  // Simple implementation - for production use a library like cron-parser
   const times: Date[] = [];
-  const now = new Date();
-  const parts = parseCronExpression(expression);
+  let cursor = new Date();
 
-  // Very simplified - returns approximate next runs
   for (let i = 0; i < count; i++) {
-    const nextRun = new Date(now);
-    nextRun.setMinutes(nextRun.getMinutes() + (i + 1) * 60); // Placeholder
-    times.push(nextRun);
+    const next = getNextCronDate(expression, cursor);
+    times.push(next);
+    cursor = next;
   }
 
   return times;

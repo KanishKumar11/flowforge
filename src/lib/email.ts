@@ -19,19 +19,19 @@ export async function sendInvitationEmail(
   if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
     console.warn("SMTP credentials not set. Email simulation:");
     console.log(`To: ${email}`);
-    console.log(`Subject: Join ${teamName} on FlowForge`);
+    console.log(`Subject: Join ${teamName} on FlowGent`);
     console.log(`Link: ${link}`);
     return;
   }
 
   await transporter.sendMail({
-    from: process.env.SMTP_FROM || '"FlowForge" <noreply@flowforge.com>',
+    from: process.env.SMTP_FROM || '"FlowGent" <noreply@flowforge.com>',
     to: email,
-    subject: `Join ${teamName} on FlowForge`,
+    subject: `Join ${teamName} on FlowGent`,
     html: `
       <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
         <h2>You've been invited!</h2>
-        <p><strong>${inviterName}</strong> has invited you to join the <strong>${teamName}</strong> workspace on FlowForge.</p>
+        <p><strong>${inviterName}</strong> has invited you to join the <strong>${teamName}</strong> workspace on FlowGent.</p>
         <p>Click the button below to accept the invitation:</p>
         <a href="${link}" style="display: inline-block; padding: 12px 24px; background-color: #000; color: #fff; text-decoration: none; border-radius: 6px; font-weight: bold;">Join Team</a>
         <p style="margin-top: 24px; font-size: 14px; color: #666;">

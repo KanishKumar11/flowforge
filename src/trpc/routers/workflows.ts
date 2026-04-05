@@ -1,5 +1,4 @@
 import { inngest } from "@/inngest/client";
-import { executeWorkflowDirect } from "@/inngest/functions";
 import prisma from "@/lib/db";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../init";
 import { z } from "zod";
@@ -412,18 +411,16 @@ export const workflowsRouter = createTRPCRouter({
         triggeredAt: new Date().toISOString(),
       };
 
-      // Fire-and-forget: VPS keeps the Node.js process alive so the
-      // promise continues executing after the response is sent.
-      executeWorkflowDirect(workflow.id, execution.id, triggerData)
-        .then(() =>
-          prisma.workflow.update({
-            where: { id: workflow.id },
-            data: { lastExecutedAt: new Date() },
-          }),
-        )
-        .catch((execError: unknown) => {
-          console.error("[Workflow Execute] Background execution failed:", execError);
-        });
+      // Queue workflow execution via Inngest for durability, retries, and
+      // proper step.sleep() in wait/delay nodes.
+      await inngest.send({
+        name: "workflow/execute",
+        data: {
+          workflowId: workflow.id,
+          executionId: execution.id,
+          triggerData,
+        },
+      });
 
       return { executionId: execution.id };
     }),

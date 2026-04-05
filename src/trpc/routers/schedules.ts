@@ -1,6 +1,7 @@
 import prisma from "@/lib/db";
 import { createTRPCRouter, protectedProcedure } from "../init";
 import { z } from "zod";
+import { getNextCronDate } from "@/lib/cron-helper";
 
 export const schedulesRouter = createTRPCRouter({
   // List all schedules for a workflow or all workflows
@@ -51,6 +52,7 @@ export const schedulesRouter = createTRPCRouter({
           cronExpression: input.cronExpression,
           timezone: input.timezone,
           isActive: input.isActive,
+          nextRunAt: input.isActive ? getNextCronDate(input.cronExpression) : null,
         },
       });
     }),
@@ -80,9 +82,17 @@ export const schedulesRouter = createTRPCRouter({
         throw new Error("Schedule not found");
       }
 
+      // If cron expression changed, recalculate nextRunAt
+      const updatePayload: Record<string, unknown> = { ...data };
+      if (data.cronExpression || data.isActive !== undefined) {
+        const cronExpr = (data.cronExpression as string) || schedule.cronExpression;
+        const active = data.isActive !== undefined ? data.isActive : schedule.isActive;
+        updatePayload.nextRunAt = active ? getNextCronDate(cronExpr as string) : null;
+      }
+
       return prisma.schedule.update({
         where: { id },
-        data,
+        data: updatePayload,
       });
     }),
 
@@ -123,7 +133,10 @@ export const schedulesRouter = createTRPCRouter({
 
       return prisma.schedule.update({
         where: { id: input.id },
-        data: { isActive: !schedule.isActive },
+        data: {
+          isActive: !schedule.isActive,
+          nextRunAt: !schedule.isActive ? getNextCronDate(schedule.cronExpression) : null,
+        },
       });
     }),
 
