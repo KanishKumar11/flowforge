@@ -17,6 +17,7 @@ import Editor from "@monaco-editor/react";
 import { X } from "lucide-react";
 import { useTRPC } from "@/trpc/client";
 import { useQuery } from "@tanstack/react-query";
+import { motion } from "framer-motion";
 
 interface NodeConfigPanelProps {
   node: Node | null;
@@ -50,14 +51,20 @@ export function NodeConfigPanel({
   };
 
   return (
-    <div className="w-80 h-full bg-(--arch-bg) border-l border-(--arch-border) flex flex-col shadow-none z-50">
+    <motion.div 
+      initial={{ x: 320, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      exit={{ x: 320, opacity: 0 }}
+      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+      className="w-96 h-full glass-panel border-l border-white/10 flex flex-col z-50 overflow-hidden shadow-[-20px_0_40px_rgba(0,0,0,0.5)]"
+    >
       {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b border-(--arch-border)">
+      <div className="flex items-center justify-between p-6 border-b border-white/5 bg-[rgba(255,255,255,0.01)] backdrop-blur-md">
         <div>
-          <h3 className="font-bold text-sm text-(--arch-fg) font-mono uppercase tracking-wider">
+          <h3 className="font-bold text-sm text-(--arch-fg) font-mono uppercase tracking-widest bg-gradient-to-r from-emerald-400 to-emerald-600 bg-clip-text text-transparent">
             Configure Node
           </h3>
-          <p className="text-xs text-(--arch-muted) font-mono">
+          <p className="text-[10px] text-(--arch-muted) font-mono mt-1 tracking-widest uppercase">
             {node.data.label as string}
           </p>
         </div>
@@ -1497,6 +1504,6 @@ export function NodeConfigPanel({
           )}
         </div>
       </ScrollArea>
-    </div>
+    </motion.div>
   );
 }

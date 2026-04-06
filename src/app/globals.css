@@ -4,154 +4,84 @@
 @custom-variant dark (&:is(.dark *));
 
 /* ============================================
-   Flowgent "NEBULA" DESIGN SYSTEM
-   Premium, Deep Space Aesthetic
+   Flowgent "PLATINUM GREEN" DESIGN SYSTEM
+   Premium, Cockpit Aesthetic (Dark Mode Exclusive)
    ============================================ */
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-heading);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --radius-2xl: calc(var(--radius) + 8px);
-  --radius-3xl: calc(var(--radius) + 12px);
-  --radius-4xl: calc(var(--radius) + 16px);
-}
-
-/* ============================================
-   LIGHT MODE (Secondary)
-   ============================================ */
 :root {
-  --background: oklch(0.99 0.001 260);
-  --foreground: oklch(0.12 0.04 260); /* Deep Charcoal */
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.12 0.04 260);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.12 0.04 260);
-  --primary: oklch(0.45 0.25 275); /* Deep Violet */
-  --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.96 0.01 260);
-  --secondary-foreground: oklch(0.2 0.05 260);
-  --muted: oklch(0.96 0.01 260);
-  --muted-foreground: oklch(0.5 0.05 260);
-  --accent: oklch(0.94 0.03 270);
-  --accent-foreground: oklch(0.45 0.25 275);
-  --destructive: oklch(0.6 0.22 25);
-  --destructive-foreground: oklch(1 0 0);
-  --border: oklch(0.92 0.01 260);
-  --input: oklch(0.92 0.01 260);
-  --ring: oklch(0.55 0.25 275);
+  /* Deep Space Cockpit Backgrounds */
+  --background: oklch(0.12 0.02 260); /* Zinc 950 essentially */
+  --foreground: oklch(0.98 0.01 260); /* Clean White */
 
-  --chart-1: oklch(0.5 0.2 270);
-  --chart-2: oklch(0.55 0.2 300);
-  --chart-3: oklch(0.6 0.2 330);
-  --chart-4: oklch(0.65 0.2 360);
-  --chart-5: oklch(0.7 0.2 30);
-
-  --sidebar: oklch(0.99 0.001 260);
-  --sidebar-foreground: oklch(0.12 0.04 260);
-  --sidebar-primary: oklch(0.45 0.25 275);
-  --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: oklch(0.96 0.01 260);
-  --sidebar-accent-foreground: oklch(0.45 0.25 275);
-  --sidebar-border: oklch(0.92 0.01 260);
-  --sidebar-ring: oklch(0.45 0.25 275);
-
-  --radius: 0.75rem;
-  --tracking-normal: -0.01em;
-
-  /* Nebula Custom Colors */
-  --nebula-glow: oklch(0.6 0.25 280);
-  --nebula-highlight: oklch(0.7 0.2 300);
-}
-
-/* ============================================
-   DARK MODE - "NEBULA" (Primary)
-   ============================================ */
-.dark {
-  --background: oklch(0.1 0.02 265); /* Deep Space Blue */
-  --foreground: oklch(0.98 0.01 260); /* Star White */
-
-  /* Glass Card Base */
-  --card: oklch(0.15 0.03 265);
+  /* Glass Card Base - Extremely subtle */
+  --card: oklch(0.15 0.02 260 / 0.4);
   --card-foreground: oklch(0.98 0.01 260);
 
-  --popover: oklch(0.15 0.03 265);
+  --popover: oklch(0.15 0.02 260);
   --popover-foreground: oklch(0.98 0.01 260);
 
-  /* Electric Neon Brand Colors */
-  --primary: oklch(0.65 0.25 280); /* Electric Violet */
-  --primary-foreground: oklch(0.1 0.02 265);
+  /* Electric Green Brand Colors (Replaces previously banned Purple) */
+  --primary: oklch(0.7 0.2 160); /* Electric Emerald */
+  --primary-foreground: oklch(0.12 0.02 260); /* Dark Zinc text on Green */
 
-  --secondary: oklch(0.2 0.04 260);
-  --secondary-foreground: oklch(0.9 0.02 260);
+  --secondary: oklch(0.2 0.02 260);
+  --secondary-foreground: oklch(0.9 0.01 260);
 
-  --muted: oklch(0.15 0.02 265);
-  --muted-foreground: oklch(0.7 0.05 260);
+  --muted: oklch(0.18 0.02 260);
+  --muted-foreground: oklch(0.65 0.02 260);
 
-  --accent: oklch(0.25 0.06 270);
+  --accent: oklch(0.25 0.05 160); /* Deep Green Accent */
   --accent-foreground: oklch(0.98 0.01 260);
 
   --destructive: oklch(0.65 0.22 20);
   --destructive-foreground: oklch(1 0 0);
 
-  --border: oklch(0.25 0.05 265);
-  --input: oklch(0.2 0.04 265);
-  --ring: oklch(0.65 0.25 280);
+  --border: oklch(0.25 0.02 260);
+  --input: oklch(0.2 0.02 260);
+  --ring: oklch(0.7 0.2 160);
 
-  /* Neon Chart Colors */
-  --chart-1: oklch(0.65 0.25 280); /* Violet */
-  --chart-2: oklch(0.7 0.22 320); /* Pink */
-  --chart-3: oklch(0.75 0.2 180); /* Cyan */
-  --chart-4: oklch(0.7 0.2 40); /* Orange */
-  --chart-5: oklch(0.8 0.15 80); /* Yellow */
+  /* Clean Data Chart Colors */
+  --chart-1: oklch(0.7 0.2 160); /* Emerald */
+  --chart-2: oklch(0.75 0.2 180); /* Cyan */
+  --chart-3: oklch(0.8 0.15 80); /* Yellow */
+  --chart-4: oklch(0.6 0.1 260); /* Slate Blue */
+  --chart-5: oklch(0.85 0.05 260); /* Platinum */
 
-  --sidebar: oklch(0.08 0.02 265); /* Darker Deep Space */
+  --sidebar: oklch(0.1 0.02 260);
   --sidebar-foreground: oklch(0.9 0.01 260);
-  --sidebar-primary: oklch(0.65 0.25 280);
-  --sidebar-primary-foreground: oklch(0.1 0.02 265);
-  --sidebar-accent: oklch(0.15 0.03 265);
+  --sidebar-primary: oklch(0.7 0.2 160);
+  --sidebar-primary-foreground: oklch(0.12 0.02 260);
+  --sidebar-accent: oklch(0.15 0.02 260);
   --sidebar-accent-foreground: oklch(0.98 0.01 260);
-  --sidebar-border: oklch(0.2 0.04 265);
-  --sidebar-ring: oklch(0.65 0.25 280);
+  --sidebar-border: oklch(0.2 0.02 260);
+  --sidebar-ring: oklch(0.7 0.2 160);
 
-  /* Nebula Custom Colors */
-  --nebula-glow: oklch(0.65 0.25 280);
-  --nebula-highlight: oklch(0.7 0.22 320);
+  --radius: 0.75rem;
+  --tracking-normal: -0.02em;
+
+  /* The Architect Theme (Merged into standard variables for editor support) */
+  --arch-bg: #09090b; /* Zinc 950 */
+  --arch-bg-secondary: #0f1115; /* Zinc 900 slightly tinted */
+  --arch-fg: #10b981; /* Emerald 500 */
+  --arch-muted: #059669; /* Emerald 600 */
+  --arch-border: rgba(16, 185, 129, 0.2);
+  --arch-grid: rgba(16, 185, 129, 0.05); /* very subtle grid */
+  --arch-accent: #10b981;
+  --arch-accent-dim: rgba(16, 185, 129, 0.1);
+  --arch-focus: #059669;
+
+  /* RGB helpers */
+  --arch-bg-rgb: 9 9 11;
+  --arch-bg-secondary-rgb: 15 17 21;
+  --arch-fg-rgb: 16 185 129;
+  --arch-muted-rgb: 5 150 105;
+  --arch-border-rgb: 16 185 129;
+  --arch-accent-rgb: 16 185 129;
+}
+
+/* Force dark mode behavior unconditionally since we only want Cockpit Mode */
+.dark {
+  /* Inherits from :root */
 }
 
 @theme inline {
@@ -200,12 +130,14 @@ body {
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background);
+  color: var(--foreground);
 }
 
-/* Custom Scrollbar - Minimalist */
+/* Custom Scrollbar - Premium Minimalist */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 4px;
+  height: 4px;
 }
 
 ::-webkit-scrollbar-track {
@@ -222,149 +154,64 @@ body {
 }
 
 /* ============================================
-   UTILITY CLASSES - PREMIUM
+   UTILITY CLASSES - PREMIUM PLATINUM GREEN
    ============================================ */
 
-/* 1. Hyper-Glass */
+/* Liquid Glass Implementation */
 @utility glass-premium {
-  background: linear-gradient(135deg, oklch(1 0 0 / 0.05), oklch(1 0 0 / 0.01));
-  backdrop-filter: blur(20px) saturate(140%);
-  -webkit-backdrop-filter: blur(20px) saturate(140%);
-  border: 1px solid oklch(1 0 0 / 0.08);
+  background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid rgba(255,255,255,0.05); /* Inner Refraction line */
   box-shadow:
-    0 4px 6px -1px rgb(0 0 0 / 0.1),
-    0 2px 4px -2px rgb(0 0 0 / 0.1),
-    inset 0 0 0 1px oklch(1 0 0 / 0.05);
+    0 20px 40px -15px rgba(0, 0, 0, 0.4), /* Diffusion shadow */
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.1); /* Top lip reflection */
 }
 
 @utility glass-panel {
-  background: oklch(0.13 0.02 265 / 0.6);
+  background: oklch(0.12 0.02 260 / 0.4);
   backdrop-filter: blur(12px);
-  border-right: 1px solid oklch(1 0 0 / 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* 2. Text Effects */
-@utility text-glow {
-  text-shadow: 0 0 20px var(--primary);
-}
+/* Advanced Inputs */
+@utility input-tech {
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--arch-border);
+  color: var(--arch-fg);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  height: 2.75rem;
+  padding: 0 1rem;
+  transition: all 0.2s ease;
+  border-radius: 0.5rem; /* Smoother corner for Bento UI */
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
 
-@utility text-gradient-nebula {
-  background: linear-gradient(
-    135deg,
-    #fff 0%,
-    var(--primary) 50%,
-    var(--nebula-highlight) 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-/* 3. Borders & Glows */
-@utility border-glow {
-  border: 1px solid var(--primary);
-  box-shadow: 0 0 10px var(--primary);
-}
-
-@utility glowing-ring {
-  box-shadow:
-    0 0 0 2px var(--background),
-    0 0 0 4px var(--primary);
-}
-
-/* 4. Animations */
-@keyframes float-slow {
-  0%,
-  100% {
-    transform: translateY(0);
+  &:hover {
+    border-color: var(--arch-muted);
+    background-color: rgba(16, 185, 129, 0.02);
   }
-  50% {
-    transform: translateY(-10px);
+
+  &:focus {
+    border-color: var(--arch-accent);
+    background-color: rgba(0,0,0,0.4);
+    outline: none;
+    box-shadow:
+      0 0 0 1px var(--arch-accent),
+      0 0 15px -3px var(--arch-accent-dim),
+      inset 0 2px 4px rgba(0,0,0,0.2);
+  }
+
+  &::placeholder {
+    color: var(--arch-muted);
+    opacity: 0.5;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
 }
 
-@utility animate-float-slow {
-  animation: float-slow 6s ease-in-out infinite;
-}
-
-@keyframes pulse-soft {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.7;
-  }
-}
-
-@utility animate-pulse-soft {
-  animation: pulse-soft 3s ease-in-out infinite;
-}
-
-/* ... previous code ... */
-
-/* 5. Inputs & Forms */
-@layer base {
-  input:-webkit-autofill,
-  input:-webkit-autofill:hover,
-  input:-webkit-autofill:focus,
-  textarea:-webkit-autofill,
-  textarea:-webkit-autofill:hover,
-  textarea:-webkit-autofill:focus,
-  select:-webkit-autofill,
-  select:-webkit-autofill:hover,
-  select:-webkit-autofill:focus {
-    -webkit-text-fill-color: var(--foreground);
-    -webkit-box-shadow: 0 0 0px 1000px oklch(0.1 0.02 265) inset;
-    transition: background-color 50000s ease-in-out 0s;
-  }
-}
-
-/* 6. The Architect (Precision Engineering) */
-
-/* Light mode Architect variables (default) */
-:root {
-  /* Light theme values for the Architect design system (green accents) */
-  --arch-bg: #ffffff;
-  --arch-bg-secondary: #f6fff7;
-  --arch-fg: #064e16; /* green-900 */
-  --arch-muted: #166534; /* green-700 */
-  --arch-border: rgba(34, 197, 94, 0.15);
-  --arch-grid: rgba(34, 197, 94, 0.03);
-  --arch-accent: #16a34a; /* green-600 */
-  --arch-accent-dim: rgba(16, 163, 74, 0.08);
-  --arch-focus: #16a34a;
-
-  /* RGB helpers for rgba(var(--arch-...)) usage */
-  --arch-bg-rgb: 255 255 255;
-  --arch-bg-secondary-rgb: 246 255 247;
-  --arch-fg-rgb: 6 78 22;
-  --arch-muted-rgb: 22 101 52;
-  --arch-border-rgb: 34 197 94;
-  --arch-accent-rgb: 16 163 74;
-}
-
-/* Dark mode overrides for the Architect (Terminal / Phosphor Green) */
-.dark {
-  --arch-bg: #020a02;
-  --arch-bg-secondary: #051405;
-  --arch-fg: #4ade80;
-  --arch-muted: #15803d;
-  --arch-border: rgba(74, 222, 128, 0.2);
-  --arch-grid: rgba(74, 222, 128, 0.1);
-  --arch-accent: #22c55e;
-  --arch-accent-dim: rgba(74, 222, 128, 0.1);
-  --arch-focus: #16a34a;
-
-  /* RGB helpers for rgba(var(--arch-...)) usage */
-  --arch-bg-rgb: 2 10 2;
-  --arch-bg-secondary-rgb: 5 20 5;
-  --arch-fg-rgb: 74 222 128;
-  --arch-muted-rgb: 21 128 61;
-  --arch-border-rgb: 74 222 128;
-  --arch-accent-rgb: 34 197 94;
-}
-
+/* Background Grids */
 @utility bg-grid {
   background-size: 40px 40px;
   background-image:
@@ -381,122 +228,62 @@ body {
 
 @utility border-tech {
   border: 1px solid var(--arch-border);
-  border-radius: 0; /* Strict square corners */
-}
-
-@utility input-tech {
-  background-color: var(--arch-bg-secondary);
-  border: 1px solid var(--arch-border);
-  color: var(--arch-fg);
-  font-family: var(--font-mono);
-  font-size: 0.875rem;
-  height: 2.75rem; /* Explicit height */
-  padding: 0 1rem;
-  transition: all 0.2s ease;
-  border-radius: 2px;
-
-  &:hover {
-    border-color: var(--arch-muted);
-    background-color: var(--arch-accent-dim);
-  }
-
-  &:focus {
-    border-color: var(--arch-accent);
-    background-color: var(--arch-bg);
-    outline: none;
-    box-shadow:
-      0 0 0 1px var(--arch-accent),
-      0 0 15px -3px var(--arch-accent-dim);
-  }
-
-  &::placeholder {
-    color: var(--arch-muted);
-    opacity: 0.7;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
+  border-radius: 1rem; /* Softened from rigid 0 for Bento */
 }
 
 @utility tech-panel {
   background: var(--arch-bg-secondary);
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(12px);
   border: 1px solid var(--arch-border);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  border-radius: 1rem;
 }
 
 @keyframes scanline {
-  0% {
-    transform: translateY(-100%);
-  }
-  100% {
-    transform: translateY(100%);
-  }
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
 }
 
 @utility animate-scanline {
-  animation: scanline 4s linear infinite;
+  animation: scanline parseInt(8s linear infinite);
 }
 
 /* ============================================
    PROJECT REPORT PRINT STYLES
-   Professional A4 Print Layout
+   (Preserved from original)
    ============================================ */
 
 /* Print-specific page setup */
 @media print {
   @page {
     size: A4;
-    margin: 0 !important; /* Remove browser margins to give full control to CSS */
-  }
-
-  /* First page - title page has no header/footer */
-  @page :first {
     margin: 0 !important;
   }
-
-  /* Named page for full-bleed printing (no margins) */
-  @page no-margin {
-    margin: 0 !important;
-    size: A4;
-  }
-
-  /* Utility to apply the named page */
-  .print-no-margin {
-    page: no-margin !important;
-  }
+  @page :first { margin: 0 !important; }
+  @page no-margin { margin: 0 !important; size: A4; }
+  
+  .print-no-margin { page: no-margin !important; }
 
   html, body {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
     background: white !important;
-    /* Removed overrides to match screen design */
     margin: 0 !important;
     padding: 0 !important;
   }
 
-  /* Hide non-print elements */
-  .no-print,
-  nav,
-  button,
-  [data-sidebar],
-  [data-slot="sidebar"],
-  [data-slot="sidebar-gap"],
-  [data-slot="sidebar-container"],
-  [data-slot="sidebar-wrapper"] > .peer {
+  .no-print, nav, button, [data-sidebar], [data-slot="sidebar"], [data-slot="sidebar-gap"], [data-slot="sidebar-container"], [data-slot="sidebar-wrapper"] > .peer {
     display: none !important;
     visibility: hidden !important;
     width: 0 !important;
     height: 0 !important;
   }
 
-  /* Force white background */
   html, body, .min-h-screen, .report-container, .report-page, .report-section {
     background: white !important;
     background-color: white !important;
   }
 
-  /* Make sure report container is visible */
   .report-container {
     display: block !important;
     visibility: visible !important;
@@ -507,336 +294,75 @@ body {
     padding: 0 !important;
   }
 
-  /* Report pages should be visible */
-  .report-page,
-  .report-section {
+  .report-page, .report-section {
     display: block !important;
     visibility: visible !important;
     background: white !important;
   }
 
-  /* Container adjustments for print */
-  .container {
-    max-width: 100% !important;
-    padding: 0 !important;
-    margin: 0 !important;
-  }
+  .container { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
+  .min-h-screen { background: white !important; padding: 0 !important; margin: 0 !important; }
 
-  /* Force min-h-screen container to be clean */
-  .min-h-screen {
-    background: white !important;
-    padding: 0 !important;
-    margin: 0 !important;
-  }
+  .page-break-before { page-break-before: always !important; break-before: page !important; }
+  .page-break-after { page-break-after: always !important; break-after: page !important; }
+  .avoid-break { page-break-inside: avoid !important; break-inside: avoid !important; }
 
-  /* Page break controls */
-  .page-break-before {
-    page-break-before: always !important;
-    break-before: page !important;
-  }
-
-  .page-break-after {
-    page-break-after: always !important;
-    break-after: page !important;
-  }
-
-  .avoid-break {
-    page-break-inside: avoid !important;
-    break-inside: avoid !important;
-  }
-
-  /* Report sections - Apply standard margins as padding, EXCEPT for custom layout pages */
   .report-section:not(.print-no-margin) {
     page-break-before: always !important;
-    padding: 5mm 5mm 5mm 5mm !important; /* Standard academic margins applied as padding */
+    padding: 5mm 5mm 5mm 5mm !important;
   }
-
-  .report-section.print-no-margin {
-    page-break-before: always !important;
-    /* No default padding - let component utility classes control it */
-  }
-
-  .report-section:first-child {
-    page-break-before: avoid !important;
-  }
-
-  /* Title page special styling - let component control layout */
-  .title-page {
-    page-break-after: always !important;
-    min-height: 100vh;
-    /* Removed flex overrides to let component control layout */
-  }
-
-  /* Full-page sections that need explicit height and flex layout */
+  .report-section.print-no-margin { page-break-before: always !important; }
+  .report-section:first-child { page-break-before: avoid !important; }
+  .title-page { page-break-after: always !important; min-height: 100vh; }
+  
   .print-no-margin {
-    height: 297mm !important;
-    min-height: 297mm !important;
-    max-height: 297mm !important;
-    overflow: hidden !important;
-    display: flex !important;
-    flex-direction: column !important;
-    padding: 0 !important; /* Override default .report-page padding */
-    margin: 0 !important;
-    /* justify-content: space-between !important; */
+    height: 297mm !important; min-height: 297mm !important; max-height: 297mm !important;
+    overflow: hidden !important; display: flex !important; flex-direction: column !important;
+    padding: 0 !important; margin: 0 !important;
   }
 
-  /* Images */
-  img {
-    max-width: 100% !important;
-    page-break-inside: avoid !important;
-  }
+  img { max-width: 100% !important; page-break-inside: avoid !important; }
+  table { page-break-inside: auto !important; }
+  tr { page-break-inside: avoid !important; }
+  thead { display: table-header-group !important; }
 
-  /* Tables */
-  table {
-    page-break-inside: auto !important;
-  }
-
-  tr {
-    page-break-inside: avoid !important;
-  }
-
-  thead {
-    display: table-header-group !important;
-  }
-
-  /* Code blocks */
-  pre,
-  code {
+  pre, code {
     font-family: "Courier New", Courier, monospace !important;
-    font-size: 10pt !important;
-    background: #f5f5f5 !important;
-    border: 1px solid #ddd !important;
-    page-break-inside: avoid !important;
+    font-size: 10pt !important; background: #f5f5f5 !important;
+    border: 1px solid #ddd !important; page-break-inside: avoid !important;
   }
 
-  /* Headings */
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    page-break-after: avoid !important;
-    break-after: avoid !important;
-    color: black !important;
-  }
+  h1, h2, h3, h4, h5, h6 { page-break-after: avoid !important; break-after: avoid !important; color: black !important; }
+  h1 { font-size: 18pt !important; margin-bottom: 1em !important; }
+  h2 { font-size: 16pt !important; margin-bottom: 0.8em !important; }
+  h3 { font-size: 14pt !important; margin-bottom: 0.6em !important; }
 
-  h1 {
-    font-size: 18pt !important;
-    margin-bottom: 1em !important;
-  }
-
-  h2 {
-    font-size: 16pt !important;
-    margin-bottom: 0.8em !important;
-  }
-
-  h3 {
-    font-size: 14pt !important;
-    margin-bottom: 0.6em !important;
-  }
-
-  /* Lists */
-  ul,
-  ol {
-    page-break-inside: avoid !important;
-  }
-
-  /* Links */
-  a {
-    color: black !important;
-    text-decoration: none !important;
-  }
-
-  a[href^="http"]:after {
-    content: " (" attr(href) ")";
-    font-size: 9pt;
-    color: #666;
-  }
-
-  /* Figures */
-  figure {
-    page-break-inside: avoid !important;
-    margin: 1em 0 !important;
-  }
-
-  figcaption {
-    font-style: italic;
-    text-align: center;
-    font-size: 10pt !important;
-  }
+  ul, ol { page-break-inside: avoid !important; }
+  a { color: black !important; text-decoration: none !important; }
+  a[href^="http"]:after { content: " (" attr(href) ")"; font-size: 9pt; color: #666; }
+  figure { page-break-inside: avoid !important; margin: 1em 0 !important; }
+  figcaption { font-style: italic; text-align: center; font-size: 10pt !important; }
 }
 
 /* Report styling (screen + print) */
 .report-container {
-  max-width: 210mm;
-  margin: 0 auto;
-  background: white;
-  color: black;
-  font-family: "Times New Roman", Times, serif;
+  max-width: 210mm; margin: 0 auto; background: white; color: black; font-family: "Times New Roman", Times, serif;
 }
-
-.report-page {
-  min-height: 297mm;
-  padding: 20mm 15mm 20mm 20mm;
-  position: relative;
-}
-
-/* Report headings */
-.report-h1 {
-  font-size: 24px;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 24px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.report-h2 {
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 16px;
-  padding-bottom: 8px;
-  border-bottom: 2px solid #333;
-}
-
-.report-h3 {
-  font-size: 16px;
-  font-weight: bold;
-  margin-bottom: 12px;
-}
-
-.report-paragraph {
-  text-align: justify;
-  text-indent: 40px;
-  margin-bottom: 12px;
-  line-height: 1.8;
-}
-
-.report-list {
-  margin-left: 40px;
-  margin-bottom: 16px;
-}
-
-.report-list li {
-  margin-bottom: 8px;
-  line-height: 1.6;
-}
-
-/* Report tables */
-.report-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 16px 0;
-  font-size: 11pt;
-}
-
-.report-table th,
-.report-table td {
-  border: 1px solid #333;
-  padding: 8px 12px;
-  text-align: left;
-}
-
-.report-table th {
-  background: #f0f0f0;
-  font-weight: bold;
-}
-
-.report-table caption {
-  caption-side: bottom;
-  font-style: italic;
-  padding-top: 8px;
-  font-size: 10pt;
-}
-
-/* Signature section */
-.signature-section {
-  margin-top: 60px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.signature-box {
-  text-align: center;
-  width: 200px;
-}
-
-.signature-line {
-  border-top: 1px solid #333;
-  margin-top: 60px;
-  padding-top: 8px;
-}
-
-/* Code snippet styling */
-.code-snippet {
-  background: #f8f8f8;
-  border: 1px solid #ddd;
-  border-left: 4px solid #4a5568;
-  padding: 16px;
-  margin: 16px 0;
-  font-family: "Courier New", monospace;
-  font-size: 10pt;
-  overflow-x: auto;
-  white-space: pre-wrap;
-}
-
-.code-snippet-caption {
-  font-style: italic;
-  font-size: 10pt;
-  color: #666;
-  margin-top: 8px;
-  text-align: center;
-}
-
-/* Figure styling */
-.report-figure {
-  margin: 24px 0;
-  text-align: center;
-}
-
-.report-figure img {
-  max-width: 100%;
-  border: 1px solid #ddd;
-}
-
-.report-figure-caption {
-  font-style: italic;
-  font-size: 10pt;
-  margin-top: 8px;
-}
-
-/* Table of contents */
-.toc-entry {
-  display: flex;
-  justify-content: space-between;
-  padding: 4px 0;
-  border-bottom: 1px dotted #ccc;
-}
-
-.toc-title {
-  flex: 1;
-}
-
-.toc-page {
-  font-weight: bold;
-  min-width: 30px;
-  text-align: right;
-}
-
-/* Header and footer for print */
-.print-header {
-  position: running(header);
-  text-align: center;
-  font-size: 10pt;
-  border-bottom: 1px solid #333;
-  padding-bottom: 8px;
-}
-
-.print-footer {
-  position: running(footer);
-  text-align: center;
-  font-size: 10pt;
-  border-top: 1px solid #333;
-  padding-top: 8px;
-}
+.report-page { min-height: 297mm; padding: 20mm 15mm 20mm 20mm; position: relative; }
+.report-h1 { font-size: 24px; font-weight: bold; text-align: center; margin-bottom: 24px; text-transform: uppercase; letter-spacing: 1px; }
+.report-h2 { font-size: 20px; font-weight: bold; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #333; }
+.report-h3 { font-size: 16px; font-weight: bold; margin-bottom: 12px; }
+.report-paragraph { text-align: justify; text-indent: 40px; margin-bottom: 12px; line-height: 1.8; }
+.report-list { margin-left: 40px; margin-bottom: 16px; }
+.report-list li { margin-bottom: 8px; line-height: 1.6; }
+.report-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 11pt; }
+.report-table th, .report-table td { border: 1px solid #333; padding: 8px 12px; text-align: left; }
+.report-table th { background: #f0f0f0; font-weight: bold; }
+.report-table caption { caption-side: bottom; font-style: italic; padding-top: 8px; font-size: 10pt; }
+.signature-section { margin-top: 60px; display: flex; justify-content: space-between; }
+.signature-box { text-align: center; width: 200px; }
+.signature-line { border-top: 1px solid #333; margin-top: 60px; padding-top: 8px; }
+.code-snippet { background: #f8f8f8; border: 1px solid #ddd; border-left: 4px solid #4a5568; padding: 16px; margin: 16px 0; font-family: "Courier New", monospace; font-size: 10pt; overflow-x: auto; white-space: pre-wrap; }
+.code-snippet-caption { font-style: italic; font-size: 10pt; color: #666; margin-top: 8px; text-align: center; }
+.report-figure { margin: 24px 0; text-align: center; }
+.report-figure img { max-width: 100%; border: 1px solid #ddd; }
