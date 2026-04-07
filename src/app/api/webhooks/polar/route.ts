@@ -5,6 +5,13 @@ import { PLANS } from "@/lib/plans";
 
 const WEBHOOK_SECRET = process.env.POLAR_WEBHOOK_SECRET!;
 
+// Extract email from Polar subscription event data
+function getSubscriptionEmail(subscription: Record<string, unknown>): string | undefined {
+  const user = subscription.user as Record<string, unknown> | undefined;
+  const customer = subscription.customer as Record<string, unknown> | undefined;
+  return (user?.email as string) || (customer?.email as string) || undefined;
+}
+
 export async function POST(req: NextRequest) {
   if (!WEBHOOK_SECRET) {
     return NextResponse.json({ error: "Webhook secret not configured" }, { status: 500 });
@@ -35,10 +42,7 @@ export async function POST(req: NextRequest) {
     case "subscription.created":
     case "subscription.updated": {
       const subscription = event.data;
-      // Polar SDK types might differ, verifying payload structure is tricky without strict types
-      // But typically subscription object has user info or custom_fields.
-
-      const email = (subscription as any).user?.email || (subscription as any).customer?.email;
+      const email = getSubscriptionEmail(subscription as Record<string, unknown>);
 
       if (email) {
         const user = await prisma.user.findUnique({ where: { email } });
@@ -60,6 +64,29 @@ export async function POST(req: NextRequest) {
                 data: { plan: newPlan }
               });
             }
+          }
+        }
+      }
+      break;
+    }
+    case "subscription.canceled":
+    case "subscription.revoked": {
+      const subscription = event.data;
+      const email = getSubscriptionEmail(subscription as Record<string, unknown>);
+
+      if (email) {
+        const user = await prisma.user.findUnique({ where: { email } });
+        if (user) {
+          const membership = await prisma.teamMember.findFirst({
+            where: { userId: user.id, role: "OWNER" },
+            include: { team: true }
+          });
+
+          if (membership && membership.team.plan !== "free") {
+            await prisma.team.update({
+              where: { id: membership.team.id },
+              data: { plan: "free" }
+            });
           }
         }
       }

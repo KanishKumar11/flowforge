@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import { encryptCredential } from "@/lib/crypto";
+import * as Sentry from "@sentry/nextjs";
 
 // OAuth2 callback handler for various providers
 export async function GET(
@@ -15,7 +17,7 @@ export async function GET(
   const error = searchParams.get("error");
 
   if (error) {
-    console.error(`OAuth error for ${provider}:`, error);
+    Sentry.captureMessage(`OAuth error for ${provider}: ${error}`, "warning");
     return NextResponse.redirect(
       new URL(`/credentials?error=${encodeURIComponent(error)}`, request.url),
     );
@@ -49,7 +51,7 @@ export async function GET(
         name: `${provider}-${Date.now()}`,
         type: "oauth2",
         provider,
-        data: JSON.stringify({ accessToken: tokens.access_token }), // Encrypt in production
+        data: encryptCredential({ accessToken: tokens.access_token }),
         userId,
         expiresAt: tokens.expires_in
           ? new Date(Date.now() + tokens.expires_in * 1000)
@@ -64,7 +66,7 @@ export async function GET(
       new URL(`/credentials?success=${provider}`, request.url),
     );
   } catch (err) {
-    console.error(`OAuth callback error for ${provider}:`, err);
+    Sentry.captureException(err, { tags: { provider, flow: "oauth_callback" } });
     return NextResponse.redirect(
       new URL(`/credentials?error=exchange_failed`, request.url),
     );

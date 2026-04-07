@@ -61,8 +61,7 @@ export function LoginForm() {
           },
         },
       );
-    } catch (error) {
-      console.error(error);
+    } catch {
       setIsLoading(false);
     }
   };
@@ -85,7 +84,7 @@ export function LoginForm() {
           className="w-full h-10 bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) hover:bg-(--arch-fg) hover:text-(--arch-bg) hover:border-(--arch-fg) transition-all duration-200 rounded-none font-mono text-xs uppercase"
         >
           <Github className="mr-2 h-4 w-4" />
-          Gihtub
+          GitHub
         </Button>
         <Button
           variant="outline"

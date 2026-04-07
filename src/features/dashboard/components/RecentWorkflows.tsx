@@ -1,10 +1,14 @@
-"use client";
-
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Workflow, Activity } from "lucide-react";
+import { ArrowRight, Workflow } from "lucide-react";
 import Link from "next/link";
-import { motion, Variants } from "framer-motion";
 
 interface RecentWorkflowsProps {
   workflows: any[] | undefined;
@@ -15,125 +19,84 @@ export function RecentWorkflows({
   workflows,
   isLoading,
 }: RecentWorkflowsProps) {
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2
-      },
-    },
-  };
-
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, x: -20 },
-    show: { 
-      opacity: 1, 
-      x: 0,
-      transition: { type: "spring", stiffness: 100, damping: 20 }
-    },
-  };
-
   return (
-    <div className="glass-panel p-8 rounded-[2rem] flex flex-col h-full relative overflow-hidden group">
-      {/* Decorative background element */}
-      <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--sidebar-primary)] opacity-5 blur-[100px] pointer-events-none group-hover:opacity-10 transition-opacity duration-1000" />
-      
-      <div className="flex items-start justify-between mb-8 relative z-10">
-        <div>
-          <h2 className="text-2xl font-light tracking-tight text-(--arch-fg) uppercase font-mono">
-            Recent_Workflows
-          </h2>
-          <p className="font-mono text-xs text-(--arch-muted) mt-1 flex items-center gap-2">
-            <Activity className="h-3 w-3 animate-pulse" />
-            LATEST_ACTIVITY //
-          </p>
-        </div>
-      </div>
-
-      <div className="flex-1 relative z-10">
+    <Card className="bg-(--arch-bg-secondary) border-(--arch-border) text-(--arch-fg) shadow-none rounded-none h-full">
+      <CardHeader>
+        <CardTitle className="text-xl font-heading font-light tracking-tight text-(--arch-fg) uppercase">
+          Recent_Workflows
+        </CardTitle>
+        <CardDescription className="font-mono text-xs text-(--arch-muted)">
+          LATEST_ACTIVITY //
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
         {isLoading ? (
           <div className="space-y-4">
-            {[...Array(4)].map((_, i) => (
-              <div key={i} className="flex items-center gap-4 bg-white/[0.02] p-4 rounded-2xl">
-                <div className="h-10 w-10 bg-white/5 rounded-xl animate-pulse" />
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="flex items-center gap-4">
+                <Skeleton className="h-10 w-10 bg-(--arch-border)" />
                 <div className="space-y-2 flex-1">
-                  <div className="h-4 w-1/3 bg-white/5 rounded animate-pulse" />
-                  <div className="h-3 w-1/4 bg-white/5 rounded animate-pulse" />
+                  <Skeleton className="h-4 w-3/4 bg-(--arch-border)" />
+                  <Skeleton className="h-3 w-1/2 bg-(--arch-border)" />
                 </div>
               </div>
             ))}
           </div>
         ) : workflows && workflows.length > 0 ? (
-          <motion.div 
-            variants={containerVariants}
-            initial="hidden"
-            animate="show"
-            className="space-y-3"
-          >
+          <div className="space-y-2">
             {workflows.slice(0, 5).map((workflow) => (
-              <motion.div key={workflow.id} variants={itemVariants}>
-                <Link
-                  href={`/workflows/${workflow.id}`}
-                  className="flex items-center justify-between p-4 bg-[rgba(255,255,255,0.02)] hover:bg-[rgba(255,255,255,0.06)] border border-transparent hover:border-white/10 rounded-2xl transition-all duration-300 group/item"
-                >
-                  <div className="flex items-center gap-4">
-                    <div
-                      className={`p-3 rounded-xl transition-all duration-500 ${workflow.isActive
-                        ? "bg-[rgba(var(--arch-accent-rgb)/0.15)] text-(--arch-accent) shadow-[0_0_15px_rgba(var(--arch-accent-rgb)/0.2)]"
-                        : "bg-[rgba(255,255,255,0.05)] text-(--arch-muted)"
-                        }`}
-                    >
-                      <Workflow className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <p className="font-mono text-sm font-medium text-(--arch-fg) tracking-tight">
-                        {workflow.name}
-                      </p>
-                      <div className="flex items-center gap-2 mt-1">
-                        <span
-                          className={`text-[10px] font-mono uppercase tracking-widest px-2 py-0.5 rounded-full ${workflow.isActive
-                            ? "bg-[rgba(var(--arch-accent-rgb)/0.1)] text-(--arch-accent)"
-                            : "bg-white/5 text-(--arch-muted)"
-                            }`}
-                        >
-                          {workflow.isActive ? "ACTIVE" : "DRAFT"}
-                        </span>
-                      </div>
+              <Link
+                key={workflow.id}
+                href={`/workflows/${workflow.id}`}
+                className="flex items-center justify-between p-3 -mx-2 hover:bg-(--arch-bg) border border-transparent hover:border-(--arch-border) transition-all group"
+              >
+                <div className="flex items-center gap-4">
+                  <div
+                    className={`p-2 transition-colors border ${workflow.isActive
+                      ? "bg-(--arch-fg) text-(--arch-bg) border-(--arch-fg)"
+                      : "bg-(--arch-bg) text-(--arch-muted) border-(--arch-border)"
+                      }`}
+                  >
+                    <Workflow className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <p className="font-mono text-sm font-medium text-(--arch-fg)">
+                      {workflow.name}
+                    </p>
+                    <div className="flex items-center gap-2 mt-0.5">
+                      <span
+                        className={`text-[10px] font-mono uppercase tracking-widest ${workflow.isActive
+                          ? "text-(--arch-accent)"
+                          : "text-(--arch-muted)"
+                          }`}
+                      >
+                        {workflow.isActive ? "STS:ACTIVE" : "STS:DRAFT"}
+                      </span>
                     </div>
                   </div>
-                  <div className="h-8 w-8 rounded-full bg-white/5 flex items-center justify-center opacity-0 -translate-x-4 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all duration-300">
-                    <ArrowRight className="h-4 w-4 text-(--arch-fg)" />
-                  </div>
-                </Link>
-              </motion.div>
+                </div>
+                <ArrowRight className="h-4 w-4 text-(--arch-fg) opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+              </Link>
             ))}
-          </motion.div>
+          </div>
         ) : (
-          <div className="h-full flex flex-col items-center justify-center py-12">
-            <motion.div 
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ type: "spring", stiffness: 100 }}
-              className="w-20 h-20 rounded-3xl bg-[rgba(255,255,255,0.02)] border border-white/5 flex items-center justify-center mb-6 relative overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-gradient-to-tr from-transparent to-white/5" />
+          <div className="text-center py-8">
+            <div className="w-16 h-16 border border-(--arch-border) flex items-center justify-center mx-auto mb-4 bg-(--arch-bg)">
               <Workflow className="h-8 w-8 text-(--arch-muted)" />
-            </motion.div>
-            <p className="text-(--arch-muted) font-mono text-sm mb-6 uppercase tracking-widest">
-              No Workflows Found
+            </div>
+            <p className="text-(--arch-muted) font-mono text-xs mb-4">
+              NO_DATA_FOUND
             </p>
             <Button
-              size="lg"
+              size="sm"
               asChild
-              className="rounded-full bg-(--arch-fg) text-[var(--background)] hover:bg-white text-xs font-mono uppercase tracking-widest border border-transparent shadow-[0_0_20px_rgba(var(--arch-accent-rgb)/0.2)] hover:shadow-[0_0_30px_rgba(var(--arch-accent-rgb)/0.4)] transition-all duration-500"
+              className="rounded-none bg-(--arch-fg) text-(--arch-bg) hover:bg-(--arch-muted) text-xs font-mono uppercase"
             >
-              <Link href="/workflows">Initialize First Flow</Link>
+              <Link href="/workflows">INIT_WORKFLOW</Link>
             </Button>
           </div>
         )}
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 }

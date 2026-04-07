@@ -64,8 +64,8 @@ async function resolveCredential(
           // decryption or data parse failed – ignore
         }
       }
-    } catch (err) {
-      console.warn("Error fetching credential for execution:", err);
+    } catch {
+      // Credential fetch failed — continue without auth
     }
   }
 
@@ -214,8 +214,8 @@ async function executeEmail(
           };
         }
       }
-    } catch (err) {
-      console.warn("[Email] Failed to load credential:", err);
+    } catch {
+      // Credential load failed — fall back to env vars
     }
   }
 
@@ -257,7 +257,6 @@ async function executeEmail(
       text: body || "",
     });
 
-    console.log(`[Email] Sent to ${to}: messageId=${info.messageId}`);
     return {
       sent: true,
       to,
@@ -820,10 +819,6 @@ async function executeSubWorkflow(
   });
 
   // Actually execute the sub-workflow
-  console.log(
-    `[SubWorkflow] Executing workflow ${workflowId} with execution ${execution.id}`,
-  );
-
   const result = await executeWorkflowDirect(workflowId, execution.id, inputData);
 
   return {
@@ -1053,8 +1048,7 @@ async function executeNode(
       // Trigger nodes just pass through the trigger data
       return context.triggerData;
     default:
-      console.log(`Unknown node type: ${type}`);
-      return { type, executed: true };
+      return { type, executed: true, warning: `Unknown node type: ${type}` };
   }
 }
 

@@ -61,7 +61,6 @@ export default function PDFReportViewer() {
       blobUrlRef.current = url;
       setPdfUrl(url);
     } catch (err) {
-      console.error("PDF generation failed:", err);
       setError(err instanceof Error ? err.message : "PDF generation failed");
     } finally {
       setIsGenerating(false);

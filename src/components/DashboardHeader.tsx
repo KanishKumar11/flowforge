@@ -13,6 +13,7 @@ import {
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { NotificationCenter } from "@/components/NotificationCenter";
 import {
+  FolderKanban,
   History,
   KeyRound,
   Plus,
@@ -21,7 +22,6 @@ import {
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
 
 interface DashboardHeaderProps {
   title: React.ReactNode;
@@ -52,90 +52,57 @@ export function DashboardHeader({
 
   return (
     <>
-      <motion.header 
-        initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ type: "spring", stiffness: 100, damping: 20 }}
-        className="sticky top-0 z-40 w-full mb-4"
-      >
-        <div className="flex items-center gap-4 py-4 w-full">
-          {/* Sidebar Toggle */}
-          <motion.div 
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.1 }}
-          >
-            <SidebarTrigger className="-ml-2 hover:bg-white/10 text-(--arch-muted) hover:text-(--arch-fg) transition-colors h-10 w-10" />
-          </motion.div>
+      <header className="sticky top-0 z-40 w-full border-b border-border/50 bg-background/80 backdrop-blur-2xl">
+        <div className="flex items-center justify-between px-6 lg:px-10 py-5">
+          <div className="flex items-center gap-6">
+            {/* Sidebar Toggle */}
+            <SidebarTrigger className="-ml-2 transition-transform hover:scale-105 active:scale-95 text-muted-foreground hover:text-foreground" />
 
-          {/* Title Section */}
-          <div className="flex-1 min-w-0 flex flex-col justify-center">
-            <motion.h1 
-              initial={{ x: -20, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ delay: 0.2, type: "spring" }}
-              className="font-heading uppercase tracking-tight text-(--arch-fg) text-3xl truncate bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent w-fit"
-            >
-              {title}
-            </motion.h1>
-            {description && (
-              <motion.p 
-                initial={{ x: -20, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ delay: 0.3, type: "spring" }}
-                className="font-mono text-[10px] text-(--arch-muted) tracking-widest truncate mt-1 w-fit uppercase"
-              >
-                {description}
-              </motion.p>
-            )}
+            {/* Title Section - Upgraded to Premium Aesthetic */}
+            <div className="flex flex-col justify-center">
+              <h1 className="text-2xl md:text-[1.75rem] font-semibold tracking-tight text-foreground leading-none">
+                {title}
+              </h1>
+              {description && (
+                <p className="text-sm text-muted-foreground/80 mt-2 font-medium tracking-wide">
+                  {description}
+                </p>
+              )}
+            </div>
           </div>
 
-          <div className="flex items-center gap-4 justify-end">
+          <div className="flex items-center gap-4">
             {/* Search Button */}
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.4 }}
+            <Button
+              variant="outline"
+              className="relative h-10 w-10 p-0 xl:h-10 xl:w-64 xl:justify-start xl:px-4 bg-background/50 hover:bg-background border-border/60 text-muted-foreground hover:text-foreground transition-all duration-300 rounded-xl text-sm font-medium shadow-sm hover:shadow-md"
+              onClick={() => setOpen(true)}
             >
-              <Button
-                variant="outline"
-                className="relative h-10 w-10 p-0 xl:h-10 xl:w-64 xl:justify-start xl:px-4 xl:py-2 bg-white/[0.02] border-white/10 text-(--arch-muted) hover:text-(--arch-fg) hover:border-white/20 hover:bg-white/[0.05] transition-all font-mono uppercase tracking-widest text-[10px] rounded-full shadow-inner"
-                onClick={() => setOpen(true)}
-              >
-                <Search className="h-4 w-4 xl:mr-3" />
-                <span className="hidden xl:inline-flex">Search Matrix...</span>
-                <kbd className="pointer-events-none absolute right-2 hidden h-6 select-none items-center gap-1 rounded-full border border-white/10 bg-white/5 px-2 font-mono text-[10px] font-medium opacity-100 xl:flex text-white/50">
-                  <span className="text-[10px]">⌘</span>K
-                </kbd>
-              </Button>
-            </motion.div>
+              <Search className="h-[18px] w-[18px] xl:mr-3 opacity-70" />
+              <span className="hidden xl:inline-flex">Search...</span>
+              <kbd className="pointer-events-none absolute right-2 hidden h-6 select-none items-center gap-1 rounded-md border border-border/50 bg-muted/50 px-2 font-sans text-[11px] font-semibold text-muted-foreground opacity-100 xl:flex shadow-sm">
+                <span className="text-[10px]">⌘</span>K
+              </kbd>
+            </Button>
 
             {/* Notifications */}
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.5 }}
-            >
+            <div className="hidden sm:block">
               <NotificationCenter />
-            </motion.div>
+            </div>
 
             {/* Action Button */}
             {action && (
-              <motion.div 
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.6 }}
-              >
+              <div className="ml-2 pl-4 border-l border-border/50 hidden sm:flex">
                 {action}
-              </motion.div>
+              </div>
             )}
           </div>
         </div>
-      </motion.header>
+      </header>
 
       {/* Command Palette */}
       <CommandDialog open={open} onOpenChange={setOpen}>
-        <CommandInput placeholder="Type a command or search..." />
+        <CommandInput placeholder="Search workflows, commands..." />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
           <CommandGroup heading="Quick Actions">

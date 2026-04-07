@@ -32,27 +32,17 @@ interface WorkflowItem {
   };
 }
 
-// Template configurations
-const TEMPLATES = [
-  {
-    id: "seo-writer",
-    name: "SEO Content Generator",
-    description: "Auto-generate optimized blog posts from keywords",
-    icon: Sparkles,
-  },
-  {
-    id: "email-responder",
-    name: "Email Auto-Responder",
-    description: "AI-powered email classification and drafting",
-    icon: Zap,
-  },
-  {
-    id: "data-scraper",
-    name: "Data Scraper",
-    description: "Extract and structure data from competitor sites",
-    icon: Globe,
-  },
-];
+// Icon map for template categories
+const categoryIcons: Record<
+  string,
+  React.ComponentType<{ className?: string }>
+> = {
+  Notifications: Zap,
+  Scheduled: Sparkles,
+  AI: Sparkles,
+  Data: Globe,
+  default: Zap,
+};
 
 export function WorkflowsPageClient() {
   const router = useRouter();
@@ -66,6 +56,11 @@ export function WorkflowsPageClient() {
     isLoading,
     refetch,
   } = useQuery(trpc.workflows.list.queryOptions());
+
+  const { data: templatesData } = useQuery(
+    trpc.workflows.templates.queryOptions(),
+  );
+  const templates = templatesData?.templates?.slice(0, 3) ?? [];
 
   // Cast to explicit type to avoid deep type inference
   const workflows = workflowsData as WorkflowItem[] | undefined;
@@ -131,7 +126,7 @@ export function WorkflowsPageClient() {
     await createWorkflow.mutateAsync(data);
   };
 
-  const handleCreateFromTemplate = async (template: (typeof TEMPLATES)[0]) => {
+  const handleCreateFromTemplate = async (template: (typeof templates)[0]) => {
     await createWorkflow.mutateAsync({
       name: template.name,
       description: template.description,
@@ -144,12 +139,12 @@ export function WorkflowsPageClient() {
         title="Workflows"
         description="Create and manage your automation workflows"
         action={
-          <div className="flex items-center gap-2">
+          <div className="flex items-center">
             <Button
               onClick={() => setShowCreateModal(true)}
-              className="gap-2 bg-(--arch-fg) text-(--arch-bg) hover:bg-[rgba(var(--arch-fg-rgb)/0.9)] rounded-none border-0 font-mono uppercase text-xs h-10 px-6 shadow-[0_0_15px_rgba(var(--arch-fg-rgb),0.3)]"
+              className="gap-2.5 bg-primary text-primary-foreground hover:bg-primary/95 rounded-xl border border-primary/20 font-medium tracking-tight text-[13px] h-10 px-6 shadow-sm transition-all hover:-translate-y-[1px] hover:shadow-md"
             >
-              <Plus className="h-4 w-4" />
+              <Plus className="h-4 w-4" strokeWidth={2} />
               New Workflow
             </Button>
           </div>
@@ -158,36 +153,41 @@ export function WorkflowsPageClient() {
 
       <div className="flex-1 p-8 overflow-auto">
         {/* Templates Section */}
-        {!isLoading && (!workflows || workflows.length === 0) && (
+        {!isLoading && (!workflows || workflows.length === 0) && templates.length > 0 && (
           <div className="mb-12">
             <h3 className="text-sm font-bold font-mono uppercase text-(--arch-fg) tracking-widest mb-4 flex items-center gap-2">
               <Sparkles className="w-4 h-4" />
               Quick Start Templates
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {TEMPLATES.map((template) => (
-                <button
-                  key={template.id}
-                  onClick={() => handleCreateFromTemplate(template)}
-                  className="group text-left p-6 border border-(--arch-border) bg-(--arch-bg-secondary) hover:border-(--arch-fg) transition-all duration-300 relative overflow-hidden"
-                  disabled={createWorkflow.isPending}
-                >
-                  <div className="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity transform group-hover:scale-110 duration-500">
-                    <template.icon className="w-16 h-16 text-(--arch-fg)" />
-                  </div>
-                  <div className="relative z-10">
-                    <div className="p-2 border border-(--arch-border) bg-(--arch-bg) w-fit mb-4 group-hover:border-(--arch-fg) transition-colors">
-                      <template.icon className="w-5 h-5 text-(--arch-fg)" />
+              {templates.map((template) => {
+                const IconComponent =
+                  categoryIcons[template.category] ||
+                  categoryIcons.default;
+                return (
+                  <button
+                    key={template.id}
+                    onClick={() => handleCreateFromTemplate(template)}
+                    className="group text-left p-6 border border-(--arch-border) bg-(--arch-bg-secondary) hover:border-(--arch-fg) transition-all duration-300 relative overflow-hidden"
+                    disabled={createWorkflow.isPending}
+                  >
+                    <div className="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity transform group-hover:scale-110 duration-500">
+                      <IconComponent className="w-16 h-16 text-(--arch-fg)" />
                     </div>
-                    <h4 className="font-bold font-mono text-sm text-(--arch-fg) mb-1 uppercase tracking-tight">
-                      {template.name}
-                    </h4>
-                    <p className="text-xs text-(--arch-muted) font-mono leading-relaxed">
-                      {template.description}
-                    </p>
-                  </div>
-                </button>
-              ))}
+                    <div className="relative z-10">
+                      <div className="p-2 border border-(--arch-border) bg-(--arch-bg) w-fit mb-4 group-hover:border-(--arch-fg) transition-colors">
+                        <IconComponent className="w-5 h-5 text-(--arch-fg)" />
+                      </div>
+                      <h4 className="font-bold font-mono text-sm text-(--arch-fg) mb-1 uppercase tracking-tight">
+                        {template.name}
+                      </h4>
+                      <p className="text-xs text-(--arch-muted) font-mono leading-relaxed">
+                        {template.description}
+                      </p>
+                    </div>
+                  </button>
+                );
+              })}
             </div>
           </div>
         )}

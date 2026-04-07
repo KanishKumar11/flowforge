@@ -2,6 +2,7 @@ import prisma from "@/lib/db";
 import { createTRPCRouter, protectedProcedure } from "../init";
 import { z } from "zod";
 import { getNextCronDate } from "@/lib/cron-helper";
+import { TRPCError } from "@trpc/server";
 
 export const schedulesRouter = createTRPCRouter({
   // List all schedules for a workflow or all workflows
@@ -43,7 +44,7 @@ export const schedulesRouter = createTRPCRouter({
       });
 
       if (!workflow) {
-        throw new Error("Workflow not found");
+        throw new TRPCError({ code: "NOT_FOUND", message: "Workflow not found" });
       }
 
       return prisma.schedule.create({
@@ -79,7 +80,7 @@ export const schedulesRouter = createTRPCRouter({
       });
 
       if (!schedule) {
-        throw new Error("Schedule not found");
+        throw new TRPCError({ code: "NOT_FOUND", message: "Schedule not found" });
       }
 
       // If cron expression changed, recalculate nextRunAt
@@ -108,7 +109,7 @@ export const schedulesRouter = createTRPCRouter({
       });
 
       if (!schedule) {
-        throw new Error("Schedule not found");
+        throw new TRPCError({ code: "NOT_FOUND", message: "Schedule not found" });
       }
 
       return prisma.schedule.delete({
@@ -128,7 +129,7 @@ export const schedulesRouter = createTRPCRouter({
       });
 
       if (!schedule) {
-        throw new Error("Schedule not found");
+        throw new TRPCError({ code: "NOT_FOUND", message: "Schedule not found" });
       }
 
       return prisma.schedule.update({

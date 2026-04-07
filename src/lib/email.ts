@@ -17,10 +17,7 @@ export async function sendInvitationEmail(
   inviterName: string
 ) {
   if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
-    console.warn("SMTP credentials not set. Email simulation:");
-    console.log(`To: ${email}`);
-    console.log(`Subject: Join ${teamName} on FlowGent`);
-    console.log(`Link: ${link}`);
+    // SMTP not configured — skip email sending silently
     return;
   }
 

@@ -2,6 +2,7 @@ import prisma from "@/lib/db";
 import { createTRPCRouter, protectedProcedure } from "../init";
 import { z } from "zod";
 import { nanoid } from "nanoid";
+import { TRPCError } from "@trpc/server";
 
 export const webhooksRouter = createTRPCRouter({
   // List all webhooks for a workflow or all workflows
@@ -44,7 +45,7 @@ export const webhooksRouter = createTRPCRouter({
       });
 
       if (!workflow) {
-        throw new Error("Workflow not found");
+        throw new TRPCError({ code: "NOT_FOUND", message: "Workflow not found" });
       }
 
       // Generate unique path (just the ID segment — the route handler receives this from [path])
@@ -80,7 +81,7 @@ export const webhooksRouter = createTRPCRouter({
       });
 
       if (!webhook) {
-        throw new Error("Webhook not found");
+        throw new TRPCError({ code: "NOT_FOUND", message: "Webhook not found" });
       }
 
       return prisma.webhookEndpoint.update({
@@ -101,7 +102,7 @@ export const webhooksRouter = createTRPCRouter({
       });
 
       if (!webhook) {
-        throw new Error("Webhook not found");
+        throw new TRPCError({ code: "NOT_FOUND", message: "Webhook not found" });
       }
 
       return prisma.webhookEndpoint.delete({
@@ -121,10 +122,10 @@ export const webhooksRouter = createTRPCRouter({
       });
 
       if (!webhook) {
-        throw new Error("Webhook not found");
+        throw new TRPCError({ code: "NOT_FOUND", message: "Webhook not found" });
       }
 
-      const newPath = `/api/webhooks/${nanoid(12)}`;
+      const newPath = nanoid(12);
 
       return prisma.webhookEndpoint.update({
         where: { id: input.id },

@@ -54,7 +54,6 @@ export function SignupForm() {
   const onSubmit = async (values: SignupFormValues) => {
     setIsLoading(true);
     try {
-      console.log("Signup with:", values);
       await authClient.signUp.email(
         {
           name: values.name,
@@ -66,14 +65,13 @@ export function SignupForm() {
           onSuccess: async () => {
             router.push("/dashboard");
           },
-          onError: (err) => {
-            console.log(err);
+          onError: () => {
             toast.error("Something went wrong");
           },
         },
       );
-    } catch (error) {
-      console.error(error);
+    } catch {
+      // handled by onError callback
     } finally {
       setIsLoading(false);
     }

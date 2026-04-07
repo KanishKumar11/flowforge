@@ -3,6 +3,7 @@ import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
 import { TRPCError } from "@trpc/server";
 import prisma from "@/lib/db";
 import { PLANS } from "@/lib/plans";
+import { randomBytes } from "crypto";
 
 export const teamsRouter = createTRPCRouter({
   // List teams the user belongs to
@@ -149,7 +150,7 @@ export const teamsRouter = createTRPCRouter({
 
       // Check plan limits
       const team = membership.team;
-      const plan = ((team as any).plan?.toUpperCase() as keyof typeof PLANS) || "FREE";
+      const plan = (team.plan?.toUpperCase() as keyof typeof PLANS) || "FREE";
       const limit =
         PLANS[plan]?.limits.teamMembers || PLANS.FREE.limits.teamMembers;
 
@@ -194,8 +195,8 @@ export const teamsRouter = createTRPCRouter({
         });
       }
 
-      // Create invitation
-      const token = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+      // Create invitation with cryptographically secure token
+      const token = randomBytes(24).toString("base64url");
       const expiresAt = new Date();
       expiresAt.setDate(expiresAt.getDate() + 7); // 7 days expiry
 
@@ -374,7 +375,7 @@ export const teamsRouter = createTRPCRouter({
         data: {
           teamId: invitation.teamId,
           userId: ctx.user.id,
-          role: invitation.role as any,
+          role: invitation.role as "OWNER" | "ADMIN" | "MEMBER" | "VIEWER",
         },
       });
 

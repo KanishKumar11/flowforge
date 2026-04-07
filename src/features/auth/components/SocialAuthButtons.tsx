@@ -16,8 +16,7 @@ export function SocialAuthButtons() {
         provider: provider,
         callbackURL: "/dashboard", // Or wherever you want them to go
       });
-    } catch (error) {
-      console.error(error);
+    } catch {
       toast.error(`Failed to sign in with ${provider}`);
     } finally {
       setIsLoading(null);
@@ -30,7 +29,7 @@ export function SocialAuthButtons() {
         variant="outline"
         disabled={!!isLoading}
         onClick={() => handleSocialLogin("github")}
-        className="w-full h-10 bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) hover:bg-(--arch-fg) hover:text-(--arch-bg) hover:border-(--arch-fg) transition-all duration-200 rounded-none font-mono text-xs uppercase cursor-pointer"
+        className="w-full h-10 bg-background border-border text-foreground hover:bg-foreground hover:text-background hover:border-foreground transition-all duration-200 rounded-none font-mono text-xs uppercase cursor-pointer"
       >
         {isLoading === "github" ? (
           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -43,7 +42,7 @@ export function SocialAuthButtons() {
         variant="outline"
         disabled={!!isLoading}
         onClick={() => handleSocialLogin("google")}
-        className="w-full h-10 bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) hover:bg-(--arch-fg) hover:text-(--arch-bg) hover:border-(--arch-fg) transition-all duration-200 rounded-none font-mono text-xs uppercase cursor-pointer"
+        className="w-full h-10 bg-background border-border text-foreground hover:bg-foreground hover:text-background hover:border-foreground transition-all duration-200 rounded-none font-mono text-xs uppercase cursor-pointer"
       >
         {isLoading === "google" ? (
           <Loader2 className="mr-2 h-4 w-4 animate-spin" />

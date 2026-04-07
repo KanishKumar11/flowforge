@@ -1,6 +1,7 @@
 import { inngest } from "@/inngest/client";
 import prisma from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
+import * as Sentry from "@sentry/nextjs";
 
 interface WebhookParams {
   params: Promise<{ path: string }>;
@@ -122,9 +123,9 @@ async function handleWebhook(request: NextRequest, { path }: { path: string }) {
       message: "Workflow execution triggered",
     });
   } catch (error) {
-    console.error("Webhook handling error:", error);
+    Sentry.captureException(error);
     return NextResponse.json(
-      { error: "Internal server error", message: (error as Error).message },
+      { error: "Internal server error" },
       { status: 500 },
     );
   }

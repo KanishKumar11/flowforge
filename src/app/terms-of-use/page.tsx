@@ -1,107 +1,156 @@
+import { ArrowLeft, Zap } from "lucide-react";
 import Link from "next/link";
 
 export default function TermsOfUsePage() {
   return (
-    <div className="min-h-screen w-full bg-(--arch-bg) text-(--arch-fg) font-mono p-8 md:p-12 overflow-y-auto selection:bg-(--arch-accent) selection:text-(--arch-bg)">
-      <div className="max-w-3xl mx-auto space-y-12">
-        {/* Header */}
-        <header className="border-b border-(--arch-border) pb-8 space-y-4">
-          <div className="flex justify-between items-start">
-            <h1 className="text-4xl font-bold uppercase tracking-tight text-(--arch-fg)">
-              USER_AGREEMENT: <span className="text-(--arch-muted)">TERMS</span>
-            </h1>
-            <div className="text-right text-xs text-(--arch-muted) space-y-1">
-              <p>DOC_ID: TOU-2024-V2</p>
-              <p>STATUS: BINDING</p>
+    <div className="min-h-dvh w-full bg-background text-foreground overflow-y-auto selection:bg-primary selection:text-primary-foreground">
+      {/* Minimal page header */}
+      <header className="sticky top-0 z-20 border-b border-border/50 bg-background/80 backdrop-blur-sm">
+        <div className="max-w-3xl mx-auto px-6 h-14 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2.5 group">
+            <div className="h-7 w-7 rounded-lg bg-foreground flex items-center justify-center transition-transform group-hover:scale-105">
+              <Zap className="h-3.5 w-3.5 text-background fill-current" />
             </div>
-          </div>
-          <p className="text-sm text-(--arch-muted) max-w-xl">
-            // CONDITIONS FOR SYSTEM ACCESS AND USAGE. // FAILURE TO COMPLY WILL
-            RESULT IN IMMEDIATE TERMINATION.
+            <span className="text-sm font-semibold tracking-tight text-foreground">
+              Flowgent
+            </span>
+          </Link>
+          <Link
+            href="/login"
+            className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors font-medium"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back
+          </Link>
+        </div>
+      </header>
+
+      <main className="max-w-3xl mx-auto px-6 py-16 space-y-12">
+        {/* Page title */}
+        <div className="space-y-3 border-b border-border/50 pb-10">
+          <p className="text-xs font-semibold text-primary uppercase tracking-widest">
+            Legal
           </p>
-        </header>
+          <h1 className="text-4xl font-bold tracking-tighter text-foreground">
+            Terms of Use
+          </h1>
+          <p className="text-base text-muted-foreground leading-relaxed max-w-lg">
+            By accessing or using Flowgent, you agree to the conditions outlined
+            below. Please read them carefully before proceeding.
+          </p>
+          <div className="flex items-center gap-4 pt-2 text-xs text-muted-foreground font-medium">
+            <span>Version 2.0</span>
+            <span className="w-1 h-1 rounded-full bg-border" />
+            <span>Effective January 2024</span>
+          </div>
+        </div>
 
         {/* Content */}
-        <main className="space-y-10 text-sm leading-relaxed">
+        <div className="space-y-10 text-sm leading-relaxed">
           <section className="space-y-4">
-            <h2 className="text-lg font-bold uppercase tracking-widest text-(--arch-accent) flex items-center gap-2">
-              <span className="w-2 h-2 bg-(--arch-accent)"></span>
-              SEC_01: ACCESS_RIGHTS
+            <h2 className="text-lg font-semibold text-foreground flex items-center gap-3">
+              <span className="flex items-center justify-center w-6 h-6 rounded-md bg-secondary border border-border/50 text-xs font-bold text-muted-foreground">
+                1
+              </span>
+              Access Rights
             </h2>
-            <div className="pl-4 border-l border-(--arch-border) space-y-4 text-(--arch-fg) opacity-90">
+            <div className="pl-9 space-y-4 text-muted-foreground">
               <p>
-                ACCESS TO THE FLOWFORGE INFRASTRUCTURE IS A PRIVILEGE, NOT A
-                RIGHT. ADMINISTRATION RESERVES THE RIGHT TO REVOKE ACCESS KEYS
-                AT ANY MOMENT WITHOUT PRIOR WARNING.
+                Access to Flowgent's infrastructure is governed by your
+                subscription plan and account status. We reserve the right to
+                suspend or terminate access for violations of these terms at our
+                discretion.
               </p>
               <p>
-                YOU AGREE NOT TO ATTEMPT TO BYPASS SECURITY PROTOCOLS, REVERSE
-                ENGINEER CORE SYSTEMS, OR INJECT MALICIOUS CODE INTO THE
-                WORKFLOW ENGINE.
+                You agree not to attempt to bypass security measures, reverse
+                engineer core systems, or inject unauthorized code or payloads
+                into the workflow engine.
               </p>
             </div>
           </section>
 
+          <div className="border-t border-border/40" />
+
           <section className="space-y-4">
-            <h2 className="text-lg font-bold uppercase tracking-widest text-(--arch-accent) flex items-center gap-2">
-              <span className="w-2 h-2 bg-(--arch-accent)"></span>
-              SEC_02: USER_RESPONSIBILITY
+            <h2 className="text-lg font-semibold text-foreground flex items-center gap-3">
+              <span className="flex items-center justify-center w-6 h-6 rounded-md bg-secondary border border-border/50 text-xs font-bold text-muted-foreground">
+                2
+              </span>
+              User Responsibility
             </h2>
-            <div className="pl-4 border-l border-(--arch-border) space-y-4 text-(--arch-fg) opacity-90">
+            <div className="pl-9 space-y-4 text-muted-foreground">
               <p>
-                OPERATORS ARE SOLELY RESPONSIBLE FOR THE INTEGRITY OF THEIR
-                CREDENTIALS. ANY ACTION PERFORMED UNDER YOUR IDENTIFIER WILL BE
-                ATTRIBUTED TO YOU.
+                You are solely responsible for the integrity and security of
+                your credentials. Any action performed under your account will
+                be attributed to you.
               </p>
               <p>
-                DO NOT SHARE ACCESS KEYS. SECURITY BREACHES MUST BE REPORTED
-                IMMEDIATELY VIA THE EMERGENCY CHANNEL.
+                Do not share your access tokens or API keys. Security incidents
+                must be reported promptly via our support channel.
               </p>
             </div>
           </section>
 
+          <div className="border-t border-border/40" />
+
           <section className="space-y-4">
-            <h2 className="text-lg font-bold uppercase tracking-widest text-(--arch-accent) flex items-center gap-2">
-              <span className="w-2 h-2 bg-(--arch-accent)"></span>
-              SEC_03: LIABILITY
+            <h2 className="text-lg font-semibold text-foreground flex items-center gap-3">
+              <span className="flex items-center justify-center w-6 h-6 rounded-md bg-secondary border border-border/50 text-xs font-bold text-muted-foreground">
+                3
+              </span>
+              Limitation of Liability
             </h2>
-            <div className="pl-4 border-l border-(--arch-border) space-y-4 text-(--arch-fg) opacity-90">
+            <div className="pl-9 space-y-4 text-muted-foreground">
               <p>
-                THE SYSTEM IS PROVIDED "AS IS". WE ARE NOT LIABLE FOR DATA LOSS,
-                WORKFLOW INTERRUPTIONS, OR UNFORESEEN CASCADING FAILURES
-                RESULTING FROM USER CONFIGURATIONS.
+                Flowgent is provided "as is" without warranty of any kind. We
+                are not liable for data loss, workflow interruptions, or
+                failures resulting from user configurations, third-party API
+                changes, or infrastructure events outside our control.
               </p>
             </div>
           </section>
 
+          <div className="border-t border-border/40" />
+
           <section className="space-y-4">
-            <h2 className="text-lg font-bold uppercase tracking-widest text-(--arch-accent) flex items-center gap-2">
-              <span className="w-2 h-2 bg-(--arch-accent)"></span>
-              SEC_04: MODIFICATIONS
+            <h2 className="text-lg font-semibold text-foreground flex items-center gap-3">
+              <span className="flex items-center justify-center w-6 h-6 rounded-md bg-secondary border border-border/50 text-xs font-bold text-muted-foreground">
+                4
+              </span>
+              Modifications to Terms
             </h2>
-            <div className="pl-4 border-l border-(--arch-border) space-y-4 text-(--arch-fg) opacity-90">
+            <div className="pl-9 space-y-4 text-muted-foreground">
               <p>
-                TERMS MAY BE UPDATED VIA OVER-THE-AIR PATCHES. CONTINUED USAGE
-                OF THE SYSTEM IMPLIES ACCEPTANCE OF THE NEW PROTOCOLS.
+                These terms may be updated from time to time. We will notify
+                users of significant changes via email or in-product
+                notification. Continued use of the platform after updates
+                constitutes acceptance of the revised terms.
               </p>
             </div>
           </section>
-        </main>
+        </div>
 
         {/* Footer */}
-        <footer className="pt-12 border-t border-(--arch-border) flex justify-between items-center">
-          <Link
-            href="/register"
-            className="text-xs font-bold uppercase tracking-widest hover:text-(--arch-accent) transition-colors flex items-center gap-2 group"
-          >
-            <span className="group-hover:-translate-x-1 transition-transform">
-              {"<-"}
-            </span>
-            ACKNOWLEDGE_&_RETURN
-          </Link>
-          <div className="text-xs text-(--arch-muted)">FIRMWARE: V2.0.4</div>
-        </footer>
-      </div>
+        <div className="pt-10 border-t border-border/50 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="text-xs text-muted-foreground">
+            &copy; {new Date().getFullYear()} Flowgent. All rights reserved.
+          </div>
+          <div className="flex items-center gap-4 text-xs text-muted-foreground">
+            <Link
+              href="/privacy-protocol"
+              className="hover:text-foreground transition-colors font-medium"
+            >
+              Privacy Policy
+            </Link>
+            <Link
+              href="/login"
+              className="hover:text-foreground transition-colors font-medium"
+            >
+              Sign in
+            </Link>
+          </div>
+        </div>
+      </main>
     </div>
   );
 }

@@ -147,34 +147,34 @@ export default function TeamDetailPage() {
       <div className="flex-1 p-6 overflow-auto space-y-6 max-w-5xl mx-auto w-full">
         {/* Stats */}
         <div className="grid grid-cols-2 gap-6">
-          <Card className="bg-(--arch-bg) border-(--arch-border) shadow-none rounded-none group">
+          <Card className="bg-background border-border shadow-none rounded-xl group">
             <CardContent className="pt-6 relative z-10">
               <div className="flex items-center gap-4">
-                <div className="p-3 bg-[rgba(var(--arch-fg-rgb)/0.1)] border border-[rgba(var(--arch-fg-rgb)/0.2)] rounded-none">
-                  <Users className="h-8 w-8 text-(--arch-fg)" />
+                <div className="p-3 bg-[rgba(var(--foreground)/0.1)] border border-[rgba(var(--foreground)/0.2)] rounded-xl">
+                  <Users className="h-8 w-8 text-foreground" />
                 </div>
                 <div>
-                  <p className="text-3xl font-bold tracking-tight text-(--arch-fg) font-mono">
+                  <p className="text-3xl font-bold tracking-tight text-foreground font-mono">
                     {team.members.length}
                   </p>
-                  <p className="text-xs text-(--arch-muted) font-mono uppercase tracking-wider">
+                  <p className="text-xs text-muted-foreground font-mono uppercase tracking-wider">
                     Members
                   </p>
                 </div>
               </div>
             </CardContent>
           </Card>
-          <Card className="bg-(--arch-bg) border-(--arch-border) shadow-none rounded-none group">
+          <Card className="bg-background border-border shadow-none rounded-xl group">
             <CardContent className="pt-6 relative z-10">
               <div className="flex items-center gap-4">
-                <div className="p-3 bg-[rgba(var(--arch-fg-rgb)/0.1)] border border-[rgba(var(--arch-fg-rgb)/0.2)] rounded-none">
-                  <Workflow className="h-8 w-8 text-(--arch-fg)" />
+                <div className="p-3 bg-[rgba(var(--foreground)/0.1)] border border-[rgba(var(--foreground)/0.2)] rounded-xl">
+                  <Workflow className="h-8 w-8 text-foreground" />
                 </div>
                 <div>
-                  <p className="text-3xl font-bold tracking-tight text-(--arch-fg) font-mono">
+                  <p className="text-3xl font-bold tracking-tight text-foreground font-mono">
                     {team._count.workflows}
                   </p>
-                  <p className="text-xs text-(--arch-muted) font-mono uppercase tracking-wider">
+                  <p className="text-xs text-muted-foreground font-mono uppercase tracking-wider">
                     Workflows
                   </p>
                 </div>
@@ -184,14 +184,14 @@ export default function TeamDetailPage() {
         </div>
 
         {/* Members */}
-        <Card className="bg-(--arch-bg) border-(--arch-border) shadow-none rounded-none">
-          <CardHeader className="flex flex-row items-center justify-between pb-6 border-b border-(--arch-border)">
+        <Card className="bg-background border-border shadow-none rounded-xl">
+          <CardHeader className="flex flex-row items-center justify-between pb-6 border-b border-border">
             <div className="space-y-1">
-              <CardTitle className="text-xl font-bold flex items-center gap-2 font-mono uppercase text-(--arch-fg)">
-                <Shield className="h-5 w-5 text-(--arch-fg)" />
+              <CardTitle className="text-xl font-bold flex items-center gap-2 font-mono uppercase text-foreground">
+                <Shield className="h-5 w-5 text-foreground" />
                 Team Members
               </CardTitle>
-              <p className="text-xs text-(--arch-muted) font-mono">
+              <p className="text-xs text-muted-foreground font-mono">
                 Manage access and roles for your team
               </p>
             </div>
@@ -200,21 +200,21 @@ export default function TeamDetailPage() {
                 <DialogTrigger asChild>
                   <Button
                     size="sm"
-                    className="shadow-none bg-(--arch-fg) text-(--arch-bg) hover:bg-[rgba(var(--arch-fg-rgb)/0.9)] rounded-none font-mono uppercase text-xs h-8 border border-(--arch-fg)"
+                    className="shadow-none bg-foreground text-background hover:bg-[rgba(var(--foreground)/0.9)] rounded-xl font-mono uppercase text-xs h-8 border border-foreground"
                   >
                     <UserPlus className="h-4 w-4 mr-2" />
                     Invite Member
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="bg-(--arch-bg) border-(--arch-border) rounded-none sm:max-w-[425px]">
+                <DialogContent className="bg-background border-border rounded-xl sm:max-w-[425px]">
                   <DialogHeader>
-                    <DialogTitle className="font-mono uppercase text-(--arch-fg)">
+                    <DialogTitle className="font-mono uppercase text-foreground">
                       Invite Team Member
                     </DialogTitle>
                   </DialogHeader>
                   <div className="space-y-4 pt-4">
                     <div className="space-y-2">
-                      <Label className="text-(--arch-fg) font-mono uppercase text-xs">
+                      <Label className="text-foreground font-mono uppercase text-xs">
                         Email Address
                       </Label>
                       <Input
@@ -222,11 +222,11 @@ export default function TeamDetailPage() {
                         placeholder="member@example.com"
                         value={inviteEmail}
                         onChange={(e) => setInviteEmail(e.target.value)}
-                        className="bg-(--arch-bg) border-(--arch-border) focus:border-(--arch-fg) text-(--arch-fg) font-mono rounded-none placeholder:text-(--arch-muted) text-xs"
+                        className="bg-background border-border focus:border-foreground text-foreground font-mono rounded-xl placeholder:text-muted-foreground text-xs"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label className="text-(--arch-fg) font-mono uppercase text-xs">
+                      <Label className="text-foreground font-mono uppercase text-xs">
                         Role
                       </Label>
                       <Select
@@ -235,25 +235,25 @@ export default function TeamDetailPage() {
                           setInviteRole(v as typeof inviteRole)
                         }
                       >
-                        <SelectTrigger className="bg-(--arch-bg) border-(--arch-border) focus:border-(--arch-fg) text-(--arch-fg) font-mono rounded-none text-xs">
+                        <SelectTrigger className="bg-background border-border focus:border-foreground text-foreground font-mono rounded-xl text-xs">
                           <SelectValue />
                         </SelectTrigger>
-                        <SelectContent className="bg-(--arch-bg) border-(--arch-border) rounded-none">
+                        <SelectContent className="bg-background border-border rounded-xl">
                           <SelectItem
                             value="ADMIN"
-                            className="font-mono text-xs focus:bg-(--arch-fg) focus:text-(--arch-bg)"
+                            className="font-mono text-xs focus:bg-foreground focus:text-background"
                           >
                             ADMIN
                           </SelectItem>
                           <SelectItem
                             value="MEMBER"
-                            className="font-mono text-xs focus:bg-(--arch-fg) focus:text-(--arch-bg)"
+                            className="font-mono text-xs focus:bg-foreground focus:text-background"
                           >
                             MEMBER
                           </SelectItem>
                           <SelectItem
                             value="VIEWER"
-                            className="font-mono text-xs focus:bg-(--arch-fg) focus:text-(--arch-bg)"
+                            className="font-mono text-xs focus:bg-foreground focus:text-background"
                           >
                             VIEWER
                           </SelectItem>
@@ -261,7 +261,7 @@ export default function TeamDetailPage() {
                       </Select>
                     </div>
                     <Button
-                      className="w-full bg-(--arch-fg) text-(--arch-bg) hover:bg-[rgba(var(--arch-fg-rgb)/0.9)] rounded-none font-mono uppercase text-xs"
+                      className="w-full bg-foreground text-background hover:bg-[rgba(var(--foreground)/0.9)] rounded-xl font-mono uppercase text-xs"
                       onClick={() =>
                         inviteMember.mutate({
                           teamId,
@@ -283,23 +283,23 @@ export default function TeamDetailPage() {
               {team.members.map((member) => (
                 <div
                   key={member.id}
-                  className="flex items-center justify-between p-4 border border-(--arch-border) bg-[rgba(var(--arch-bg-secondary-rgb)/0.2)] hover:border-(--arch-fg) transition-colors group rounded-none"
+                  className="flex items-center justify-between p-4 border border-border bg-secondary hover:border-foreground transition-colors group rounded-xl"
                 >
                   <div className="flex items-center gap-4">
-                    <Avatar className="h-10 w-10 ring-1 ring-(--arch-border) rounded-none">
+                    <Avatar className="h-10 w-10 ring-1 ring-border rounded-xl">
                       <AvatarImage
                         src={member.user.image || undefined}
-                        className="rounded-none"
+                        className="rounded-xl"
                       />
-                      <AvatarFallback className="bg-[rgba(var(--arch-fg-rgb)/0.1)] text-(--arch-fg) font-mono rounded-none">
+                      <AvatarFallback className="bg-[rgba(var(--foreground)/0.1)] text-foreground font-mono rounded-xl">
                         {member.user.name?.[0] || member.user.email[0]}
                       </AvatarFallback>
                     </Avatar>
                     <div>
-                      <p className="font-bold text-sm text-(--arch-fg) font-mono">
+                      <p className="font-bold text-sm text-foreground font-mono">
                         {member.user.name || member.user.email}
                       </p>
-                      <p className="text-xs text-(--arch-muted) font-mono opacity-80">
+                      <p className="text-xs text-muted-foreground font-mono opacity-80">
                         {member.user.email}
                       </p>
                     </div>
@@ -316,25 +316,25 @@ export default function TeamDetailPage() {
                           })
                         }
                       >
-                        <SelectTrigger className="w-28 h-8 bg-transparent border-(--arch-border) focus:ring-0 hover:border-(--arch-fg) rounded-none font-mono text-xs text-(--arch-fg)">
+                        <SelectTrigger className="w-28 h-8 bg-transparent border-border focus:ring-0 hover:border-foreground rounded-xl font-mono text-xs text-foreground">
                           <SelectValue />
                         </SelectTrigger>
-                        <SelectContent className="bg-(--arch-bg) border-(--arch-border) rounded-none">
+                        <SelectContent className="bg-background border-border rounded-xl">
                           <SelectItem
                             value="ADMIN"
-                            className="font-mono text-xs focus:bg-(--arch-fg) focus:text-(--arch-bg)"
+                            className="font-mono text-xs focus:bg-foreground focus:text-background"
                           >
                             ADMIN
                           </SelectItem>
                           <SelectItem
                             value="MEMBER"
-                            className="font-mono text-xs focus:bg-(--arch-fg) focus:text-(--arch-bg)"
+                            className="font-mono text-xs focus:bg-foreground focus:text-background"
                           >
                             MEMBER
                           </SelectItem>
                           <SelectItem
                             value="VIEWER"
-                            className="font-mono text-xs focus:bg-(--arch-fg) focus:text-(--arch-bg)"
+                            className="font-mono text-xs focus:bg-foreground focus:text-background"
                           >
                             VIEWER
                           </SelectItem>
@@ -343,7 +343,7 @@ export default function TeamDetailPage() {
                     ) : (
                       <Badge
                         variant="secondary"
-                        className="font-mono text-[10px] px-2.5 py-0.5 bg-[rgba(var(--arch-fg-rgb)/0.1)] text-(--arch-fg) border border-[rgba(var(--arch-fg-rgb)/0.2)] rounded-none uppercase"
+                        className="font-mono text-[10px] px-2.5 py-0.5 bg-[rgba(var(--foreground)/0.1)] text-foreground border border-[rgba(var(--foreground)/0.2)] rounded-xl uppercase"
                       >
                         {member.role}
                       </Badge>
@@ -352,7 +352,7 @@ export default function TeamDetailPage() {
                       <Button
                         variant="ghost"
                         size="icon"
-                        className="h-8 w-8 text-(--arch-muted) hover:text-red-500 hover:bg-red-500/10 transition-colors rounded-none"
+                        className="h-8 w-8 text-muted-foreground hover:text-red-500 hover:bg-red-500/10 transition-colors rounded-xl"
                         onClick={() =>
                           removeMember.mutate({
                             teamId,
@@ -372,7 +372,7 @@ export default function TeamDetailPage() {
 
         {/* Danger Zone */}
         {isOwner && (
-          <Card className="border-destructive/50 bg-destructive/5 shadow-none rounded-none">
+          <Card className="border-destructive/50 bg-destructive/5 shadow-none rounded-xl">
             <CardHeader className="border-b border-destructive/20">
               <CardTitle className="text-destructive font-mono uppercase">
                 Danger Zone
@@ -381,7 +381,7 @@ export default function TeamDetailPage() {
             <CardContent className="p-6">
               <Button
                 variant="destructive"
-                className="rounded-none font-mono uppercase text-xs"
+                className="rounded-xl font-mono uppercase text-xs"
                 onClick={() => {
                   if (confirm("Are you sure? This cannot be undone.")) {
                     deleteTeam.mutate({ id: teamId });

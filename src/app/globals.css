@@ -5,24 +5,89 @@
 
 /* ============================================
    Flowgent "PLATINUM GREEN" DESIGN SYSTEM
-   Premium, Cockpit Aesthetic (Dark Mode Exclusive)
+   Light + Dark theme support (emerald accent)
    ============================================ */
 
 :root {
-  /* Deep Space Cockpit Backgrounds */
-  --background: oklch(0.12 0.02 260); /* Zinc 950 essentially */
-  --foreground: oklch(0.98 0.01 260); /* Clean White */
+  /* Light Mode — Vibrant Emerald Green */
+  --background: oklch(0.975 0.008 160);      /* very subtle green tint instead of grey */
+  --foreground: oklch(0.13 0.025 170);        /* ink-black with slight green undertone */
 
-  /* Glass Card Base - Extremely subtle */
+  --card: oklch(0.995 0.004 160);             /* clean white cards, barely tinted */
+  --card-foreground: oklch(0.13 0.025 170);
+
+  --popover: oklch(0.99 0.005 160);
+  --popover-foreground: oklch(0.13 0.025 170);
+
+  --primary: oklch(0.46 0.22 160);            /* Deep Forest Emerald (≈ #047857) — rich & vibrant */
+  --primary-foreground: oklch(1 0 0);
+
+  --secondary: oklch(0.92 0.025 160);         /* green-tinted container */
+  --secondary-foreground: oklch(0.2 0.03 160);
+
+  --muted: oklch(0.93 0.018 160);             /* green-tinted muted bg */
+  --muted-foreground: oklch(0.44 0.02 160);
+
+  --accent: oklch(0.88 0.07 160);             /* visibly green accent wash */
+  --accent-foreground: oklch(0.18 0.04 160);
+
+  --destructive: oklch(0.55 0.22 20);
+  --destructive-foreground: oklch(1 0 0);
+
+  --border: oklch(0.84 0.03 160);             /* green-tinted border — clearly visible */
+  --input: oklch(0.91 0.02 160);
+  --ring: oklch(0.46 0.22 160);
+
+  --chart-1: oklch(0.46 0.22 160);
+  --chart-2: oklch(0.55 0.2 180);
+  --chart-3: oklch(0.65 0.15 80);
+  --chart-4: oklch(0.4 0.1 260);
+  --chart-5: oklch(0.25 0.05 260);
+
+  --sidebar: oklch(0.95 0.02 160);            /* clearly green-tinted sidebar */
+  --sidebar-foreground: oklch(0.18 0.03 160);
+  --sidebar-primary: oklch(0.46 0.22 160);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.91 0.035 160);
+  --sidebar-accent-foreground: oklch(0.13 0.025 160);
+  --sidebar-border: oklch(0.84 0.03 160);
+  --sidebar-ring: oklch(0.46 0.22 160);
+
+  --radius: 0.75rem;
+  --tracking-normal: -0.02em;
+
+  /* The Architect Theme — light mode (deep forest emerald) */
+  --arch-bg: #f0fdf4;                         /* Tailwind green-50 — branded page bg */
+  --arch-bg-secondary: #dcfce7;               /* Tailwind green-100 — secondary surfaces */
+  --arch-fg: #047857;                         /* Emerald-700 — deep vibrant green */
+  --arch-muted: #059669;                      /* Emerald-600 */
+  --arch-border: rgba(4, 120, 87, 0.3);
+  --arch-grid: rgba(4, 120, 87, 0.07);
+  --arch-accent: #047857;
+  --arch-accent-dim: rgba(4, 120, 87, 0.12);
+  --arch-focus: #065f46;                      /* Emerald-800 */
+
+  --arch-bg-rgb: 240 253 244;
+  --arch-bg-secondary-rgb: 220 252 231;
+  --arch-fg-rgb: 4 120 87;
+  --arch-muted-rgb: 5 150 105;
+  --arch-border-rgb: 4 120 87;
+  --arch-accent-rgb: 4 120 87;
+}
+
+.dark {
+  /* Dark Mode — Deep Space Cockpit */
+  --background: oklch(0.12 0.02 260);
+  --foreground: oklch(0.98 0.01 260);
+
   --card: oklch(0.15 0.02 260 / 0.4);
   --card-foreground: oklch(0.98 0.01 260);
 
   --popover: oklch(0.15 0.02 260);
   --popover-foreground: oklch(0.98 0.01 260);
 
-  /* Electric Green Brand Colors (Replaces previously banned Purple) */
-  --primary: oklch(0.7 0.2 160); /* Electric Emerald */
-  --primary-foreground: oklch(0.12 0.02 260); /* Dark Zinc text on Green */
+  --primary: oklch(0.7 0.2 160);
+  --primary-foreground: oklch(0.12 0.02 260);
 
   --secondary: oklch(0.2 0.02 260);
   --secondary-foreground: oklch(0.9 0.01 260);
@@ -30,7 +95,7 @@
   --muted: oklch(0.18 0.02 260);
   --muted-foreground: oklch(0.65 0.02 260);
 
-  --accent: oklch(0.25 0.05 160); /* Deep Green Accent */
+  --accent: oklch(0.25 0.05 160);
   --accent-foreground: oklch(0.98 0.01 260);
 
   --destructive: oklch(0.65 0.22 20);
@@ -40,12 +105,11 @@
   --input: oklch(0.2 0.02 260);
   --ring: oklch(0.7 0.2 160);
 
-  /* Clean Data Chart Colors */
-  --chart-1: oklch(0.7 0.2 160); /* Emerald */
-  --chart-2: oklch(0.75 0.2 180); /* Cyan */
-  --chart-3: oklch(0.8 0.15 80); /* Yellow */
-  --chart-4: oklch(0.6 0.1 260); /* Slate Blue */
-  --chart-5: oklch(0.85 0.05 260); /* Platinum */
+  --chart-1: oklch(0.7 0.2 160);
+  --chart-2: oklch(0.75 0.2 180);
+  --chart-3: oklch(0.8 0.15 80);
+  --chart-4: oklch(0.6 0.1 260);
+  --chart-5: oklch(0.85 0.05 260);
 
   --sidebar: oklch(0.1 0.02 260);
   --sidebar-foreground: oklch(0.9 0.01 260);
@@ -56,32 +120,23 @@
   --sidebar-border: oklch(0.2 0.02 260);
   --sidebar-ring: oklch(0.7 0.2 160);
 
-  --radius: 0.75rem;
-  --tracking-normal: -0.02em;
-
-  /* The Architect Theme (Merged into standard variables for editor support) */
-  --arch-bg: #09090b; /* Zinc 950 */
-  --arch-bg-secondary: #0f1115; /* Zinc 900 slightly tinted */
-  --arch-fg: #10b981; /* Emerald 500 */
-  --arch-muted: #059669; /* Emerald 600 */
+  /* The Architect Theme — dark mode */
+  --arch-bg: #09090b;
+  --arch-bg-secondary: #0f1115;
+  --arch-fg: #10b981;
+  --arch-muted: #059669;
   --arch-border: rgba(16, 185, 129, 0.2);
-  --arch-grid: rgba(16, 185, 129, 0.05); /* very subtle grid */
+  --arch-grid: rgba(16, 185, 129, 0.05);
   --arch-accent: #10b981;
   --arch-accent-dim: rgba(16, 185, 129, 0.1);
   --arch-focus: #059669;
 
-  /* RGB helpers */
   --arch-bg-rgb: 9 9 11;
   --arch-bg-secondary-rgb: 15 17 21;
   --arch-fg-rgb: 16 185 129;
   --arch-muted-rgb: 5 150 105;
   --arch-border-rgb: 16 185 129;
   --arch-accent-rgb: 16 185 129;
-}
-
-/* Force dark mode behavior unconditionally since we only want Cockpit Mode */
-.dark {
-  /* Inherits from :root */
 }
 
 @theme inline {

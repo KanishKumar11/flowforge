@@ -33,7 +33,7 @@ export const WorkflowVisualizer = ({ className }: { className?: string }) => {
             <path
               d="M 20 0 L 0 0 0 20"
               fill="none"
-              stroke="var(--arch-grid)"
+              stroke="var(--border)"
               strokeWidth="0.5"
             />
           </pattern>
@@ -45,7 +45,7 @@ export const WorkflowVisualizer = ({ className }: { className?: string }) => {
             refY="3"
             orient="auto"
           >
-            <path d="M0,0 L0,6 L9,3 z" fill="var(--arch-muted)" />
+            <path d="M0,0 L0,6 L9,3 z" fill="var(--muted-foreground)" />
           </marker>
         </defs>
 
@@ -62,7 +62,7 @@ export const WorkflowVisualizer = ({ className }: { className?: string }) => {
         {/* Main Trunk: Left to Center (Shifted DOWN to Y=450 to avoid text) */}
         <path
           d="M100,450 L300,450"
-          stroke="var(--arch-fg)"
+          stroke="var(--foreground)"
           strokeWidth="2"
           fill="none"
         />
@@ -70,7 +70,7 @@ export const WorkflowVisualizer = ({ className }: { className?: string }) => {
         {/* Branch 1: Center to Top-ish */}
         <path
           d="M300,450 L300,350 L500,350"
-          stroke="var(--arch-fg)"
+          stroke="var(--foreground)"
           strokeWidth="2"
           fill="none"
         />
@@ -78,7 +78,7 @@ export const WorkflowVisualizer = ({ className }: { className?: string }) => {
         {/* Branch 2: Center to Bottom */}
         <path
           d="M300,450 L300,550 L500,550"
-          stroke="var(--arch-fg)"
+          stroke="var(--foreground)"
           strokeWidth="2"
           fill="none"
         />
@@ -87,7 +87,7 @@ export const WorkflowVisualizer = ({ className }: { className?: string }) => {
         <rect
           width="6"
           height="6"
-          fill="var(--arch-accent)"
+          fill="var(--primary)"
           className="opacity-100"
         >
           <animateMotion
@@ -103,7 +103,7 @@ export const WorkflowVisualizer = ({ className }: { className?: string }) => {
         <rect
           width="6"
           height="6"
-          fill="var(--arch-accent)"
+          fill="var(--primary)"
           className="opacity-100"
         >
           <animateMotion
@@ -123,14 +123,14 @@ export const WorkflowVisualizer = ({ className }: { className?: string }) => {
             y="-10"
             width="20"
             height="20"
-            fill="var(--arch-bg-secondary)"
-            stroke="var(--arch-fg)"
+            fill="var(--secondary)"
+            stroke="var(--foreground)"
             strokeWidth="2"
           />
           <text
             x="-15"
             y="-20"
-            fill="var(--arch-fg)"
+            fill="var(--foreground)"
             fontSize="10"
             fontFamily="monospace"
           >
@@ -142,15 +142,15 @@ export const WorkflowVisualizer = ({ className }: { className?: string }) => {
         <g transform="translate(300, 450)">
           <circle
             r="15"
-            fill="var(--arch-bg-secondary)"
-            stroke="var(--arch-fg)"
+            fill="var(--secondary)"
+            stroke="var(--foreground)"
             strokeWidth="2"
           />
-          <circle r="2" fill="var(--arch-accent)" className="animate-pulse" />
+          <circle r="2" fill="var(--primary)" className="animate-pulse" />
           <text
             x="20"
             y="-10"
-            fill="var(--arch-fg)"
+            fill="var(--foreground)"
             fontSize="10"
             fontFamily="monospace"
           >
@@ -165,19 +165,19 @@ export const WorkflowVisualizer = ({ className }: { className?: string }) => {
             y="-15"
             width="30"
             height="30"
-            fill="var(--arch-bg-secondary)"
-            stroke="var(--arch-fg)"
+            fill="var(--secondary)"
+            stroke="var(--foreground)"
             strokeWidth="2"
           />
           <path
             d="M-5 -5 L5 5 M-5 5 L5 -5"
-            stroke="var(--arch-fg)"
+            stroke="var(--foreground)"
             strokeWidth="2"
           />
           <text
             x="20"
             y="5"
-            fill="var(--arch-fg)"
+            fill="var(--foreground)"
             fontSize="10"
             fontFamily="monospace"
           >
@@ -192,15 +192,15 @@ export const WorkflowVisualizer = ({ className }: { className?: string }) => {
             y="-15"
             width="30"
             height="30"
-            fill="var(--arch-bg-secondary)"
-            stroke="var(--arch-fg)"
+            fill="var(--secondary)"
+            stroke="var(--foreground)"
             strokeWidth="2"
           />
-          <circle r="5" fill="var(--arch-fg)" />
+          <circle r="5" fill="var(--foreground)" />
           <text
             x="20"
             y="5"
-            fill="var(--arch-fg)"
+            fill="var(--foreground)"
             fontSize="10"
             fontFamily="monospace"
           >
@@ -210,7 +210,7 @@ export const WorkflowVisualizer = ({ className }: { className?: string }) => {
       </svg>
 
       {/* Floating DOM Overlay */}
-      <div className="absolute top-8 right-8 text-right font-mono text-[10px] text-(--arch-muted) tracking-widest opacity-70">
+      <div className="absolute top-8 right-8 text-right font-mono text-[10px] text-muted-foreground tracking-widest opacity-70">
         <div>SYS.TIME: {ticks}</div>
         <div>MODE: ARCHITECT</div>
         <div>STATUS: NOMINAL</div>

@@ -42,8 +42,8 @@ export function CreateWorkflowModal({
       setName("");
       setDescription("");
       onOpenChange(false);
-    } catch (error) {
-      console.error("Failed to create workflow:", error);
+    } catch {
+      // error handled by mutation onError callback
     } finally {
       setIsLoading(false);
     }

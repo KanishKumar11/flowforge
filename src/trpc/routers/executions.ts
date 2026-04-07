@@ -76,7 +76,7 @@ export const executionsRouter = createTRPCRouter({
       });
 
       if (!execution) {
-        throw new Error("Execution not found");
+        throw new TRPCError({ code: "NOT_FOUND", message: "Execution not found" });
       }
 
       return execution;
@@ -164,7 +164,7 @@ export const executionsRouter = createTRPCRouter({
       });
 
       if (!execution) {
-        throw new Error("Execution not found or cannot be cancelled");
+        throw new TRPCError({ code: "NOT_FOUND", message: "Execution not found or cannot be cancelled" });
       }
 
       return prisma.execution.update({
@@ -192,7 +192,7 @@ export const executionsRouter = createTRPCRouter({
       });
 
       if (!execution) {
-        throw new Error("Execution not found or cannot be retried");
+        throw new TRPCError({ code: "NOT_FOUND", message: "Execution not found or cannot be retried" });
       }
 
       // Check monthly execution limits
@@ -202,7 +202,7 @@ export const executionsRouter = createTRPCRouter({
       });
 
       if (teamMember) {
-        const plan = ((teamMember.team as any).plan?.toUpperCase() as keyof typeof PLANS) || "FREE";
+        const plan = (teamMember.team.plan?.toUpperCase() as keyof typeof PLANS) || "FREE";
         const limit = PLANS[plan]?.limits.executionsPerMonth || PLANS.FREE.limits.executionsPerMonth;
 
         const startOfMonth = new Date();
@@ -250,7 +250,7 @@ export const executionsRouter = createTRPCRouter({
       });
 
       if (!execution) {
-        throw new Error("Execution not found");
+        throw new TRPCError({ code: "NOT_FOUND", message: "Execution not found" });
       }
 
       return prisma.execution.delete({

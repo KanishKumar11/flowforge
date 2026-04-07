@@ -2,6 +2,7 @@ import prisma from "@/lib/db";
 import { createTRPCRouter, protectedProcedure } from "../init";
 import { z } from "zod";
 import { encryptCredential, decryptCredential } from "@/lib/crypto";
+import { TRPCError } from "@trpc/server";
 
 export const credentialsRouter = createTRPCRouter({
   // List all credentials for the current user
@@ -43,7 +44,7 @@ export const credentialsRouter = createTRPCRouter({
       });
 
       if (!credential) {
-        throw new Error("Credential not found");
+        throw new TRPCError({ code: "NOT_FOUND", message: "Credential not found" });
       }
 
       return credential;
@@ -99,7 +100,7 @@ export const credentialsRouter = createTRPCRouter({
       });
 
       if (!credential) {
-        throw new Error("Credential not found");
+        throw new TRPCError({ code: "NOT_FOUND", message: "Credential not found" });
       }
 
       const data: any = {};
@@ -132,7 +133,7 @@ export const credentialsRouter = createTRPCRouter({
       });
 
       if (!credential) {
-        throw new Error("Credential not found");
+        throw new TRPCError({ code: "NOT_FOUND", message: "Credential not found" });
       }
 
       return prisma.credential.delete({
@@ -152,7 +153,7 @@ export const credentialsRouter = createTRPCRouter({
       });
 
       if (!credential) {
-        throw new Error("Credential not found");
+        throw new TRPCError({ code: "NOT_FOUND", message: "Credential not found" });
       }
 
       // Update last used timestamp
