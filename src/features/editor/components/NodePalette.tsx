@@ -25,6 +25,7 @@ import {
   Search,
   Sheet,
   SquarePen,
+  Shuffle,
   Timer,
   Webhook,
   Workflow,
@@ -93,6 +94,12 @@ const actionNodes = [
   { type: "filter", label: "Filter", icon: Filter, color: "text-violet-500" },
   { type: "set", label: "Set", icon: SquarePen, color: "text-sky-500" },
   { type: "sort", label: "Sort", icon: ArrowUpDown, color: "text-orange-500" },
+  {
+    type: "transform",
+    label: "Transform",
+    icon: Shuffle,
+    color: "text-blue-500",
+  },
   {
     type: "openai",
     label: "AI / LLM",

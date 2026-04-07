@@ -19,6 +19,7 @@ import {
   Phone,
   Repeat,
   Sheet,
+  Shuffle,
   SquarePen,
   Timer,
   Workflow,
@@ -49,6 +50,7 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   "sub-workflow": Workflow,
   merge: Merge,
   comment: MessageCircle,
+  transform: Shuffle,
 };
 
 const colorMap: Record<string, string> = {
@@ -73,6 +75,7 @@ const colorMap: Record<string, string> = {
   "sub-workflow": "bg-indigo-600/10 text-indigo-600 border-indigo-600/30",
   merge: "bg-teal-500/10 text-teal-500 border-teal-500/30",
   comment: "bg-slate-500/10 text-slate-500 border-slate-500/30",
+  transform: "bg-blue-500/10 text-blue-500 border-blue-500/30",
 };
 
 interface ActionNodeData {
