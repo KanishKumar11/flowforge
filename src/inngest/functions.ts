@@ -83,7 +83,11 @@ async function executeHttpRequest(
   let headers: Record<string, string> = {};
   if (config.headers) {
     if (typeof config.headers === "string") {
-      try { headers = JSON.parse(config.headers); } catch { /* invalid JSON, ignore */ }
+      try {
+        headers = JSON.parse(config.headers);
+      } catch {
+        /* invalid JSON, ignore */
+      }
     } else {
       headers = config.headers as Record<string, string>;
     }
@@ -170,7 +174,10 @@ async function executeWait(
 ): Promise<{ waited: number }> {
   // Duration may arrive as a string from the config panel input
   const raw = config.duration;
-  const duration = typeof raw === "string" ? parseInt(raw, 10) || 1000 : (raw as number) || 1000;
+  const duration =
+    typeof raw === "string"
+      ? parseInt(raw, 10) || 1000
+      : (raw as number) || 1000;
   // Inngest will handle this with step.sleep
   return { waited: duration };
 }
@@ -253,7 +260,9 @@ async function executeEmail(
       from,
       to,
       subject,
-      html: body ? `<div style="font-family: sans-serif;">${body.replace(/\n/g, "<br>")}</div>` : undefined,
+      html: body
+        ? `<div style="font-family: sans-serif;">${body.replace(/\n/g, "<br>")}</div>`
+        : undefined,
       text: body || "",
     });
 
@@ -381,7 +390,9 @@ async function executeGoogleSheets(
   }
 
   if (!spreadsheetId) {
-    throw new Error("Google Sheets node requires a 'Spreadsheet ID'. Find it in your Google Sheets URL.");
+    throw new Error(
+      "Google Sheets node requires a 'Spreadsheet ID'. Find it in your Google Sheets URL.",
+    );
   }
 
   const baseUrl = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}`;
@@ -508,8 +519,13 @@ async function executeNotion(
     );
   }
 
-  if (!databaseId && (operation === "create_page" || operation === "query_database")) {
-    throw new Error("Notion node requires a 'Database ID'. Find it in your Notion database URL.");
+  if (
+    !databaseId &&
+    (operation === "create_page" || operation === "query_database")
+  ) {
+    throw new Error(
+      "Notion node requires a 'Database ID'. Find it in your Notion database URL.",
+    );
   }
 
   const notion = new NotionClient({ auth: token });
@@ -527,14 +543,17 @@ async function executeNotion(
         return { success: true, provider: "notion_api", operation, page };
       }
       case "query_database": {
-        const res = await fetch(`https://api.notion.com/v1/databases/${databaseId}/query`, {
-          method: "POST",
-          headers: {
-            "Authorization": `Bearer ${token}`,
-            "Notion-Version": "2022-06-28",
-            "Content-Type": "application/json"
-          }
-        });
+        const res = await fetch(
+          `https://api.notion.com/v1/databases/${databaseId}/query`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Notion-Version": "2022-06-28",
+              "Content-Type": "application/json",
+            },
+          },
+        );
         if (!res.ok) throw new Error(`Notion API error: ${await res.text()}`);
         const result = await res.json();
         return {
@@ -598,7 +617,11 @@ async function executeSwitch(
   // Cases may be stored as a JSON string from the config panel textarea
   let cases: Array<{ value: unknown; output: unknown }> = [];
   if (typeof config.cases === "string") {
-    try { cases = JSON.parse(config.cases); } catch { /* invalid JSON */ }
+    try {
+      cases = JSON.parse(config.cases);
+    } catch {
+      /* invalid JSON */
+    }
   } else if (Array.isArray(config.cases)) {
     cases = config.cases as Array<{ value: unknown; output: unknown }>;
   }
@@ -819,7 +842,11 @@ async function executeSubWorkflow(
   });
 
   // Actually execute the sub-workflow
-  const result = await executeWorkflowDirect(workflowId, execution.id, inputData);
+  const result = await executeWorkflowDirect(
+    workflowId,
+    execution.id,
+    inputData,
+  );
 
   return {
     subWorkflowId: workflowId,
@@ -930,7 +957,10 @@ async function executeTwilio(
         });
         if (cred) {
           const data = decryptCredential(cred.data || "{}");
-          accountSid = accountSid || (data.accountSid as string) || (data.account_sid as string);
+          accountSid =
+            accountSid ||
+            (data.accountSid as string) ||
+            (data.account_sid as string);
           authToken =
             authToken ||
             (data.authToken as string) ||
@@ -1187,8 +1217,13 @@ export async function executeWorkflowDirect(
 
     // Update execution status to success
     const finishedAt = new Date();
-    const startRecord = await prisma.execution.findUnique({ where: { id: executionId }, select: { startedAt: true } });
-    const duration = startRecord?.startedAt ? finishedAt.getTime() - startRecord.startedAt.getTime() : null;
+    const startRecord = await prisma.execution.findUnique({
+      where: { id: executionId },
+      select: { startedAt: true },
+    });
+    const duration = startRecord?.startedAt
+      ? finishedAt.getTime() - startRecord.startedAt.getTime()
+      : null;
     await prisma.execution.update({
       where: { id: executionId },
       data: {
@@ -1294,9 +1329,15 @@ export const executeWorkflow = inngest.createFunction(
         );
 
         // Handle wait/delay nodes with durable sleep
-        if (currentNode.data.type === "wait" || currentNode.data.type === "delay") {
+        if (
+          currentNode.data.type === "wait" ||
+          currentNode.data.type === "delay"
+        ) {
           const raw = currentNode.data.config.duration;
-          const waitMs = typeof raw === "string" ? parseInt(raw, 10) || 1000 : (raw as number) || 1000;
+          const waitMs =
+            typeof raw === "string"
+              ? parseInt(raw, 10) || 1000
+              : (raw as number) || 1000;
           await step.sleep(`wait-${currentNode.id}`, waitMs);
         }
 
@@ -1337,8 +1378,13 @@ export const executeWorkflow = inngest.createFunction(
       // Update execution status to success
       await step.run("update-status-success", async () => {
         const finishedAt = new Date();
-        const startRecord = await prisma.execution.findUnique({ where: { id: executionId }, select: { startedAt: true } });
-        const duration = startRecord?.startedAt ? finishedAt.getTime() - startRecord.startedAt.getTime() : null;
+        const startRecord = await prisma.execution.findUnique({
+          where: { id: executionId },
+          select: { startedAt: true },
+        });
+        const duration = startRecord?.startedAt
+          ? finishedAt.getTime() - startRecord.startedAt.getTime()
+          : null;
         await prisma.execution.update({
           where: { id: executionId },
           data: {

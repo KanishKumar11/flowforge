@@ -25,7 +25,10 @@ export const workflowsRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const template = getTemplateById(input.templateId);
       if (!template) {
-        throw new TRPCError({ code: "NOT_FOUND", message: "Template not found" });
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Template not found",
+        });
       }
 
       // Get user's team and plan
@@ -42,8 +45,7 @@ export const workflowsRouter = createTRPCRouter({
       }
 
       const plan =
-        (teamMember.team.plan?.toUpperCase() as keyof typeof PLANS) ||
-        "FREE";
+        (teamMember.team.plan?.toUpperCase() as keyof typeof PLANS) || "FREE";
       const limit =
         PLANS[plan]?.limits.workflows || PLANS.FREE.limits.workflows;
 
@@ -103,7 +105,10 @@ export const workflowsRouter = createTRPCRouter({
       });
 
       if (!workflow) {
-        throw new TRPCError({ code: "NOT_FOUND", message: "Workflow not found" });
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Workflow not found",
+        });
       }
 
       return workflow;
@@ -134,8 +139,7 @@ export const workflowsRouter = createTRPCRouter({
       }
 
       const plan =
-        (teamMember.team.plan?.toUpperCase() as keyof typeof PLANS) ||
-        "FREE";
+        (teamMember.team.plan?.toUpperCase() as keyof typeof PLANS) || "FREE";
       const limit =
         PLANS[plan]?.limits.workflows || PLANS.FREE.limits.workflows;
 
@@ -185,7 +189,10 @@ export const workflowsRouter = createTRPCRouter({
       });
 
       if (!workflow) {
-        throw new TRPCError({ code: "NOT_FOUND", message: "Workflow not found" });
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Workflow not found",
+        });
       }
 
       // Save version before updating if nodes or edges changed
@@ -223,7 +230,10 @@ export const workflowsRouter = createTRPCRouter({
       });
 
       if (!workflow) {
-        throw new TRPCError({ code: "NOT_FOUND", message: "Workflow not found" });
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Workflow not found",
+        });
       }
 
       return prisma.workflowVersion.findMany({
@@ -245,7 +255,10 @@ export const workflowsRouter = createTRPCRouter({
       });
 
       if (!workflow) {
-        throw new TRPCError({ code: "NOT_FOUND", message: "Workflow not found" });
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Workflow not found",
+        });
       }
 
       // Find the version to rollback to
@@ -259,7 +272,10 @@ export const workflowsRouter = createTRPCRouter({
       });
 
       if (!version) {
-        throw new TRPCError({ code: "NOT_FOUND", message: "Version not found" });
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Version not found",
+        });
       }
 
       // Save current state as a new version before rollback
@@ -299,7 +315,10 @@ export const workflowsRouter = createTRPCRouter({
       });
 
       if (!workflow) {
-        throw new TRPCError({ code: "NOT_FOUND", message: "Workflow not found" });
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Workflow not found",
+        });
       }
 
       return prisma.workflow.delete({
@@ -316,7 +335,10 @@ export const workflowsRouter = createTRPCRouter({
       });
 
       if (!workflow) {
-        throw new TRPCError({ code: "NOT_FOUND", message: "Workflow not found" });
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Workflow not found",
+        });
       }
 
       return prisma.workflow.create({
@@ -341,7 +363,10 @@ export const workflowsRouter = createTRPCRouter({
       });
 
       if (!workflow) {
-        throw new TRPCError({ code: "NOT_FOUND", message: "Workflow not found" });
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Workflow not found",
+        });
       }
 
       return prisma.workflow.update({
@@ -359,7 +384,10 @@ export const workflowsRouter = createTRPCRouter({
       });
 
       if (!workflow) {
-        throw new TRPCError({ code: "NOT_FOUND", message: "Workflow not found" });
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Workflow not found",
+        });
       }
 
       // Check monthly execution limits
@@ -432,7 +460,10 @@ export const workflowsRouter = createTRPCRouter({
       });
 
       if (!workflow) {
-        throw new TRPCError({ code: "NOT_FOUND", message: "Workflow not found" });
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Workflow not found",
+        });
       }
 
       // Return workflow data without sensitive info
@@ -496,7 +527,10 @@ export const workflowsRouter = createTRPCRouter({
       });
 
       if (!workflow) {
-        throw new TRPCError({ code: "NOT_FOUND", message: "Workflow not found" });
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Workflow not found",
+        });
       }
 
       return prisma.workflow.update({
@@ -514,7 +548,10 @@ export const workflowsRouter = createTRPCRouter({
       });
 
       if (!workflow) {
-        throw new TRPCError({ code: "NOT_FOUND", message: "Workflow not found" });
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Workflow not found",
+        });
       }
 
       return prisma.workflow.update({
@@ -532,7 +569,10 @@ export const workflowsRouter = createTRPCRouter({
       });
 
       if (!workflow) {
-        throw new TRPCError({ code: "NOT_FOUND", message: "Workflow not found" });
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Workflow not found",
+        });
       }
 
       return prisma.workflow.update({
@@ -599,7 +639,10 @@ export const workflowsRouter = createTRPCRouter({
       });
 
       if (!workflow) {
-        throw new TRPCError({ code: "NOT_FOUND", message: "Workflow not found" });
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Workflow not found",
+        });
       }
 
       return prisma.workflow.update({
@@ -622,7 +665,10 @@ export const workflowsRouter = createTRPCRouter({
       });
 
       if (!workflow) {
-        throw new TRPCError({ code: "NOT_FOUND", message: "Workflow not found" });
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Workflow not found",
+        });
       }
 
       const baseUrl =

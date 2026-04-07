@@ -14,7 +14,7 @@ export async function sendInvitationEmail(
   email: string,
   teamName: string,
   link: string,
-  inviterName: string
+  inviterName: string,
 ) {
   if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
     // SMTP not configured — skip email sending silently

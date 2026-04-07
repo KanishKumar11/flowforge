@@ -130,4 +130,3 @@ async function handleWebhook(request: NextRequest, { path }: { path: string }) {
     );
   }
 }
-

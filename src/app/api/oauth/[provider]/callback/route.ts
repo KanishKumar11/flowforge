@@ -66,7 +66,9 @@ export async function GET(
       new URL(`/credentials?success=${provider}`, request.url),
     );
   } catch (err) {
-    Sentry.captureException(err, { tags: { provider, flow: "oauth_callback" } });
+    Sentry.captureException(err, {
+      tags: { provider, flow: "oauth_callback" },
+    });
     return NextResponse.redirect(
       new URL(`/credentials?error=exchange_failed`, request.url),
     );

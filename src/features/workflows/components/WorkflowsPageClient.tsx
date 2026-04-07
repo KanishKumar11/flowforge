@@ -153,44 +153,45 @@ export function WorkflowsPageClient() {
 
       <div className="flex-1 p-8 overflow-auto">
         {/* Templates Section */}
-        {!isLoading && (!workflows || workflows.length === 0) && templates.length > 0 && (
-          <div className="mb-12">
-            <h3 className="text-sm font-bold font-mono uppercase text-(--arch-fg) tracking-widest mb-4 flex items-center gap-2">
-              <Sparkles className="w-4 h-4" />
-              Quick Start Templates
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {templates.map((template) => {
-                const IconComponent =
-                  categoryIcons[template.category] ||
-                  categoryIcons.default;
-                return (
-                  <button
-                    key={template.id}
-                    onClick={() => handleCreateFromTemplate(template)}
-                    className="group text-left p-6 border border-(--arch-border) bg-(--arch-bg-secondary) hover:border-(--arch-fg) transition-all duration-300 relative overflow-hidden"
-                    disabled={createWorkflow.isPending}
-                  >
-                    <div className="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity transform group-hover:scale-110 duration-500">
-                      <IconComponent className="w-16 h-16 text-(--arch-fg)" />
-                    </div>
-                    <div className="relative z-10">
-                      <div className="p-2 border border-(--arch-border) bg-(--arch-bg) w-fit mb-4 group-hover:border-(--arch-fg) transition-colors">
-                        <IconComponent className="w-5 h-5 text-(--arch-fg)" />
+        {!isLoading &&
+          (!workflows || workflows.length === 0) &&
+          templates.length > 0 && (
+            <div className="mb-12">
+              <h3 className="text-sm font-bold font-mono uppercase text-(--arch-fg) tracking-widest mb-4 flex items-center gap-2">
+                <Sparkles className="w-4 h-4" />
+                Quick Start Templates
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {templates.map((template) => {
+                  const IconComponent =
+                    categoryIcons[template.category] || categoryIcons.default;
+                  return (
+                    <button
+                      key={template.id}
+                      onClick={() => handleCreateFromTemplate(template)}
+                      className="group text-left p-6 border border-(--arch-border) bg-(--arch-bg-secondary) hover:border-(--arch-fg) transition-all duration-300 relative overflow-hidden"
+                      disabled={createWorkflow.isPending}
+                    >
+                      <div className="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity transform group-hover:scale-110 duration-500">
+                        <IconComponent className="w-16 h-16 text-(--arch-fg)" />
                       </div>
-                      <h4 className="font-bold font-mono text-sm text-(--arch-fg) mb-1 uppercase tracking-tight">
-                        {template.name}
-                      </h4>
-                      <p className="text-xs text-(--arch-muted) font-mono leading-relaxed">
-                        {template.description}
-                      </p>
-                    </div>
-                  </button>
-                );
-              })}
+                      <div className="relative z-10">
+                        <div className="p-2 border border-(--arch-border) bg-(--arch-bg) w-fit mb-4 group-hover:border-(--arch-fg) transition-colors">
+                          <IconComponent className="w-5 h-5 text-(--arch-fg)" />
+                        </div>
+                        <h4 className="font-bold font-mono text-sm text-(--arch-fg) mb-1 uppercase tracking-tight">
+                          {template.name}
+                        </h4>
+                        <p className="text-xs text-(--arch-muted) font-mono leading-relaxed">
+                          {template.description}
+                        </p>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
-          </div>
-        )}
+          )}
 
         {/* Stats Overview */}
         {!isLoading && workflows && workflows.length > 0 && (

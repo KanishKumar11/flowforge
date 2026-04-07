@@ -212,7 +212,9 @@ export const teamsRouter = createTRPCRouter({
       });
 
       // Send email
-      const inviter = await prisma.user.findUnique({ where: { id: ctx.user.id } });
+      const inviter = await prisma.user.findUnique({
+        where: { id: ctx.user.id },
+      });
       const link = `${process.env.NEXT_PUBLIC_APP_URL}/join/${token}`;
 
       const { sendInvitationEmail } = await import("@/lib/email");
@@ -220,7 +222,7 @@ export const teamsRouter = createTRPCRouter({
         input.email,
         invitation.team.name,
         link,
-        inviter?.name || "A team member"
+        inviter?.name || "A team member",
       );
 
       return { success: true, message: "Invitation sent" };
@@ -353,7 +355,7 @@ export const teamsRouter = createTRPCRouter({
       }
 
       // Check if user matches invitation email (optional, but good for security)
-      // For now, we allow any logged-in user to accept if they have the token, 
+      // For now, we allow any logged-in user to accept if they have the token,
       // OR we could enforce email match:
       // if (invitation.email !== ctx.user.email) ...
 

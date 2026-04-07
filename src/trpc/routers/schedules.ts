@@ -44,7 +44,10 @@ export const schedulesRouter = createTRPCRouter({
       });
 
       if (!workflow) {
-        throw new TRPCError({ code: "NOT_FOUND", message: "Workflow not found" });
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Workflow not found",
+        });
       }
 
       return prisma.schedule.create({
@@ -53,7 +56,9 @@ export const schedulesRouter = createTRPCRouter({
           cronExpression: input.cronExpression,
           timezone: input.timezone,
           isActive: input.isActive,
-          nextRunAt: input.isActive ? getNextCronDate(input.cronExpression) : null,
+          nextRunAt: input.isActive
+            ? getNextCronDate(input.cronExpression)
+            : null,
         },
       });
     }),
@@ -80,15 +85,22 @@ export const schedulesRouter = createTRPCRouter({
       });
 
       if (!schedule) {
-        throw new TRPCError({ code: "NOT_FOUND", message: "Schedule not found" });
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Schedule not found",
+        });
       }
 
       // If cron expression changed, recalculate nextRunAt
       const updatePayload: Record<string, unknown> = { ...data };
       if (data.cronExpression || data.isActive !== undefined) {
-        const cronExpr = (data.cronExpression as string) || schedule.cronExpression;
-        const active = data.isActive !== undefined ? data.isActive : schedule.isActive;
-        updatePayload.nextRunAt = active ? getNextCronDate(cronExpr as string) : null;
+        const cronExpr =
+          (data.cronExpression as string) || schedule.cronExpression;
+        const active =
+          data.isActive !== undefined ? data.isActive : schedule.isActive;
+        updatePayload.nextRunAt = active
+          ? getNextCronDate(cronExpr as string)
+          : null;
       }
 
       return prisma.schedule.update({
@@ -109,7 +121,10 @@ export const schedulesRouter = createTRPCRouter({
       });
 
       if (!schedule) {
-        throw new TRPCError({ code: "NOT_FOUND", message: "Schedule not found" });
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Schedule not found",
+        });
       }
 
       return prisma.schedule.delete({
@@ -129,14 +144,19 @@ export const schedulesRouter = createTRPCRouter({
       });
 
       if (!schedule) {
-        throw new TRPCError({ code: "NOT_FOUND", message: "Schedule not found" });
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Schedule not found",
+        });
       }
 
       return prisma.schedule.update({
         where: { id: input.id },
         data: {
           isActive: !schedule.isActive,
-          nextRunAt: !schedule.isActive ? getNextCronDate(schedule.cronExpression) : null,
+          nextRunAt: !schedule.isActive
+            ? getNextCronDate(schedule.cronExpression)
+            : null,
         },
       });
     }),
