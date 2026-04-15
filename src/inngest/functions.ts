@@ -35,6 +35,49 @@ interface ExecutionContext {
   nodeResults: Record<string, unknown>;
 }
 
+// ── Template variable resolver ────────────────────────────────────────
+// Resolves {{trigger.body.email}}, {{nodeId.field}}, etc. in config strings
+function resolveTemplateVars(
+  value: unknown,
+  context: ExecutionContext,
+): unknown {
+  if (typeof value !== "string") return value;
+
+  return value.replace(/\{\{([^}]+)\}\}/g, (_match, path: string) => {
+    const parts = path.trim().split(".");
+    const [root, ...rest] = parts;
+
+    let base: unknown;
+    if (root === "trigger") {
+      base = context.triggerData;
+    } else {
+      base = context.nodeResults[root];
+    }
+
+    const resolved = rest.reduce((obj: unknown, key: string) => {
+      if (obj !== null && obj !== undefined && typeof obj === "object") {
+        return (obj as Record<string, unknown>)[key];
+      }
+      return undefined;
+    }, base);
+
+    return resolved !== undefined && resolved !== null
+      ? String(resolved)
+      : _match;
+  });
+}
+
+function resolveConfig(
+  config: Record<string, unknown>,
+  context: ExecutionContext,
+): Record<string, unknown> {
+  const resolved: Record<string, unknown> = {};
+  for (const [key, value] of Object.entries(config)) {
+    resolved[key] = resolveTemplateVars(value, context);
+  }
+  return resolved;
+}
+
 // ── Shared credential-resolution helper ──────────────────────────────
 // Resolves an API key / token from: env var → inline config → stored Credential
 async function resolveCredential(
@@ -1022,7 +1065,9 @@ async function executeNode(
   node: WorkflowNode,
   context: ExecutionContext,
 ): Promise<unknown> {
-  const { type, config } = node.data;
+  const { type } = node.data;
+  // Resolve {{trigger.X}} / {{nodeId.X}} template variables in all string config values
+  const config = resolveConfig(node.data.config, context);
 
   switch (type) {
     case "http-request":

@@ -80,11 +80,11 @@ async function handleWebhook(request: NextRequest, { path }: { path: string }) {
       request.nextUrl.searchParams.entries(),
     );
 
-    // Create trigger data - serialize to JSON-compatible format
+    // Create trigger data - store body as-is for template variable resolution
     const triggerData = {
       method,
       headers,
-      body: body ? JSON.stringify(body) : null,
+      body: body ?? null,
       query: queryParams,
       path: webhook.path,
       timestamp: new Date().toISOString(),

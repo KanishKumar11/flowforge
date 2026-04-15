@@ -14,9 +14,10 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { type Node } from "@xyflow/react";
 import Editor from "@monaco-editor/react";
-import { X } from "lucide-react";
+import { X, Plus } from "lucide-react";
 import { useTRPC } from "@/trpc/client";
 import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
 interface NodeConfigPanelProps {
   node: Node | null;
@@ -342,22 +343,30 @@ export function NodeConfigPanel({
                     <SelectValue placeholder="Select an SMTP credential" />
                   </SelectTrigger>
                   <SelectContent className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) rounded-none font-mono">
-                    {credentials
-                      ?.filter((c) => c.provider === "smtp" || c.provider === "email")
-                      .map((cred) => (
+                    {credentials && credentials.length > 0 ? (
+                      credentials.map((cred) => (
                         <SelectItem key={cred.id} value={cred.id} className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs">
                           {cred.name}
+                          {(cred.provider === "smtp" || cred.provider === "email") && (
+                            <span className="ml-1 opacity-50">(SMTP)</span>
+                          )}
                         </SelectItem>
-                      ))}
-                    {(!credentials ||
-                      credentials.filter((c) => c.provider === "smtp" || c.provider === "email")
-                        .length === 0) && (
-                      <SelectItem value="" disabled>
-                        No SMTP credentials — add one in Credentials
+                      ))
+                    ) : (
+                      <SelectItem value="__no_credentials__" disabled>
+                        No credentials — create one first
                       </SelectItem>
                     )}
                   </SelectContent>
                 </Select>
+                <button
+                  type="button"
+                  onClick={() => window.open("/credentials?create=smtp", "_blank")}
+                  className="flex items-center gap-1 text-[11px] font-mono text-(--arch-muted) hover:text-(--arch-fg) transition-colors mt-1"
+                >
+                  <Plus className="w-3 h-3" />
+                  Create new SMTP credential
+                </button>
                 <p className="text-xs text-(--arch-muted) font-mono">
                   Create an SMTP credential in the Credentials page with: host, port, user, pass fields.
                 </p>
@@ -527,12 +536,20 @@ export function NodeConfigPanel({
                     {(!credentials ||
                       credentials.filter((c) => c.provider === "slack")
                         .length === 0) && (
-                      <SelectItem value="" disabled>
+                      <SelectItem value="__no_credentials__" disabled>
                         No Slack credentials found
                       </SelectItem>
                     )}
                   </SelectContent>
                 </Select>
+                <button
+                  type="button"
+                  onClick={() => window.open("/credentials?create=slack", "_blank")}
+                  className="flex items-center gap-1 text-[11px] font-mono text-(--arch-muted) hover:text-(--arch-fg) transition-colors mt-1"
+                >
+                  <Plus className="w-3 h-3" />
+                  Create new Slack credential
+                </button>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="channel">Channel</Label>
@@ -1002,12 +1019,23 @@ export function NodeConfigPanel({
                         const selectedProvider = (node.data.config as Record<string, string>)?.provider || "openai";
                         return c.provider === selectedProvider || c.provider === "custom";
                       }).length === 0) && (
-                      <SelectItem value="" disabled>
+                      <SelectItem value="__no_credentials__" disabled>
                         No {((node.data.config as Record<string, string>)?.provider || "openai").toUpperCase()} credentials found
                       </SelectItem>
                     )}
                   </SelectContent>
                 </Select>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const provider = (node.data.config as Record<string, string>)?.provider || "openai";
+                    window.open(`/credentials?create=${provider}`, "_blank");
+                  }}
+                  className="flex items-center gap-1 text-[11px] font-mono text-(--arch-muted) hover:text-(--arch-fg) transition-colors mt-1"
+                >
+                  <Plus className="w-3 h-3" />
+                  Create new {((node?.data?.config as Record<string, string>)?.provider || "openai").toUpperCase()} credential
+                </button>
                 <p className="text-xs text-muted-foreground">
                   Select a credential matching your chosen provider. Otherwise env vars will be used.
                 </p>

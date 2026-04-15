@@ -28,6 +28,7 @@ import {
   FolderKanban,
   History,
   KeyRound,
+  LayoutTemplate,
   LogOut,
   Settings,
   Sparkles,
@@ -50,6 +51,11 @@ const mainMenuItems = [
     label: "Workflows",
     href: "/workflows",
     icon: Workflow,
+  },
+  {
+    label: "Templates",
+    href: "/templates",
+    icon: LayoutTemplate,
   },
   {
     label: "Executions",

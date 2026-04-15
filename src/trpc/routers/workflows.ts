@@ -1,4 +1,5 @@
 import { inngest } from "@/inngest/client";
+import { executeWorkflowDirect } from "@/inngest/functions";
 import prisma from "@/lib/db";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../init";
 import { z } from "zod";
@@ -377,7 +378,12 @@ export const workflowsRouter = createTRPCRouter({
 
   // Execute a workflow manually
   execute: protectedProcedure
-    .input(z.object({ id: z.string() }))
+    .input(
+      z.object({
+        id: z.string(),
+        inputData: z.record(z.string(), z.unknown()).optional(),
+      }),
+    )
     .mutation(async ({ ctx, input }) => {
       const workflow = await prisma.workflow.findFirst({
         where: { id: input.id, userId: ctx.user.id },
@@ -432,21 +438,28 @@ export const workflowsRouter = createTRPCRouter({
         },
       });
 
-      const triggerData = {
+      const triggerData: Record<string, unknown> = {
         triggeredBy: ctx.user.id,
         triggeredAt: new Date().toISOString(),
+        ...(input.inputData ? { body: input.inputData } : {}),
       };
 
-      // Queue workflow execution via Inngest for durability, retries, and
-      // proper step.sleep() in wait/delay nodes.
-      await inngest.send({
-        name: "workflow/execute",
-        data: {
-          workflowId: workflow.id,
-          executionId: execution.id,
-          triggerData,
-        },
-      });
+      // In development, execute directly (Inngest Cloud can't reach localhost).
+      // In production, use Inngest for durability, retries, and step.sleep().
+      if (process.env.NODE_ENV === "development") {
+        executeWorkflowDirect(workflow.id, execution.id, triggerData).catch(
+          () => {},
+        );
+      } else {
+        await inngest.send({
+          name: "workflow/execute",
+          data: {
+            workflowId: workflow.id,
+            executionId: execution.id,
+            triggerData,
+          },
+        });
+      }
 
       return { executionId: execution.id };
     }),

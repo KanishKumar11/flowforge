@@ -28,6 +28,16 @@ import Link from "next/link";
 import { useTRPC, useVanillaClient } from "@/trpc/client";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 
 interface WorkflowEditorProps {
   workflowId: string;
@@ -51,6 +61,9 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
   const { screenToFlowPosition } = useReactFlow();
   const [isSaving, setIsSaving] = useState(false);
   const [selectedNode, setSelectedNode] = useState<Node | null>(null);
+  const [testInputOpen, setTestInputOpen] = useState(false);
+  const [testInputJson, setTestInputJson] = useState("{\n  \"email\": \"user@example.com\",\n  \"name\": \"Test User\"\n}");
+  const [testInputError, setTestInputError] = useState<string | null>(null);
 
   // Undo/Redo history
   const [history, setHistory] = useState<HistoryState[]>([]);
@@ -260,7 +273,28 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
   };
 
   const handleExecute = () => {
-    executeWorkflow.mutate({ id: workflowId });
+    // Check if the workflow has a webhook trigger — if so, prompt for test body data
+    const hasWebhookTrigger = nodes.some(
+      (n) => n.type === "trigger" && (n.data as { type?: string }).type === "webhook",
+    );
+    if (hasWebhookTrigger) {
+      setTestInputOpen(true);
+    } else {
+      executeWorkflow.mutate({ id: workflowId });
+    }
+  };
+
+  const handleTestInputSubmit = () => {
+    let parsed: Record<string, unknown>;
+    try {
+      parsed = JSON.parse(testInputJson);
+    } catch {
+      setTestInputError("Invalid JSON — please fix before running.");
+      return;
+    }
+    setTestInputError(null);
+    setTestInputOpen(false);
+    executeWorkflow.mutate({ id: workflowId, inputData: parsed });
   };
 
   const handleNodeClick = useCallback((_: React.MouseEvent, node: Node) => {
@@ -451,6 +485,61 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
           onUpdate={handleNodeUpdate}
         />
       )}
+
+      {/* Test Input Dialog — shown when executing a webhook-triggered workflow manually */}
+      <Dialog open={testInputOpen} onOpenChange={setTestInputOpen}>
+        <DialogContent className="sm:max-w-md font-mono">
+          <DialogHeader>
+            <DialogTitle className="font-mono uppercase text-sm tracking-wider">
+              Test Input Data
+            </DialogTitle>
+            <DialogDescription className="text-xs font-mono">
+              This workflow uses a webhook trigger. Provide a sample JSON body
+              to populate{" "}
+              <code className="bg-muted px-1">{"{{trigger.body.*}}"}</code>{" "}
+              variables during this test run.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-2">
+            <Label className="text-xs font-mono uppercase">
+              Webhook body (JSON)
+            </Label>
+            <Textarea
+              className="font-mono text-xs h-40 resize-none"
+              value={testInputJson}
+              onChange={(e) => {
+                setTestInputJson(e.target.value);
+                setTestInputError(null);
+              }}
+              spellCheck={false}
+            />
+            {testInputError && (
+              <p className="text-destructive text-xs font-mono">
+                {testInputError}
+              </p>
+            )}
+          </div>
+          <DialogFooter className="gap-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="font-mono uppercase text-xs rounded-none"
+              onClick={() => setTestInputOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              size="sm"
+              className="font-mono uppercase text-xs rounded-none"
+              onClick={handleTestInputSubmit}
+              disabled={executeWorkflow.isPending}
+            >
+              <Play className="h-3.5 w-3.5 mr-2 fill-current" />
+              Run
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

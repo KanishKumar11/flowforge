@@ -8,12 +8,14 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useTRPC, useVanillaClient } from "@/trpc/client";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { Plus, Workflow, Sparkles, Zap, Globe } from "lucide-react";
+import { Plus, Workflow, Sparkles, Zap, Globe, LayoutTemplate } from "lucide-react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
 import { TemplateBrowser } from "@/features/workflows/components/TemplateBrowser";
 import { WorkflowSearch } from "@/features/workflows/components/WorkflowSearch";
+import { UpgradePlanDialog } from "@/components/UpgradePlanDialog";
 
 // Explicit type to avoid deep type inference
 interface WorkflowItem {
@@ -48,6 +50,7 @@ export function WorkflowsPageClient() {
   const router = useRouter();
   const [search, setSearch] = useState("");
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showUpgradeDialog, setShowUpgradeDialog] = useState(false);
 
   const trpc = useTRPC();
   const client = useVanillaClient();
@@ -74,9 +77,13 @@ export function WorkflowsPageClient() {
       router.push(`/workflows/${workflow.id}`);
     },
     onError: (error: Error) => {
-      toast.error("Failed to create workflow", {
-        description: error.message,
-      });
+      if (error.message.includes("Plan limit reached") || (error as { data?: { code?: string } }).data?.code === "FORBIDDEN") {
+        setShowUpgradeDialog(true);
+      } else {
+        toast.error("Failed to create workflow", {
+          description: error.message,
+        });
+      }
     },
   });
 
@@ -139,7 +146,17 @@ export function WorkflowsPageClient() {
         title="Workflows"
         description="Create and manage your automation workflows"
         action={
-          <div className="flex items-center">
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              asChild
+              className="gap-2 rounded-xl border-(--arch-border) font-medium text-[13px] h-10 px-4"
+            >
+              <Link href="/templates">
+                <LayoutTemplate className="h-4 w-4" strokeWidth={2} />
+                Template Library
+              </Link>
+            </Button>
             <Button
               onClick={() => setShowCreateModal(true)}
               className="gap-2.5 bg-primary text-primary-foreground hover:bg-primary/95 rounded-xl border border-primary/20 font-medium tracking-tight text-[13px] h-10 px-6 shadow-sm transition-all hover:-translate-y-[1px] hover:shadow-md"
@@ -297,6 +314,12 @@ export function WorkflowsPageClient() {
         onOpenChange={setShowCreateModal}
         onSubmit={handleCreateWorkflow}
         isLoading={createWorkflow.isPending}
+      />
+
+      <UpgradePlanDialog
+        open={showUpgradeDialog}
+        onOpenChange={setShowUpgradeDialog}
+        limitType="workflows"
       />
     </div>
   );

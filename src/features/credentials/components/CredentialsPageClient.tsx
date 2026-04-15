@@ -57,9 +57,10 @@ import {
   Brain,
   Mail,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useSearchParams } from "next/navigation";
 
 const providerIcons: Record<
   string,
@@ -80,6 +81,7 @@ const providerIcons: Record<
 };
 
 export function CredentialsPageClient() {
+  const searchParams = useSearchParams();
   const [search, setSearch] = useState("");
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [editingCredentialId, setEditingCredentialId] = useState<string | null>(
@@ -102,6 +104,19 @@ export function CredentialsPageClient() {
     twilioAuthToken: "",
     twilioPhoneNumber: "",
   });
+
+  // Auto-open create dialog with pre-selected provider when ?create=X is in URL
+  useEffect(() => {
+    const createProvider = searchParams.get("create");
+    if (createProvider) {
+      setNewCredential((prev) => ({
+        ...prev,
+        provider: createProvider,
+        name: createProvider.charAt(0).toUpperCase() + createProvider.slice(1) + " Credential",
+      }));
+      setShowCreateModal(true);
+    }
+  }, [searchParams]);
 
   const trpc = useTRPC();
   const client = useVanillaClient();
@@ -575,61 +590,64 @@ export function CredentialsPageClient() {
               />
             </div>
             <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider mb-1 block">
-                  Auth Type
-                </Label>
-                <Select
-                  value={newCredential.type}
-                  onValueChange={(value) =>
-                    setNewCredential({
-                      ...newCredential,
-                      type: value as
-                        | "apiKey"
-                        | "oauth2"
-                        | "basic"
-                        | "bearer"
-                        | "custom",
-                    })
-                  }
-                >
-                  <SelectTrigger className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) rounded-none font-mono text-xs h-10 focus:ring-1 focus:ring-(--arch-fg)">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) rounded-none font-mono z-50">
-                    <SelectItem
-                      value="apiKey"
-                      className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs font-mono"
-                    >
-                      API_KEY
-                    </SelectItem>
-                    <SelectItem
-                      value="bearer"
-                      className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs font-mono"
-                    >
-                      BEARER_TOKEN
-                    </SelectItem>
-                    <SelectItem
-                      value="basic"
-                      className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs font-mono"
-                    >
-                      BASIC_AUTH
-                    </SelectItem>
-                    <SelectItem
-                      value="oauth2"
-                      className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs font-mono"
-                    >
-                      OAUTH2
-                    </SelectItem>
-                    <SelectItem
-                      value="custom"
-                      className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs font-mono"
-                    >
-                      CUSTOM
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+              {/* Hide Auth Type for SMTP — it's irrelevant for email users */}
+              {newCredential.provider !== "smtp" && (
+                <div className="space-y-2">
+                  <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider mb-1 block">
+                    Auth Type
+                  </Label>
+                  <Select
+                    value={newCredential.type}
+                    onValueChange={(value) =>
+                      setNewCredential({
+                        ...newCredential,
+                        type: value as
+                          | "apiKey"
+                          | "oauth2"
+                          | "basic"
+                          | "bearer"
+                          | "custom",
+                      })
+                    }
+                  >
+                    <SelectTrigger className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) rounded-none font-mono text-xs h-10 focus:ring-1 focus:ring-(--arch-fg)">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) rounded-none font-mono z-50">
+                      <SelectItem
+                        value="apiKey"
+                        className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs font-mono"
+                      >
+                        API_KEY
+                      </SelectItem>
+                      <SelectItem
+                        value="bearer"
+                        className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs font-mono"
+                      >
+                        BEARER_TOKEN
+                      </SelectItem>
+                      <SelectItem
+                        value="basic"
+                        className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs font-mono"
+                      >
+                        BASIC_AUTH
+                      </SelectItem>
+                      <SelectItem
+                        value="oauth2"
+                        className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs font-mono"
+                      >
+                        OAUTH2
+                      </SelectItem>
+                      <SelectItem
+                        value="custom"
+                        className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs font-mono"
+                      >
+                        CUSTOM
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
               <div className="space-y-2">
                 <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider mb-1 block">
                   Provider
@@ -711,6 +729,40 @@ export function CredentialsPageClient() {
             {/* SMTP-specific fields */}
             {newCredential.provider === "smtp" ? (
               <div className="space-y-4">
+                {/* Email provider preset picker */}
+                <div className="space-y-2">
+                  <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider mb-1 block">
+                    Email Provider
+                  </Label>
+                  <div className="grid grid-cols-4 gap-2">
+                    {([
+                      { label: "Gmail", host: "smtp.gmail.com", port: "587", secure: false },
+                      { label: "Outlook", host: "smtp-mail.outlook.com", port: "587", secure: false },
+                      { label: "Yahoo", host: "smtp.mail.yahoo.com", port: "465", secure: true },
+                      { label: "Custom", host: "", port: "587", secure: false },
+                    ] as const).map((preset) => (
+                      <button
+                        key={preset.label}
+                        type="button"
+                        onClick={() =>
+                          setNewCredential({
+                            ...newCredential,
+                            smtpHost: preset.host,
+                            smtpPort: preset.port,
+                            smtpSecure: preset.secure,
+                          })
+                        }
+                        className={`py-2 text-xs font-mono border transition-colors ${
+                          newCredential.smtpHost === preset.host
+                            ? "border-(--arch-fg) bg-(--arch-fg) text-(--arch-bg)"
+                            : "border-(--arch-border) text-(--arch-muted) hover:border-(--arch-fg) hover:text-(--arch-fg)"
+                        }`}
+                      >
+                        {preset.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider mb-1 block">
@@ -741,7 +793,7 @@ export function CredentialsPageClient() {
                 </div>
                 <div className="space-y-2">
                   <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider mb-1 block">
-                    Email / Username
+                    Email Address
                   </Label>
                   <Input
                     placeholder="you@gmail.com"
@@ -754,11 +806,11 @@ export function CredentialsPageClient() {
                 </div>
                 <div className="space-y-2">
                   <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider mb-1 block">
-                    Password / App Password
+                    Password
                   </Label>
                   <Input
                     type="password"
-                    placeholder="**********************"
+                    placeholder="App password or account password"
                     value={newCredential.smtpPass}
                     onChange={(e) =>
                       setNewCredential({ ...newCredential, smtpPass: e.target.value })
@@ -768,10 +820,10 @@ export function CredentialsPageClient() {
                 </div>
                 <div className="space-y-2">
                   <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider mb-1 block">
-                    From Name / Address (Optional)
+                    From Name / Address <span className="normal-case text-(--arch-muted)">(optional)</span>
                   </Label>
                   <Input
-                    placeholder='"FlowGent" <noreply@yourdomain.com>'
+                    placeholder='"My App" <noreply@yourdomain.com>'
                     value={newCredential.smtpFrom}
                     onChange={(e) =>
                       setNewCredential({ ...newCredential, smtpFrom: e.target.value })
@@ -779,9 +831,17 @@ export function CredentialsPageClient() {
                     className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) font-mono text-xs rounded-none h-10 placeholder:text-(--arch-muted) focus-visible:ring-1 focus-visible:ring-(--arch-fg)"
                   />
                 </div>
-                <p className="text-xs text-(--arch-muted) font-mono">
-                  For Gmail: use an App Password (not your account password). Enable 2FA and create one at myaccount.google.com/apppasswords.
-                </p>
+                {newCredential.smtpHost === "smtp.gmail.com" && (
+                  <div className="p-3 border border-yellow-500/30 bg-yellow-500/5 text-yellow-600 dark:text-yellow-400 text-xs font-mono space-y-1">
+                    <p className="font-semibold">Gmail requires an App Password</p>
+                    <p>Your regular Gmail password won\'t work. Go to <span className="underline">myaccount.google.com/apppasswords</span>, create an app password, and paste it above.</p>
+                  </div>
+                )}
+                {newCredential.smtpHost === "smtp-mail.outlook.com" && (
+                  <div className="p-3 border border-blue-500/30 bg-blue-500/5 text-blue-600 dark:text-blue-400 text-xs font-mono">
+                    <p>Use your Outlook email address and password. If you have 2FA, create an App Password at account.microsoft.com/security.</p>
+                  </div>
+                )}
               </div>
             ) : newCredential.provider === "twilio" ? (
               <div className="space-y-4">

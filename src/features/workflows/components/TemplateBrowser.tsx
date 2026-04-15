@@ -30,6 +30,7 @@ import {
 import { useState } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { UpgradePlanDialog } from "@/components/UpgradePlanDialog";
 
 const categoryIcons: Record<string, React.ReactNode> = {
   Notifications: <MessageSquare className="h-5 w-5" />,
@@ -46,6 +47,7 @@ export function TemplateBrowser() {
   const queryClient = useQueryClient();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [showUpgradeDialog, setShowUpgradeDialog] = useState(false);
   const [workflowName, setWorkflowName] = useState("");
   const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
 
@@ -61,7 +63,12 @@ export function TemplateBrowser() {
       router.push(`/workflows/${workflow.id}`);
     },
     onError: (error: Error) => {
-      toast.error(error.message);
+      if (error.message.includes("Plan limit reached") || (error as { data?: { code?: string } }).data?.code === "FORBIDDEN") {
+        setIsOpen(false);
+        setShowUpgradeDialog(true);
+      } else {
+        toast.error(error.message);
+      }
     },
   });
 
@@ -76,6 +83,7 @@ export function TemplateBrowser() {
     : templates;
 
   return (
+    <>
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button variant="outline" className="gap-2">
@@ -182,5 +190,12 @@ export function TemplateBrowser() {
         )}
       </DialogContent>
     </Dialog>
+
+    <UpgradePlanDialog
+      open={showUpgradeDialog}
+      onOpenChange={setShowUpgradeDialog}
+      limitType="workflows"
+    />
+    </>
   );
 }
