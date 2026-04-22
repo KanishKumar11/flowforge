@@ -62,7 +62,9 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
   const [isSaving, setIsSaving] = useState(false);
   const [selectedNode, setSelectedNode] = useState<Node | null>(null);
   const [testInputOpen, setTestInputOpen] = useState(false);
-  const [testInputJson, setTestInputJson] = useState("{\n  \"email\": \"user@example.com\",\n  \"name\": \"Test User\"\n}");
+  const [testInputJson, setTestInputJson] = useState(
+    '{\n  "email": "user@example.com",\n  "name": "Test User"\n}',
+  );
   const [testInputError, setTestInputError] = useState<string | null>(null);
 
   // Undo/Redo history
@@ -275,7 +277,9 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
   const handleExecute = () => {
     // Check if the workflow has a webhook trigger — if so, prompt for test body data
     const hasWebhookTrigger = nodes.some(
-      (n) => n.type === "trigger" && (n.data as { type?: string }).type === "webhook",
+      (n) =>
+        n.type === "trigger" &&
+        (n.data as { type?: string }).type === "webhook",
     );
     if (hasWebhookTrigger) {
       setTestInputOpen(true);

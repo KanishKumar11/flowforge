@@ -63,7 +63,10 @@ export function TemplateBrowser() {
       router.push(`/workflows/${workflow.id}`);
     },
     onError: (error: Error) => {
-      if (error.message.includes("Plan limit reached") || (error as { data?: { code?: string } }).data?.code === "FORBIDDEN") {
+      if (
+        error.message.includes("Plan limit reached") ||
+        (error as { data?: { code?: string } }).data?.code === "FORBIDDEN"
+      ) {
         setIsOpen(false);
         setShowUpgradeDialog(true);
       } else {
@@ -84,118 +87,118 @@ export function TemplateBrowser() {
 
   return (
     <>
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
-        <Button variant="outline" className="gap-2">
-          <BookTemplate className="h-4 w-4" />
-          Browse Templates
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="max-w-3xl max-h-[80vh] overflow-hidden flex flex-col">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <BookTemplate className="h-5 w-5" />
-            Workflow Templates
-          </DialogTitle>
-        </DialogHeader>
-
-        {/* Category Filters */}
-        <div className="flex gap-2 flex-wrap">
-          <Button
-            variant={selectedCategory === null ? "default" : "outline"}
-            size="sm"
-            onClick={() => setSelectedCategory(null)}
-          >
-            All
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+        <DialogTrigger asChild>
+          <Button variant="outline" className="gap-2">
+            <BookTemplate className="h-4 w-4" />
+            Browse Templates
           </Button>
-          {categories.map((cat) => (
+        </DialogTrigger>
+        <DialogContent className="max-w-3xl max-h-[80vh] overflow-hidden flex flex-col">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <BookTemplate className="h-5 w-5" />
+              Workflow Templates
+            </DialogTitle>
+          </DialogHeader>
+
+          {/* Category Filters */}
+          <div className="flex gap-2 flex-wrap">
             <Button
-              key={cat}
-              variant={selectedCategory === cat ? "default" : "outline"}
+              variant={selectedCategory === null ? "default" : "outline"}
               size="sm"
-              onClick={() => setSelectedCategory(cat)}
-              className="gap-2"
+              onClick={() => setSelectedCategory(null)}
             >
-              {categoryIcons[cat] || <Workflow className="h-4 w-4" />}
-              {cat}
+              All
             </Button>
-          ))}
-        </div>
-
-        {/* Templates Grid */}
-        <div className="flex-1 overflow-auto grid gap-4 sm:grid-cols-2 py-4">
-          {filteredTemplates.map((template) => (
-            <Card
-              key={template.id}
-              className={`cursor-pointer transition-all hover:border-primary ${
-                selectedTemplate === template.id
-                  ? "border-primary ring-2 ring-primary/20"
-                  : ""
-              }`}
-              onClick={() => {
-                setSelectedTemplate(template.id);
-                setWorkflowName(template.name);
-              }}
-            >
-              <CardHeader className="pb-2">
-                <CardTitle className="text-base flex items-center justify-between">
-                  {template.name}
-                  <Badge variant="secondary" className="text-xs">
-                    {template.category}
-                  </Badge>
-                </CardTitle>
-                <CardDescription className="text-sm">
-                  {template.description}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-wrap gap-1">
-                  {template.tags.map((tag) => (
-                    <Badge key={tag} variant="outline" className="text-xs">
-                      {tag}
-                    </Badge>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        {/* Create Button */}
-        {selectedTemplate && (
-          <div className="border-t pt-4 space-y-4">
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Workflow Name</label>
-              <Input
-                value={workflowName}
-                onChange={(e) => setWorkflowName(e.target.value)}
-                placeholder="My Workflow"
-              />
-            </div>
-            <Button
-              className="w-full"
-              onClick={() =>
-                createFromTemplate.mutate({
-                  templateId: selectedTemplate,
-                  name: workflowName,
-                })
-              }
-              disabled={createFromTemplate.isPending}
-            >
-              {createFromTemplate.isPending
-                ? "Creating..."
-                : "Create from Template"}
-            </Button>
+            {categories.map((cat) => (
+              <Button
+                key={cat}
+                variant={selectedCategory === cat ? "default" : "outline"}
+                size="sm"
+                onClick={() => setSelectedCategory(cat)}
+                className="gap-2"
+              >
+                {categoryIcons[cat] || <Workflow className="h-4 w-4" />}
+                {cat}
+              </Button>
+            ))}
           </div>
-        )}
-      </DialogContent>
-    </Dialog>
 
-    <UpgradePlanDialog
-      open={showUpgradeDialog}
-      onOpenChange={setShowUpgradeDialog}
-      limitType="workflows"
-    />
+          {/* Templates Grid */}
+          <div className="flex-1 overflow-auto grid gap-4 sm:grid-cols-2 py-4">
+            {filteredTemplates.map((template) => (
+              <Card
+                key={template.id}
+                className={`cursor-pointer transition-all hover:border-primary ${
+                  selectedTemplate === template.id
+                    ? "border-primary ring-2 ring-primary/20"
+                    : ""
+                }`}
+                onClick={() => {
+                  setSelectedTemplate(template.id);
+                  setWorkflowName(template.name);
+                }}
+              >
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-base flex items-center justify-between">
+                    {template.name}
+                    <Badge variant="secondary" className="text-xs">
+                      {template.category}
+                    </Badge>
+                  </CardTitle>
+                  <CardDescription className="text-sm">
+                    {template.description}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex flex-wrap gap-1">
+                    {template.tags.map((tag) => (
+                      <Badge key={tag} variant="outline" className="text-xs">
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          {/* Create Button */}
+          {selectedTemplate && (
+            <div className="border-t pt-4 space-y-4">
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Workflow Name</label>
+                <Input
+                  value={workflowName}
+                  onChange={(e) => setWorkflowName(e.target.value)}
+                  placeholder="My Workflow"
+                />
+              </div>
+              <Button
+                className="w-full"
+                onClick={() =>
+                  createFromTemplate.mutate({
+                    templateId: selectedTemplate,
+                    name: workflowName,
+                  })
+                }
+                disabled={createFromTemplate.isPending}
+              >
+                {createFromTemplate.isPending
+                  ? "Creating..."
+                  : "Create from Template"}
+              </Button>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
+
+      <UpgradePlanDialog
+        open={showUpgradeDialog}
+        onOpenChange={setShowUpgradeDialog}
+        limitType="workflows"
+      />
     </>
   );
 }

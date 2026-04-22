@@ -70,6 +70,7 @@ export const executionsRouter = createTRPCRouter({
             select: {
               id: true,
               name: true,
+              nodes: true,
             },
           },
         },

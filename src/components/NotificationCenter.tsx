@@ -36,14 +36,16 @@ function mapExecutionsToNotifications(
     id: string;
     status: string;
     startedAt: Date | string;
-    completedAt: Date | string | null;
-    errorMessage: string | null;
+    finishedAt: Date | string | null;
+    error: unknown;
     workflow: { id: string; name: string };
   }>,
 ): Notification[] {
   return items.map((exec) => {
     const isError = exec.status === "ERROR";
     const isCancelled = exec.status === "CANCELLED";
+    const errorMsg =
+      typeof exec.error === "string" ? exec.error : "Unknown error";
     return {
       id: exec.id,
       type: isError ? "error" : isCancelled ? "warning" : "success",
@@ -53,9 +55,9 @@ function mapExecutionsToNotifications(
           ? "Execution Cancelled"
           : "Execution Complete",
       message: isError
-        ? `${exec.workflow.name}: ${exec.errorMessage || "Unknown error"}`
+        ? `${exec.workflow.name}: ${errorMsg}`
         : `${exec.workflow.name} completed successfully`,
-      timestamp: new Date(exec.completedAt || exec.startedAt),
+      timestamp: new Date(exec.finishedAt || exec.startedAt),
       read: false,
     };
   });
@@ -78,22 +80,33 @@ const typeColors: Record<NotificationType, string> = {
   error: "text-red-500",
 };
 
+type ExecListItem = {
+  id: string;
+  status: string;
+  startedAt: Date | string;
+  finishedAt: Date | string | null;
+  error: unknown;
+  workflow: { id: string; name: string };
+};
+
 export function NotificationCenter() {
   const trpc = useTRPC();
   const { data: recentExecutions } = useQuery(
     trpc.executions.list.queryOptions({ limit: 10 }),
   );
 
-  const executionNotifications = recentExecutions
-    ? mapExecutionsToNotifications(
-        recentExecutions.items.filter(
-          (e) =>
-            e.status === "ERROR" ||
-            e.status === "CANCELLED" ||
-            e.status === "SUCCESS",
-        ),
-      )
-    : [];
+  // Cast once to a simple shape to avoid Prisma JsonValue deep type instantiation
+  const rawItems: ExecListItem[] =
+    (recentExecutions?.items as unknown as ExecListItem[]) ?? [];
+
+  const executionNotifications = mapExecutionsToNotifications(
+    rawItems.filter(
+      (e) =>
+        e.status === "ERROR" ||
+        e.status === "CANCELLED" ||
+        e.status === "SUCCESS",
+    ),
+  );
 
   const [dismissedIds, setDismissedIds] = useState<Set<string>>(new Set());
   const [readIds, setReadIds] = useState<Set<string>>(new Set());
@@ -130,7 +143,7 @@ export function NotificationCenter() {
         >
           <Bell className="h-5 w-5" />
           {unreadCount > 0 && (
-            <span className="absolute -top-0.5 -right-0.5 h-[18px] w-[18px] rounded-full bg-primary text-primary-foreground text-[10px] font-bold flex items-center justify-center">
+            <span className="absolute -top-0.5 -right-0.5 h-4.5 w-4.5 rounded-full bg-primary text-primary-foreground text-[10px] font-bold flex items-center justify-center">
               {unreadCount}
             </span>
           )}
@@ -183,7 +196,7 @@ export function NotificationCenter() {
             </div>
           </div>
         ) : (
-          <ScrollArea className="max-h-[320px]">
+          <ScrollArea className="max-h-80">
             <div className="py-1">
               {notifications.map((notification) => {
                 const Icon = typeIcons[notification.type];

@@ -8,7 +8,14 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useTRPC, useVanillaClient } from "@/trpc/client";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { Plus, Workflow, Sparkles, Zap, Globe, LayoutTemplate } from "lucide-react";
+import {
+  Plus,
+  Workflow,
+  Sparkles,
+  Zap,
+  Globe,
+  LayoutTemplate,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useState } from "react";
@@ -77,7 +84,10 @@ export function WorkflowsPageClient() {
       router.push(`/workflows/${workflow.id}`);
     },
     onError: (error: Error) => {
-      if (error.message.includes("Plan limit reached") || (error as { data?: { code?: string } }).data?.code === "FORBIDDEN") {
+      if (
+        error.message.includes("Plan limit reached") ||
+        (error as { data?: { code?: string } }).data?.code === "FORBIDDEN"
+      ) {
         setShowUpgradeDialog(true);
       } else {
         toast.error("Failed to create workflow", {

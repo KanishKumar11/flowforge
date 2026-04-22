@@ -53,14 +53,14 @@ export function DashboardHeader({
   return (
     <>
       <header className="sticky top-0 z-40 w-full border-b border-border/50 bg-background/80 backdrop-blur-2xl">
-        <div className="flex items-center justify-between px-6 lg:px-10 py-5">
+        <div className="flex items-center justify-between px-6 lg:px-10 py-4">
           <div className="flex items-center gap-6">
             {/* Sidebar Toggle */}
             <SidebarTrigger className="-ml-2 transition-transform hover:scale-105 active:scale-95 text-muted-foreground hover:text-foreground" />
 
             {/* Title Section - Upgraded to Premium Aesthetic */}
             <div className="flex flex-col justify-center">
-              <h1 className="text-2xl md:text-[1.75rem] font-semibold tracking-tight text-foreground leading-none">
+              <h1 className="text-xl font-semibold tracking-tight text-foreground leading-none">
                 {title}
               </h1>
               {description && (

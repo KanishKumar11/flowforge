@@ -42,16 +42,56 @@ const CATEGORIES: {
   color: string;
 }[] = [
   { label: "All", icon: <Layers className="w-3.5 h-3.5" />, color: "" },
-  { label: "Notifications", icon: <Zap className="w-3.5 h-3.5" />, color: "text-yellow-500" },
-  { label: "Scheduled", icon: <Clock className="w-3.5 h-3.5" />, color: "text-blue-500" },
-  { label: "AI", icon: <Sparkles className="w-3.5 h-3.5" />, color: "text-purple-500" },
-  { label: "Data", icon: <Database className="w-3.5 h-3.5" />, color: "text-green-500" },
-  { label: "Developer", icon: <Code2 className="w-3.5 h-3.5" />, color: "text-cyan-500" },
-  { label: "Sales", icon: <TrendingUp className="w-3.5 h-3.5" />, color: "text-orange-500" },
-  { label: "DevOps", icon: <Server className="w-3.5 h-3.5" />, color: "text-red-500" },
-  { label: "Payments", icon: <CreditCard className="w-3.5 h-3.5" />, color: "text-emerald-500" },
-  { label: "CRM", icon: <Users className="w-3.5 h-3.5" />, color: "text-pink-500" },
-  { label: "Operations", icon: <Settings className="w-3.5 h-3.5" />, color: "text-slate-500" },
+  {
+    label: "Notifications",
+    icon: <Zap className="w-3.5 h-3.5" />,
+    color: "text-yellow-500",
+  },
+  {
+    label: "Scheduled",
+    icon: <Clock className="w-3.5 h-3.5" />,
+    color: "text-blue-500",
+  },
+  {
+    label: "AI",
+    icon: <Sparkles className="w-3.5 h-3.5" />,
+    color: "text-purple-500",
+  },
+  {
+    label: "Data",
+    icon: <Database className="w-3.5 h-3.5" />,
+    color: "text-green-500",
+  },
+  {
+    label: "Developer",
+    icon: <Code2 className="w-3.5 h-3.5" />,
+    color: "text-cyan-500",
+  },
+  {
+    label: "Sales",
+    icon: <TrendingUp className="w-3.5 h-3.5" />,
+    color: "text-orange-500",
+  },
+  {
+    label: "DevOps",
+    icon: <Server className="w-3.5 h-3.5" />,
+    color: "text-red-500",
+  },
+  {
+    label: "Payments",
+    icon: <CreditCard className="w-3.5 h-3.5" />,
+    color: "text-emerald-500",
+  },
+  {
+    label: "CRM",
+    icon: <Users className="w-3.5 h-3.5" />,
+    color: "text-pink-500",
+  },
+  {
+    label: "Operations",
+    icon: <Settings className="w-3.5 h-3.5" />,
+    color: "text-slate-500",
+  },
 ];
 
 const CATEGORY_ICONS: Record<string, React.ReactNode> = {
@@ -234,8 +274,9 @@ export function WorkflowTemplateLibrary() {
           {filtered.map((template) => {
             const triggerType = getTriggerType(template.nodes);
             const actionCount = getNodeCount(template.nodes);
-            const categoryIcon =
-              CATEGORY_ICONS[template.category] ?? <Zap className="w-5 h-5" />;
+            const categoryIcon = CATEGORY_ICONS[template.category] ?? (
+              <Zap className="w-5 h-5" />
+            );
 
             return (
               <div
@@ -272,7 +313,9 @@ export function WorkflowTemplateLibrary() {
                       {triggerType}
                     </span>
                     <span className="opacity-30">·</span>
-                    <span>{actionCount} node{actionCount !== 1 ? "s" : ""}</span>
+                    <span>
+                      {actionCount} node{actionCount !== 1 ? "s" : ""}
+                    </span>
                   </div>
                 </div>
 

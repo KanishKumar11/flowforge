@@ -1226,9 +1226,13 @@ export async function executeWorkflowDirect(
         await new Promise((resolve) => setTimeout(resolve, waitMs));
       }
 
-      // Store result
+      // Store result and persist incrementally so UI shows real-time progress
       context.nodeResults[currentNode.id] = result;
       executed.add(currentNode.id);
+      await prisma.execution.update({
+        where: { id: executionId },
+        data: { nodeResults: context.nodeResults as Record<string, never> },
+      });
 
       // Determine branch filter for conditional nodes
       let branchFilter: string | undefined;
@@ -1373,6 +1377,18 @@ export const executeWorkflow = inngest.createFunction(
           },
         );
 
+        // Store result immediately so it's available before any sleep
+        context.nodeResults[currentNode.id] = result;
+        executed.add(currentNode.id);
+
+        // Persist progress to DB so UI shows real-time node status
+        await step.run(`save-progress-${currentNode.id}`, async () => {
+          await prisma.execution.update({
+            where: { id: executionId },
+            data: { nodeResults: context.nodeResults as Record<string, never> },
+          });
+        });
+
         // Handle wait/delay nodes with durable sleep
         if (
           currentNode.data.type === "wait" ||
@@ -1385,10 +1401,6 @@ export const executeWorkflow = inngest.createFunction(
               : (raw as number) || 1000;
           await step.sleep(`wait-${currentNode.id}`, waitMs);
         }
-
-        // Store result
-        context.nodeResults[currentNode.id] = result;
-        executed.add(currentNode.id);
 
         // Determine branch filter for conditional nodes
         let branchFilter: string | undefined;

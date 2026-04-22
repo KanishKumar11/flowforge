@@ -112,7 +112,10 @@ export function CredentialsPageClient() {
       setNewCredential((prev) => ({
         ...prev,
         provider: createProvider,
-        name: createProvider.charAt(0).toUpperCase() + createProvider.slice(1) + " Credential",
+        name:
+          createProvider.charAt(0).toUpperCase() +
+          createProvider.slice(1) +
+          " Credential",
       }));
       setShowCreateModal(true);
     }
@@ -216,7 +219,7 @@ export function CredentialsPageClient() {
 
     const isSmtp = newCredential.provider === "smtp";
     const isTwilio = newCredential.provider === "twilio";
-    
+
     let credData: Record<string, unknown>;
     if (isSmtp) {
       credData = {
@@ -242,7 +245,11 @@ export function CredentialsPageClient() {
       await updateCredential.mutateAsync({
         id: editingCredentialId,
         name: newCredential.name,
-        ...((isSmtp ? newCredential.smtpUser : (isTwilio ? newCredential.twilioAccountSid : newCredential.apiKey)) && {
+        ...((isSmtp
+          ? newCredential.smtpUser
+          : isTwilio
+            ? newCredential.twilioAccountSid
+            : newCredential.apiKey) && {
           data: credData,
         }),
       });
@@ -735,12 +742,34 @@ export function CredentialsPageClient() {
                     Email Provider
                   </Label>
                   <div className="grid grid-cols-4 gap-2">
-                    {([
-                      { label: "Gmail", host: "smtp.gmail.com", port: "587", secure: false },
-                      { label: "Outlook", host: "smtp-mail.outlook.com", port: "587", secure: false },
-                      { label: "Yahoo", host: "smtp.mail.yahoo.com", port: "465", secure: true },
-                      { label: "Custom", host: "", port: "587", secure: false },
-                    ] as const).map((preset) => (
+                    {(
+                      [
+                        {
+                          label: "Gmail",
+                          host: "smtp.gmail.com",
+                          port: "587",
+                          secure: false,
+                        },
+                        {
+                          label: "Outlook",
+                          host: "smtp-mail.outlook.com",
+                          port: "587",
+                          secure: false,
+                        },
+                        {
+                          label: "Yahoo",
+                          host: "smtp.mail.yahoo.com",
+                          port: "465",
+                          secure: true,
+                        },
+                        {
+                          label: "Custom",
+                          host: "",
+                          port: "587",
+                          secure: false,
+                        },
+                      ] as const
+                    ).map((preset) => (
                       <button
                         key={preset.label}
                         type="button"
@@ -772,7 +801,10 @@ export function CredentialsPageClient() {
                       placeholder="smtp.gmail.com"
                       value={newCredential.smtpHost}
                       onChange={(e) =>
-                        setNewCredential({ ...newCredential, smtpHost: e.target.value })
+                        setNewCredential({
+                          ...newCredential,
+                          smtpHost: e.target.value,
+                        })
                       }
                       className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) font-mono text-xs rounded-none h-10 placeholder:text-(--arch-muted) focus-visible:ring-1 focus-visible:ring-(--arch-fg)"
                     />
@@ -785,7 +817,10 @@ export function CredentialsPageClient() {
                       placeholder="587"
                       value={newCredential.smtpPort}
                       onChange={(e) =>
-                        setNewCredential({ ...newCredential, smtpPort: e.target.value })
+                        setNewCredential({
+                          ...newCredential,
+                          smtpPort: e.target.value,
+                        })
                       }
                       className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) font-mono text-xs rounded-none h-10 placeholder:text-(--arch-muted) focus-visible:ring-1 focus-visible:ring-(--arch-fg)"
                     />
@@ -799,7 +834,10 @@ export function CredentialsPageClient() {
                     placeholder="you@gmail.com"
                     value={newCredential.smtpUser}
                     onChange={(e) =>
-                      setNewCredential({ ...newCredential, smtpUser: e.target.value })
+                      setNewCredential({
+                        ...newCredential,
+                        smtpUser: e.target.value,
+                      })
                     }
                     className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) font-mono text-xs rounded-none h-10 placeholder:text-(--arch-muted) focus-visible:ring-1 focus-visible:ring-(--arch-fg)"
                   />
@@ -813,33 +851,54 @@ export function CredentialsPageClient() {
                     placeholder="App password or account password"
                     value={newCredential.smtpPass}
                     onChange={(e) =>
-                      setNewCredential({ ...newCredential, smtpPass: e.target.value })
+                      setNewCredential({
+                        ...newCredential,
+                        smtpPass: e.target.value,
+                      })
                     }
                     className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) font-mono text-xs rounded-none h-10 placeholder:text-(--arch-muted) focus-visible:ring-1 focus-visible:ring-(--arch-fg)"
                   />
                 </div>
                 <div className="space-y-2">
                   <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider mb-1 block">
-                    From Name / Address <span className="normal-case text-(--arch-muted)">(optional)</span>
+                    From Name / Address{" "}
+                    <span className="normal-case text-(--arch-muted)">
+                      (optional)
+                    </span>
                   </Label>
                   <Input
                     placeholder='"My App" <noreply@yourdomain.com>'
                     value={newCredential.smtpFrom}
                     onChange={(e) =>
-                      setNewCredential({ ...newCredential, smtpFrom: e.target.value })
+                      setNewCredential({
+                        ...newCredential,
+                        smtpFrom: e.target.value,
+                      })
                     }
                     className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) font-mono text-xs rounded-none h-10 placeholder:text-(--arch-muted) focus-visible:ring-1 focus-visible:ring-(--arch-fg)"
                   />
                 </div>
                 {newCredential.smtpHost === "smtp.gmail.com" && (
                   <div className="p-3 border border-yellow-500/30 bg-yellow-500/5 text-yellow-600 dark:text-yellow-400 text-xs font-mono space-y-1">
-                    <p className="font-semibold">Gmail requires an App Password</p>
-                    <p>Your regular Gmail password won\'t work. Go to <span className="underline">myaccount.google.com/apppasswords</span>, create an app password, and paste it above.</p>
+                    <p className="font-semibold">
+                      Gmail requires an App Password
+                    </p>
+                    <p>
+                      Your regular Gmail password won\'t work. Go to{" "}
+                      <span className="underline">
+                        myaccount.google.com/apppasswords
+                      </span>
+                      , create an app password, and paste it above.
+                    </p>
                   </div>
                 )}
                 {newCredential.smtpHost === "smtp-mail.outlook.com" && (
                   <div className="p-3 border border-blue-500/30 bg-blue-500/5 text-blue-600 dark:text-blue-400 text-xs font-mono">
-                    <p>Use your Outlook email address and password. If you have 2FA, create an App Password at account.microsoft.com/security.</p>
+                    <p>
+                      Use your Outlook email address and password. If you have
+                      2FA, create an App Password at
+                      account.microsoft.com/security.
+                    </p>
                   </div>
                 )}
               </div>
@@ -853,7 +912,10 @@ export function CredentialsPageClient() {
                     placeholder="ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
                     value={newCredential.twilioAccountSid}
                     onChange={(e) =>
-                      setNewCredential({ ...newCredential, twilioAccountSid: e.target.value })
+                      setNewCredential({
+                        ...newCredential,
+                        twilioAccountSid: e.target.value,
+                      })
                     }
                     className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) font-mono text-xs rounded-none h-10 placeholder:text-(--arch-muted) focus-visible:ring-1 focus-visible:ring-(--arch-fg)"
                   />
@@ -867,7 +929,10 @@ export function CredentialsPageClient() {
                     placeholder="********************************"
                     value={newCredential.twilioAuthToken}
                     onChange={(e) =>
-                      setNewCredential({ ...newCredential, twilioAuthToken: e.target.value })
+                      setNewCredential({
+                        ...newCredential,
+                        twilioAuthToken: e.target.value,
+                      })
                     }
                     className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) font-mono text-xs rounded-none h-10 placeholder:text-(--arch-muted) focus-visible:ring-1 focus-visible:ring-(--arch-fg)"
                   />
@@ -880,7 +945,10 @@ export function CredentialsPageClient() {
                     placeholder="+1234567890"
                     value={newCredential.twilioPhoneNumber}
                     onChange={(e) =>
-                      setNewCredential({ ...newCredential, twilioPhoneNumber: e.target.value })
+                      setNewCredential({
+                        ...newCredential,
+                        twilioPhoneNumber: e.target.value,
+                      })
                     }
                     className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) font-mono text-xs rounded-none h-10 placeholder:text-(--arch-muted) focus-visible:ring-1 focus-visible:ring-(--arch-fg)"
                   />
@@ -900,7 +968,10 @@ export function CredentialsPageClient() {
                   placeholder="**********************"
                   value={newCredential.apiKey}
                   onChange={(e) =>
-                    setNewCredential({ ...newCredential, apiKey: e.target.value })
+                    setNewCredential({
+                      ...newCredential,
+                      apiKey: e.target.value,
+                    })
                   }
                   className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) font-mono text-xs rounded-none h-10 placeholder:text-(--arch-muted) focus-visible:ring-1 focus-visible:ring-(--arch-fg)"
                 />
