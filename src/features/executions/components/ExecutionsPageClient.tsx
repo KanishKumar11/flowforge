@@ -57,7 +57,7 @@ interface ExecutionItem {
   startedAt: Date | string;
   finishedAt: Date | string | null;
   duration: number | null;
-  errorMessage: string | null;
+  error?: unknown;
   workflow: { id: string; name: string };
 }
 
