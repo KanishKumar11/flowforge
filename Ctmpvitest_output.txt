@@ -1,0 +1,356 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90mK:/personal/flowgent[39m
+
+ [32m✓[39m src/lib/integrations/registry.test.ts[2m > [22mIntegration Registry[2m > [22mintegrations object[2m > [22mshould contain all expected providers
+ [32m✓[39m src/lib/integrations/registry.test.ts[2m > [22mIntegration Registry[2m > [22mintegrations object[2m > [22mshould have at least 4 integrations
+ [32m✓[39m src/lib/integrations/registry.test.ts[2m > [22mIntegration Registry[2m > [22mSlack integration[2m > [22mshould have correct metadata
+ [32m✓[39m src/lib/integrations/registry.test.ts[2m > [22mIntegration Registry[2m > [22mSlack integration[2m > [22mshould have correct OAuth scopes
+ [32m✓[39m src/lib/integrations/registry.test.ts[2m > [22mIntegration Registry[2m > [22mSlack integration[2m > [22mshould have operations
+ [32m✓[39m src/lib/integrations/registry.test.ts[2m > [22mIntegration Registry[2m > [22mSlack integration[2m > [22mshould have send_message operation with required args
+ [32m✓[39m src/lib/integrations/registry.test.ts[2m > [22mIntegration Registry[2m > [22mSlack integration[2m > [22mshould have list_channels operation
+ [32m✓[39m src/lib/integrations/registry.test.ts[2m > [22mIntegration Registry[2m > [22mGoogle Sheets integration[2m > [22mshould have correct metadata
+ [32m✓[39m src/lib/integrations/registry.test.ts[2m > [22mIntegration Registry[2m > [22mGoogle Sheets integration[2m > [22mshould have correct OAuth scopes
+ [32m✓[39m src/lib/integrations/registry.test.ts[2m > [22mIntegration Registry[2m > [22mGoogle Sheets integration[2m > [22mshould have append_row operation
+ [32m✓[39m src/lib/integrations/registry.test.ts[2m > [22mIntegration Registry[2m > [22mGoogle Sheets integration[2m > [22mshould have read_rows operation
+ [32m✓[39m src/lib/integrations/registry.test.ts[2m > [22mIntegration Registry[2m > [22mGitHub integration[2m > [22mshould have correct metadata
+ [32m✓[39m src/lib/integrations/registry.test.ts[2m > [22mIntegration Registry[2m > [22mGitHub integration[2m > [22mshould have correct OAuth scopes
+ [32m✓[39m src/lib/integrations/registry.test.ts[2m > [22mIntegration Registry[2m > [22mGitHub integration[2m > [22mshould have create_issue operation
+ [32m✓[39m src/lib/integrations/registry.test.ts[2m > [22mIntegration Registry[2m > [22mGitHub integration[2m > [22mshould have list_issues operation
+ [32m✓[39m src/lib/integrations/registry.test.ts[2m > [22mIntegration Registry[2m > [22mNotion integration[2m > [22mshould have correct metadata
+ [32m✓[39m src/lib/integrations/registry.test.ts[2m > [22mIntegration Registry[2m > [22mNotion integration[2m > [22mshould have empty scopes array
+ [32m✓[39m src/lib/integrations/registry.test.ts[2m > [22mIntegration Registry[2m > [22mNotion integration[2m > [22mshould have create_page operation
+ [32m✓[39m src/lib/integrations/registry.test.ts[2m > [22mIntegration Registry[2m > [22mNotion integration[2m > [22mshould have query_database operation
+ [32m✓[39m src/lib/integrations/registry.test.ts[2m > [22mIntegration Registry[2m > [22mIntegration structure validation[2m > [22mshould have all required fields for each integration
+ [32m✓[39m src/lib/integrations/registry.test.ts[2m > [22mIntegration Registry[2m > [22mIntegration structure validation[2m > [22mshould have valid operations for each integration
+ [32m✓[39m src/lib/integrations/registry.test.ts[2m > [22mIntegration Registry[2m > [22mIntegration structure validation[2m > [22mshould have valid operation args structure
+ [32m✓[39m src/lib/integrations/registry.test.ts[2m > [22mIntegration Registry[2m > [22mIntegration structure validation[2m > [22mshould only use valid integration types
+ [32m✓[39m src/lib/integrations/registry.test.ts[2m > [22mIntegration Registry[2m > [22mIntegration structure validation[2m > [22mshould have scopes defined for OAuth2 integrations
+ [32m✓[39m src/lib/integrations/registry.test.ts[2m > [22mIntegration Registry[2m > [22mOperation argument types[2m > [22mshould use valid argument types
+ [32m✓[39m src/lib/integrations/registry.test.ts[2m > [22mIntegration Registry[2m > [22mOperation argument types[2m > [22mshould mark appropriate args as required
+ [32m✓[39m src/lib/utils.test.ts[2m > [22mUtils[2m > [22mcn (className utility)[2m > [22mshould merge class names correctly
+ [32m✓[39m src/lib/utils.test.ts[2m > [22mUtils[2m > [22mcn (className utility)[2m > [22mshould handle conditional classes
+ [32m✓[39m src/lib/utils.test.ts[2m > [22mUtils[2m > [22mcn (className utility)[2m > [22mshould ignore falsy values
+ [32m✓[39m src/lib/utils.test.ts[2m > [22mUtils[2m > [22mcn (className utility)[2m > [22mshould merge conflicting Tailwind classes correctly
+ [32m✓[39m src/lib/utils.test.ts[2m > [22mUtils[2m > [22mcn (className utility)[2m > [22mshould handle array of classes
+ [32m✓[39m src/lib/utils.test.ts[2m > [22mUtils[2m > [22mcn (className utility)[2m > [22mshould handle empty input
+ [32m✓[39m src/lib/utils.test.ts[2m > [22mUtils[2m > [22mcn (className utility)[2m > [22mshould handle objects with boolean values
+ [32m✓[39m src/lib/cron-helper.test.ts[2m > [22mCron Helper[2m > [22mcronPresets[2m > [22mshould have at least 10 presets
+ [32m✓[39m src/lib/cron-helper.test.ts[2m > [22mCron Helper[2m > [22mcronPresets[2m > [22mshould have valid structure for each preset
+ [32m✓[39m src/lib/cron-helper.test.ts[2m > [22mCron Helper[2m > [22mcronPresets[2m > [22mshould include common presets
+ [32m✓[39m src/lib/cron-helper.test.ts[2m > [22mCron Helper[2m > [22mcronPresets[2m > [22mshould have valid cron expressions for all presets
+ [32m✓[39m src/lib/cron-helper.test.ts[2m > [22mCron Helper[2m > [22mparseCronExpression[2m > [22mshould parse a simple cron expression
+ [32m✓[39m src/lib/cron-helper.test.ts[2m > [22mCron Helper[2m > [22mparseCronExpression[2m > [22mshould parse every hour cron expression
+ [32m✓[39m src/lib/cron-helper.test.ts[2m > [22mCron Helper[2m > [22mparseCronExpression[2m > [22mshould parse daily at midnight
+ [32m✓[39m src/lib/cron-helper.test.ts[2m > [22mCron Helper[2m > [22mparseCronExpression[2m > [22mshould parse weekly schedule
+ [32m✓[39m src/lib/cron-helper.test.ts[2m > [22mCron Helper[2m > [22mparseCronExpression[2m > [22mshould parse expressions with ranges
+ [32m✓[39m src/lib/cron-helper.test.ts[2m > [22mCron Helper[2m > [22mparseCronExpression[2m > [22mshould parse expressions with step values
+ [32m✓[39m src/lib/cron-helper.test.ts[2m > [22mCron Helper[2m > [22mparseCronExpression[2m > [22mshould handle expressions with extra whitespace
+ [32m✓[39m src/lib/cron-helper.test.ts[2m > [22mCron Helper[2m > [22mbuildCronExpression[2m > [22mshould build cron expression from parts
+ [32m✓[39m src/lib/cron-helper.test.ts[2m > [22mCron Helper[2m > [22mbuildCronExpression[2m > [22mshould build every minute expression
+ [32m✓[39m src/lib/cron-helper.test.ts[2m > [22mCron Helper[2m > [22mbuildCronExpression[2m > [22mshould build complex expression with ranges
+ [32m✓[39m src/lib/cron-helper.test.ts[2m > [22mCron Helper[2m > [22mdescribeCron[2m > [22mshould return preset description for known expressions
+ [32m✓[39m src/lib/cron-helper.test.ts[2m > [22mCron Helper[2m > [22mdescribeCron[2m > [22mshould describe hourly schedule
+ [32m✓[39m src/lib/cron-helper.test.ts[2m > [22mCron Helper[2m > [22mdescribeCron[2m > [22mshould describe daily at midnight
+ [32m✓[39m src/lib/cron-helper.test.ts[2m > [22mCron Helper[2m > [22mdescribeCron[2m > [22mshould generate description for custom expression
+ [32m✓[39m src/lib/cron-helper.test.ts[2m > [22mCron Helper[2m > [22mdescribeCron[2m > [22mshould describe expressions with step values
+ [32m✓[39m src/lib/cron-helper.test.ts[2m > [22mCron Helper[2m > [22mdescribeCron[2m > [22mshould describe weekly schedules
+ [32m✓[39m src/lib/cron-helper.test.ts[2m > [22mCron Helper[2m > [22mdescribeCron[2m > [22mshould describe day of month
+ [32m✓[39m src/lib/cron-helper.test.ts[2m > [22mCron Helper[2m > [22misValidCron[2m > [22mshould validate correct cron expressions
+ [32m✓[39m src/lib/cron-helper.test.ts[2m > [22mCron Helper[2m > [22misValidCron[2m > [22mshould reject expressions with wrong number of parts
+ [32m✓[39m src/lib/cron-helper.test.ts[2m > [22mCron Helper[2m > [22misValidCron[2m > [22mshould reject invalid minute values
+ [32m✓[39m src/lib/cron-helper.test.ts[2m > [22mCron Helper[2m > [22misValidCron[2m > [22mshould reject invalid hour values
+ [32m✓[39m src/lib/cron-helper.test.ts[2m > [22mCron Helper[2m > [22misValidCron[2m > [22mshould reject invalid day of month values
+ [32m✓[39m src/lib/cron-helper.test.ts[2m > [22mCron Helper[2m > [22misValidCron[2m > [22mshould reject invalid month values
+ [32m✓[39m src/lib/cron-helper.test.ts[2m > [22mCron Helper[2m > [22misValidCron[2m > [22mshould reject invalid day of week values
+ [32m✓[39m src/lib/cron-helper.test.ts[2m > [22mCron Helper[2m > [22misValidCron[2m > [22mshould accept valid step values
+ [32m✓[39m src/lib/cron-helper.test.ts[2m > [22mCron Helper[2m > [22misValidCron[2m > [22mshould accept valid ranges
+ [32m✓[39m src/lib/cron-helper.test.ts[2m > [22mCron Helper[2m > [22misValidCron[2m > [22mshould handle expressions with multiple spaces
+ [32m✓[39m src/lib/cron-helper.test.ts[2m > [22mCron Helper[2m > [22mgetNextRunTimes[2m > [22mshould return array of Date objects
+ [32m✓[39m src/lib/cron-helper.test.ts[2m > [22mCron Helper[2m > [22mgetNextRunTimes[2m > [22mshould return requested number of run times
+ [32m✓[39m src/lib/cron-helper.test.ts[2m > [22mCron Helper[2m > [22mgetNextRunTimes[2m > [22mshould return future dates
+ [32m✓[39m src/lib/cron-helper.test.ts[2m > [22mCron Helper[2m > [22mgetNextRunTimes[2m > [22mshould default to 5 run times when count not specified
+ [32m✓[39m src/lib/cron-helper.test.ts[2m > [22mCron Helper[2m > [22mgetNextRunTimes[2m > [22mshould return dates in chronological order
+ [32m✓[39m src/lib/cron-helper.test.ts[2m > [22mCron Helper[2m > [22mIntegration tests[2m > [22mshould parse and rebuild the same expression
+ [32m✓[39m src/lib/cron-helper.test.ts[2m > [22mCron Helper[2m > [22mIntegration tests[2m > [22mshould validate all preset expressions
+ [32m✓[39m src/lib/cron-helper.test.ts[2m > [22mCron Helper[2m > [22mIntegration tests[2m > [22mshould describe all preset expressions
+ [32m✓[39m src/app/api/oauth/[provider]/connect/route.test.ts[2m > [22mOAuth Connect Route[2m > [22mGET /api/oauth/[provider]/connect[2m > [22mshould redirect to sign-in when user is not authenticated
+ [32m✓[39m src/app/api/oauth/[provider]/connect/route.test.ts[2m > [22mOAuth Connect Route[2m > [22mGET /api/oauth/[provider]/connect[2m > [22mshould redirect to Slack OAuth URL with correct parameters
+ [32m✓[39m src/app/api/oauth/[provider]/connect/route.test.ts[2m > [22mOAuth Connect Route[2m > [22mGET /api/oauth/[provider]/connect[2m > [22mshould redirect to Google OAuth URL with correct parameters
+ [32m✓[39m src/app/api/oauth/[provider]/connect/route.test.ts[2m > [22mOAuth Connect Route[2m > [22mGET /api/oauth/[provider]/connect[2m > [22mshould redirect to GitHub OAuth URL with correct parameters
+ [32m✓[39m src/app/api/oauth/[provider]/connect/route.test.ts[2m > [22mOAuth Connect Route[2m > [22mGET /api/oauth/[provider]/connect[2m > [22mshould redirect to Notion OAuth URL with owner=user parameter
+ [32m✓[39m src/app/api/oauth/[provider]/connect/route.test.ts[2m > [22mOAuth Connect Route[2m > [22mGET /api/oauth/[provider]/connect[2m > [22mshould return 400 for unknown provider
+ [32m✓[39m src/app/api/oauth/[provider]/connect/route.test.ts[2m > [22mOAuth Connect Route[2m > [22mGET /api/oauth/[provider]/connect[2m > [22mshould include userId in state parameter
+ [32m✓[39m src/app/api/oauth/[provider]/connect/route.test.ts[2m > [22mOAuth Connect Route[2m > [22mGET /api/oauth/[provider]/connect[2m > [22mshould use correct redirect_uri for callback
+ [32m✓[39m src/trpc/routers/credentials.test.ts[2m > [22mCredentials Router[2m > [22mlist[2m > [22mshould return all credentials for the current user
+ [32m✓[39m src/trpc/routers/credentials.test.ts[2m > [22mCredentials Router[2m > [22mlist[2m > [22mshould return empty array when user has no credentials
+ [32m✓[39m src/trpc/routers/credentials.test.ts[2m > [22mCredentials Router[2m > [22mget[2m > [22mshould return a credential by ID for the current user
+ [32m✓[39m src/trpc/routers/credentials.test.ts[2m > [22mCredentials Router[2m > [22mget[2m > [22mshould throw error when credential is not found
+ [31m×[39m src/trpc/routers/credentials.test.ts[2m > [22mCredentials Router[2m > [22mcreate[2m > [22mshould create a new credential
+[31m   → BETTER_AUTH_SECRET is required for credential encryption. Set it in your .env file.[39m
+ [32m✓[39m src/trpc/routers/credentials.test.ts[2m > [22mCredentials Router[2m > [22mcreate[2m > [22mshould validate credential name is not empty
+ [32m✓[39m src/trpc/routers/credentials.test.ts[2m > [22mCredentials Router[2m > [22mcreate[2m > [22mshould validate credential type enum
+ [32m✓[39m src/trpc/routers/credentials.test.ts[2m > [22mCredentials Router[2m > [22mupdate[2m > [22mshould update credential name
+ [32m✓[39m src/trpc/routers/credentials.test.ts[2m > [22mCredentials Router[2m > [22mupdate[2m > [22mshould throw error when updating non-existent credential
+ [32m✓[39m src/trpc/routers/credentials.test.ts[2m > [22mCredentials Router[2m > [22mdelete[2m > [22mshould delete a credential by ID
+ [32m✓[39m src/trpc/routers/credentials.test.ts[2m > [22mCredentials Router[2m > [22mdelete[2m > [22mshould throw error when deleting non-existent credential
+ [32m✓[39m src/trpc/routers/credentials.test.ts[2m > [22mCredentials Router[2m > [22mgetDecrypted[2m > [22mshould return decrypted credential data
+ [32m✓[39m src/trpc/routers/credentials.test.ts[2m > [22mCredentials Router[2m > [22mgetDecrypted[2m > [22mshould throw error when credential not found
+ [32m✓[39m src/trpc/routers/credentials.test.ts[2m > [22mCredentials Router[2m > [22mgetDecrypted[2m > [22mshould update lastUsedAt when getting decrypted data
+ [32m✓[39m src/trpc/routers/credentials.test.ts[2m > [22mCredentials Router[2m > [22munauthorized access[2m > [22mshould throw unauthorized error when no session
+[90mstderr[2m | src/hooks/use-mobile.test.ts[2m > [22m[2museIsMobile[2m > [22m[2mshould update when window is resized
+[22m[39mAn update to TestComponent inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+ [32m✓[39m src/hooks/useDebounce.test.ts[2m > [22museDebounce[2m > [22mshould return initial value immediately
+ [32m✓[39m src/hooks/useDebounce.test.ts[2m > [22museDebounce[2m > [22mshould debounce value changes
+ [32m✓[39m src/hooks/useDebounce.test.ts[2m > [22museDebounce[2m > [22mshould cancel previous timeout on rapid changes
+ [32m✓[39m src/hooks/useDebounce.test.ts[2m > [22museDebounce[2m > [22mshould work with different delay values
+ [32m✓[39m src/hooks/useDebounce.test.ts[2m > [22museDebounce[2m > [22mshould work with short delays
+ [32m✓[39m src/hooks/useDebounce.test.ts[2m > [22museDebounce[2m > [22mshould handle multiple sequential updates
+ [32m✓[39m src/hooks/useDebounce.test.ts[2m > [22museDebounce[2m > [22mshould work with numbers
+ [32m✓[39m src/hooks/useDebounce.test.ts[2m > [22museDebounce[2m > [22mshould work with objects
+ [32m✓[39m src/hooks/useDebounce.test.ts[2m > [22museDebounce[2m > [22mshould cleanup timeout on unmount
+ [32m✓[39m src/hooks/useDebounce.test.ts[2m > [22museDebounce[2m > [22mshould handle zero delay
+[90mstderr[2m | src/hooks/use-mobile.test.ts[2m > [22m[2museIsMobile[2m > [22m[2mshould handle rapid resize events
+[22m[39mAn update to TestComponent inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+An update to TestComponent inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+An update to TestComponent inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+An update to TestComponent inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+An update to TestComponent inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+An update to TestComponent inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+An update to TestComponent inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+An update to TestComponent inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+An update to TestComponent inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+An update to TestComponent inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+An update to TestComponent inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+ [32m✓[39m src/hooks/use-mobile.test.ts[2m > [22museIsMobile[2m > [22mshould return false for desktop width (>= 768px)
+ [32m✓[39m src/hooks/use-mobile.test.ts[2m > [22museIsMobile[2m > [22mshould return true for mobile width (< 768px)
+ [32m✓[39m src/hooks/use-mobile.test.ts[2m > [22museIsMobile[2m > [22mshould return true at 767px (just below breakpoint)
+ [32m✓[39m src/hooks/use-mobile.test.ts[2m > [22museIsMobile[2m > [22mshould return false at 768px (at breakpoint)
+ [32m✓[39m src/hooks/use-mobile.test.ts[2m > [22museIsMobile[2m > [22mshould use matchMedia with correct breakpoint query
+ [32m✓[39m src/hooks/use-mobile.test.ts[2m > [22museIsMobile[2m > [22mshould update when window is resized
+ [32m✓[39m src/hooks/use-mobile.test.ts[2m > [22museIsMobile[2m > [22mshould cleanup listener on unmount
+ [32m✓[39m src/hooks/use-mobile.test.ts[2m > [22museIsMobile[2m > [22mshould initialize as undefined before effect runs
+ [32m✓[39m src/hooks/use-mobile.test.ts[2m > [22museIsMobile[2m > [22mshould handle rapid resize events
+ [32m✓[39m src/hooks/use-mobile.test.ts[2m > [22museIsMobile[2m > [22mshould handle common mobile widths
+ [32m✓[39m src/hooks/use-mobile.test.ts[2m > [22museIsMobile[2m > [22mshould handle common desktop widths
+ [32m✓[39m src/components/AppHeader.test.tsx[2m > [22mAppHeader[2m > [22mshould render without crashing[33m 1268[2mms[22m[39m
+ [32m✓[39m src/components/AppHeader.test.tsx[2m > [22mAppHeader[2m > [22mshould have correct CSS classes
+ [32m✓[39m src/components/AppHeader.test.tsx[2m > [22mAppHeader[2m > [22mshould render SidebarTrigger component
+ [32m✓[39m src/components/AppHeader.test.tsx[2m > [22mAppHeader[2m > [22mshould have fixed height
+ [32m✓[39m src/components/AppHeader.test.tsx[2m > [22mAppHeader[2m > [22mshould have proper layout classes for flexbox
+ [32m✓[39m src/components/AppHeader.test.tsx[2m > [22mAppHeader[2m > [22mshould have background styling
+ [32m✓[39m src/components/AppHeader.test.tsx[2m > [22mAppHeader[2m > [22mshould have padding
+ [32m✓[39m src/components/AppHeader.test.tsx[2m > [22mAppHeader[2m > [22mshould have shrink-0 to prevent shrinking
+ [32m✓[39m src/app/api/oauth/[provider]/callback/route.test.ts[2m > [22mOAuth Callback Route[2m > [22mGET /api/oauth/[provider]/callback[2m > [22mshould redirect to credentials page with error when OAuth error is present
+ [32m✓[39m src/app/api/oauth/[provider]/callback/route.test.ts[2m > [22mOAuth Callback Route[2m > [22mGET /api/oauth/[provider]/callback[2m > [22mshould redirect with error when code is missing
+ [32m✓[39m src/app/api/oauth/[provider]/callback/route.test.ts[2m > [22mOAuth Callback Route[2m > [22mGET /api/oauth/[provider]/callback[2m > [22mshould redirect with error when state is invalid
+ [31m×[39m src/app/api/oauth/[provider]/callback/route.test.ts[2m > [22mOAuth Callback Route[2m > [22mGET /api/oauth/[provider]/callback[2m > [22mshould exchange code for tokens and create credential for Slack
+[31m   → expected 'http://localhost:3000/credentials?err…' to contain '/credentials?success=slack'[39m
+ [32m✓[39m src/app/api/oauth/[provider]/callback/route.test.ts[2m > [22mOAuth Callback Route[2m > [22mGET /api/oauth/[provider]/callback[2m > [22mshould handle Google OAuth callback correctly
+ [32m✓[39m src/app/api/oauth/[provider]/callback/route.test.ts[2m > [22mOAuth Callback Route[2m > [22mGET /api/oauth/[provider]/callback[2m > [22mshould handle GitHub OAuth callback correctly
+ [32m✓[39m src/app/api/oauth/[provider]/callback/route.test.ts[2m > [22mOAuth Callback Route[2m > [22mGET /api/oauth/[provider]/callback[2m > [22mshould handle Notion OAuth callback correctly
+ [32m✓[39m src/app/api/oauth/[provider]/callback/route.test.ts[2m > [22mOAuth Callback Route[2m > [22mGET /api/oauth/[provider]/callback[2m > [22mshould redirect with error when token exchange fails
+ [31m×[39m src/app/api/oauth/[provider]/callback/route.test.ts[2m > [22mOAuth Callback Route[2m > [22mGET /api/oauth/[provider]/callback[2m > [22mshould store token expiry when provided
+[31m   → expected "spy" to be called with arguments: [ { data: ObjectContaining{…} } ][90m
+
+Received: 
+
+[31m[90m
+
+Number of calls: [1m0[22m
+[31m[39m
+ [32m✓[39m src/features/credentials/components/CredentialsPageClient.test.tsx[2m > [22mCredentialsPageClient[2m > [22mshould render without crashing[33m 315[2mms[22m[39m
+ [32m✓[39m src/features/credentials/components/CredentialsPageClient.test.tsx[2m > [22mCredentialsPageClient[2m > [22mshould display credentials heading
+ [32m✓[39m src/features/credentials/components/CredentialsPageClient.test.tsx[2m > [22mCredentialsPageClient[2m > [22mshould display credential names when loaded
+ [32m✓[39m src/features/credentials/components/CredentialsPageClient.test.tsx[2m > [22mCredentialsPageClient[2m > [22mshould show create button[33m 339[2mms[22m[39m
+ [32m✓[39m src/features/credentials/components/CredentialsPageClient.test.tsx[2m > [22mCredentialsPageClient[2m > [22mshould display provider information
+ [32m✓[39m src/features/credentials/components/CredentialsPageClient.test.tsx[2m > [22mCredentialsPageClient[2m > [22mshould have OAuth quick connect buttons
+ [32m✓[39m src/features/credentials/components/CredentialsPageClient.test.tsx[2m > [22mCredentialsPageClient[2m > [22mshould display credential count in stats
+ [32m✓[39m src/features/credentials/components/CredentialsPageClient.test.tsx[2m > [22mCredentialsPageClient - Loading State[2m > [22mshould render component successfully
+ [32m✓[39m src/features/credentials/components/CredentialsPageClient.test.tsx[2m > [22mCredentialsPageClient - Empty State[2m > [22mshould render component in empty state
+
+[31m⎯⎯⎯⎯⎯⎯⎯[1m[7m Failed Tests 3 [27m[22m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[31m[1m[7m FAIL [27m[22m[39m src/trpc/routers/credentials.test.ts[2m > [22mCredentials Router[2m > [22mcreate[2m > [22mshould create a new credential
+[31m[1mTRPCError[22m: BETTER_AUTH_SECRET is required for credential encryption. Set it in your .env file.[39m
+[36m [2m❯[22m getEncryptionKey src/lib/crypto.ts:[2m8:11[22m[39m
+    [90m  6| [39m  [35mconst[39m secret [33m=[39m process[33m.[39menv[33m.[39m[33mBETTER_AUTH_SECRET[39m[33m;[39m
+    [90m  7| [39m  [35mif[39m ([33m![39msecret) {
+    [90m  8| [39m    [35mthrow[39m [35mnew[39m [33mError[39m(
+    [90m   | [39m          [31m^[39m
+    [90m  9| [39m      [32m"BETTER_AUTH_SECRET is required for credential encryption. Set i[39m…
+    [90m 10| [39m    )[33m;[39m
+[90m [2m❯[22m Module.encryptCredential src/lib/crypto.ts:[2m20:15[22m[39m
+[90m [2m❯[22m src/trpc/routers/credentials.ts:[2m65:29[22m[39m
+[90m [2m❯[22m resolveMiddleware node_modules/@trpc/server/src/unstable-core-do-not-import/procedureBuilder.ts:[2m571:28[22m[39m
+[90m [2m❯[22m callRecursive node_modules/@trpc/server/src/unstable-core-do-not-import/procedureBuilder.ts:[2m633:26[22m[39m
+[90m [2m❯[22m Object.next node_modules/@trpc/server/src/unstable-core-do-not-import/procedureBuilder.ts:[2m646:16[22m[39m
+[90m [2m❯[22m inputValidatorMiddleware node_modules/@trpc/server/src/unstable-core-do-not-import/middleware.ts:[2m206:19[22m[39m
+[90m [2m❯[22m callRecursive node_modules/@trpc/server/src/unstable-core-do-not-import/procedureBuilder.ts:[2m633:20[22m[39m
+[90m [2m❯[22m callRecursive node_modules/@trpc/server/src/unstable-core-do-not-import/procedureBuilder.ts:[2m633:20[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[22m[39m
+[31m[1mSerialized Error:[22m[39m [90m{ code: 'INTERNAL_SERVER_ERROR' }[39m
+[31m[1mCaused by: Error[22m: BETTER_AUTH_SECRET is required for credential encryption. Set it in your .env file.[39m
+[36m [2m❯[22m getEncryptionKey src/lib/crypto.ts:[2m8:11[22m[39m
+[90m [2m❯[22m Module.encryptCredential src/lib/crypto.ts:[2m20:15[22m[39m
+[90m [2m❯[22m src/trpc/routers/credentials.ts:[2m65:29[22m[39m
+[90m [2m❯[22m resolveMiddleware node_modules/@trpc/server/src/unstable-core-do-not-import/procedureBuilder.ts:[2m571:28[22m[39m
+[90m [2m❯[22m callRecursive node_modules/@trpc/server/src/unstable-core-do-not-import/procedureBuilder.ts:[2m633:26[22m[39m
+[90m [2m❯[22m Object.next node_modules/@trpc/server/src/unstable-core-do-not-import/procedureBuilder.ts:[2m646:16[22m[39m
+[90m [2m❯[22m inputValidatorMiddleware node_modules/@trpc/server/src/unstable-core-do-not-import/middleware.ts:[2m206:19[22m[39m
+[90m [2m❯[22m callRecursive node_modules/@trpc/server/src/unstable-core-do-not-import/procedureBuilder.ts:[2m633:20[22m[39m
+[90m [2m❯[22m callRecursive node_modules/@trpc/server/src/unstable-core-do-not-import/procedureBuilder.ts:[2m633:20[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯[22m[39m
+
+[31m[1m[7m FAIL [27m[22m[39m src/app/api/oauth/[provider]/callback/route.test.ts[2m > [22mOAuth Callback Route[2m > [22mGET /api/oauth/[provider]/callback[2m > [22mshould exchange code for tokens and create credential for Slack
+[31m[1mAssertionError[22m: expected 'http://localhost:3000/credentials?err…' to contain '/credentials?success=slack'[39m
+
+Expected: [32m"/credentials?success=slack"[39m
+Received: [31m"http://localhost:3000/credentials?error=exchange_failed"[39m
+
+[36m [2m❯[22m src/app/api/oauth/[provider]/callback/route.test.ts:[2m129:48[22m[39m
+    [90m127| [39m
+    [90m128| [39m      [34mexpect[39m(response[33m.[39mstatus)[33m.[39m[34mtoBe[39m([34m307[39m)[33m;[39m
+    [90m129| [39m      [34mexpect[39m(response[33m.[39mheaders[33m.[39m[35mget[39m([32m"location"[39m))[33m.[39m[34mtoContain[39m(
+    [90m   | [39m                                               [31m^[39m
+    [90m130| [39m        [32m"/credentials?success=slack"[39m[33m,[39m
+    [90m131| [39m      )[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯[22m[39m
+
+[31m[1m[7m FAIL [27m[22m[39m src/app/api/oauth/[provider]/callback/route.test.ts[2m > [22mOAuth Callback Route[2m > [22mGET /api/oauth/[provider]/callback[2m > [22mshould store token expiry when provided
+[31m[1mAssertionError[22m: expected "spy" to be called with arguments: [ { data: ObjectContaining{…} } ][90m
+
+Received: 
+
+[31m[90m
+
+Number of calls: [1m0[22m
+[31m[39m
+[36m [2m❯[22m src/app/api/oauth/[provider]/callback/route.test.ts:[2m311:40[22m[39m
+    [90m309| [39m      [35mawait[39m [33mGET[39m(request[33m,[39m { params })[33m;[39m
+    [90m310| [39m
+    [90m311| [39m      [34mexpect[39m(prisma[33m.[39mcredential[33m.[39mcreate)[33m.[39m[34mtoHaveBeenCalledWith[39m({
+    [90m   | [39m                                       [31m^[39m
+    [90m312| [39m        data[33m:[39m expect[33m.[39m[34mobjectContaining[39m({
+    [90m313| [39m          expiresAt[33m:[39m expect[33m.[39m[34many[39m([33mDate[39m)[33m,[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯[22m[39m
+
+[2m Test Files [22m [1m[31m2 failed[39m[22m[2m | [22m[1m[32m8 passed[39m[22m[90m (10)[39m
+[2m      Tests [22m [1m[31m3 failed[39m[22m[2m | [22m[1m[32m139 passed[39m[22m[90m (142)[39m
+[2m   Start at [22m 14:39:55
+[2m   Duration [22m 38.72s[2m (transform 13.47s, setup 20.21s, collect 54.94s, tests 6.15s, environment 114.86s, prepare 31.28s)[22m
+

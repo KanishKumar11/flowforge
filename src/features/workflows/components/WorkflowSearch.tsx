@@ -9,6 +9,7 @@ import { Search, X, Workflow, Clock, Tag } from "lucide-react";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
+import { BallLoader } from "@/components/ui/ball-loader";
 
 // Explicit types to avoid deep type inference
 interface WorkflowSearchResult {
@@ -81,8 +82,8 @@ export function WorkflowSearch() {
         <Card className="absolute top-full mt-2 w-full z-50 max-h-80 overflow-auto shadow-lg bg-(--arch-bg) border-(--arch-border) rounded-none">
           <CardContent className="p-2">
             {isLoading ? (
-              <div className="p-4 text-center text-muted-foreground font-mono text-xs">
-                Searching...
+              <div className="p-6 flex justify-center">
+                <BallLoader />
               </div>
             ) : typedResults && typedResults.length > 0 ? (
               <div className="space-y-1">

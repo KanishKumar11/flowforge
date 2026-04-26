@@ -28,6 +28,7 @@ import Link from "next/link";
 import { useTRPC, useVanillaClient } from "@/trpc/client";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { BallLoader } from "@/components/ui/ball-loader";
 import {
   Dialog,
   DialogContent,
@@ -321,9 +322,7 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
   if (isLoading) {
     return (
       <div className="h-full w-full flex items-center justify-center">
-        <div className="animate-pulse text-muted-foreground">
-          Loading workflow...
-        </div>
+        <BallLoader />
       </div>
     );
   }

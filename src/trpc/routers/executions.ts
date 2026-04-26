@@ -3,6 +3,8 @@ import { createTRPCRouter, protectedProcedure } from "../init";
 import { z } from "zod";
 import { PLANS } from "@/lib/plans";
 import { TRPCError } from "@trpc/server";
+import { inngest } from "@/inngest/client";
+import { executeWorkflowDirect } from "@/inngest/functions";
 
 export const executionsRouter = createTRPCRouter({
   // List executions with filters
@@ -238,7 +240,7 @@ export const executionsRouter = createTRPCRouter({
       }
 
       // Create a new execution as a retry
-      return prisma.execution.create({
+      const newExecution = await prisma.execution.create({
         data: {
           workflowId: execution.workflowId,
           userId: ctx.user.id,
@@ -249,6 +251,32 @@ export const executionsRouter = createTRPCRouter({
           retryCount: execution.retryCount + 1,
         },
       });
+
+      const triggerData: Record<string, unknown> = {
+        triggeredBy: ctx.user.id,
+        retriedAt: new Date().toISOString(),
+        ...(execution.inputData ? { body: execution.inputData } : {}),
+      };
+
+      // Fire the Inngest event to actually run the workflow
+      if (process.env.NODE_ENV === "development") {
+        executeWorkflowDirect(
+          newExecution.workflowId,
+          newExecution.id,
+          triggerData,
+        ).catch(() => {});
+      } else {
+        await inngest.send({
+          name: "workflow/execute",
+          data: {
+            workflowId: newExecution.workflowId,
+            executionId: newExecution.id,
+            triggerData,
+          },
+        });
+      }
+
+      return newExecution;
     }),
 
   // Delete an execution

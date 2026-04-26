@@ -35,6 +35,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
 import { DashboardHeader } from "@/components/DashboardHeader";
+import { BallLoader } from "@/components/ui/ball-loader";
 
 export default function TeamDetailPage() {
   const params = useParams();
@@ -97,9 +98,7 @@ export default function TeamDetailPage() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-pulse text-muted-foreground">
-          Loading team...
-        </div>
+        <BallLoader />
       </div>
     );
   }

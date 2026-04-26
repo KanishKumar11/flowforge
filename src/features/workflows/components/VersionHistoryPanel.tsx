@@ -5,6 +5,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { BallLoader } from "@/components/ui/ball-loader";
 import { History, RotateCcw, Clock, User } from "lucide-react";
 import { toast } from "sonner";
 import { formatDistanceToNow } from "date-fns";
@@ -56,10 +57,8 @@ export function VersionHistoryPanel({
   if (isLoading) {
     return (
       <Card>
-        <CardContent className="p-6">
-          <div className="animate-pulse text-muted-foreground">
-            Loading versions...
-          </div>
+        <CardContent className="p-6 flex items-center justify-center">
+          <BallLoader />
         </CardContent>
       </Card>
     );

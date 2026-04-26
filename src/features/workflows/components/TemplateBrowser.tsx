@@ -31,6 +31,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { UpgradePlanDialog } from "@/components/UpgradePlanDialog";
+import { BallLoader } from "@/components/ui/ball-loader";
 
 const categoryIcons: Record<string, React.ReactNode> = {
   Notifications: <MessageSquare className="h-5 w-5" />,
@@ -76,7 +77,7 @@ export function TemplateBrowser() {
   });
 
   if (isLoading) {
-    return <div className="animate-pulse">Loading templates...</div>;
+    return <div className="flex justify-center py-8"><BallLoader /></div>;
   }
 
   const templates = data?.templates || [];

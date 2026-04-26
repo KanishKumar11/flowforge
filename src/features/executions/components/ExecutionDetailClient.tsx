@@ -26,7 +26,7 @@ import { DashboardHeader } from "@/components/DashboardHeader";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
+import { BallLoader } from "@/components/ui/ball-loader";
 import { useTRPC, useVanillaClient } from "@/trpc/client";
 
 type ExecutionStatus =
@@ -135,10 +135,8 @@ export function ExecutionDetailClient({
     return (
       <div className="flex flex-col h-full">
         <DashboardHeader title="Execution Details" />
-        <div className="flex-1 p-6">
-          <Skeleton className="h-8 w-64 mb-4" />
-          <Skeleton className="h-32 w-full mb-4" />
-          <Skeleton className="h-48 w-full" />
+        <div className="flex-1 flex items-center justify-center">
+          <BallLoader />
         </div>
       </div>
     );

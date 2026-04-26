@@ -40,6 +40,7 @@ process.env.GITHUB_CLIENT_SECRET = "test-github-secret";
 process.env.NOTION_CLIENT_ID = "test-notion-client-id";
 process.env.NOTION_CLIENT_SECRET = "test-notion-secret";
 process.env.DATABASE_URL = "postgresql://test:test@localhost:5432/testdb";
+process.env.BETTER_AUTH_SECRET = "test-secret-for-testing-only-not-for-production";
 
 // Global test setup
 beforeAll(() => {

@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Skeleton } from "@/components/ui/skeleton";
+import { BallLoader } from "@/components/ui/ball-loader";
 import { useTRPC, useVanillaClient } from "@/trpc/client";
 import { Loader2, Plus, Settings, Users, Workflow } from "lucide-react";
 import { useState } from "react";
@@ -77,19 +77,8 @@ export function TeamsPageClient() {
       <div className="flex-1 p-6 overflow-auto">
         {/* Loading */}
         {isLoading && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[...Array(3)].map((_, i) => (
-              <div
-                key={i}
-                className="p-8 border border-(--arch-border) bg-(--arch-bg) rounded-none space-y-4"
-              >
-                <Skeleton className="h-8 w-48 bg-(--arch-border)" />
-                <Skeleton className="h-4 w-64 bg-(--arch-border)" />
-                <div className="flex gap-4 pt-4">
-                  <Skeleton className="h-10 w-full bg-(--arch-border)" />
-                </div>
-              </div>
-            ))}
+          <div className="flex items-center justify-center py-16">
+            <BallLoader />
           </div>
         )}
 

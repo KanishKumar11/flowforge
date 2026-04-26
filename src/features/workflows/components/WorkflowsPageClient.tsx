@@ -5,7 +5,7 @@ import { WorkflowCard } from "./WorkflowCard";
 import { CreateWorkflowModal } from "./CreateWorkflowModal";
 import { EmptyWorkflows } from "./EmptyWorkflows";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
+import { BallLoader } from "@/components/ui/ball-loader";
 import { useTRPC, useVanillaClient } from "@/trpc/client";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import {
@@ -295,10 +295,8 @@ export function WorkflowsPageClient() {
 
         {/* Workflow List */}
         {isLoading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[1, 2, 3, 4, 5, 6].map((i) => (
-              <Skeleton key={i} className="h-[200px] w-full rounded-xl" />
-            ))}
+          <div className="flex items-center justify-center py-16">
+            <BallLoader />
           </div>
         ) : filteredWorkflows && filteredWorkflows.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
