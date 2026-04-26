@@ -128,6 +128,7 @@ model Workflow {
   executions Execution[]
   schedules  Schedule[]
   webhooks   WebhookEndpoint[]
+  apiKeys    ApiKey[]
 
   // Metadata
   createdAt        DateTime          @default(now())
@@ -138,6 +139,7 @@ model Workflow {
   workflowVersions WorkflowVersion[]
 
   @@index([userId])
+  @@index([teamId])
   @@index([isActive])
   @@map("workflow")
 }
@@ -284,6 +286,7 @@ model ApiKey {
   keyPrefix   String // First 8 chars of raw key (for display, e.g. "fg_abc123")
   isActive    Boolean   @default(true)
   workflowId  String? // null = any workflow the team owns
+  workflow    Workflow? @relation(fields: [workflowId], references: [id], onDelete: SetNull)
   teamId      String
   team        Team      @relation(fields: [teamId], references: [id], onDelete: Cascade)
   createdById String
@@ -358,14 +361,14 @@ model Team {
 }
 
 model Invitation {
-  id        String   @id @default(cuid())
+  id        String     @id @default(cuid())
   email     String
-  token     String   @unique
+  token     String     @unique
   teamId    String
-  role      String   @default("MEMBER")
+  role      TeamRole   @default(MEMBER)
   expiresAt DateTime
-  createdAt DateTime @default(now())
-  team      Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  createdAt DateTime   @default(now())
+  team      Team       @relation(fields: [teamId], references: [id], onDelete: Cascade)
 
   @@index([token])
   @@index([email])

@@ -569,59 +569,6 @@ export function NodeConfigPanel({
             </>
           )}
 
-          {node.data.type === "database" && (
-            <>
-              <div className="space-y-2">
-                <Label>Operation</Label>
-                <Select
-                  value={
-                    (node.data.config as Record<string, string>)?.operation ||
-                    "find"
-                  }
-                  onValueChange={(value) =>
-                    handleConfigChange("operation", value)
-                  }
-                >
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="find">Find / Select</SelectItem>
-                    <SelectItem value="insert">Insert</SelectItem>
-                    <SelectItem value="update">Update</SelectItem>
-                    <SelectItem value="delete">Delete</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="collection">Collection / Table</Label>
-                <Input
-                  id="collection"
-                  placeholder="users"
-                  value={
-                    (node.data.config as Record<string, string>)?.collection ||
-                    ""
-                  }
-                  onChange={(e) =>
-                    handleConfigChange("collection", e.target.value)
-                  }
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="query">Query / Data (JSON)</Label>
-                <Textarea
-                  id="query"
-                  placeholder='{"id": 1}'
-                  rows={5}
-                  value={
-                    (node.data.config as Record<string, string>)?.query || ""
-                  }
-                  onChange={(e) => handleConfigChange("query", e.target.value)}
-                />
-              </div>
-            </>
-          )}
-
           {node.data.type === "google_sheets" && (
             <>
               <div className="space-y-2">

@@ -39,6 +39,15 @@ export async function POST(request: NextRequest, { params }: RunParams) {
     return NextResponse.json({ error: "API key has expired" }, { status: 401 });
   }
 
+  // Parse the body ONCE — may contain both workflowId and input fields
+  let bodyJson: Record<string, unknown> = {};
+  try {
+    const raw = await request.text();
+    if (raw) bodyJson = JSON.parse(raw) as Record<string, unknown>;
+  } catch {
+    // non-JSON body is fine — input will be empty
+  }
+
   // Determine which workflow to run
   let workflowId = apiKey.workflowId;
 
@@ -46,15 +55,8 @@ export async function POST(request: NextRequest, { params }: RunParams) {
     // If no workflow bound to key, caller must specify via query param or body
     const url = new URL(request.url);
     const qWorkflowId = url.searchParams.get("workflowId");
-
-    let body: Record<string, unknown> = {};
-    try {
-      body = (await request.json()) as Record<string, unknown>;
-    } catch {
-      // body may be empty
-    }
-
-    workflowId = qWorkflowId ?? (body.workflowId as string | undefined) ?? null;
+    workflowId =
+      qWorkflowId ?? (bodyJson.workflowId as string | undefined) ?? null;
   }
 
   if (!workflowId) {
@@ -83,14 +85,8 @@ export async function POST(request: NextRequest, { params }: RunParams) {
     );
   }
 
-  // Parse input body
-  let inputData: Record<string, unknown> = {};
-  try {
-    const raw = await request.text();
-    if (raw) inputData = JSON.parse(raw) as Record<string, unknown>;
-  } catch {
-    // non-JSON body is fine
-  }
+  // Use the body we already parsed — exclude workflowId from the input payload
+  const { workflowId: _wid, ...inputData } = bodyJson;
 
   // Create execution record
   const execution = await prisma.execution.create({

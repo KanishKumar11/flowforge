@@ -700,6 +700,241 @@ export const workflowTemplates: WorkflowTemplate[] = [
     tags: ["github", "ai", "code-review", "developer"],
   },
   {
+    id: "form-to-db-notify",
+    name: "Form Submission → DB + Notify",
+    description:
+      "Save form submissions to a PostgreSQL database and notify the team on Telegram and Discord. Requires: PostgreSQL credential, Telegram bot token, Discord webhook.",
+    category: "Data",
+    icon: "database",
+    nodes: [
+      {
+        id: "1",
+        type: "trigger",
+        position: { x: 100, y: 200 },
+        data: { type: "webhook", label: "Form Submission", config: {} },
+      },
+      {
+        id: "2",
+        type: "action",
+        position: { x: 350, y: 200 },
+        data: {
+          type: "database",
+          label: "Save Lead to DB",
+          config: {
+            query:
+              "INSERT INTO leads (name, email, message, created_at) VALUES ('{{trigger.body.name}}', '{{trigger.body.email}}', '{{trigger.body.message}}', NOW()) RETURNING id",
+          },
+        },
+      },
+      {
+        id: "3",
+        type: "action",
+        position: { x: 600, y: 100 },
+        data: {
+          type: "telegram",
+          label: "Notify via Telegram",
+          config: {
+            text: "📬 New lead: {{trigger.body.name}} ({{trigger.body.email}})\n{{trigger.body.message}}",
+            parseMode: "HTML",
+          },
+        },
+      },
+      {
+        id: "4",
+        type: "action",
+        position: { x: 600, y: 300 },
+        data: {
+          type: "discord",
+          label: "Log to Discord",
+          config: {
+            message:
+              "New submission from **{{trigger.body.name}}** — {{trigger.body.email}}",
+            username: "Flowgent Bot",
+          },
+        },
+      },
+    ],
+    edges: [
+      { id: "e1-2", source: "1", target: "2" },
+      { id: "e2-3", source: "2", target: "3" },
+      { id: "e2-4", source: "2", target: "4" },
+    ],
+    tags: ["database", "telegram", "discord", "webhook", "leads"],
+  },
+  {
+    id: "scheduled-db-digest",
+    name: "Scheduled DB Digest",
+    description:
+      "Weekly query from PostgreSQL, filter active error records, sort by timestamp, format and email a digest. Requires: PostgreSQL credential, SMTP credential.",
+    category: "Scheduled",
+    icon: "schedule",
+    nodes: [
+      {
+        id: "1",
+        type: "trigger",
+        position: { x: 100, y: 200 },
+        data: {
+          type: "schedule",
+          label: "Every Monday 9 AM",
+          config: { cron: "0 9 * * 1" },
+        },
+      },
+      {
+        id: "2",
+        type: "action",
+        position: { x: 350, y: 200 },
+        data: {
+          type: "database",
+          label: "Fetch Last 7 Days Events",
+          config: {
+            query:
+              "SELECT id, type, message, created_at FROM events WHERE created_at >= NOW() - INTERVAL '7 days' ORDER BY created_at DESC",
+          },
+        },
+      },
+      {
+        id: "3",
+        type: "action",
+        position: { x: 600, y: 200 },
+        data: {
+          type: "filter",
+          label: "Errors Only",
+          config: {
+            conditions: [{ field: "type", operator: "===", value: "error", combinator: "AND" }],
+            condition: "item.type === 'error'",
+          },
+        },
+      },
+      {
+        id: "4",
+        type: "action",
+        position: { x: 850, y: 200 },
+        data: {
+          type: "sort",
+          label: "Sort by Date",
+          config: { field: "created_at", order: "desc" },
+        },
+      },
+      {
+        id: "5",
+        type: "action",
+        position: { x: 1100, y: 200 },
+        data: {
+          type: "set",
+          label: "Format Digest",
+          config: {
+            fields: {
+              subject: "Weekly Error Digest — {{trigger.triggeredAt}}",
+              errorCount: "{{filter.length}}",
+            },
+          },
+        },
+      },
+      {
+        id: "6",
+        type: "action",
+        position: { x: 1350, y: 200 },
+        data: {
+          type: "email",
+          label: "Send Digest",
+          config: {
+            subject: "Weekly Error Digest",
+            body: "There were {{set.errorCount}} errors in the last 7 days.\n\nSee attached for details.",
+          },
+        },
+      },
+    ],
+    edges: [
+      { id: "e1-2", source: "1", target: "2" },
+      { id: "e2-3", source: "2", target: "3" },
+      { id: "e3-4", source: "3", target: "4" },
+      { id: "e4-5", source: "4", target: "5" },
+      { id: "e5-6", source: "5", target: "6" },
+    ],
+    tags: ["schedule", "database", "filter", "sort", "email", "digest"],
+  },
+  {
+    id: "api-key-deploy-hook",
+    name: "API Key Deploy Hook",
+    description:
+      "Trigger a deployment via API key, check the result, then notify on Slack (success) or Telegram (failure). Requires: Slack credential, Telegram bot token.",
+    category: "DevOps",
+    icon: "http",
+    nodes: [
+      {
+        id: "1",
+        type: "trigger",
+        position: { x: 100, y: 200 },
+        data: {
+          type: "webhook",
+          label: "API Key Trigger",
+          config: {},
+        },
+      },
+      {
+        id: "2",
+        type: "action",
+        position: { x: 350, y: 200 },
+        data: {
+          type: "http-request",
+          label: "Trigger Deployment",
+          config: {
+            url: "https://your-deploy-endpoint.com/deploy",
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: '{"ref": "main"}',
+          },
+        },
+      },
+      {
+        id: "3",
+        type: "action",
+        position: { x: 600, y: 200 },
+        data: {
+          type: "if",
+          label: "Deploy OK?",
+          config: {
+            conditions: [{ field: "http_request.status", operator: "===", value: "200", combinator: "AND" }],
+            condition: "{{http_request.status}} === 200",
+          },
+        },
+      },
+      {
+        id: "4",
+        type: "action",
+        position: { x: 850, y: 100 },
+        data: {
+          type: "slack",
+          label: "Success Alert",
+          config: {
+            channel: "#deployments",
+            message: "✅ Deployment triggered successfully via API key.",
+          },
+        },
+      },
+      {
+        id: "5",
+        type: "action",
+        position: { x: 850, y: 300 },
+        data: {
+          type: "telegram",
+          label: "Failure Alert",
+          config: {
+            text: "❌ Deployment FAILED. HTTP status: {{http_request.status}}",
+            parseMode: "HTML",
+          },
+        },
+      },
+    ],
+    edges: [
+      { id: "e1-2", source: "1", target: "2" },
+      { id: "e2-3", source: "2", target: "3" },
+      { id: "e3-4", source: "3", target: "4" },
+      { id: "e3-5", source: "3", target: "5" },
+    ],
+    tags: ["devops", "deployment", "slack", "telegram", "api-key"],
+  },
+  {
     id: "scheduled-data-backup",
     name: "Scheduled Data Backup",
     description:

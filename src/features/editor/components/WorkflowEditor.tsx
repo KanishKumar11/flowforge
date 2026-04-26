@@ -68,7 +68,7 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
   const trpc = useTRPC();
   const client = useVanillaClient();
   const reactFlowWrapper = useRef<HTMLDivElement>(null);
-  const { screenToFlowPosition } = useReactFlow();
+  const { screenToFlowPosition, getViewport } = useReactFlow();
   const [isSaving, setIsSaving] = useState(false);
   const [selectedNode, setSelectedNode] = useState<Node | null>(null);
   const [showExecutionSettings, setShowExecutionSettings] = useState(false);
@@ -216,13 +216,19 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
       // Delete selected node: Backspace or Delete
       if ((e.key === "Backspace" || e.key === "Delete") && selectedNode) {
         setNodes((nds) => nds.filter((n) => n.id !== selectedNode.id));
+        setEdges((eds) =>
+          eds.filter(
+            (e) =>
+              e.source !== selectedNode.id && e.target !== selectedNode.id,
+          ),
+        );
         setSelectedNode(null);
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [handleUndo, handleRedo, selectedNode, setNodes]);
+  }, [handleUndo, handleRedo, selectedNode, setNodes, setEdges]);
 
   const onConnect = useCallback(
     (params: Connection) => setEdges((eds) => addEdge(params, eds)),
@@ -282,6 +288,7 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
       id: workflowId,
       nodes,
       edges,
+      viewport: getViewport(),
     });
   };
 

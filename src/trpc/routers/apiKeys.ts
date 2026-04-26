@@ -132,7 +132,10 @@ export const apiKeysRouter = createTRPCRouter({
           workflowId: apiKey.workflowId,
           teamId: ctx.team.id,
           createdById: ctx.user.id,
-          expiresAt: apiKey.expiresAt,
+          expiresAt:
+            apiKey.expiresAt && apiKey.expiresAt > new Date()
+              ? apiKey.expiresAt
+              : null,
         },
       });
 

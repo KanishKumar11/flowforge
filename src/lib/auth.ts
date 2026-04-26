@@ -42,7 +42,7 @@ export const auth = betterAuth({
 
           await prisma.team.create({
             data: {
-              name: `${user.name}'s Workspace`,
+              name: `${name}'s Workspace`,
               slug: `${slug}-${Date.now().toString(36)}`,
               description: "Your default personal workspace",
               members: {

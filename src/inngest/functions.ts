@@ -31,6 +31,7 @@ interface WorkflowEdge {
 interface ExecutionContext {
   workflowId: string;
   executionId: string;
+  teamId: string | null;
   triggerData: Record<string, unknown>;
   nodeResults: Record<string, unknown>;
 }
@@ -427,7 +428,7 @@ async function executeDatabase(
     if (!credential) {
       throw new Error(`Database node: Credential '${credentialId}' not found.`);
     }
-    const decrypted = decryptCredential(credential.encryptedData);
+    const decrypted = decryptCredential(credential.data);
     connectionString =
       (decrypted as Record<string, string>).connectionString ||
       (decrypted as Record<string, string>).url ||
@@ -989,13 +990,18 @@ async function executeSubWorkflow(
     throw new Error("Sub-workflow ID is required");
   }
 
-  // Find the sub-workflow
-  const subWorkflow = await prisma.workflow.findUnique({
-    where: { id: workflowId },
+  // Find the sub-workflow — must belong to the same team
+  const subWorkflow = await prisma.workflow.findFirst({
+    where: {
+      id: workflowId,
+      ...(context.teamId ? { teamId: context.teamId } : {}),
+    },
   });
 
   if (!subWorkflow) {
-    throw new Error(`Sub-workflow ${workflowId} not found`);
+    throw new Error(
+      `Sub-workflow ${workflowId} not found or does not belong to this team`,
+    );
   }
 
   // Create execution record for sub-workflow
@@ -1264,7 +1270,8 @@ function getNextNodes(
 ): WorkflowNode[] {
   let outgoingEdges = edges.filter((e) => e.source === currentNodeId);
 
-  // If a branch filter is specified, only follow edges matching that branch
+  // If a branch filter is specified, ONLY follow edges matching that branch
+  // Never fall through to all edges — an IF "true" branch must not execute the "false" branch
   if (branchFilter !== undefined) {
     const filtered = outgoingEdges.filter(
       (e) =>
@@ -1272,10 +1279,9 @@ function getNextNodes(
         e.label === branchFilter ||
         (e.sourceHandle || "").toLowerCase() === branchFilter.toLowerCase(),
     );
-    // If we found matching edges use them; otherwise fall through to all edges
-    if (filtered.length > 0) {
-      outgoingEdges = filtered;
-    }
+    return filtered
+      .map((edge) => nodes.find((n) => n.id === edge.target))
+      .filter(Boolean) as WorkflowNode[];
   }
 
   return outgoingEdges
@@ -1357,6 +1363,7 @@ export async function executeWorkflowDirect(
       const context: ExecutionContext = {
         workflowId,
         executionId,
+        teamId: workflow.teamId,
         triggerData,
         nodeResults: {},
       };
@@ -1377,7 +1384,8 @@ export async function executeWorkflowDirect(
 
         // Handle wait nodes
         if (currentNode.data.type === "wait") {
-          const waitMs = (currentNode.data.config.duration as number) || 1000;
+          const waitMs =
+            parseInt(String(currentNode.data.config.duration), 10) || 1000;
           await new Promise((resolve) => setTimeout(resolve, waitMs));
         }
 
@@ -1535,6 +1543,7 @@ export const executeWorkflow = inngest.createFunction(
       const context: ExecutionContext = {
         workflowId,
         executionId,
+        teamId: workflow.teamId,
         triggerData,
         nodeResults: {},
       };

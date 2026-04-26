@@ -99,6 +99,28 @@ export function WorkflowsPageClient() {
     },
   });
 
+  const createFromTemplate = useMutation({
+    mutationFn: (data: { templateId: string; name?: string }) =>
+      client.workflows.createFromTemplate.mutate(data),
+    onSuccess: (workflow) => {
+      refetch();
+      toast.success("Workflow created from template");
+      router.push(`/workflows/${workflow.id}`);
+    },
+    onError: (error: Error) => {
+      if (
+        error.message.includes("Plan limit reached") ||
+        (error as { data?: { code?: string } }).data?.code === "FORBIDDEN"
+      ) {
+        setShowUpgradeDialog(true);
+      } else {
+        toast.error("Failed to create from template", {
+          description: error.message,
+        });
+      }
+    },
+  });
+
   const toggleWorkflow = useMutation({
     mutationFn: (data: { id: string }) =>
       client.workflows.toggleActive.mutate(data),
@@ -183,9 +205,9 @@ export function WorkflowsPageClient() {
   };
 
   const handleCreateFromTemplate = async (template: (typeof templates)[0]) => {
-    await createWorkflow.mutateAsync({
+    await createFromTemplate.mutateAsync({
+      templateId: template.id,
       name: template.name,
-      description: template.description,
     });
   };
 
@@ -252,7 +274,7 @@ export function WorkflowsPageClient() {
                       key={template.id}
                       onClick={() => handleCreateFromTemplate(template)}
                       className="group text-left p-6 border border-(--arch-border) bg-(--arch-bg-secondary) hover:border-(--arch-fg) transition-all duration-300 relative overflow-hidden"
-                      disabled={createWorkflow.isPending}
+                      disabled={createFromTemplate.isPending}
                     >
                       <div className="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity transform group-hover:scale-110 duration-500">
                         <IconComponent className="w-16 h-16 text-(--arch-fg)" />

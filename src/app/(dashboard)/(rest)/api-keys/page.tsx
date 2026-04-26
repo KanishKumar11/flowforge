@@ -24,7 +24,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { useTRPC, useVanillaClient } from "@/trpc/client";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import {
   Copy,
   Eye,
@@ -42,7 +42,7 @@ import { formatDistanceToNow } from "date-fns";
 export default function ApiKeysPage() {
   const trpc = useTRPC();
   const client = useVanillaClient();
-  const queryClient = useQueryClient();
+  const utils = trpc.useUtils();
 
   const [showCreate, setShowCreate] = useState(false);
   const [newKeyName, setNewKeyName] = useState("");
@@ -65,7 +65,7 @@ export default function ApiKeysPage() {
         workflowId: newKeyWorkflowId || undefined,
       }),
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["apiKeys"] });
+      void utils.apiKeys.list.invalidate();
       setCreatedKey(data.rawKey);
       setShowCreatedKey(true);
       setNewKeyName("");
@@ -79,7 +79,7 @@ export default function ApiKeysPage() {
   const revokeKey = useMutation({
     mutationFn: (id: string) => client.apiKeys.revoke.mutate({ id }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["apiKeys"] });
+      void utils.apiKeys.list.invalidate();
       toast.success("API key revoked");
     },
     onError: (err: Error) => toast.error(err.message),
@@ -88,7 +88,7 @@ export default function ApiKeysPage() {
   const deleteKey = useMutation({
     mutationFn: (id: string) => client.apiKeys.delete.mutate({ id }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["apiKeys"] });
+      void utils.apiKeys.list.invalidate();
       setDeleteId(null);
       toast.success("API key deleted");
     },
@@ -98,7 +98,7 @@ export default function ApiKeysPage() {
   const rotateKey = useMutation({
     mutationFn: (id: string) => client.apiKeys.rotate.mutate({ id }),
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["apiKeys"] });
+      void utils.apiKeys.list.invalidate();
       setCreatedKey(data.rawKey);
       setShowCreatedKey(true);
       toast.success("API key rotated — copy your new key");
