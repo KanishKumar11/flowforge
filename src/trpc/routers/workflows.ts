@@ -1,7 +1,12 @@
 import { inngest } from "@/inngest/client";
 import { executeWorkflowDirect } from "@/inngest/functions";
 import prisma from "@/lib/db";
-import { createTRPCRouter, protectedProcedure, publicProcedure } from "../init";
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+  teamProcedure,
+} from "../init";
 import { z } from "zod";
 import { PLANS } from "@/lib/plans";
 import { TRPCError } from "@trpc/server";
@@ -21,7 +26,7 @@ export const workflowsRouter = createTRPCRouter({
   }),
 
   // Create workflow from template
-  createFromTemplate: protectedProcedure
+  createFromTemplate: teamProcedure
     .input(z.object({ templateId: z.string(), name: z.string().optional() }))
     .mutation(async ({ ctx, input }) => {
       const template = getTemplateById(input.templateId);
@@ -32,27 +37,13 @@ export const workflowsRouter = createTRPCRouter({
         });
       }
 
-      // Get user's team and plan
-      const teamMember = await prisma.teamMember.findFirst({
-        where: { userId: ctx.user.id },
-        include: { team: true },
-      });
-
-      if (!teamMember) {
-        throw new TRPCError({
-          code: "PRECONDITION_FAILED",
-          message: "You must be part of a team to create workflows",
-        });
-      }
-
       const plan =
-        (teamMember.team.plan?.toUpperCase() as keyof typeof PLANS) || "FREE";
+        (ctx.team.plan?.toUpperCase() as keyof typeof PLANS) || "FREE";
       const limit =
         PLANS[plan]?.limits.workflows || PLANS.FREE.limits.workflows;
 
-      // Count existing workflows
       const count = await prisma.workflow.count({
-        where: { userId: ctx.user.id },
+        where: { teamId: ctx.team.id },
       });
 
       if (count >= limit) {
@@ -70,14 +61,15 @@ export const workflowsRouter = createTRPCRouter({
           edges: template.edges as object[],
           tags: template.tags,
           userId: ctx.user.id,
+          teamId: ctx.team.id,
         },
       });
     }),
 
-  // List all workflows for the current user
-  list: protectedProcedure.query(async ({ ctx }) => {
+  // List all workflows for the active team
+  list: teamProcedure.query(async ({ ctx }) => {
     return prisma.workflow.findMany({
-      where: { userId: ctx.user.id },
+      where: { teamId: ctx.team.id },
       orderBy: { updatedAt: "desc" },
       include: {
         _count: {
@@ -88,13 +80,13 @@ export const workflowsRouter = createTRPCRouter({
   }),
 
   // Get a single workflow by ID
-  get: protectedProcedure
+  get: teamProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ ctx, input }) => {
       const workflow = await prisma.workflow.findFirst({
         where: {
           id: input.id,
-          userId: ctx.user.id,
+          teamId: ctx.team.id,
         },
         include: {
           schedules: true,
@@ -118,7 +110,7 @@ export const workflowsRouter = createTRPCRouter({
   // ... existing imports
 
   // Create a new workflow
-  create: protectedProcedure
+  create: teamProcedure
     .input(
       z.object({
         name: z.string().min(1).max(100),
@@ -126,27 +118,13 @@ export const workflowsRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      // Get user's team and plan
-      const teamMember = await prisma.teamMember.findFirst({
-        where: { userId: ctx.user.id },
-        include: { team: true },
-      });
-
-      if (!teamMember) {
-        throw new TRPCError({
-          code: "PRECONDITION_FAILED",
-          message: "You must be part of a team to create workflows",
-        });
-      }
-
       const plan =
-        (teamMember.team.plan?.toUpperCase() as keyof typeof PLANS) || "FREE";
+        (ctx.team.plan?.toUpperCase() as keyof typeof PLANS) || "FREE";
       const limit =
         PLANS[plan]?.limits.workflows || PLANS.FREE.limits.workflows;
 
-      // Count existing workflows
       const count = await prisma.workflow.count({
-        where: { userId: ctx.user.id },
+        where: { teamId: ctx.team.id },
       });
 
       if (count >= limit) {
@@ -161,6 +139,7 @@ export const workflowsRouter = createTRPCRouter({
           name: input.name,
           description: input.description,
           userId: ctx.user.id,
+          teamId: ctx.team.id,
           nodes: [],
           edges: [],
         },
@@ -168,7 +147,7 @@ export const workflowsRouter = createTRPCRouter({
     }),
 
   // Update a workflow
-  update: protectedProcedure
+  update: teamProcedure
     .input(
       z.object({
         id: z.string(),
@@ -184,9 +163,9 @@ export const workflowsRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const { id, ...data } = input;
 
-      // Verify ownership
+      // Verify team ownership
       const workflow = await prisma.workflow.findFirst({
-        where: { id, userId: ctx.user.id },
+        where: { id, teamId: ctx.team.id },
       });
 
       if (!workflow) {
@@ -222,12 +201,12 @@ export const workflowsRouter = createTRPCRouter({
     }),
 
   // List workflow versions
-  listVersions: protectedProcedure
+  listVersions: teamProcedure
     .input(z.object({ workflowId: z.string() }))
     .query(async ({ ctx, input }) => {
-      // Verify ownership
+      // Verify team ownership
       const workflow = await prisma.workflow.findFirst({
-        where: { id: input.workflowId, userId: ctx.user.id },
+        where: { id: input.workflowId, teamId: ctx.team.id },
       });
 
       if (!workflow) {
@@ -247,12 +226,12 @@ export const workflowsRouter = createTRPCRouter({
     }),
 
   // Rollback to a previous version
-  rollback: protectedProcedure
+  rollback: teamProcedure
     .input(z.object({ workflowId: z.string(), versionNum: z.number() }))
     .mutation(async ({ ctx, input }) => {
-      // Verify ownership
+      // Verify team ownership
       const workflow = await prisma.workflow.findFirst({
-        where: { id: input.workflowId, userId: ctx.user.id },
+        where: { id: input.workflowId, teamId: ctx.team.id },
       });
 
       if (!workflow) {
@@ -307,12 +286,12 @@ export const workflowsRouter = createTRPCRouter({
     }),
 
   // Delete a workflow
-  delete: protectedProcedure
+  delete: teamProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
-      // Verify ownership
+      // Verify team ownership
       const workflow = await prisma.workflow.findFirst({
-        where: { id: input.id, userId: ctx.user.id },
+        where: { id: input.id, teamId: ctx.team.id },
       });
 
       if (!workflow) {
@@ -328,11 +307,11 @@ export const workflowsRouter = createTRPCRouter({
     }),
 
   // Duplicate a workflow
-  duplicate: protectedProcedure
+  duplicate: teamProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
       const workflow = await prisma.workflow.findFirst({
-        where: { id: input.id, userId: ctx.user.id },
+        where: { id: input.id, teamId: ctx.team.id },
       });
 
       if (!workflow) {
@@ -350,17 +329,18 @@ export const workflowsRouter = createTRPCRouter({
           edges: workflow.edges ?? [],
           settings: workflow.settings ?? undefined,
           userId: ctx.user.id,
+          teamId: ctx.team.id,
           isActive: false,
         },
       });
     }),
 
   // Toggle workflow active status
-  toggleActive: protectedProcedure
+  toggleActive: teamProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
       const workflow = await prisma.workflow.findFirst({
-        where: { id: input.id, userId: ctx.user.id },
+        where: { id: input.id, teamId: ctx.team.id },
       });
 
       if (!workflow) {
@@ -377,7 +357,7 @@ export const workflowsRouter = createTRPCRouter({
     }),
 
   // Execute a workflow manually
-  execute: protectedProcedure
+  execute: teamProcedure
     .input(
       z.object({
         id: z.string(),
@@ -386,7 +366,7 @@ export const workflowsRouter = createTRPCRouter({
     )
     .mutation(async ({ ctx, input }) => {
       const workflow = await prisma.workflow.findFirst({
-        where: { id: input.id, userId: ctx.user.id },
+        where: { id: input.id, teamId: ctx.team.id },
       });
 
       if (!workflow) {
@@ -396,36 +376,29 @@ export const workflowsRouter = createTRPCRouter({
         });
       }
 
-      // Check monthly execution limits
-      const teamMember = await prisma.teamMember.findFirst({
-        where: { userId: ctx.user.id },
-        include: { team: true },
+      // Check monthly execution limits based on team plan
+      const plan =
+        (ctx.team.plan?.toUpperCase() as keyof typeof PLANS) || "FREE";
+      const limit =
+        PLANS[plan]?.limits.executionsPerMonth ||
+        PLANS.FREE.limits.executionsPerMonth;
+
+      const startOfMonth = new Date();
+      startOfMonth.setDate(1);
+      startOfMonth.setHours(0, 0, 0, 0);
+
+      const count = await prisma.execution.count({
+        where: {
+          workflow: { teamId: ctx.team.id },
+          startedAt: { gte: startOfMonth },
+        },
       });
 
-      if (teamMember) {
-        const plan =
-          (teamMember.team.plan?.toUpperCase() as keyof typeof PLANS) || "FREE";
-        const limit =
-          PLANS[plan]?.limits.executionsPerMonth ||
-          PLANS.FREE.limits.executionsPerMonth;
-
-        const startOfMonth = new Date();
-        startOfMonth.setDate(1);
-        startOfMonth.setHours(0, 0, 0, 0);
-
-        const count = await prisma.execution.count({
-          where: {
-            workflow: { userId: ctx.user.id },
-            startedAt: { gte: startOfMonth },
-          },
+      if (count >= limit) {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: `Monthly execution limit reached (${limit}). Upgrade to Pro for more capacity.`,
         });
-
-        if (count >= limit) {
-          throw new TRPCError({
-            code: "FORBIDDEN",
-            message: `Monthly execution limit reached (${limit}). Upgrade to Pro for more capacity.`,
-          });
-        }
       }
 
       // Create execution record
@@ -465,11 +438,11 @@ export const workflowsRouter = createTRPCRouter({
     }),
 
   // Export a workflow as JSON
-  export: protectedProcedure
+  export: teamProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ ctx, input }) => {
       const workflow = await prisma.workflow.findFirst({
-        where: { id: input.id, userId: ctx.user.id },
+        where: { id: input.id, teamId: ctx.team.id },
       });
 
       if (!workflow) {
@@ -496,7 +469,7 @@ export const workflowsRouter = createTRPCRouter({
     }),
 
   // Import a workflow from JSON
-  import: protectedProcedure
+  import: teamProcedure
     .input(
       z.object({
         data: z.object({
@@ -525,6 +498,7 @@ export const workflowsRouter = createTRPCRouter({
           folder: data.folder,
           tags: data.tags || [],
           userId: ctx.user.id,
+          teamId: ctx.team.id,
         },
       });
 
@@ -532,11 +506,11 @@ export const workflowsRouter = createTRPCRouter({
     }),
 
   // Update workflow folder
-  updateFolder: protectedProcedure
+  updateFolder: teamProcedure
     .input(z.object({ id: z.string(), folder: z.string().nullable() }))
     .mutation(async ({ ctx, input }) => {
       const workflow = await prisma.workflow.findFirst({
-        where: { id: input.id, userId: ctx.user.id },
+        where: { id: input.id, teamId: ctx.team.id },
       });
 
       if (!workflow) {
@@ -553,11 +527,11 @@ export const workflowsRouter = createTRPCRouter({
     }),
 
   // Update workflow tags
-  updateTags: protectedProcedure
+  updateTags: teamProcedure
     .input(z.object({ id: z.string(), tags: z.array(z.string()) }))
     .mutation(async ({ ctx, input }) => {
       const workflow = await prisma.workflow.findFirst({
-        where: { id: input.id, userId: ctx.user.id },
+        where: { id: input.id, teamId: ctx.team.id },
       });
 
       if (!workflow) {
@@ -574,11 +548,11 @@ export const workflowsRouter = createTRPCRouter({
     }),
 
   // Toggle workflow favorite
-  toggleFavorite: protectedProcedure
+  toggleFavorite: teamProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
       const workflow = await prisma.workflow.findFirst({
-        where: { id: input.id, userId: ctx.user.id },
+        where: { id: input.id, teamId: ctx.team.id },
       });
 
       if (!workflow) {
@@ -595,20 +569,20 @@ export const workflowsRouter = createTRPCRouter({
     }),
 
   // List favorite workflows
-  listFavorites: protectedProcedure.query(async ({ ctx }) => {
+  listFavorites: teamProcedure.query(async ({ ctx }) => {
     return prisma.workflow.findMany({
-      where: { userId: ctx.user.id, isFavorite: true },
+      where: { teamId: ctx.team.id, isFavorite: true },
       orderBy: { updatedAt: "desc" },
       include: { _count: { select: { executions: true } } },
     });
   }),
 
   // List recent workflows
-  listRecent: protectedProcedure
+  listRecent: teamProcedure
     .input(z.object({ limit: z.number().min(1).max(20).default(5) }))
     .query(async ({ ctx, input }) => {
       return prisma.workflow.findMany({
-        where: { userId: ctx.user.id },
+        where: { teamId: ctx.team.id },
         orderBy: { updatedAt: "desc" },
         take: input.limit,
         include: { _count: { select: { executions: true } } },
@@ -616,14 +590,14 @@ export const workflowsRouter = createTRPCRouter({
     }),
 
   // Search workflows by name, description, tags, or folder
-  search: protectedProcedure
+  search: teamProcedure
     .input(z.object({ query: z.string().min(1) }))
     .query(async ({ ctx, input }) => {
       const searchTerm = input.query.toLowerCase();
 
       return prisma.workflow.findMany({
         where: {
-          userId: ctx.user.id,
+          teamId: ctx.team.id,
           OR: [
             { name: { contains: searchTerm, mode: "insensitive" } },
             { description: { contains: searchTerm, mode: "insensitive" } },
@@ -637,7 +611,7 @@ export const workflowsRouter = createTRPCRouter({
     }),
 
   // Update error alert settings
-  updateErrorAlerts: protectedProcedure
+  updateErrorAlerts: teamProcedure
     .input(
       z.object({
         id: z.string(),
@@ -648,7 +622,7 @@ export const workflowsRouter = createTRPCRouter({
     )
     .mutation(async ({ ctx, input }) => {
       const workflow = await prisma.workflow.findFirst({
-        where: { id: input.id, userId: ctx.user.id },
+        where: { id: input.id, teamId: ctx.team.id },
       });
 
       if (!workflow) {
@@ -669,11 +643,11 @@ export const workflowsRouter = createTRPCRouter({
     }),
 
   // Get webhook API documentation for a workflow
-  getWebhookDocs: protectedProcedure
+  getWebhookDocs: teamProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ ctx, input }) => {
       const workflow = await prisma.workflow.findFirst({
-        where: { id: input.id, userId: ctx.user.id },
+        where: { id: input.id, teamId: ctx.team.id },
         include: { webhooks: true },
       });
 

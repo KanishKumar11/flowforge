@@ -174,7 +174,10 @@ export function ExecutionDetailClient({
     workflow: {
       id: string;
       name: string;
-      nodes: Array<{ id: string; data: { type: string; label: string } }> | null;
+      nodes: Array<{
+        id: string;
+        data: { type: string; label: string };
+      }> | null;
     };
   };
 
@@ -228,8 +231,7 @@ export function ExecutionDetailClient({
         title="Execution Details"
         action={
           <div className="flex items-center gap-2">
-            {(exec.status === "ERROR" ||
-              exec.status === "CANCELLED") && (
+            {(exec.status === "ERROR" || exec.status === "CANCELLED") && (
               <Button
                 variant="outline"
                 onClick={() => retryExecution.mutate({ id: executionId })}
@@ -345,10 +347,7 @@ export function ExecutionDetailClient({
                     Started
                   </span>
                   <span className="text-xs font-mono text-(--arch-fg)">
-                    {format(
-                      new Date(exec.startedAt),
-                      "yyyy-MM-dd HH:mm:ss",
-                    )}
+                    {format(new Date(exec.startedAt), "yyyy-MM-dd HH:mm:ss")}
                   </span>
                 </div>
                 {exec.finishedAt && (
@@ -357,10 +356,7 @@ export function ExecutionDetailClient({
                       Finished
                     </span>
                     <span className="text-xs font-mono text-(--arch-fg)">
-                      {format(
-                        new Date(exec.finishedAt),
-                        "yyyy-MM-dd HH:mm:ss",
-                      )}
+                      {format(new Date(exec.finishedAt), "yyyy-MM-dd HH:mm:ss")}
                     </span>
                   </div>
                 )}

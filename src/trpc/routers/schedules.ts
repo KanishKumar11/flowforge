@@ -1,12 +1,12 @@
 import prisma from "@/lib/db";
-import { createTRPCRouter, protectedProcedure } from "../init";
+import { createTRPCRouter, teamProcedure } from "../init";
 import { z } from "zod";
 import { getNextCronDate } from "@/lib/cron-helper";
 import { TRPCError } from "@trpc/server";
 
 export const schedulesRouter = createTRPCRouter({
-  // List all schedules for a workflow or all workflows
-  list: protectedProcedure
+  // List all schedules for a workflow or all team workflows
+  list: teamProcedure
     .input(
       z.object({
         workflowId: z.string().optional(),
@@ -15,7 +15,7 @@ export const schedulesRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       return prisma.schedule.findMany({
         where: {
-          workflow: { userId: ctx.user.id },
+          workflow: { teamId: ctx.team.id },
           ...(input.workflowId && { workflowId: input.workflowId }),
         },
         orderBy: { createdAt: "desc" },
@@ -28,7 +28,7 @@ export const schedulesRouter = createTRPCRouter({
     }),
 
   // Create a new schedule
-  create: protectedProcedure
+  create: teamProcedure
     .input(
       z.object({
         workflowId: z.string(),
@@ -38,9 +38,8 @@ export const schedulesRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      // Verify workflow ownership
       const workflow = await prisma.workflow.findFirst({
-        where: { id: input.workflowId, userId: ctx.user.id },
+        where: { id: input.workflowId, teamId: ctx.team.id },
       });
 
       if (!workflow) {
@@ -64,7 +63,7 @@ export const schedulesRouter = createTRPCRouter({
     }),
 
   // Update a schedule
-  update: protectedProcedure
+  update: teamProcedure
     .input(
       z.object({
         id: z.string(),
@@ -76,11 +75,10 @@ export const schedulesRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const { id, ...data } = input;
 
-      // Verify ownership via workflow
       const schedule = await prisma.schedule.findFirst({
         where: {
           id,
-          workflow: { userId: ctx.user.id },
+          workflow: { teamId: ctx.team.id },
         },
       });
 
@@ -91,7 +89,6 @@ export const schedulesRouter = createTRPCRouter({
         });
       }
 
-      // If cron expression changed, recalculate nextRunAt
       const updatePayload: Record<string, unknown> = { ...data };
       if (data.cronExpression || data.isActive !== undefined) {
         const cronExpr =
@@ -110,13 +107,13 @@ export const schedulesRouter = createTRPCRouter({
     }),
 
   // Delete a schedule
-  delete: protectedProcedure
+  delete: teamProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
       const schedule = await prisma.schedule.findFirst({
         where: {
           id: input.id,
-          workflow: { userId: ctx.user.id },
+          workflow: { teamId: ctx.team.id },
         },
       });
 
@@ -133,13 +130,13 @@ export const schedulesRouter = createTRPCRouter({
     }),
 
   // Toggle schedule active status
-  toggle: protectedProcedure
+  toggle: teamProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
       const schedule = await prisma.schedule.findFirst({
         where: {
           id: input.id,
-          workflow: { userId: ctx.user.id },
+          workflow: { teamId: ctx.team.id },
         },
       });
 
@@ -162,7 +159,7 @@ export const schedulesRouter = createTRPCRouter({
     }),
 
   // Get cron expression presets
-  presets: protectedProcedure.query(() => {
+  presets: teamProcedure.query(() => {
     return [
       {
         label: "Every minute",
@@ -218,7 +215,7 @@ export const schedulesRouter = createTRPCRouter({
   }),
 
   // Describe a cron expression
-  describe: protectedProcedure
+  describe: teamProcedure
     .input(z.object({ expression: z.string() }))
     .query(({ input }) => {
       const parts = input.expression.trim().split(/\s+/);

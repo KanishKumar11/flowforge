@@ -1,14 +1,14 @@
 import prisma from "@/lib/db";
-import { createTRPCRouter, protectedProcedure } from "../init";
+import { createTRPCRouter, teamProcedure } from "../init";
 import { z } from "zod";
 import { encryptCredential, decryptCredential } from "@/lib/crypto";
 import { TRPCError } from "@trpc/server";
 
 export const credentialsRouter = createTRPCRouter({
-  // List all credentials for the current user
-  list: protectedProcedure.query(async ({ ctx }) => {
+  // List all credentials for the active team
+  list: teamProcedure.query(async ({ ctx }) => {
     return prisma.credential.findMany({
-      where: { userId: ctx.user.id },
+      where: { teamId: ctx.team.id },
       orderBy: { updatedAt: "desc" },
       select: {
         id: true,
@@ -18,19 +18,18 @@ export const credentialsRouter = createTRPCRouter({
         createdAt: true,
         updatedAt: true,
         lastUsedAt: true,
-        // Don't return the encrypted data in list view
       },
     });
   }),
 
   // Get a single credential by ID (without decrypted data)
-  get: protectedProcedure
+  get: teamProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ ctx, input }) => {
       const credential = await prisma.credential.findFirst({
         where: {
           id: input.id,
-          userId: ctx.user.id,
+          teamId: ctx.team.id,
         },
         select: {
           id: true,
@@ -51,17 +50,16 @@ export const credentialsRouter = createTRPCRouter({
     }),
 
   // Create a new credential
-  create: protectedProcedure
+  create: teamProcedure
     .input(
       z.object({
         name: z.string().min(1).max(100),
         type: z.enum(["oauth2", "apiKey", "basic", "bearer", "custom"]),
         provider: z.string().min(1).max(50),
-        data: z.record(z.string(), z.any()), // The credential data to encrypt
+        data: z.record(z.string(), z.any()),
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      // Encrypt credential data with AES-256-GCM
       const encryptedData = encryptCredential(input.data);
 
       return prisma.credential.create({
@@ -71,6 +69,7 @@ export const credentialsRouter = createTRPCRouter({
           provider: input.provider,
           data: encryptedData,
           userId: ctx.user.id,
+          teamId: ctx.team.id,
         },
         select: {
           id: true,
@@ -83,7 +82,7 @@ export const credentialsRouter = createTRPCRouter({
     }),
 
   // Update a credential
-  update: protectedProcedure
+  update: teamProcedure
     .input(
       z.object({
         id: z.string(),
@@ -94,19 +93,17 @@ export const credentialsRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const { id, ...updateData } = input;
 
-      // Verify ownership
       const credential = await prisma.credential.findFirst({
-        where: { id, userId: ctx.user.id },
+        where: { id, teamId: ctx.team.id },
       });
 
       if (!credential) {
         throw new TRPCError({ code: "NOT_FOUND", message: "Credential not found" });
       }
 
-      const data: any = {};
+      const data: Record<string, unknown> = {};
       if (updateData.name) data.name = updateData.name;
       if (updateData.data) {
-        // Encrypt updated credential data
         data.data = encryptCredential(updateData.data);
       }
 
@@ -124,12 +121,11 @@ export const credentialsRouter = createTRPCRouter({
     }),
 
   // Delete a credential
-  delete: protectedProcedure
+  delete: teamProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
-      // Verify ownership
       const credential = await prisma.credential.findFirst({
-        where: { id: input.id, userId: ctx.user.id },
+        where: { id: input.id, teamId: ctx.team.id },
       });
 
       if (!credential) {
@@ -142,13 +138,13 @@ export const credentialsRouter = createTRPCRouter({
     }),
 
   // Get decrypted credential data (for workflow execution)
-  getDecrypted: protectedProcedure
+  getDecrypted: teamProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ ctx, input }) => {
       const credential = await prisma.credential.findFirst({
         where: {
           id: input.id,
-          userId: ctx.user.id,
+          teamId: ctx.team.id,
         },
       });
 
@@ -156,13 +152,11 @@ export const credentialsRouter = createTRPCRouter({
         throw new TRPCError({ code: "NOT_FOUND", message: "Credential not found" });
       }
 
-      // Update last used timestamp
       await prisma.credential.update({
         where: { id: input.id },
         data: { lastUsedAt: new Date() },
       });
 
-      // Decrypt credential data using AES-256-GCM
       const decryptedData = decryptCredential(credential.data);
 
       return {

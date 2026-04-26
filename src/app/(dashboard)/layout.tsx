@@ -1,4 +1,5 @@
 import { AppSidebar } from "@/components/AppSidebar";
+import { TeamProvider } from "@/features/teams/components/TeamProvider";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
 export default function DashboardLayout({
@@ -23,8 +24,10 @@ export default function DashboardLayout({
         } as React.CSSProperties
       }
     >
-      <AppSidebar />
-      <SidebarInset>{children}</SidebarInset>
+      <TeamProvider>
+        <AppSidebar />
+        <SidebarInset>{children}</SidebarInset>
+      </TeamProvider>
     </SidebarProvider>
   );
 }

@@ -37,6 +37,11 @@ function getUrl() {
   return `${base}/api/trpc`;
 }
 
+function getActiveTeamId(): string | null {
+  if (typeof window === "undefined") return null;
+  return localStorage.getItem("flowgent:active-team");
+}
+
 // Vanilla tRPC client for direct mutations (avoids type recursion issues)
 let vanillaClient: ReturnType<typeof createTRPCClient<AppRouter>> | null = null;
 
@@ -44,13 +49,29 @@ export function getVanillaClient() {
   if (typeof window === "undefined") {
     // Server-side: always create fresh
     return createTRPCClient<AppRouter>({
-      links: [httpBatchLink({ url: getUrl() })],
+      links: [
+        httpBatchLink({
+          url: getUrl(),
+          headers() {
+            const teamId = getActiveTeamId();
+            return teamId ? { "x-team-id": teamId } : {};
+          },
+        }),
+      ],
     });
   }
   // Browser: reuse singleton
   if (!vanillaClient) {
     vanillaClient = createTRPCClient<AppRouter>({
-      links: [httpBatchLink({ url: getUrl() })],
+      links: [
+        httpBatchLink({
+          url: getUrl(),
+          headers() {
+            const teamId = getActiveTeamId();
+            return teamId ? { "x-team-id": teamId } : {};
+          },
+        }),
+      ],
     });
   }
   return vanillaClient;
@@ -78,6 +99,10 @@ export function TRPCReactProvider(
         httpBatchLink({
           // transformer: superjson, <-- if you use a data transformer
           url: getUrl(),
+          headers() {
+            const teamId = getActiveTeamId();
+            return teamId ? { "x-team-id": teamId } : {};
+          },
         }),
       ],
     }),

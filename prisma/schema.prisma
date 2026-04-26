@@ -209,6 +209,10 @@ model Credential {
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  // Team (shared credentials)
+  teamId String?
+  team   Team?   @relation("TeamCredentials", fields: [teamId], references: [id], onDelete: SetNull)
+
   // Metadata
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
@@ -216,6 +220,7 @@ model Credential {
 
   @@unique([userId, name])
   @@index([userId])
+  @@index([teamId])
   @@index([provider])
   @@map("credential")
 }
@@ -317,6 +322,7 @@ model Team {
 
   members   TeamMember[]
   workflows Workflow[]   @relation("TeamWorkflows")
+  credentials Credential[] @relation("TeamCredentials")
 
   @@map("team")
 }

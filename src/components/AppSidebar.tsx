@@ -22,8 +22,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useHasActiveSubscription } from "@/features/hooks/useSubscription";
+import { useTeam } from "@/features/teams/components/TeamProvider";
 import { authClient } from "@/lib/auth-client";
 import {
+  Check,
+  ChevronDown,
   CreditCard,
   FolderKanban,
   History,
@@ -85,6 +88,7 @@ export function AppSidebar() {
   const { hasActiveSubscription, isLoading } = useHasActiveSubscription();
   const { state } = useSidebar();
   const isCollapsed = state === "collapsed";
+  const { activeTeam, teams, switchTeam, isLoading: teamsLoading } = useTeam();
 
   const session = authClient.useSession();
   const user = session.data?.user;
@@ -127,6 +131,47 @@ export function AppSidebar() {
             </Link>
           </SidebarMenuButton>
         </SidebarMenuItem>
+
+        {/* Team Switcher */}
+        {!isCollapsed && (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="mt-3 w-full flex items-center justify-between px-2 py-1.5 border border-(--arch-border) hover:border-(--arch-fg) hover:bg-[rgba(var(--arch-fg-rgb)/0.05)] transition-all font-mono text-xs uppercase tracking-wider text-(--arch-fg)">
+                <span className="truncate">
+                  {teamsLoading ? "..." : (activeTeam?.name ?? "SELECT TEAM")}
+                </span>
+                <ChevronDown className="w-3 h-3 ml-1 shrink-0 text-(--arch-muted)" />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              align="start"
+              className="w-56 rounded-none border border-(--arch-border) bg-(--arch-bg) text-(--arch-fg) font-mono"
+            >
+              <DropdownMenuLabel className="text-[10px] uppercase tracking-wider text-(--arch-muted) border-b border-(--arch-border) pb-2 mb-1">
+                TEAMS
+              </DropdownMenuLabel>
+              {teams.map((team) => (
+                <DropdownMenuItem
+                  key={team.id}
+                  onClick={() => switchTeam(team.id)}
+                  className="flex items-center justify-between cursor-pointer text-xs uppercase focus:bg-(--arch-fg) focus:text-(--arch-bg)"
+                >
+                  <span className="truncate">{team.name}</span>
+                  {team.id === activeTeam?.id && (
+                    <Check className="w-3 h-3 ml-2 shrink-0" />
+                  )}
+                </DropdownMenuItem>
+              ))}
+              <DropdownMenuSeparator className="bg-(--arch-border)" />
+              <DropdownMenuItem asChild className="text-xs uppercase cursor-pointer focus:bg-(--arch-fg) focus:text-(--arch-bg)">
+                <Link href="/teams">
+                  <Users className="mr-2 h-3 w-3" />
+                  MANAGE TEAMS
+                </Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        )}
       </SidebarHeader>
 
       {/* Main Navigation */}

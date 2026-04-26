@@ -1,12 +1,12 @@
 import prisma from "@/lib/db";
-import { createTRPCRouter, protectedProcedure } from "../init";
+import { createTRPCRouter, teamProcedure } from "../init";
 import { z } from "zod";
 import { nanoid } from "nanoid";
 import { TRPCError } from "@trpc/server";
 
 export const webhooksRouter = createTRPCRouter({
-  // List all webhooks for a workflow or all workflows
-  list: protectedProcedure
+  // List all webhooks for a workflow or all team workflows
+  list: teamProcedure
     .input(
       z.object({
         workflowId: z.string().optional(),
@@ -15,7 +15,7 @@ export const webhooksRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       return prisma.webhookEndpoint.findMany({
         where: {
-          workflow: { userId: ctx.user.id },
+          workflow: { teamId: ctx.team.id },
           ...(input.workflowId && { workflowId: input.workflowId }),
         },
         orderBy: { createdAt: "desc" },
@@ -28,7 +28,7 @@ export const webhooksRouter = createTRPCRouter({
     }),
 
   // Create a new webhook endpoint
-  create: protectedProcedure
+  create: teamProcedure
     .input(
       z.object({
         workflowId: z.string(),
@@ -39,9 +39,8 @@ export const webhooksRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      // Verify workflow ownership
       const workflow = await prisma.workflow.findFirst({
-        where: { id: input.workflowId, userId: ctx.user.id },
+        where: { id: input.workflowId, teamId: ctx.team.id },
       });
 
       if (!workflow) {
@@ -51,7 +50,6 @@ export const webhooksRouter = createTRPCRouter({
         });
       }
 
-      // Generate unique path (just the ID segment — the route handler receives this from [path])
       const path = nanoid(12);
 
       return prisma.webhookEndpoint.create({
@@ -65,7 +63,7 @@ export const webhooksRouter = createTRPCRouter({
     }),
 
   // Update a webhook
-  update: protectedProcedure
+  update: teamProcedure
     .input(
       z.object({
         id: z.string(),
@@ -79,7 +77,7 @@ export const webhooksRouter = createTRPCRouter({
       const webhook = await prisma.webhookEndpoint.findFirst({
         where: {
           id,
-          workflow: { userId: ctx.user.id },
+          workflow: { teamId: ctx.team.id },
         },
       });
 
@@ -97,13 +95,13 @@ export const webhooksRouter = createTRPCRouter({
     }),
 
   // Delete a webhook
-  delete: protectedProcedure
+  delete: teamProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
       const webhook = await prisma.webhookEndpoint.findFirst({
         where: {
           id: input.id,
-          workflow: { userId: ctx.user.id },
+          workflow: { teamId: ctx.team.id },
         },
       });
 
@@ -120,13 +118,13 @@ export const webhooksRouter = createTRPCRouter({
     }),
 
   // Regenerate webhook path
-  regenerate: protectedProcedure
+  regenerate: teamProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
       const webhook = await prisma.webhookEndpoint.findFirst({
         where: {
           id: input.id,
-          workflow: { userId: ctx.user.id },
+          workflow: { teamId: ctx.team.id },
         },
       });
 

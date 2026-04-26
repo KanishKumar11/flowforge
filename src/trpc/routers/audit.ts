@@ -1,10 +1,10 @@
 import { z } from "zod";
-import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
+import { createTRPCRouter, teamProcedure } from "@/trpc/init";
 import prisma from "@/lib/db";
 
 export const auditRouter = createTRPCRouter({
-  // List audit logs with pagination
-  list: protectedProcedure
+  // List audit logs for the active team
+  list: teamProcedure
     .input(
       z.object({
         entity: z.string().optional(),
@@ -16,7 +16,7 @@ export const auditRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       const logs = await prisma.auditLog.findMany({
         where: {
-          userId: ctx.user.id,
+          user: { teamMembers: { some: { teamId: ctx.team.id } } },
           ...(input.entity && { entity: input.entity }),
           ...(input.action && { action: input.action }),
         },
@@ -38,12 +38,12 @@ export const auditRouter = createTRPCRouter({
     }),
 
   // Get activity for a specific entity
-  forEntity: protectedProcedure
+  forEntity: teamProcedure
     .input(z.object({ entity: z.string(), entityId: z.string() }))
     .query(async ({ ctx, input }) => {
       return prisma.auditLog.findMany({
         where: {
-          userId: ctx.user.id,
+          user: { teamMembers: { some: { teamId: ctx.team.id } } },
           entity: input.entity,
           entityId: input.entityId,
         },
@@ -56,7 +56,7 @@ export const auditRouter = createTRPCRouter({
     }),
 
   // Create an audit log entry (internal use)
-  create: protectedProcedure
+  create: teamProcedure
     .input(
       z.object({
         action: z.string(),
@@ -77,24 +77,26 @@ export const auditRouter = createTRPCRouter({
       });
     }),
 
-  // Get recent activity summary
-  summary: protectedProcedure
+  // Get recent activity summary for the active team
+  summary: teamProcedure
     .input(z.object({ days: z.number().min(1).max(30).default(7) }))
     .query(async ({ ctx, input }) => {
       const startDate = new Date();
       startDate.setDate(startDate.getDate() - input.days);
 
+      const teamFilter = { user: { teamMembers: { some: { teamId: ctx.team.id } } } };
+
       const [totalActions, byEntity, recentLogs] = await Promise.all([
         prisma.auditLog.count({
-          where: { userId: ctx.user.id, createdAt: { gte: startDate } },
+          where: { ...teamFilter, createdAt: { gte: startDate } },
         }),
         prisma.auditLog.groupBy({
           by: ["entity"],
-          where: { userId: ctx.user.id, createdAt: { gte: startDate } },
+          where: { ...teamFilter, createdAt: { gte: startDate } },
           _count: { entity: true },
         }),
         prisma.auditLog.findMany({
-          where: { userId: ctx.user.id, createdAt: { gte: startDate } },
+          where: { ...teamFilter, createdAt: { gte: startDate } },
           orderBy: { createdAt: "desc" },
           take: 10,
         }),

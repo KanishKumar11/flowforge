@@ -77,7 +77,11 @@ export function TemplateBrowser() {
   });
 
   if (isLoading) {
-    return <div className="flex justify-center py-8"><BallLoader /></div>;
+    return (
+      <div className="flex justify-center py-8">
+        <BallLoader />
+      </div>
+    );
   }
 
   const templates = data?.templates || [];
