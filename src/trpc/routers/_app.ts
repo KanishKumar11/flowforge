@@ -6,6 +6,7 @@ import { schedulesRouter } from "./schedules";
 import { webhooksRouter } from "./webhooks";
 import { teamsRouter } from "./teams";
 import { auditRouter } from "./audit";
+import { apiKeysRouter } from "./apiKeys";
 
 export const appRouter = createTRPCRouter({
   workflows: workflowsRouter,
@@ -15,6 +16,7 @@ export const appRouter = createTRPCRouter({
   webhooks: webhooksRouter,
   teams: teamsRouter,
   audit: auditRouter,
+  apiKeys: apiKeysRouter,
 });
 
 export type AppRouter = typeof appRouter;

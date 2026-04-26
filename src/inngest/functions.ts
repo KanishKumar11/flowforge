@@ -409,12 +409,125 @@ async function executeDatabase(
   config: Record<string, unknown>,
   context: ExecutionContext,
 ): Promise<unknown> {
-  const operation = (config.operation as string) || "find";
-  const collection = config.collection as string;
+  const operation = (config.operation as string) || "query";
+  const query = resolveTemplateVars(config.query as string, context) as string;
+  const credentialId = config.credentialId as string | undefined;
 
-  throw new Error(
-    `Database node: No database connection configured. The Database node requires a connected database to perform '${operation}' on '${collection}'. Use an HTTP Request node to query your API instead, or connect a real database credential.`,
-  );
+  if (!query) {
+    throw new Error("Database node: No SQL query provided.");
+  }
+
+  // Resolve connection string from credential or direct config
+  let connectionString: string | undefined;
+
+  if (credentialId) {
+    const credential = await prisma.credential.findUnique({
+      where: { id: credentialId },
+    });
+    if (!credential) {
+      throw new Error(`Database node: Credential '${credentialId}' not found.`);
+    }
+    const decrypted = decryptCredential(credential.encryptedData);
+    connectionString =
+      (decrypted as Record<string, string>).connectionString ||
+      (decrypted as Record<string, string>).url ||
+      (decrypted as Record<string, string>).databaseUrl;
+  } else {
+    connectionString = (
+      resolveTemplateVars(config.connectionString, context) as string
+    ) || undefined;
+  }
+
+  if (!connectionString) {
+    throw new Error(
+      "Database node: No connection string available. Create a PostgreSQL credential or set the connectionString field.",
+    );
+  }
+
+  // Dynamic import to avoid bundling issues
+  const { Client } = await import("pg");
+  const client = new Client({ connectionString });
+
+  try {
+    await client.connect();
+    const result = await client.query(query);
+    return {
+      operation,
+      rowCount: result.rowCount,
+      rows: result.rows,
+      fields: result.fields?.map((f) => ({ name: f.name, dataTypeID: f.dataTypeID })),
+    };
+  } finally {
+    await client.end().catch(() => {});
+  }
+}
+
+async function executeDiscord(
+  config: Record<string, unknown>,
+  context: ExecutionContext,
+): Promise<unknown> {
+  const webhookUrl = resolveTemplateVars(config.webhookUrl, context) as string;
+  const message = resolveTemplateVars(config.message, context) as string;
+  const username = resolveTemplateVars(config.username, context) as string | undefined;
+  const avatarUrl = resolveTemplateVars(config.avatarUrl, context) as string | undefined;
+
+  if (!webhookUrl) {
+    throw new Error("Discord node: webhookUrl is required.");
+  }
+  if (!message) {
+    throw new Error("Discord node: message is required.");
+  }
+
+  const body: Record<string, unknown> = { content: message };
+  if (username) body.username = username;
+  if (avatarUrl) body.avatar_url = avatarUrl;
+
+  const response = await fetch(webhookUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(`Discord webhook failed (${response.status}): ${text}`);
+  }
+
+  return { sent: true, webhookUrl, message };
+}
+
+async function executeTelegram(
+  config: Record<string, unknown>,
+  context: ExecutionContext,
+): Promise<unknown> {
+  const botToken = resolveTemplateVars(config.botToken, context) as string;
+  const chatId = resolveTemplateVars(config.chatId, context) as string;
+  const text = resolveTemplateVars(config.text, context) as string;
+  const parseMode = (config.parseMode as string) || "HTML";
+
+  if (!botToken) {
+    throw new Error("Telegram node: botToken is required.");
+  }
+  if (!chatId) {
+    throw new Error("Telegram node: chatId is required.");
+  }
+  if (!text) {
+    throw new Error("Telegram node: text (message) is required.");
+  }
+
+  const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+  const response = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ chat_id: chatId, text, parse_mode: parseMode }),
+  });
+
+  const data = (await response.json()) as { ok: boolean; description?: string; result?: unknown };
+  if (!data.ok) {
+    throw new Error(`Telegram API error: ${data.description}`);
+  }
+
+  return { sent: true, chatId, text, result: data.result };
 }
 
 async function executeGoogleSheets(
@@ -1096,6 +1209,10 @@ async function executeNode(
       return executeSlack(config, context);
     case "database":
       return executeDatabase(config, context);
+    case "discord":
+      return executeDiscord(config, context);
+    case "telegram":
+      return executeTelegram(config, context);
     case "google_sheets":
       return executeGoogleSheets(config, context);
     case "github":
@@ -1166,6 +1283,34 @@ export async function executeWorkflowDirect(
   executionId: string;
   results: Record<string, unknown>;
 }> {
+  // Fetch workflow first to check concurrency / timeout settings
+  const workflow = await prisma.workflow.findUnique({
+    where: { id: workflowId },
+  });
+
+  if (!workflow) {
+    throw new Error(`Workflow ${workflowId} not found`);
+  }
+
+  // ── Concurrency check ─────────────────────────────────────────────
+  const maxConcurrency = workflow.maxConcurrency ?? 0;
+  if (maxConcurrency > 0) {
+    const running = await prisma.execution.count({
+      where: { workflowId, status: "RUNNING" },
+    });
+    if (running >= maxConcurrency) {
+      await prisma.execution.update({
+        where: { id: executionId },
+        data: {
+          status: "CANCELLED",
+          finishedAt: new Date(),
+          error: `Concurrency limit reached (max ${maxConcurrency} concurrent execution${maxConcurrency === 1 ? "" : "s"})`,
+        },
+      });
+      return { success: false, executionId, results: {} };
+    }
+  }
+
   // Update execution status to running
   await prisma.execution.update({
     where: { id: executionId },
@@ -1175,15 +1320,16 @@ export async function executeWorkflowDirect(
     },
   });
 
-  try {
-    // Fetch workflow
-    const workflow = await prisma.workflow.findUnique({
-      where: { id: workflowId },
-    });
+  // ── Timeout wrapper ───────────────────────────────────────────────
+  const timeoutMs = workflow.timeoutMs ?? 0;
 
-    if (!workflow) {
-      throw new Error(`Workflow ${workflowId} not found`);
-    }
+  const runExecution = async (): Promise<{
+    success: boolean;
+    executionId: string;
+    results: Record<string, unknown>;
+  }> => {
+
+  try {
 
     const nodes = (workflow.nodes as unknown as WorkflowNode[]) || [];
     const edges = (workflow.edges as unknown as WorkflowEdge[]) || [];
@@ -1302,6 +1448,25 @@ export async function executeWorkflowDirect(
 
     throw error;
   }
+  }; // end runExecution
+
+  if (timeoutMs > 0) {
+    const timeoutPromise = new Promise<never>((_, reject) =>
+      setTimeout(
+        () => reject(new Error(`Workflow execution timed out after ${timeoutMs}ms`)),
+        timeoutMs,
+      ),
+    );
+    return Promise.race([runExecution(), timeoutPromise]).catch(async (err) => {
+      await prisma.execution.update({
+        where: { id: executionId },
+        data: { status: "ERROR", finishedAt: new Date(), error: (err as Error).message },
+      });
+      throw err;
+    });
+  }
+
+  return runExecution();
 }
 
 // Main workflow execution function (Inngest-managed)

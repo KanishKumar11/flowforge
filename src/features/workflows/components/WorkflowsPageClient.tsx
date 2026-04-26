@@ -15,10 +15,11 @@ import {
   Zap,
   Globe,
   LayoutTemplate,
+  Upload,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { toast } from "sonner";
 import { TemplateBrowser } from "@/features/workflows/components/TemplateBrowser";
 import { WorkflowSearch } from "@/features/workflows/components/WorkflowSearch";
@@ -58,6 +59,7 @@ export function WorkflowsPageClient() {
   const [search, setSearch] = useState("");
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showUpgradeDialog, setShowUpgradeDialog] = useState(false);
+  const importRef = useRef<HTMLInputElement>(null);
 
   const trpc = useTRPC();
   const client = useVanillaClient();
@@ -132,6 +134,36 @@ export function WorkflowsPageClient() {
     },
   });
 
+  const importWorkflow = useMutation({
+    mutationFn: (data: Parameters<typeof client.workflows.import.mutate>[0]) =>
+      client.workflows.import.mutate(data),
+    onSuccess: (workflow) => {
+      refetch();
+      toast.success("Workflow imported");
+      router.push(`/workflows/${workflow.id}`);
+    },
+    onError: () => {
+      toast.error("Failed to import workflow");
+    },
+  });
+
+  const handleImportFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      try {
+        const json = JSON.parse(ev.target?.result as string) as Record<string, unknown>;
+        importWorkflow.mutate({ data: json as Parameters<typeof client.workflows.import.mutate>[0]["data"] });
+      } catch {
+        toast.error("Invalid JSON file");
+      }
+    };
+    reader.readAsText(file);
+    // Reset so same file can be re-imported
+    e.target.value = "";
+  };
+
   const filteredWorkflows = workflows?.filter((w) =>
     w.name.toLowerCase().includes(search.toLowerCase()),
   );
@@ -157,6 +189,22 @@ export function WorkflowsPageClient() {
         description="Create and manage your automation workflows"
         action={
           <div className="flex items-center gap-2">
+            <input
+              ref={importRef}
+              type="file"
+              accept=".json"
+              className="hidden"
+              onChange={handleImportFile}
+            />
+            <Button
+              variant="outline"
+              onClick={() => importRef.current?.click()}
+              disabled={importWorkflow.isPending}
+              className="gap-2 rounded-xl border-(--arch-border) font-medium text-[13px] h-10 px-4"
+            >
+              <Upload className="h-4 w-4" strokeWidth={2} />
+              Import
+            </Button>
             <Button
               variant="outline"
               asChild

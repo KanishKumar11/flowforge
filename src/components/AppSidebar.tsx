@@ -71,6 +71,11 @@ const mainMenuItems = [
     icon: KeyRound,
   },
   {
+    label: "API Keys",
+    href: "/api-keys",
+    icon: Zap,
+  },
+  {
     label: "Teams",
     href: "/teams",
     icon: Users,

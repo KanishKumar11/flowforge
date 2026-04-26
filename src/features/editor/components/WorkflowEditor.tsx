@@ -22,8 +22,9 @@ import { TriggerNode } from "@/features/editor/nodes/TriggerNode";
 import { ActionNode } from "@/features/editor/nodes/ActionNode";
 import { NodePalette } from "./NodePalette";
 import { NodeConfigPanel } from "./NodeConfigPanel";
+import { ExecutionSettings } from "./ExecutionSettings";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Play, Redo2, Save, Undo2, Loader2 } from "lucide-react";
+import { ArrowLeft, Play, Redo2, Save, Settings, Undo2, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useTRPC, useVanillaClient } from "@/trpc/client";
 import { useQuery, useMutation } from "@tanstack/react-query";
@@ -62,6 +63,7 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
   const { screenToFlowPosition } = useReactFlow();
   const [isSaving, setIsSaving] = useState(false);
   const [selectedNode, setSelectedNode] = useState<Node | null>(null);
+  const [showExecutionSettings, setShowExecutionSettings] = useState(false);
   const [testInputOpen, setTestInputOpen] = useState(false);
   const [testInputJson, setTestInputJson] = useState(
     '{\n  "email": "user@example.com",\n  "name": "Test User"\n}',
@@ -443,6 +445,20 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
               <Button
                 variant="ghost"
                 size="sm"
+                onClick={() => {
+                  setShowExecutionSettings((v) => !v);
+                  setSelectedNode(null);
+                }}
+                className="hover:bg-(--arch-fg) hover:text-(--arch-bg) text-(--arch-fg) h-8 rounded-none font-mono uppercase text-xs"
+                title="Execution Settings"
+              >
+                <Settings className="h-3.5 w-3.5 mr-2" />
+                Settings
+              </Button>
+              <div className="w-px h-4 bg-(--arch-border)" />
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={handleSave}
                 disabled={isSaving}
                 className="hover:bg-(--arch-fg) hover:text-(--arch-bg) text-(--arch-fg) h-8 rounded-none font-mono uppercase text-xs"
@@ -486,6 +502,16 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
           node={nodes.find((n) => n.id === selectedNode.id)!}
           onClose={() => setSelectedNode(null)}
           onUpdate={handleNodeUpdate}
+        />
+      )}
+
+      {/* Execution Settings Panel */}
+      {showExecutionSettings && !selectedNode && (
+        <ExecutionSettings
+          workflowId={workflowId}
+          initialTimeoutMs={(workflow as { timeoutMs?: number | null }).timeoutMs ?? null}
+          initialMaxConcurrency={(workflow as { maxConcurrency?: number }).maxConcurrency ?? 0}
+          onClose={() => setShowExecutionSettings(false)}
         />
       )}
 

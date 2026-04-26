@@ -642,6 +642,36 @@ export const workflowsRouter = createTRPCRouter({
       });
     }),
 
+  // Update execution safety settings (timeout + concurrency)
+  updateExecutionSettings: teamProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        timeoutMs: z.number().int().min(0).nullable().optional(),
+        maxConcurrency: z.number().int().min(0).max(100).optional(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const workflow = await prisma.workflow.findFirst({
+        where: { id: input.id, teamId: ctx.team.id },
+      });
+
+      if (!workflow) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Workflow not found",
+        });
+      }
+
+      return prisma.workflow.update({
+        where: { id: input.id },
+        data: {
+          timeoutMs: input.timeoutMs ?? null,
+          maxConcurrency: input.maxConcurrency ?? 0,
+        },
+      });
+    }),
+
   // Get webhook API documentation for a workflow
   getWebhookDocs: teamProcedure
     .input(z.object({ id: z.string() }))

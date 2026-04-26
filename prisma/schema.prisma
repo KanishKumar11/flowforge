@@ -34,6 +34,7 @@ model User {
   teamMembers      TeamMember[]
   workflowVersions WorkflowVersion[]
   auditLogs        AuditLog[]
+  apiKeys          ApiKey[]
 
   @@map("user")
 }
@@ -105,6 +106,10 @@ model Workflow {
   folder     String? // Folder path for organizing workflows
   tags       String[] @default([]) // Tags for filtering
   isFavorite Boolean  @default(false)
+
+  // Execution safety
+  timeoutMs      Int? // Max execution time in ms (null = no limit)
+  maxConcurrency Int  @default(0) // 0 = unlimited, 1 = one at a time, etc.
 
   // Error Alert Settings
   errorAlertEmail   String? // Email to notify on failure
@@ -269,6 +274,30 @@ model WebhookEndpoint {
 }
 
 // ============================================
+// API KEYS (public workflow trigger)
+// ============================================
+
+model ApiKey {
+  id          String    @id @default(cuid())
+  name        String
+  keyHash     String    @unique // SHA-256 of the raw key (never store raw)
+  keyPrefix   String    // First 8 chars of raw key (for display, e.g. "fg_abc123")
+  isActive    Boolean   @default(true)
+  workflowId  String?   // null = any workflow the team owns
+  teamId      String
+  team        Team      @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  createdById String
+  createdBy   User      @relation(fields: [createdById], references: [id])
+  lastUsedAt  DateTime?
+  expiresAt   DateTime?
+  createdAt   DateTime  @default(now())
+
+  @@index([keyHash])
+  @@index([teamId])
+  @@map("api_key")
+}
+
+// ============================================
 // ENUMS
 // ============================================
 
@@ -323,6 +352,7 @@ model Team {
   members     TeamMember[]
   workflows   Workflow[]   @relation("TeamWorkflows")
   credentials Credential[] @relation("TeamCredentials")
+  apiKeys     ApiKey[]
 
   @@map("team")
 }

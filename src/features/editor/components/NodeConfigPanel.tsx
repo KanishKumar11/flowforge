@@ -298,22 +298,18 @@ export function NodeConfigPanel({
           )}
 
           {node.data.type === "if" && (
-            <div className="space-y-2">
-              <Label htmlFor="condition">Condition</Label>
-              <Input
-                id="condition"
-                placeholder="{{$input.data.status}} === 'success'"
-                value={
-                  (node.data.config as Record<string, string>)?.condition || ""
-                }
-                onChange={(e) =>
-                  handleConfigChange("condition", e.target.value)
-                }
-              />
-              <p className="text-xs text-muted-foreground">
-                Use {`{{$input.data}}`} to reference previous node output
-              </p>
-            </div>
+            <ConditionBuilder
+              key={node.id}
+              value={(node.data.config as Record<string, unknown>)?.conditions}
+              rawCondition={
+                (node.data.config as Record<string, string>)?.condition || ""
+              }
+              onChange={(conditions, rawExpr) => {
+                handleConfigChange("conditions", conditions);
+                handleConfigChange("condition", rawExpr);
+              }}
+              label="Condition (IF)"
+            />
           )}
 
           {(node.data.type === "wait" || node.data.type === "delay") && (
@@ -451,22 +447,19 @@ export function NodeConfigPanel({
           )}
 
           {node.data.type === "filter" && (
-            <div className="space-y-2">
-              <Label htmlFor="filterCondition">Condition</Label>
-              <Input
-                id="filterCondition"
-                placeholder="item.active === true"
-                value={
-                  (node.data.config as Record<string, string>)?.condition || ""
-                }
-                onChange={(e) =>
-                  handleConfigChange("condition", e.target.value)
-                }
-              />
-              <p className="text-xs text-muted-foreground">
-                JavaScript expression using `item` and `index`.
-              </p>
-            </div>
+            <ConditionBuilder
+              key={node.id}
+              value={(node.data.config as Record<string, unknown>)?.conditions}
+              rawCondition={
+                (node.data.config as Record<string, string>)?.condition || ""
+              }
+              onChange={(conditions, rawExpr) => {
+                handleConfigChange("conditions", conditions);
+                handleConfigChange("condition", rawExpr);
+              }}
+              label="Filter Condition"
+              itemVar="item"
+            />
           )}
 
           {node.data.type === "sort" && (
@@ -1508,6 +1501,194 @@ export function NodeConfigPanel({
               </div>
             </>
           )}
+
+          {/* ─── Discord ───────────────────────────────────────────── */}
+          {node.data.type === "discord" && (
+            <>
+              <div className="space-y-2">
+                <Label htmlFor="discord-webhook">Webhook URL</Label>
+                <Input
+                  id="discord-webhook"
+                  placeholder="https://discord.com/api/webhooks/..."
+                  value={
+                    (node.data.config as Record<string, string>)?.webhookUrl ||
+                    ""
+                  }
+                  onChange={(e) =>
+                    handleConfigChange("webhookUrl", e.target.value)
+                  }
+                  className="bg-(--arch-bg) border-(--arch-border) focus:border-(--arch-fg) text-(--arch-fg) font-mono rounded-none placeholder:text-(--arch-muted) text-xs h-9 focus-visible:ring-0"
+                />
+                <p className="text-[11px] text-(--arch-muted) font-mono">
+                  Discord server → Edit Channel → Integrations → Webhooks
+                </p>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="discord-message">Message</Label>
+                <Textarea
+                  id="discord-message"
+                  placeholder="Hello from Flowgent! {{trigger.body.name}}"
+                  rows={4}
+                  value={
+                    (node.data.config as Record<string, string>)?.message || ""
+                  }
+                  onChange={(e) =>
+                    handleConfigChange("message", e.target.value)
+                  }
+                  className="bg-(--arch-bg) border-(--arch-border) focus:border-(--arch-fg) text-(--arch-fg) font-mono rounded-none placeholder:text-(--arch-muted) text-xs min-h-[80px] focus-visible:ring-0"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="discord-username">Bot Username (optional)</Label>
+                <Input
+                  id="discord-username"
+                  placeholder="Flowgent Bot"
+                  value={
+                    (node.data.config as Record<string, string>)?.username || ""
+                  }
+                  onChange={(e) =>
+                    handleConfigChange("username", e.target.value)
+                  }
+                  className="bg-(--arch-bg) border-(--arch-border) focus:border-(--arch-fg) text-(--arch-fg) font-mono rounded-none placeholder:text-(--arch-muted) text-xs h-9 focus-visible:ring-0"
+                />
+              </div>
+            </>
+          )}
+
+          {/* ─── Telegram ──────────────────────────────────────────── */}
+          {node.data.type === "telegram" && (
+            <>
+              <div className="space-y-2">
+                <Label htmlFor="tg-token">Bot Token</Label>
+                <Input
+                  id="tg-token"
+                  type="password"
+                  placeholder="123456:ABC-DEF..."
+                  value={
+                    (node.data.config as Record<string, string>)?.botToken || ""
+                  }
+                  onChange={(e) =>
+                    handleConfigChange("botToken", e.target.value)
+                  }
+                  className="bg-(--arch-bg) border-(--arch-border) focus:border-(--arch-fg) text-(--arch-fg) font-mono rounded-none placeholder:text-(--arch-muted) text-xs h-9 focus-visible:ring-0"
+                />
+                <p className="text-[11px] text-(--arch-muted) font-mono">
+                  Get from @BotFather on Telegram
+                </p>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="tg-chatid">Chat ID</Label>
+                <Input
+                  id="tg-chatid"
+                  placeholder="-1001234567890"
+                  value={
+                    (node.data.config as Record<string, string>)?.chatId || ""
+                  }
+                  onChange={(e) =>
+                    handleConfigChange("chatId", e.target.value)
+                  }
+                  className="bg-(--arch-bg) border-(--arch-border) focus:border-(--arch-fg) text-(--arch-fg) font-mono rounded-none placeholder:text-(--arch-muted) text-xs h-9 focus-visible:ring-0"
+                />
+                <p className="text-[11px] text-(--arch-muted) font-mono">
+                  Group/channel ID (negative) or user ID
+                </p>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="tg-text">Message Text</Label>
+                <Textarea
+                  id="tg-text"
+                  placeholder="Hello <b>{{trigger.body.name}}</b>!"
+                  rows={4}
+                  value={
+                    (node.data.config as Record<string, string>)?.text || ""
+                  }
+                  onChange={(e) => handleConfigChange("text", e.target.value)}
+                  className="bg-(--arch-bg) border-(--arch-border) focus:border-(--arch-fg) text-(--arch-fg) font-mono rounded-none placeholder:text-(--arch-muted) text-xs min-h-[80px] focus-visible:ring-0"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>Parse Mode</Label>
+                <Select
+                  value={
+                    (node.data.config as Record<string, string>)?.parseMode ||
+                    "HTML"
+                  }
+                  onValueChange={(v) => handleConfigChange("parseMode", v)}
+                >
+                  <SelectTrigger className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) rounded-none font-mono text-xs h-9">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) rounded-none font-mono z-50">
+                    <SelectItem value="HTML" className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer font-mono text-xs">HTML</SelectItem>
+                    <SelectItem value="Markdown" className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer font-mono text-xs">Markdown</SelectItem>
+                    <SelectItem value="MarkdownV2" className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer font-mono text-xs">MarkdownV2</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </>
+          )}
+
+          {/* ─── Database (PostgreSQL) ─────────────────────────────── */}
+          {node.data.type === "database" && (
+            <>
+              <div className="space-y-2">
+                <Label>
+                  PostgreSQL Credential
+                </Label>
+                <Select
+                  value={
+                    (node.data.config as Record<string, string>)
+                      ?.credentialId || ""
+                  }
+                  onValueChange={(value) =>
+                    handleConfigChange("credentialId", value)
+                  }
+                >
+                  <SelectTrigger className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) rounded-none font-mono text-xs h-9 focus:ring-1 focus:ring-(--arch-fg)">
+                    <SelectValue placeholder="Select a credential" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) rounded-none font-mono z-50">
+                    {credentials
+                      ?.filter(
+                        (c) =>
+                          c.provider === "postgres" ||
+                          c.provider === "postgresql" ||
+                          c.provider === "database" ||
+                          c.provider === "custom",
+                      )
+                      .map((cred) => (
+                        <SelectItem
+                          key={cred.id}
+                          value={cred.id}
+                          className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer font-mono text-xs"
+                        >
+                          {cred.name}
+                        </SelectItem>
+                      ))}
+                  </SelectContent>
+                </Select>
+                <p className="text-[11px] text-(--arch-muted) font-mono">
+                  Credential must contain a <code className="bg-[rgba(var(--arch-fg-rgb)/0.1)] px-1">connectionString</code> field.
+                </p>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="db-query">SQL Query</Label>
+                <Textarea
+                  id="db-query"
+                  placeholder="SELECT * FROM users WHERE email = '{{trigger.body.email}}'"
+                  rows={6}
+                  value={
+                    (node.data.config as Record<string, string>)?.query || ""
+                  }
+                  onChange={(e) => handleConfigChange("query", e.target.value)}
+                  className="bg-(--arch-bg) border-(--arch-border) focus:border-(--arch-fg) text-(--arch-fg) font-mono rounded-none placeholder:text-(--arch-muted) text-xs min-h-[100px] focus-visible:ring-0"
+                />
+                <p className="text-[11px] text-(--arch-muted) font-mono">
+                  Use <code className="bg-[rgba(var(--arch-fg-rgb)/0.1)] px-1">{"{{nodeId.field}}"}</code> to inject values from previous nodes.
+                </p>
+              </div>
+            </>
+          )}
         </div>
       </ScrollArea>
     </div>
@@ -1995,6 +2176,262 @@ function KeyValueBuilder({
         <Plus className="w-3 h-3" />
         Add field
       </button>
+    </div>
+  );
+}
+
+// ─── Condition Builder (IF / Filter) ─────────────────────────────────────────
+
+type ConditionOperator =
+  | "==="
+  | "!=="
+  | ">"
+  | "<"
+  | ">="
+  | "<="
+  | "includes"
+  | "startsWith"
+  | "endsWith"
+  | "exists"
+  | "!exists";
+
+interface ConditionRow {
+  field: string;
+  operator: ConditionOperator;
+  value: string;
+  combinator: "AND" | "OR";
+}
+
+const OPERATOR_LABELS: Record<ConditionOperator, string> = {
+  "===": "equals",
+  "!==": "not equals",
+  ">": "greater than",
+  "<": "less than",
+  ">=": "≥",
+  "<=": "≤",
+  includes: "contains",
+  startsWith: "starts with",
+  endsWith: "ends with",
+  exists: "exists",
+  "!exists": "not exists",
+};
+
+function buildExpression(
+  rows: ConditionRow[],
+  itemVar = "$input",
+): string {
+  if (rows.length === 0) return "";
+  const parts = rows.map((r) => {
+    const lhs = r.field.startsWith("{{")
+      ? r.field
+      : `{{${itemVar}.${r.field}}}`;
+    switch (r.operator) {
+      case "===":
+      case "!==":
+      case ">":
+      case "<":
+      case ">=":
+      case "<=": {
+        const rhs = isNaN(Number(r.value)) ? `'${r.value}'` : r.value;
+        return `${lhs} ${r.operator} ${rhs}`;
+      }
+      case "includes":
+        return `String(${lhs}).includes('${r.value}')`;
+      case "startsWith":
+        return `String(${lhs}).startsWith('${r.value}')`;
+      case "endsWith":
+        return `String(${lhs}).endsWith('${r.value}')`;
+      case "exists":
+        return `${lhs} != null`;
+      case "!exists":
+        return `${lhs} == null`;
+      default:
+        return "";
+    }
+  });
+
+  let result = parts[0] ?? "";
+  for (let i = 1; i < rows.length; i++) {
+    const combinator = rows[i]?.combinator === "OR" ? " || " : " && ";
+    result += combinator + (parts[i] ?? "");
+  }
+  return result;
+}
+
+function ConditionBuilder({
+  value,
+  rawCondition,
+  onChange,
+  label = "Conditions",
+  itemVar = "$input",
+}: {
+  value: unknown;
+  rawCondition: string;
+  onChange: (rows: ConditionRow[], expr: string) => void;
+  label?: string;
+  itemVar?: string;
+}) {
+  const initialRows: ConditionRow[] =
+    Array.isArray(value) && value.length > 0
+      ? (value as ConditionRow[])
+      : [{ field: "", operator: "===", value: "", combinator: "AND" }];
+
+  const [rows, setRows] = useState<ConditionRow[]>(initialRows);
+  const [showRaw, setShowRaw] = useState(false);
+  const [rawExpr, setRawExpr] = useState(rawCondition);
+
+  const update = (newRows: ConditionRow[]) => {
+    setRows(newRows);
+    const expr = buildExpression(newRows, itemVar);
+    setRawExpr(expr);
+    onChange(newRows, expr);
+  };
+
+  const addRow = () => {
+    update([...rows, { field: "", operator: "===", value: "", combinator: "AND" }]);
+  };
+
+  const removeRow = (i: number) => {
+    const next = rows.filter((_, idx) => idx !== i);
+    if (next.length === 0) {
+      next.push({ field: "", operator: "===", value: "", combinator: "AND" });
+    }
+    update(next);
+  };
+
+  const updateRow = <K extends keyof ConditionRow>(
+    i: number,
+    key: K,
+    val: ConditionRow[K],
+  ) => {
+    const next = rows.map((r, idx) => (idx === i ? { ...r, [key]: val } : r));
+    update(next);
+  };
+
+  const noValueOps: ConditionOperator[] = ["exists", "!exists"];
+
+  return (
+    <div className="space-y-3">
+      <div className="flex items-center justify-between">
+        <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider">
+          {label}
+        </Label>
+        <button
+          type="button"
+          onClick={() => setShowRaw((v) => !v)}
+          className="text-[10px] font-mono text-(--arch-muted) hover:text-(--arch-fg) uppercase transition-colors"
+        >
+          {showRaw ? "↑ Visual" : "{ } Raw"}
+        </button>
+      </div>
+
+      {showRaw ? (
+        <div className="space-y-1">
+          <Textarea
+            value={rawExpr}
+            onChange={(e) => {
+              setRawExpr(e.target.value);
+              onChange(rows, e.target.value);
+            }}
+            placeholder={`{{${itemVar}.status}} === 'active'`}
+            rows={3}
+            className="bg-(--arch-bg) border-(--arch-border) focus:border-(--arch-fg) text-(--arch-fg) font-mono rounded-none placeholder:text-(--arch-muted) text-xs min-h-[60px] focus-visible:ring-0"
+          />
+          <p className="text-[10px] text-(--arch-muted) font-mono">
+            JavaScript expression. Use <code className="bg-[rgba(var(--arch-fg-rgb)/0.1)] px-1">{"{{field}}"}</code> for values.
+          </p>
+        </div>
+      ) : (
+        <div className="space-y-2">
+          {rows.map((row, i) => (
+            <div key={i} className="space-y-1">
+              {i > 0 && (
+                <div className="flex items-center gap-1 py-0.5">
+                  <div className="flex-1 h-px bg-(--arch-border)" />
+                  <button
+                    type="button"
+                    onClick={() =>
+                      updateRow(
+                        i,
+                        "combinator",
+                        row.combinator === "AND" ? "OR" : "AND",
+                      )
+                    }
+                    className="text-[10px] font-mono font-bold px-2 py-0.5 border border-(--arch-border) text-(--arch-muted) hover:text-(--arch-fg) hover:border-(--arch-fg) transition-all uppercase"
+                  >
+                    {row.combinator}
+                  </button>
+                  <div className="flex-1 h-px bg-(--arch-border)" />
+                </div>
+              )}
+              <div className="grid grid-cols-[1fr_auto_1fr_auto] gap-1 items-center">
+                {/* Field */}
+                <Input
+                  placeholder="field.path"
+                  value={row.field}
+                  onChange={(e) => updateRow(i, "field", e.target.value)}
+                  className="bg-(--arch-bg) border-(--arch-border) focus:border-(--arch-fg) text-(--arch-fg) font-mono rounded-none placeholder:text-(--arch-muted) text-xs h-8 focus-visible:ring-0"
+                />
+                {/* Operator */}
+                <Select
+                  value={row.operator}
+                  onValueChange={(v) =>
+                    updateRow(i, "operator", v as ConditionOperator)
+                  }
+                >
+                  <SelectTrigger className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) rounded-none font-mono text-xs h-8 w-28 focus:ring-0">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) rounded-none font-mono z-50">
+                    {(Object.keys(OPERATOR_LABELS) as ConditionOperator[]).map(
+                      (op) => (
+                        <SelectItem
+                          key={op}
+                          value={op}
+                          className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs font-mono"
+                        >
+                          {OPERATOR_LABELS[op]}
+                        </SelectItem>
+                      ),
+                    )}
+                  </SelectContent>
+                </Select>
+                {/* Value */}
+                <Input
+                  placeholder="value"
+                  value={row.value}
+                  disabled={noValueOps.includes(row.operator)}
+                  onChange={(e) => updateRow(i, "value", e.target.value)}
+                  className="bg-(--arch-bg) border-(--arch-border) focus:border-(--arch-fg) text-(--arch-fg) font-mono rounded-none placeholder:text-(--arch-muted) text-xs h-8 focus-visible:ring-0 disabled:opacity-40"
+                />
+                {/* Remove */}
+                <button
+                  type="button"
+                  onClick={() => removeRow(i)}
+                  className="h-8 w-8 flex items-center justify-center text-(--arch-muted) hover:text-red-500 hover:bg-red-500/10 transition-colors shrink-0"
+                >
+                  <X className="h-3.5 w-3.5" />
+                </button>
+              </div>
+            </div>
+          ))}
+
+          <button
+            type="button"
+            onClick={addRow}
+            className="w-full flex items-center justify-center gap-1.5 py-1.5 border border-dashed border-(--arch-border) text-[10px] font-mono text-(--arch-muted) hover:text-(--arch-fg) hover:border-(--arch-fg) uppercase transition-colors"
+          >
+            <Plus className="h-3 w-3" />
+            Add condition
+          </button>
+
+          {rawExpr && (
+            <p className="text-[10px] font-mono text-(--arch-muted) border-l-2 border-(--arch-border) pl-2 break-all">
+              {rawExpr}
+            </p>
+          )}
+        </div>
+      )}
     </div>
   );
 }
