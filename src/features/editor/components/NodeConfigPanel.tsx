@@ -1933,9 +1933,10 @@ function SubWorkflowPicker({
   onChange: (id: string) => void;
 }) {
   const trpc = useTRPC();
-  const { data: workflows, isLoading } = useQuery(
+  const { data: rawWorkflows, isLoading } = useQuery(
     trpc.workflows.list.queryOptions(),
   );
+  const workflows = rawWorkflows as Array<{ id: string; name: string }> | undefined;
 
   return (
     <div className="space-y-2">
