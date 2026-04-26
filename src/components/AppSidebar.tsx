@@ -278,17 +278,32 @@ export function AppSidebar() {
                   </>
                 )}
 
-                <DropdownMenuItem className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs uppercase">
-                  <User className="mr-2 h-3 w-3" />
-                  ID_CARD
+                <DropdownMenuItem
+                  asChild
+                  className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs uppercase"
+                >
+                  <Link href="/settings">
+                    <User className="mr-2 h-3 w-3" />
+                    ID_CARD
+                  </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs uppercase">
-                  <Settings className="mr-2 h-3 w-3" />
-                  CONFIG
+                <DropdownMenuItem
+                  asChild
+                  className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs uppercase"
+                >
+                  <Link href="/settings">
+                    <Settings className="mr-2 h-3 w-3" />
+                    CONFIG
+                  </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs uppercase">
-                  <CreditCard className="mr-2 h-3 w-3" />
-                  CREDITS
+                <DropdownMenuItem
+                  asChild
+                  className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs uppercase"
+                >
+                  <Link href="/subscription">
+                    <CreditCard className="mr-2 h-3 w-3" />
+                    CREDITS
+                  </Link>
                 </DropdownMenuItem>
 
                 <DropdownMenuSeparator className="bg-(--arch-border)" />

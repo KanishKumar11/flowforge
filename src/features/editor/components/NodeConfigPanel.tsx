@@ -319,7 +319,9 @@ export function NodeConfigPanel({
           {(node.data.type === "wait" || node.data.type === "delay") && (
             <WaitDurationPicker
               key={node.id}
-              value={(node.data.config as Record<string, string>)?.duration || ""}
+              value={
+                (node.data.config as Record<string, string>)?.duration || ""
+              }
               onChange={(ms) => handleConfigChange("duration", ms)}
             />
           )}
@@ -1270,8 +1272,7 @@ export function NodeConfigPanel({
             <>
               <SubWorkflowPicker
                 value={
-                  (node.data.config as Record<string, string>)?.workflowId ||
-                  ""
+                  (node.data.config as Record<string, string>)?.workflowId || ""
                 }
                 onChange={(id) => handleConfigChange("workflowId", id)}
               />
@@ -1418,8 +1419,13 @@ export function NodeConfigPanel({
               </div>
               <StripeAmountInput
                 key={node.id}
-                amount={(node.data.config as Record<string, string>)?.amount || ""}
-                currency={(node.data.config as Record<string, string>)?.currency || "usd"}
+                amount={
+                  (node.data.config as Record<string, string>)?.amount || ""
+                }
+                currency={
+                  (node.data.config as Record<string, string>)?.currency ||
+                  "usd"
+                }
                 onAmountChange={(v) => handleConfigChange("amount", v)}
                 onCurrencyChange={(v) => handleConfigChange("currency", v)}
               />
@@ -1623,7 +1629,10 @@ function WaitDurationPicker({
           onChange={(e) => handleAmountChange(e.target.value)}
           className="bg-(--arch-bg) border-(--arch-border) border-r-0 focus:border-(--arch-fg) text-(--arch-fg) font-mono rounded-none placeholder:text-(--arch-muted) text-xs h-9 focus-visible:ring-0 w-20 shrink-0"
         />
-        <Select value={unit} onValueChange={(v) => handleUnitChange(v as TimeUnit)}>
+        <Select
+          value={unit}
+          onValueChange={(v) => handleUnitChange(v as TimeUnit)}
+        >
           <SelectTrigger className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) rounded-none font-mono text-xs h-9 flex-1 focus:ring-0 focus:border-(--arch-fg)">
             <SelectValue />
           </SelectTrigger>
@@ -1809,9 +1818,7 @@ function SubWorkflowPicker({
         </SelectContent>
       </Select>
       {value && !workflows?.find((w) => w.id === value) && !isLoading && (
-        <p className="text-[10px] font-mono text-(--arch-muted)">
-          ID: {value}
-        </p>
+        <p className="text-[10px] font-mono text-(--arch-muted)">ID: {value}</p>
       )}
     </div>
   );
@@ -1851,8 +1858,7 @@ function SwitchCasesBuilder({
   const updateRow = (i: number, field: keyof SwitchCase, val: string) =>
     commit(cases.map((c, idx) => (idx === i ? { ...c, [field]: val } : c)));
   const addRow = () => commit([...cases, { value: "", output: "" }]);
-  const removeRow = (i: number) =>
-    commit(cases.filter((_, idx) => idx !== i));
+  const removeRow = (i: number) => commit(cases.filter((_, idx) => idx !== i));
 
   return (
     <div className="space-y-2">
@@ -1860,9 +1866,13 @@ function SwitchCasesBuilder({
         Cases
       </Label>
       <div className="grid grid-cols-[1fr_8px_1fr_16px] gap-x-1 items-center mb-1">
-        <span className="text-[9px] font-mono text-(--arch-muted) uppercase">when</span>
+        <span className="text-[9px] font-mono text-(--arch-muted) uppercase">
+          when
+        </span>
         <span />
-        <span className="text-[9px] font-mono text-(--arch-muted) uppercase">route to</span>
+        <span className="text-[9px] font-mono text-(--arch-muted) uppercase">
+          route to
+        </span>
         <span />
       </div>
       <div className="space-y-1.5">
@@ -1910,11 +1920,7 @@ function SwitchCasesBuilder({
 type KVPair = { key: string; value: string };
 
 function parseKVPairs(fields: unknown): KVPair[] {
-  if (
-    typeof fields === "object" &&
-    fields !== null &&
-    !Array.isArray(fields)
-  ) {
+  if (typeof fields === "object" && fields !== null && !Array.isArray(fields)) {
     return Object.entries(fields as Record<string, unknown>).map(([k, v]) => ({
       key: k,
       value: String(v),
@@ -1946,8 +1952,7 @@ function KeyValueBuilder({
   const updateRow = (i: number, field: keyof KVPair, val: string) =>
     commit(pairs.map((p, idx) => (idx === i ? { ...p, [field]: val } : p)));
   const addRow = () => commit([...pairs, { key: "", value: "" }]);
-  const removeRow = (i: number) =>
-    commit(pairs.filter((_, idx) => idx !== i));
+  const removeRow = (i: number) => commit(pairs.filter((_, idx) => idx !== i));
 
   return (
     <div className="space-y-2">
@@ -1998,8 +2003,14 @@ function KeyValueBuilder({
 
 const CURRENCIES = ["usd", "eur", "gbp", "cad", "aud", "jpy", "inr", "sgd"];
 const CURRENCY_SYMBOLS: Record<string, string> = {
-  usd: "$", eur: "€", gbp: "£", cad: "CA$", aud: "A$",
-  jpy: "¥", inr: "₹", sgd: "S$",
+  usd: "$",
+  eur: "€",
+  gbp: "£",
+  cad: "CA$",
+  aud: "A$",
+  jpy: "¥",
+  inr: "₹",
+  sgd: "S$",
 };
 
 function StripeAmountInput({
@@ -2017,7 +2028,8 @@ function StripeAmountInput({
   const isZeroDecimal = ["jpy"].includes(currency.toLowerCase());
   const cents = parseInt(amount, 10) || 0;
   const dollars = isZeroDecimal ? cents : cents / 100;
-  const symbol = CURRENCY_SYMBOLS[currency.toLowerCase()] ?? currency.toUpperCase();
+  const symbol =
+    CURRENCY_SYMBOLS[currency.toLowerCase()] ?? currency.toUpperCase();
 
   const [dollarInput, setDollarInput] = useState<string>(
     dollars > 0 ? String(dollars) : "",
