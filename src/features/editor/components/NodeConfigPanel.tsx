@@ -1936,7 +1936,9 @@ function SubWorkflowPicker({
   const { data: rawWorkflows, isLoading } = useQuery(
     trpc.workflows.list.queryOptions(),
   );
-  const workflows = rawWorkflows as Array<{ id: string; name: string }> | undefined;
+  const workflows = rawWorkflows as
+    | Array<{ id: string; name: string }>
+    | undefined;
 
   return (
     <div className="space-y-2">
