@@ -55,12 +55,8 @@ export default function ApiKeysPage() {
     trpc.apiKeys.list.queryOptions(),
   );
 
-  const { data: workflowsData } = useQuery(
-    trpc.workflows.list.queryOptions(),
-  );
-  const workflows = workflowsData as
-    | { id: string; name: string }[]
-    | undefined;
+  const { data: workflowsData } = useQuery(trpc.workflows.list.queryOptions());
+  const workflows = workflowsData as { id: string; name: string }[] | undefined;
 
   const createKey = useMutation({
     mutationFn: () =>
@@ -110,8 +106,7 @@ export default function ApiKeysPage() {
     onError: (err: Error) => toast.error(err.message),
   });
 
-  const baseUrl =
-    typeof window !== "undefined" ? window.location.origin : "";
+  const baseUrl = typeof window !== "undefined" ? window.location.origin : "";
 
   return (
     <div className="flex flex-col h-full bg-(--arch-bg) min-h-screen">
@@ -335,7 +330,9 @@ export default function ApiKeysPage() {
           <div className="space-y-3">
             <div className="flex items-center gap-2 bg-[rgba(var(--arch-fg-rgb)/0.08)] border border-(--arch-border) px-3 py-2">
               <code className="flex-1 text-xs text-(--arch-fg) break-all select-all">
-                {showCreatedKey && createdKey ? createdKey : "••••••••••••••••••"}
+                {showCreatedKey && createdKey
+                  ? createdKey
+                  : "••••••••••••••••••"}
               </code>
               <Button
                 variant="ghost"

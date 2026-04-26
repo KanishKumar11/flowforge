@@ -281,9 +281,9 @@ model ApiKey {
   id          String    @id @default(cuid())
   name        String
   keyHash     String    @unique // SHA-256 of the raw key (never store raw)
-  keyPrefix   String    // First 8 chars of raw key (for display, e.g. "fg_abc123")
+  keyPrefix   String // First 8 chars of raw key (for display, e.g. "fg_abc123")
   isActive    Boolean   @default(true)
-  workflowId  String?   // null = any workflow the team owns
+  workflowId  String? // null = any workflow the team owns
   teamId      String
   team        Team      @relation(fields: [teamId], references: [id], onDelete: Cascade)
   createdById String

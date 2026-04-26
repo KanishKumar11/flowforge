@@ -153,8 +153,15 @@ export function WorkflowsPageClient() {
     const reader = new FileReader();
     reader.onload = (ev) => {
       try {
-        const json = JSON.parse(ev.target?.result as string) as Record<string, unknown>;
-        importWorkflow.mutate({ data: json as Parameters<typeof client.workflows.import.mutate>[0]["data"] });
+        const json = JSON.parse(ev.target?.result as string) as Record<
+          string,
+          unknown
+        >;
+        importWorkflow.mutate({
+          data: json as Parameters<
+            typeof client.workflows.import.mutate
+          >[0]["data"],
+        });
       } catch {
         toast.error("Invalid JSON file");
       }

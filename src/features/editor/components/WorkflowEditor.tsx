@@ -24,7 +24,15 @@ import { NodePalette } from "./NodePalette";
 import { NodeConfigPanel } from "./NodeConfigPanel";
 import { ExecutionSettings } from "./ExecutionSettings";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Play, Redo2, Save, Settings, Undo2, Loader2 } from "lucide-react";
+import {
+  ArrowLeft,
+  Play,
+  Redo2,
+  Save,
+  Settings,
+  Undo2,
+  Loader2,
+} from "lucide-react";
 import Link from "next/link";
 import { useTRPC, useVanillaClient } from "@/trpc/client";
 import { useQuery, useMutation } from "@tanstack/react-query";
@@ -509,8 +517,12 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
       {showExecutionSettings && !selectedNode && (
         <ExecutionSettings
           workflowId={workflowId}
-          initialTimeoutMs={(workflow as { timeoutMs?: number | null }).timeoutMs ?? null}
-          initialMaxConcurrency={(workflow as { maxConcurrency?: number }).maxConcurrency ?? 0}
+          initialTimeoutMs={
+            (workflow as { timeoutMs?: number | null }).timeoutMs ?? null
+          }
+          initialMaxConcurrency={
+            (workflow as { maxConcurrency?: number }).maxConcurrency ?? 0
+          }
           onClose={() => setShowExecutionSettings(false)}
         />
       )}

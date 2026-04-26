@@ -76,7 +76,10 @@ export const apiKeysRouter = createTRPCRouter({
         where: { id: input.id, teamId: ctx.team.id },
       });
       if (!apiKey) {
-        throw new TRPCError({ code: "NOT_FOUND", message: "API key not found" });
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "API key not found",
+        });
       }
       return prisma.apiKey.update({
         where: { id: input.id },
@@ -92,7 +95,10 @@ export const apiKeysRouter = createTRPCRouter({
         where: { id: input.id, teamId: ctx.team.id },
       });
       if (!apiKey) {
-        throw new TRPCError({ code: "NOT_FOUND", message: "API key not found" });
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "API key not found",
+        });
       }
       return prisma.apiKey.delete({ where: { id: input.id } });
     }),
@@ -105,7 +111,10 @@ export const apiKeysRouter = createTRPCRouter({
         where: { id: input.id, teamId: ctx.team.id },
       });
       if (!apiKey) {
-        throw new TRPCError({ code: "NOT_FOUND", message: "API key not found" });
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "API key not found",
+        });
       }
 
       const { raw, prefix, hash } = generateKey();

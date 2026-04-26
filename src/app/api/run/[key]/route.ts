@@ -28,7 +28,10 @@ export async function POST(request: NextRequest, { params }: RunParams) {
   });
 
   if (!apiKey) {
-    return NextResponse.json({ error: "Invalid or inactive API key" }, { status: 401 });
+    return NextResponse.json(
+      { error: "Invalid or inactive API key" },
+      { status: 401 },
+    );
   }
 
   // Check expiry
@@ -56,7 +59,10 @@ export async function POST(request: NextRequest, { params }: RunParams) {
 
   if (!workflowId) {
     return NextResponse.json(
-      { error: "No workflowId bound to this API key. Pass ?workflowId= or include it in the request body." },
+      {
+        error:
+          "No workflowId bound to this API key. Pass ?workflowId= or include it in the request body.",
+      },
       { status: 400 },
     );
   }
@@ -71,7 +77,10 @@ export async function POST(request: NextRequest, { params }: RunParams) {
   }
 
   if (!workflow.isActive) {
-    return NextResponse.json({ error: "Workflow is not active" }, { status: 400 });
+    return NextResponse.json(
+      { error: "Workflow is not active" },
+      { status: 400 },
+    );
   }
 
   // Parse input body
@@ -107,7 +116,9 @@ export async function POST(request: NextRequest, { params }: RunParams) {
   });
 
   if (process.env.NODE_ENV === "development") {
-    executeWorkflowDirect(workflow.id, execution.id, triggerData).catch(() => {});
+    executeWorkflowDirect(workflow.id, execution.id, triggerData).catch(
+      () => {},
+    );
   } else {
     await inngest.send({
       name: "workflow/execute",
@@ -115,5 +126,8 @@ export async function POST(request: NextRequest, { params }: RunParams) {
     });
   }
 
-  return NextResponse.json({ executionId: execution.id, status: "queued" }, { status: 202 });
+  return NextResponse.json(
+    { executionId: execution.id, status: "queued" },
+    { status: 202 },
+  );
 }

@@ -433,9 +433,9 @@ async function executeDatabase(
       (decrypted as Record<string, string>).url ||
       (decrypted as Record<string, string>).databaseUrl;
   } else {
-    connectionString = (
-      resolveTemplateVars(config.connectionString, context) as string
-    ) || undefined;
+    connectionString =
+      (resolveTemplateVars(config.connectionString, context) as string) ||
+      undefined;
   }
 
   if (!connectionString) {
@@ -455,7 +455,10 @@ async function executeDatabase(
       operation,
       rowCount: result.rowCount,
       rows: result.rows,
-      fields: result.fields?.map((f) => ({ name: f.name, dataTypeID: f.dataTypeID })),
+      fields: result.fields?.map((f) => ({
+        name: f.name,
+        dataTypeID: f.dataTypeID,
+      })),
     };
   } finally {
     await client.end().catch(() => {});
@@ -468,8 +471,12 @@ async function executeDiscord(
 ): Promise<unknown> {
   const webhookUrl = resolveTemplateVars(config.webhookUrl, context) as string;
   const message = resolveTemplateVars(config.message, context) as string;
-  const username = resolveTemplateVars(config.username, context) as string | undefined;
-  const avatarUrl = resolveTemplateVars(config.avatarUrl, context) as string | undefined;
+  const username = resolveTemplateVars(config.username, context) as
+    | string
+    | undefined;
+  const avatarUrl = resolveTemplateVars(config.avatarUrl, context) as
+    | string
+    | undefined;
 
   if (!webhookUrl) {
     throw new Error("Discord node: webhookUrl is required.");
@@ -522,7 +529,11 @@ async function executeTelegram(
     body: JSON.stringify({ chat_id: chatId, text, parse_mode: parseMode }),
   });
 
-  const data = (await response.json()) as { ok: boolean; description?: string; result?: unknown };
+  const data = (await response.json()) as {
+    ok: boolean;
+    description?: string;
+    result?: unknown;
+  };
   if (!data.ok) {
     throw new Error(`Telegram API error: ${data.description}`);
   }
@@ -1328,139 +1339,144 @@ export async function executeWorkflowDirect(
     executionId: string;
     results: Record<string, unknown>;
   }> => {
+    try {
+      const nodes = (workflow.nodes as unknown as WorkflowNode[]) || [];
+      const edges = (workflow.edges as unknown as WorkflowEdge[]) || [];
 
-  try {
-
-    const nodes = (workflow.nodes as unknown as WorkflowNode[]) || [];
-    const edges = (workflow.edges as unknown as WorkflowEdge[]) || [];
-
-    if (nodes.length === 0) {
-      throw new Error("Workflow has no nodes");
-    }
-
-    // Find trigger node (entry point)
-    const triggerNode = nodes.find((n) => n.type === "trigger");
-    if (!triggerNode) {
-      throw new Error("Workflow has no trigger node");
-    }
-
-    // Execution context
-    const context: ExecutionContext = {
-      workflowId,
-      executionId,
-      triggerData,
-      nodeResults: {},
-    };
-
-    // Execute nodes in order (BFS traversal)
-    const executed = new Set<string>();
-    const queue: WorkflowNode[] = [triggerNode];
-
-    while (queue.length > 0) {
-      const currentNode = queue.shift()!;
-
-      if (executed.has(currentNode.id)) {
-        continue;
+      if (nodes.length === 0) {
+        throw new Error("Workflow has no nodes");
       }
 
-      // Execute the node
-      const result = await executeNode(currentNode, context);
-
-      // Handle wait nodes
-      if (currentNode.data.type === "wait") {
-        const waitMs = (currentNode.data.config.duration as number) || 1000;
-        await new Promise((resolve) => setTimeout(resolve, waitMs));
+      // Find trigger node (entry point)
+      const triggerNode = nodes.find((n) => n.type === "trigger");
+      if (!triggerNode) {
+        throw new Error("Workflow has no trigger node");
       }
 
-      // Store result and persist incrementally so UI shows real-time progress
-      context.nodeResults[currentNode.id] = result;
-      executed.add(currentNode.id);
-      await prisma.execution.update({
-        where: { id: executionId },
-        data: { nodeResults: context.nodeResults as Record<string, never> },
-      });
+      // Execution context
+      const context: ExecutionContext = {
+        workflowId,
+        executionId,
+        triggerData,
+        nodeResults: {},
+      };
 
-      // Determine branch filter for conditional nodes
-      let branchFilter: string | undefined;
-      if (currentNode.data.type === "if") {
-        const ifResult = result as { condition: boolean; branch: string };
-        branchFilter = ifResult.branch; // "true" or "false"
-      } else if (currentNode.data.type === "switch") {
-        const switchResult = result as {
-          matched: boolean;
-          case?: unknown;
-          output?: unknown;
-        };
-        branchFilter = switchResult.matched
-          ? String(switchResult.case)
-          : "default";
-      }
+      // Execute nodes in order (BFS traversal)
+      const executed = new Set<string>();
+      const queue: WorkflowNode[] = [triggerNode];
 
-      // Get and queue next nodes (filtered by branch for IF/Switch)
-      const nextNodes = getNextNodes(
-        currentNode.id,
-        edges,
-        nodes,
-        branchFilter,
-      );
-      for (const nextNode of nextNodes) {
-        if (!executed.has(nextNode.id)) {
-          queue.push(nextNode);
+      while (queue.length > 0) {
+        const currentNode = queue.shift()!;
+
+        if (executed.has(currentNode.id)) {
+          continue;
+        }
+
+        // Execute the node
+        const result = await executeNode(currentNode, context);
+
+        // Handle wait nodes
+        if (currentNode.data.type === "wait") {
+          const waitMs = (currentNode.data.config.duration as number) || 1000;
+          await new Promise((resolve) => setTimeout(resolve, waitMs));
+        }
+
+        // Store result and persist incrementally so UI shows real-time progress
+        context.nodeResults[currentNode.id] = result;
+        executed.add(currentNode.id);
+        await prisma.execution.update({
+          where: { id: executionId },
+          data: { nodeResults: context.nodeResults as Record<string, never> },
+        });
+
+        // Determine branch filter for conditional nodes
+        let branchFilter: string | undefined;
+        if (currentNode.data.type === "if") {
+          const ifResult = result as { condition: boolean; branch: string };
+          branchFilter = ifResult.branch; // "true" or "false"
+        } else if (currentNode.data.type === "switch") {
+          const switchResult = result as {
+            matched: boolean;
+            case?: unknown;
+            output?: unknown;
+          };
+          branchFilter = switchResult.matched
+            ? String(switchResult.case)
+            : "default";
+        }
+
+        // Get and queue next nodes (filtered by branch for IF/Switch)
+        const nextNodes = getNextNodes(
+          currentNode.id,
+          edges,
+          nodes,
+          branchFilter,
+        );
+        for (const nextNode of nextNodes) {
+          if (!executed.has(nextNode.id)) {
+            queue.push(nextNode);
+          }
         }
       }
+
+      // Update execution status to success
+      const finishedAt = new Date();
+      const startRecord = await prisma.execution.findUnique({
+        where: { id: executionId },
+        select: { startedAt: true },
+      });
+      const duration = startRecord?.startedAt
+        ? finishedAt.getTime() - startRecord.startedAt.getTime()
+        : null;
+      await prisma.execution.update({
+        where: { id: executionId },
+        data: {
+          status: "SUCCESS",
+          finishedAt,
+          duration,
+          outputData: context.nodeResults as Record<string, never>,
+          nodeResults: context.nodeResults as Record<string, never>,
+        },
+      });
+
+      return {
+        success: true,
+        executionId,
+        results: context.nodeResults,
+      };
+    } catch (error) {
+      // Update execution status to error
+      await prisma.execution.update({
+        where: { id: executionId },
+        data: {
+          status: "ERROR",
+          finishedAt: new Date(),
+          error: (error as Error).message,
+        },
+      });
+
+      throw error;
     }
-
-    // Update execution status to success
-    const finishedAt = new Date();
-    const startRecord = await prisma.execution.findUnique({
-      where: { id: executionId },
-      select: { startedAt: true },
-    });
-    const duration = startRecord?.startedAt
-      ? finishedAt.getTime() - startRecord.startedAt.getTime()
-      : null;
-    await prisma.execution.update({
-      where: { id: executionId },
-      data: {
-        status: "SUCCESS",
-        finishedAt,
-        duration,
-        outputData: context.nodeResults as Record<string, never>,
-        nodeResults: context.nodeResults as Record<string, never>,
-      },
-    });
-
-    return {
-      success: true,
-      executionId,
-      results: context.nodeResults,
-    };
-  } catch (error) {
-    // Update execution status to error
-    await prisma.execution.update({
-      where: { id: executionId },
-      data: {
-        status: "ERROR",
-        finishedAt: new Date(),
-        error: (error as Error).message,
-      },
-    });
-
-    throw error;
-  }
   }; // end runExecution
 
   if (timeoutMs > 0) {
     const timeoutPromise = new Promise<never>((_, reject) =>
       setTimeout(
-        () => reject(new Error(`Workflow execution timed out after ${timeoutMs}ms`)),
+        () =>
+          reject(
+            new Error(`Workflow execution timed out after ${timeoutMs}ms`),
+          ),
         timeoutMs,
       ),
     );
     return Promise.race([runExecution(), timeoutPromise]).catch(async (err) => {
       await prisma.execution.update({
         where: { id: executionId },
-        data: { status: "ERROR", finishedAt: new Date(), error: (err as Error).message },
+        data: {
+          status: "ERROR",
+          finishedAt: new Date(),
+          error: (err as Error).message,
+        },
       });
       throw err;
     });

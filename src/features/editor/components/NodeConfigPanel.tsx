@@ -1539,7 +1539,9 @@ export function NodeConfigPanel({
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="discord-username">Bot Username (optional)</Label>
+                <Label htmlFor="discord-username">
+                  Bot Username (optional)
+                </Label>
                 <Input
                   id="discord-username"
                   placeholder="Flowgent Bot"
@@ -1584,9 +1586,7 @@ export function NodeConfigPanel({
                   value={
                     (node.data.config as Record<string, string>)?.chatId || ""
                   }
-                  onChange={(e) =>
-                    handleConfigChange("chatId", e.target.value)
-                  }
+                  onChange={(e) => handleConfigChange("chatId", e.target.value)}
                   className="bg-(--arch-bg) border-(--arch-border) focus:border-(--arch-fg) text-(--arch-fg) font-mono rounded-none placeholder:text-(--arch-muted) text-xs h-9 focus-visible:ring-0"
                 />
                 <p className="text-[11px] text-(--arch-muted) font-mono">
@@ -1619,9 +1619,24 @@ export function NodeConfigPanel({
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) rounded-none font-mono z-50">
-                    <SelectItem value="HTML" className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer font-mono text-xs">HTML</SelectItem>
-                    <SelectItem value="Markdown" className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer font-mono text-xs">Markdown</SelectItem>
-                    <SelectItem value="MarkdownV2" className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer font-mono text-xs">MarkdownV2</SelectItem>
+                    <SelectItem
+                      value="HTML"
+                      className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer font-mono text-xs"
+                    >
+                      HTML
+                    </SelectItem>
+                    <SelectItem
+                      value="Markdown"
+                      className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer font-mono text-xs"
+                    >
+                      Markdown
+                    </SelectItem>
+                    <SelectItem
+                      value="MarkdownV2"
+                      className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer font-mono text-xs"
+                    >
+                      MarkdownV2
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -1632,9 +1647,7 @@ export function NodeConfigPanel({
           {node.data.type === "database" && (
             <>
               <div className="space-y-2">
-                <Label>
-                  PostgreSQL Credential
-                </Label>
+                <Label>PostgreSQL Credential</Label>
                 <Select
                   value={
                     (node.data.config as Record<string, string>)
@@ -1668,7 +1681,11 @@ export function NodeConfigPanel({
                   </SelectContent>
                 </Select>
                 <p className="text-[11px] text-(--arch-muted) font-mono">
-                  Credential must contain a <code className="bg-[rgba(var(--arch-fg-rgb)/0.1)] px-1">connectionString</code> field.
+                  Credential must contain a{" "}
+                  <code className="bg-[rgba(var(--arch-fg-rgb)/0.1)] px-1">
+                    connectionString
+                  </code>{" "}
+                  field.
                 </p>
               </div>
               <div className="space-y-2">
@@ -1684,7 +1701,11 @@ export function NodeConfigPanel({
                   className="bg-(--arch-bg) border-(--arch-border) focus:border-(--arch-fg) text-(--arch-fg) font-mono rounded-none placeholder:text-(--arch-muted) text-xs min-h-[100px] focus-visible:ring-0"
                 />
                 <p className="text-[11px] text-(--arch-muted) font-mono">
-                  Use <code className="bg-[rgba(var(--arch-fg-rgb)/0.1)] px-1">{"{{nodeId.field}}"}</code> to inject values from previous nodes.
+                  Use{" "}
+                  <code className="bg-[rgba(var(--arch-fg-rgb)/0.1)] px-1">
+                    {"{{nodeId.field}}"}
+                  </code>{" "}
+                  to inject values from previous nodes.
                 </p>
               </div>
             </>
@@ -2216,10 +2237,7 @@ const OPERATOR_LABELS: Record<ConditionOperator, string> = {
   "!exists": "not exists",
 };
 
-function buildExpression(
-  rows: ConditionRow[],
-  itemVar = "$input",
-): string {
+function buildExpression(rows: ConditionRow[], itemVar = "$input"): string {
   if (rows.length === 0) return "";
   const parts = rows.map((r) => {
     const lhs = r.field.startsWith("{{")
@@ -2288,7 +2306,10 @@ function ConditionBuilder({
   };
 
   const addRow = () => {
-    update([...rows, { field: "", operator: "===", value: "", combinator: "AND" }]);
+    update([
+      ...rows,
+      { field: "", operator: "===", value: "", combinator: "AND" },
+    ]);
   };
 
   const removeRow = (i: number) => {
@@ -2338,7 +2359,11 @@ function ConditionBuilder({
             className="bg-(--arch-bg) border-(--arch-border) focus:border-(--arch-fg) text-(--arch-fg) font-mono rounded-none placeholder:text-(--arch-muted) text-xs min-h-[60px] focus-visible:ring-0"
           />
           <p className="text-[10px] text-(--arch-muted) font-mono">
-            JavaScript expression. Use <code className="bg-[rgba(var(--arch-fg-rgb)/0.1)] px-1">{"{{field}}"}</code> for values.
+            JavaScript expression. Use{" "}
+            <code className="bg-[rgba(var(--arch-fg-rgb)/0.1)] px-1">
+              {"{{field}}"}
+            </code>{" "}
+            for values.
           </p>
         </div>
       ) : (
