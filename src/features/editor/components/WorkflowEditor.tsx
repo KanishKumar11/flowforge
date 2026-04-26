@@ -96,6 +96,7 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
       edges?: unknown;
       name?: string;
       description?: string;
+      viewport?: unknown;
     }) => client.workflows.update.mutate(data),
     onSuccess: () => {
       refetch();
