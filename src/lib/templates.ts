@@ -526,7 +526,7 @@ export const workflowTemplates: WorkflowTemplate[] = [
           label: "Extract Payment Info",
           config: {
             expression:
-              '({ amount: input.body?.data?.object?.amount / 100, currency: input.body?.data?.object?.currency, customer: input.body?.data?.object?.customer, type: input.body?.type })',
+              "({ amount: input.body?.data?.object?.amount / 100, currency: input.body?.data?.object?.currency, customer: input.body?.data?.object?.customer, type: input.body?.type })",
           },
         },
       },
@@ -800,7 +800,14 @@ export const workflowTemplates: WorkflowTemplate[] = [
           type: "filter",
           label: "Errors Only",
           config: {
-            conditions: [{ field: "type", operator: "===", value: "error", combinator: "AND" }],
+            conditions: [
+              {
+                field: "type",
+                operator: "===",
+                value: "error",
+                combinator: "AND",
+              },
+            ],
             condition: "item.type === 'error'",
           },
         },
@@ -894,7 +901,14 @@ export const workflowTemplates: WorkflowTemplate[] = [
           type: "if",
           label: "Deploy OK?",
           config: {
-            conditions: [{ field: "http_request.status", operator: "===", value: "200", combinator: "AND" }],
+            conditions: [
+              {
+                field: "http_request.status",
+                operator: "===",
+                value: "200",
+                combinator: "AND",
+              },
+            ],
             condition: "{{http_request.status}} === 200",
           },
         },
@@ -974,7 +988,7 @@ export const workflowTemplates: WorkflowTemplate[] = [
           label: "Format for Sheets",
           config: {
             expression:
-              'Array.isArray(input) ? input.map(item => ({ id: item.id, name: item.name, date: new Date().toISOString() })) : [input]',
+              "Array.isArray(input) ? input.map(item => ({ id: item.id, name: item.name, date: new Date().toISOString() })) : [input]",
           },
         },
       },

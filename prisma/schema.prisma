@@ -361,14 +361,14 @@ model Team {
 }
 
 model Invitation {
-  id        String     @id @default(cuid())
+  id        String   @id @default(cuid())
   email     String
-  token     String     @unique
+  token     String   @unique
   teamId    String
-  role      TeamRole   @default(MEMBER)
+  role      TeamRole @default(MEMBER)
   expiresAt DateTime
-  createdAt DateTime   @default(now())
-  team      Team       @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  team      Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
 
   @@index([token])
   @@index([email])

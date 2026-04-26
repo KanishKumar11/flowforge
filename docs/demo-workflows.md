@@ -7,12 +7,14 @@ Eight workflows designed to demonstrate Flowgent at its best — branching logic
 ---
 
 ## 1. SaaS API Uptime Monitor
+
 **Template ID:** `api-health-monitor` · **Category:** DevOps  
 **Real-life use case:** A startup's backend goes down at 3 AM. Nobody notices for 2 hours because there's no automated alerting. This workflow is the fix.
 
 Pings a health endpoint every 5 minutes. On failure, simultaneously Slacks the #alerts channel and emails the on-call devops address.
 
 **Node chain:**
+
 ```
 schedule (*/5 * * * *)
   → http-request (GET /health)
@@ -29,10 +31,12 @@ schedule (*/5 * * * *)
 ---
 
 ## 2. SaaS Trial-to-Paid Drip Sequence
+
 **Template ID:** `customer-onboarding` · **Category:** CRM  
 **Real-life use case:** A B2B SaaS with a 14-day free trial. Users who don't convert are often just forgetting — a well-timed 3-email sequence recovers 15–25% of churning trials. This is what Customer.io charges $150/mo for.
 
 **Node chain:**
+
 ```
 webhook (signup)
   → email ("Welcome, {{name}}! Here's how to get started")
@@ -50,10 +54,12 @@ webhook (signup)
 ---
 
 ## 3. Contact Form → CRM + Multi-Channel Notify
+
 **Template ID:** `form-to-db-notify` · **Category:** Data  
 **Real-life use case:** A consultancy's website has a contact form. Every submission needs to be persisted to their leads DB, instantly visible to sales on Telegram (mobile), and logged to a Discord ops channel. Currently someone manually copies leads into a spreadsheet.
 
 **Node chain:**
+
 ```
 webhook (form POST)
   → database (INSERT INTO leads — name, email, message, created_at)
@@ -69,10 +75,12 @@ webhook (form POST)
 ---
 
 ## 4. E-Commerce Order → Inventory → Fulfillment
+
 **Template ID:** `daily-report` (replace with `form-to-db-notify` pattern, extended)  
 **Real-life use case:** A Shopify store using a custom checkout. When an order arrives, check inventory in real time, confirm or flag it, then route to fulfilment or back-order handling — no human in the loop.
 
 **Node chain:**
+
 ```
 webhook (new order)
   → database (SELECT qty FROM stock WHERE product_id = {{productId}})
@@ -95,10 +103,12 @@ webhook (new order)
 ---
 
 ## 5. Stripe Payment → Invoice DB + Tiered Alert
+
 **Template ID:** `stripe-payment-notifier` · **Category:** Payments  
 **Real-life use case:** A freelance agency or SaaS. Every Stripe payment needs to be logged to their billing DB, the revenue channel notified, and the finance lead emailed — without anyone manually entering data. VIP payments ($1000+) get a separate high-priority alert.
 
 **Node chain:**
+
 ```
 webhook (Stripe payment_intent.succeeded)
   → transform (extract: amount ÷ 100, currency, customer, invoice_id)
@@ -117,10 +127,12 @@ webhook (Stripe payment_intent.succeeded)
 ---
 
 ## 6. AI Customer Support Triage
+
 **Template ID:** `content-review-pipeline` (same pattern, different domain)  
 **Real-life use case:** A SaaS product gets 200+ support tickets/day. The team can't manually triage them. This workflow classifies urgency and category via AI and routes critical issues to the on-call engineer instantly — before a human reads the ticket.
 
 **Node chain:**
+
 ```
 webhook (new support ticket from Intercom/Zendesk)
   → openai (classify: {urgency: "critical|high|low", category: "billing|bug|feature|question"})
@@ -142,10 +154,12 @@ webhook (new support ticket from Intercom/Zendesk)
 ---
 
 ## 7. Weekly Error Digest from Database
+
 **Template ID:** `scheduled-db-digest` · **Category:** Scheduled  
 **Real-life use case:** An engineering team wants a Monday morning Slack or email summarising every error from the past week — without building a custom internal dashboard. The digest filters noise, sorts by recency, and counts severity.
 
 **Node chain:**
+
 ```
 schedule (0 9 * * 1 — Monday 9 AM)
   → database (SELECT * FROM events WHERE type='error' AND created_at >= NOW()-7d)
@@ -163,10 +177,12 @@ schedule (0 9 * * 1 — Monday 9 AM)
 ---
 
 ## 8. CI/CD Deploy Pipeline via API Key
+
 **Template ID:** `api-key-deploy-hook` · **Category:** DevOps  
 **Real-life use case:** A team wants non-engineers (PMs, QA, clients) to trigger a staging deployment without repo access — just a secure URL from a Slack button or an internal tool. On success, Slack confirms. On failure, it auto-rolls back and alerts the dev lead on Telegram.
 
 **Node chain:**
+
 ```
 POST /api/run/fg_YOUR_API_KEY
   → http-request (POST /deploy — triggers build pipeline)
@@ -180,6 +196,7 @@ POST /api/run/fg_YOUR_API_KEY
 ```
 
 **Trigger example:**
+
 ```bash
 curl -X POST "https://your-domain.com/api/run/fg_YOUR_API_KEY" \
   -H "Content-Type: application/json" \
@@ -195,16 +212,16 @@ curl -X POST "https://your-domain.com/api/run/fg_YOUR_API_KEY" \
 
 ## Complexity Assessment
 
-| # | Workflow | Nodes | Branches | Integrations | Rating |
-|---|----------|-------|----------|--------------|--------|
-| 1 | API Uptime Monitor | 5 | 1 | schedule, http, slack, email | ★★★☆☆ |
-| 2 | Trial Drip Sequence | 6 | 0 | webhook, email ×3, wait ×2 | ★★☆☆☆ |
-| 3 | Form → CRM + Notify | 4 | 0 | webhook, db, telegram, discord | ★★☆☆☆ |
-| 4 | Order → Inventory → Fulfil | 8 | 2 | webhook, db ×2, email, slack, telegram | ★★★★★ |
-| 5 | Stripe → Invoice + Tiered Alert | 6 | 1 | webhook, transform, slack, db, email | ★★★★☆ |
-| 6 | AI Support Triage | 7 | 1 | webhook, openai, slack, telegram, db, email | ★★★★★ |
-| 7 | Weekly Error Digest | 6 | 0 | schedule, db, filter, sort, set, email | ★★★☆☆ |
-| 8 | CI/CD Deploy Hook | 8 | 1 | api-key, http ×3, slack, telegram | ★★★★★ |
+| #   | Workflow                        | Nodes | Branches | Integrations                                | Rating |
+| --- | ------------------------------- | ----- | -------- | ------------------------------------------- | ------ |
+| 1   | API Uptime Monitor              | 5     | 1        | schedule, http, slack, email                | ★★★☆☆  |
+| 2   | Trial Drip Sequence             | 6     | 0        | webhook, email ×3, wait ×2                  | ★★☆☆☆  |
+| 3   | Form → CRM + Notify             | 4     | 0        | webhook, db, telegram, discord              | ★★☆☆☆  |
+| 4   | Order → Inventory → Fulfil      | 8     | 2        | webhook, db ×2, email, slack, telegram      | ★★★★★  |
+| 5   | Stripe → Invoice + Tiered Alert | 6     | 1        | webhook, transform, slack, db, email        | ★★★★☆  |
+| 6   | AI Support Triage               | 7     | 1        | webhook, openai, slack, telegram, db, email | ★★★★★  |
+| 7   | Weekly Error Digest             | 6     | 0        | schedule, db, filter, sort, set, email      | ★★★☆☆  |
+| 8   | CI/CD Deploy Hook               | 8     | 1        | api-key, http ×3, slack, telegram           | ★★★★★  |
 
 **Best demos to lead with:** #4 (order fulfillment), #6 (AI triage), #8 (deploy hook) — these show the most business logic density per workflow and are closest to what real teams would build on day one.
 
@@ -212,13 +229,13 @@ curl -X POST "https://your-domain.com/api/run/fg_YOUR_API_KEY" \
 
 ## What These Workflows Replace
 
-| Workflow | Replaces | Typical cost |
-|----------|----------|-------------|
-| API Uptime Monitor | PagerDuty / Statuspage basic plan | $23–$299/mo |
-| Trial Drip Sequence | Customer.io / Intercom drip | $100–$500/mo |
-| Form → CRM + Notify | Zapier form → CRM zap + Notify | $20–$50/mo |
-| Order → Inventory | Custom order management backend code | Engineering time |
-| Stripe → Invoice | Stripe + Baremetrics + Slack wiring | $50–$200/mo |
-| AI Support Triage | Zendesk + PagerDuty + AI classify service | $200–$1000/mo |
-| Weekly Error Digest | Custom cron + DB query + email scripts | Engineering time |
-| CI/CD Deploy Hook | GitHub Actions + Slack bot + rollback script | Engineering time |
+| Workflow            | Replaces                                     | Typical cost     |
+| ------------------- | -------------------------------------------- | ---------------- |
+| API Uptime Monitor  | PagerDuty / Statuspage basic plan            | $23–$299/mo      |
+| Trial Drip Sequence | Customer.io / Intercom drip                  | $100–$500/mo     |
+| Form → CRM + Notify | Zapier form → CRM zap + Notify               | $20–$50/mo       |
+| Order → Inventory   | Custom order management backend code         | Engineering time |
+| Stripe → Invoice    | Stripe + Baremetrics + Slack wiring          | $50–$200/mo      |
+| AI Support Triage   | Zendesk + PagerDuty + AI classify service    | $200–$1000/mo    |
+| Weekly Error Digest | Custom cron + DB query + email scripts       | Engineering time |
+| CI/CD Deploy Hook   | GitHub Actions + Slack bot + rollback script | Engineering time |

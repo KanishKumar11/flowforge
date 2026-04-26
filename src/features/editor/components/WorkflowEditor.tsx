@@ -218,8 +218,7 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
         setNodes((nds) => nds.filter((n) => n.id !== selectedNode.id));
         setEdges((eds) =>
           eds.filter(
-            (e) =>
-              e.source !== selectedNode.id && e.target !== selectedNode.id,
+            (e) => e.source !== selectedNode.id && e.target !== selectedNode.id,
           ),
         );
         setSelectedNode(null);
