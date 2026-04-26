@@ -25,6 +25,7 @@ export function createMockCredential(
     provider: "slack",
     data: JSON.stringify({ accessToken: "test-token" }),
     userId: "test-user-id",
+    teamId: null,
     expiresAt: new Date(Date.now() + 3600000), // 1 hour from now
     refreshToken: "test-refresh-token",
     scope: "chat:write,channels:read",
