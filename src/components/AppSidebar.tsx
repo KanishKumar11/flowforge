@@ -124,7 +124,7 @@ export function AppSidebar() {
                     FLOWGENT
                   </span>
                   <span className="font-mono text-[10px] text-(--arch-muted) tracking-widest">
-                    V2.0.4
+                    V1.0.0
                   </span>
                 </div>
               )}
@@ -163,7 +163,10 @@ export function AppSidebar() {
                 </DropdownMenuItem>
               ))}
               <DropdownMenuSeparator className="bg-(--arch-border)" />
-              <DropdownMenuItem asChild className="text-xs uppercase cursor-pointer focus:bg-(--arch-fg) focus:text-(--arch-bg)">
+              <DropdownMenuItem
+                asChild
+                className="text-xs uppercase cursor-pointer focus:bg-(--arch-fg) focus:text-(--arch-bg)"
+              >
                 <Link href="/teams">
                   <Users className="mr-2 h-3 w-3" />
                   MANAGE TEAMS

@@ -40,9 +40,7 @@ const STORAGE_KEY = "flowgent:active-team";
 
 export function TeamProvider({ children }: { children: React.ReactNode }) {
   const trpc = useTRPC();
-  const { data: teams, isLoading } = useQuery(
-    trpc.teams.list.queryOptions(),
-  );
+  const { data: teams, isLoading } = useQuery(trpc.teams.list.queryOptions());
 
   const [activeTeamId, setActiveTeamId] = useState<string | null>(() => {
     if (typeof window === "undefined") return null;

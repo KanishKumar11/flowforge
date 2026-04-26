@@ -54,7 +54,7 @@ export const AuthLayout = ({ children }: { children: React.ReactNode }) => {
             </h1>
             <p className="font-mono text-xs text-(--arch-muted) max-w-sm border-l border-(--arch-border) pl-4 py-1 transition-colors duration-500">
               PRECISION TOOLS FOR WORKFLOW ORCHESTRATION. <br />
-              VERSION 2.0.4 [STABLE]
+              VERSION 1.0.0 [STABLE]
             </p>
           </div>
 

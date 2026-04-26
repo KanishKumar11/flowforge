@@ -84,7 +84,9 @@ export const auditRouter = createTRPCRouter({
       const startDate = new Date();
       startDate.setDate(startDate.getDate() - input.days);
 
-      const teamFilter = { user: { teamMembers: { some: { teamId: ctx.team.id } } } };
+      const teamFilter = {
+        user: { teamMembers: { some: { teamId: ctx.team.id } } },
+      };
 
       const [totalActions, byEntity, recentLogs] = await Promise.all([
         prisma.auditLog.count({

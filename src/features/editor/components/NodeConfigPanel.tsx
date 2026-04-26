@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -251,18 +252,11 @@ export function NodeConfigPanel({
           )}
 
           {node.data.type === "schedule" && (
-            <div className="space-y-2">
-              <Label htmlFor="cron">Cron Expression</Label>
-              <Input
-                id="cron"
-                placeholder="0 * * * *"
-                value={(node.data.config as Record<string, string>)?.cron || ""}
-                onChange={(e) => handleConfigChange("cron", e.target.value)}
-              />
-              <p className="text-xs text-muted-foreground">
-                Examples: "0 * * * *" (hourly), "0 0 * * *" (daily)
-              </p>
-            </div>
+            <CronSchedulePicker
+              key={node.id}
+              value={(node.data.config as Record<string, string>)?.cron || ""}
+              onChange={(cron) => handleConfigChange("cron", cron)}
+            />
           )}
 
           {node.data.type === "transform" && (
@@ -323,19 +317,11 @@ export function NodeConfigPanel({
           )}
 
           {(node.data.type === "wait" || node.data.type === "delay") && (
-            <div className="space-y-2">
-              <Label htmlFor="duration">Wait Duration (milliseconds)</Label>
-              <Input
-                id="duration"
-                type="number"
-                min="1"
-                placeholder="60"
-                value={
-                  (node.data.config as Record<string, string>)?.duration || ""
-                }
-                onChange={(e) => handleConfigChange("duration", e.target.value)}
-              />
-            </div>
+            <WaitDurationPicker
+              key={node.id}
+              value={(node.data.config as Record<string, string>)?.duration || ""}
+              onChange={(ms) => handleConfigChange("duration", ms)}
+            />
           )}
 
           {node.data.type === "email" && (
@@ -454,28 +440,11 @@ export function NodeConfigPanel({
                   </SelectContent>
                 </Select>
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="fields">Fields (JSON)</Label>
-                <Textarea
-                  id="fields"
-                  placeholder='{"key": "value"}'
-                  rows={5}
-                  value={JSON.stringify(
-                    (node.data.config as Record<string, unknown>)?.fields || {},
-                    null,
-                    2,
-                  )}
-                  onChange={(e) => {
-                    try {
-                      const fields = JSON.parse(e.target.value);
-                      handleConfigChange("fields", fields);
-                    } catch (err) {
-                      // Allow typing invalid JSON temporarily
-                      // handleConfigChange("fields_raw", e.target.value);
-                    }
-                  }}
-                />
-              </div>
+              <KeyValueBuilder
+                key={node.id}
+                value={(node.data.config as Record<string, unknown>)?.fields}
+                onChange={(fields) => handleConfigChange("fields", fields)}
+              />
             </>
           )}
 
@@ -934,18 +903,13 @@ export function NodeConfigPanel({
                   onChange={(e) => handleConfigChange("value", e.target.value)}
                 />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="cases">Cases (JSON)</Label>
-                <Textarea
-                  id="cases"
-                  placeholder='[{"value": "active", "output": "go"}, {"value": "inactive", "output": "stop"}]'
-                  rows={4}
-                  value={
-                    (node.data.config as Record<string, string>)?.cases || "[]"
-                  }
-                  onChange={(e) => handleConfigChange("cases", e.target.value)}
-                />
-              </div>
+              <SwitchCasesBuilder
+                key={node.id}
+                value={
+                  (node.data.config as Record<string, string>)?.cases || "[]"
+                }
+                onChange={(json) => handleConfigChange("cases", json)}
+              />
               <div className="space-y-2">
                 <Label htmlFor="default">Default Output</Label>
                 <Input
@@ -1304,24 +1268,13 @@ export function NodeConfigPanel({
 
           {node.data.type === "sub-workflow" && (
             <>
-              <div className="space-y-2">
-                <Label htmlFor="workflowId">Workflow ID</Label>
-                <Input
-                  id="workflowId"
-                  placeholder="Workflow ID to execute"
-                  value={
-                    (node.data.config as Record<string, string>)?.workflowId ||
-                    ""
-                  }
-                  onChange={(e) =>
-                    handleConfigChange("workflowId", e.target.value)
-                  }
-                  className="bg-(--arch-bg) border-(--arch-border) focus:border-(--arch-fg) text-(--arch-fg) font-mono rounded-none placeholder:text-(--arch-muted) text-xs h-9 focus-visible:ring-0"
-                />
-                <p className="text-xs text-muted-foreground">
-                  Enter the ID of the workflow to execute as a sub-workflow.
-                </p>
-              </div>
+              <SubWorkflowPicker
+                value={
+                  (node.data.config as Record<string, string>)?.workflowId ||
+                  ""
+                }
+                onChange={(id) => handleConfigChange("workflowId", id)}
+              />
               <div className="space-y-2">
                 <Label>Wait for Completion</Label>
                 <Select
@@ -1463,34 +1416,13 @@ export function NodeConfigPanel({
                   </SelectContent>
                 </Select>
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="amount">Amount (cents)</Label>
-                <Input
-                  id="amount"
-                  type="number"
-                  placeholder="1000"
-                  value={
-                    (node.data.config as Record<string, string>)?.amount || ""
-                  }
-                  onChange={(e) => handleConfigChange("amount", e.target.value)}
-                  className="bg-(--arch-bg) border-(--arch-border) focus:border-(--arch-fg) text-(--arch-fg) font-mono rounded-none placeholder:text-(--arch-muted) text-xs h-9 focus-visible:ring-0"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="currency">Currency</Label>
-                <Input
-                  id="currency"
-                  placeholder="usd"
-                  value={
-                    (node.data.config as Record<string, string>)?.currency ||
-                    "usd"
-                  }
-                  onChange={(e) =>
-                    handleConfigChange("currency", e.target.value)
-                  }
-                  className="bg-(--arch-bg) border-(--arch-border) focus:border-(--arch-fg) text-(--arch-fg) font-mono rounded-none placeholder:text-(--arch-muted) text-xs h-9 focus-visible:ring-0"
-                />
-              </div>
+              <StripeAmountInput
+                key={node.id}
+                amount={(node.data.config as Record<string, string>)?.amount || ""}
+                currency={(node.data.config as Record<string, string>)?.currency || "usd"}
+                onAmountChange={(v) => handleConfigChange("amount", v)}
+                onCurrencyChange={(v) => handleConfigChange("currency", v)}
+              />
             </>
           )}
 
@@ -1573,5 +1505,580 @@ export function NodeConfigPanel({
         </div>
       </ScrollArea>
     </div>
+  );
+}
+
+// ─── Wait Duration Picker ────────────────────────────────────────────────────
+
+type TimeUnit = "s" | "m" | "h" | "d" | "w";
+
+const UNIT_MS: Record<TimeUnit, number> = {
+  s: 1_000,
+  m: 60_000,
+  h: 3_600_000,
+  d: 86_400_000,
+  w: 604_800_000,
+};
+
+const UNIT_LABELS: Record<TimeUnit, string> = {
+  s: "Seconds",
+  m: "Minutes",
+  h: "Hours",
+  d: "Days",
+  w: "Weeks",
+};
+
+const PRESETS: { label: string; ms: number }[] = [
+  { label: "30s", ms: 30_000 },
+  { label: "5m", ms: 300_000 },
+  { label: "30m", ms: 1_800_000 },
+  { label: "1h", ms: 3_600_000 },
+  { label: "6h", ms: 21_600_000 },
+  { label: "1d", ms: 86_400_000 },
+  { label: "3d", ms: 259_200_000 },
+  { label: "1w", ms: 604_800_000 },
+];
+
+function detectBestUnit(ms: number): TimeUnit {
+  if (ms >= 604_800_000 && ms % 604_800_000 === 0) return "w";
+  if (ms >= 86_400_000 && ms % 86_400_000 === 0) return "d";
+  if (ms >= 3_600_000 && ms % 3_600_000 === 0) return "h";
+  if (ms >= 60_000 && ms % 60_000 === 0) return "m";
+  return "s";
+}
+
+function humanizeDuration(ms: number): string {
+  if (!ms || ms <= 0) return "—";
+  const w = Math.floor(ms / 604_800_000);
+  const d = Math.floor((ms % 604_800_000) / 86_400_000);
+  const h = Math.floor((ms % 86_400_000) / 3_600_000);
+  const m = Math.floor((ms % 3_600_000) / 60_000);
+  const s = Math.floor((ms % 60_000) / 1_000);
+  const parts: string[] = [];
+  if (w) parts.push(`${w} week${w !== 1 ? "s" : ""}`);
+  if (d) parts.push(`${d} day${d !== 1 ? "s" : ""}`);
+  if (h) parts.push(`${h} hour${h !== 1 ? "s" : ""}`);
+  if (m) parts.push(`${m} min`);
+  if (s) parts.push(`${s} sec`);
+  return parts.join(", ") || "< 1 sec";
+}
+
+function WaitDurationPicker({
+  value,
+  onChange,
+}: {
+  value: string;
+  onChange: (ms: string) => void;
+}) {
+  const initialMs = parseInt(value, 10) || 0;
+  const initialUnit = initialMs > 0 ? detectBestUnit(initialMs) : "m";
+  const initialAmount =
+    initialMs > 0 ? String(initialMs / UNIT_MS[initialUnit]) : "1";
+
+  const [unit, setUnit] = useState<TimeUnit>(initialUnit);
+  const [amount, setAmount] = useState<string>(initialAmount);
+
+  const currentMs = Math.round((parseFloat(amount) || 0) * UNIT_MS[unit]);
+
+  const applyChange = (newAmount: string, newUnit: TimeUnit) => {
+    const num = parseFloat(newAmount);
+    if (!isNaN(num) && num > 0) {
+      onChange(String(Math.round(num * UNIT_MS[newUnit])));
+    }
+  };
+
+  const handleAmountChange = (val: string) => {
+    setAmount(val);
+    applyChange(val, unit);
+  };
+
+  const handleUnitChange = (newUnit: TimeUnit) => {
+    setUnit(newUnit);
+    applyChange(amount, newUnit);
+  };
+
+  const handlePreset = (presetMs: number) => {
+    const u = detectBestUnit(presetMs);
+    const a = String(presetMs / UNIT_MS[u]);
+    setUnit(u);
+    setAmount(a);
+    onChange(String(presetMs));
+  };
+
+  return (
+    <div className="space-y-3">
+      {/* Label */}
+      <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider mb-1 block">
+        Wait Duration
+      </Label>
+
+      {/* Amount + Unit row */}
+      <div className="flex">
+        <Input
+          type="number"
+          min="1"
+          step="1"
+          placeholder="1"
+          value={amount}
+          onChange={(e) => handleAmountChange(e.target.value)}
+          className="bg-(--arch-bg) border-(--arch-border) border-r-0 focus:border-(--arch-fg) text-(--arch-fg) font-mono rounded-none placeholder:text-(--arch-muted) text-xs h-9 focus-visible:ring-0 w-20 shrink-0"
+        />
+        <Select value={unit} onValueChange={(v) => handleUnitChange(v as TimeUnit)}>
+          <SelectTrigger className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) rounded-none font-mono text-xs h-9 flex-1 focus:ring-0 focus:border-(--arch-fg)">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) rounded-none font-mono">
+            {(Object.keys(UNIT_LABELS) as TimeUnit[]).map((u) => (
+              <SelectItem
+                key={u}
+                value={u}
+                className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs"
+              >
+                {UNIT_LABELS[u]}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
+      {/* Quick Presets */}
+      <div className="flex flex-wrap gap-1">
+        {PRESETS.map((p) => (
+          <button
+            key={p.label}
+            type="button"
+            onClick={() => handlePreset(p.ms)}
+            className={`px-2 py-0.5 text-[10px] font-mono uppercase border transition-all ${
+              currentMs === p.ms
+                ? "bg-(--arch-fg) text-(--arch-bg) border-(--arch-fg)"
+                : "bg-(--arch-bg) text-(--arch-muted) border-(--arch-border) hover:text-(--arch-fg) hover:border-(--arch-fg)"
+            }`}
+          >
+            {p.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Human summary */}
+      {currentMs > 0 && (
+        <p className="text-[10px] font-mono text-(--arch-muted) border-l-2 border-(--arch-border) pl-2">
+          {humanizeDuration(currentMs)}
+          <span className="ml-2 opacity-50">
+            ({currentMs.toLocaleString()} ms)
+          </span>
+        </p>
+      )}
+    </div>
+  );
+}
+
+// ─── Cron Schedule Picker ────────────────────────────────────────────────────
+
+const CRON_PRESETS: { label: string; cron: string; description: string }[] = [
+  { label: "1m", cron: "* * * * *", description: "Every minute" },
+  { label: "5m", cron: "*/5 * * * *", description: "Every 5 minutes" },
+  { label: "15m", cron: "*/15 * * * *", description: "Every 15 minutes" },
+  { label: "30m", cron: "*/30 * * * *", description: "Every 30 minutes" },
+  { label: "1h", cron: "0 * * * *", description: "Every hour" },
+  { label: "2h", cron: "0 */2 * * *", description: "Every 2 hours" },
+  { label: "9am", cron: "0 9 * * *", description: "Daily at 9:00 AM" },
+  { label: "midnight", cron: "0 0 * * *", description: "Daily at midnight" },
+  { label: "weekly", cron: "0 9 * * 1", description: "Every Monday at 9 AM" },
+  { label: "monthly", cron: "0 0 1 * *", description: "1st of each month" },
+];
+
+function describeCron(cron: string): string {
+  const preset = CRON_PRESETS.find((p) => p.cron === cron.trim());
+  if (preset) return preset.description;
+  if (!cron.trim()) return "—";
+  return `Custom expression`;
+}
+
+function CronSchedulePicker({
+  value,
+  onChange,
+}: {
+  value: string;
+  onChange: (cron: string) => void;
+}) {
+  const isPreset = CRON_PRESETS.some((p) => p.cron === value);
+  const [showCustom, setShowCustom] = useState(!isPreset && !!value);
+
+  return (
+    <div className="space-y-3">
+      <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider mb-1 block">
+        Schedule
+      </Label>
+
+      {/* Preset buttons */}
+      <div className="flex flex-wrap gap-1">
+        {CRON_PRESETS.map((p) => (
+          <button
+            key={p.cron}
+            type="button"
+            onClick={() => {
+              setShowCustom(false);
+              onChange(p.cron);
+            }}
+            className={`px-2 py-0.5 text-[10px] font-mono uppercase border transition-all ${
+              value === p.cron && !showCustom
+                ? "bg-(--arch-fg) text-(--arch-bg) border-(--arch-fg)"
+                : "bg-(--arch-bg) text-(--arch-muted) border-(--arch-border) hover:text-(--arch-fg) hover:border-(--arch-fg)"
+            }`}
+          >
+            {p.label}
+          </button>
+        ))}
+        <button
+          type="button"
+          onClick={() => setShowCustom(true)}
+          className={`px-2 py-0.5 text-[10px] font-mono uppercase border transition-all ${
+            showCustom || (!isPreset && value)
+              ? "bg-(--arch-fg) text-(--arch-bg) border-(--arch-fg)"
+              : "bg-(--arch-bg) text-(--arch-muted) border-(--arch-border) hover:text-(--arch-fg) hover:border-(--arch-fg)"
+          }`}
+        >
+          custom
+        </button>
+      </div>
+
+      {/* Custom cron input */}
+      {(showCustom || (!isPreset && value)) && (
+        <Input
+          placeholder="*/5 * * * *"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          className="bg-(--arch-bg) border-(--arch-border) focus:border-(--arch-fg) text-(--arch-fg) font-mono rounded-none placeholder:text-(--arch-muted) text-xs h-9 focus-visible:ring-0"
+        />
+      )}
+
+      {/* Human summary */}
+      {value && (
+        <p className="text-[10px] font-mono text-(--arch-muted) border-l-2 border-(--arch-border) pl-2">
+          {describeCron(value)}
+          {(!isPreset || showCustom) && value && (
+            <span className="ml-2 opacity-50">{value}</span>
+          )}
+        </p>
+      )}
+    </div>
+  );
+}
+
+// ─── Sub-Workflow Picker ─────────────────────────────────────────────────────
+
+function SubWorkflowPicker({
+  value,
+  onChange,
+}: {
+  value: string;
+  onChange: (id: string) => void;
+}) {
+  const trpc = useTRPC();
+  const { data: workflows, isLoading } = useQuery(
+    trpc.workflows.list.queryOptions(),
+  );
+
+  return (
+    <div className="space-y-2">
+      <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider mb-1 block">
+        Workflow
+      </Label>
+      <Select value={value} onValueChange={onChange}>
+        <SelectTrigger className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) rounded-none font-mono text-xs h-9 focus:ring-1 focus:ring-(--arch-fg) hover:border-(--arch-fg) transition-colors">
+          <SelectValue
+            placeholder={isLoading ? "Loading..." : "Select a workflow"}
+          />
+        </SelectTrigger>
+        <SelectContent className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) rounded-none font-mono z-50">
+          {workflows && workflows.length > 0 ? (
+            workflows.map((wf) => (
+              <SelectItem
+                key={wf.id}
+                value={wf.id}
+                className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer font-mono text-xs"
+              >
+                {wf.name}
+              </SelectItem>
+            ))
+          ) : (
+            <SelectItem value="__none__" disabled className="text-xs">
+              {isLoading ? "Loading workflows..." : "No workflows found"}
+            </SelectItem>
+          )}
+        </SelectContent>
+      </Select>
+      {value && !workflows?.find((w) => w.id === value) && !isLoading && (
+        <p className="text-[10px] font-mono text-(--arch-muted)">
+          ID: {value}
+        </p>
+      )}
+    </div>
+  );
+}
+
+// ─── Switch Cases Builder ────────────────────────────────────────────────────
+
+type SwitchCase = { value: string; output: string };
+
+function parseSwitchCases(raw: string): SwitchCase[] {
+  try {
+    const parsed = JSON.parse(raw || "[]");
+    if (Array.isArray(parsed)) return parsed as SwitchCase[];
+  } catch {
+    // ignore parse errors
+  }
+  return [];
+}
+
+function SwitchCasesBuilder({
+  value,
+  onChange,
+}: {
+  value: string;
+  onChange: (json: string) => void;
+}) {
+  const initial = parseSwitchCases(value);
+  const [cases, setCases] = useState<SwitchCase[]>(
+    initial.length ? initial : [{ value: "", output: "" }],
+  );
+
+  const commit = (updated: SwitchCase[]) => {
+    setCases(updated);
+    onChange(JSON.stringify(updated));
+  };
+
+  const updateRow = (i: number, field: keyof SwitchCase, val: string) =>
+    commit(cases.map((c, idx) => (idx === i ? { ...c, [field]: val } : c)));
+  const addRow = () => commit([...cases, { value: "", output: "" }]);
+  const removeRow = (i: number) =>
+    commit(cases.filter((_, idx) => idx !== i));
+
+  return (
+    <div className="space-y-2">
+      <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider mb-1 block">
+        Cases
+      </Label>
+      <div className="grid grid-cols-[1fr_8px_1fr_16px] gap-x-1 items-center mb-1">
+        <span className="text-[9px] font-mono text-(--arch-muted) uppercase">when</span>
+        <span />
+        <span className="text-[9px] font-mono text-(--arch-muted) uppercase">route to</span>
+        <span />
+      </div>
+      <div className="space-y-1.5">
+        {cases.map((c, i) => (
+          <div key={i} className="flex gap-1 items-center">
+            <Input
+              placeholder="active"
+              value={c.value}
+              onChange={(e) => updateRow(i, "value", e.target.value)}
+              className="bg-(--arch-bg) border-(--arch-border) focus:border-(--arch-fg) text-(--arch-fg) font-mono rounded-none text-xs h-8 focus-visible:ring-0 flex-1"
+            />
+            <span className="text-[10px] text-(--arch-muted) font-mono shrink-0">
+              →
+            </span>
+            <Input
+              placeholder="output"
+              value={c.output}
+              onChange={(e) => updateRow(i, "output", e.target.value)}
+              className="bg-(--arch-bg) border-(--arch-border) focus:border-(--arch-fg) text-(--arch-fg) font-mono rounded-none text-xs h-8 focus-visible:ring-0 flex-1"
+            />
+            <button
+              type="button"
+              onClick={() => removeRow(i)}
+              className="shrink-0 text-(--arch-muted) hover:text-(--arch-fg) transition-colors"
+            >
+              <X className="w-3 h-3" />
+            </button>
+          </div>
+        ))}
+      </div>
+      <button
+        type="button"
+        onClick={addRow}
+        className="flex items-center gap-1 text-[11px] font-mono text-(--arch-muted) hover:text-(--arch-fg) transition-colors mt-1"
+      >
+        <Plus className="w-3 h-3" />
+        Add case
+      </button>
+    </div>
+  );
+}
+
+// ─── Key-Value Builder (Set node) ────────────────────────────────────────────
+
+type KVPair = { key: string; value: string };
+
+function parseKVPairs(fields: unknown): KVPair[] {
+  if (
+    typeof fields === "object" &&
+    fields !== null &&
+    !Array.isArray(fields)
+  ) {
+    return Object.entries(fields as Record<string, unknown>).map(([k, v]) => ({
+      key: k,
+      value: String(v),
+    }));
+  }
+  return [];
+}
+
+function KeyValueBuilder({
+  value,
+  onChange,
+}: {
+  value: unknown;
+  onChange: (fields: Record<string, string>) => void;
+}) {
+  const initial = parseKVPairs(value);
+  const [pairs, setPairs] = useState<KVPair[]>(
+    initial.length ? initial : [{ key: "", value: "" }],
+  );
+
+  const commit = (updated: KVPair[]) => {
+    setPairs(updated);
+    const obj = Object.fromEntries(
+      updated.filter((p) => p.key).map((p) => [p.key, p.value]),
+    );
+    onChange(obj);
+  };
+
+  const updateRow = (i: number, field: keyof KVPair, val: string) =>
+    commit(pairs.map((p, idx) => (idx === i ? { ...p, [field]: val } : p)));
+  const addRow = () => commit([...pairs, { key: "", value: "" }]);
+  const removeRow = (i: number) =>
+    commit(pairs.filter((_, idx) => idx !== i));
+
+  return (
+    <div className="space-y-2">
+      <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider mb-1 block">
+        Fields
+      </Label>
+      <div className="space-y-1.5">
+        {pairs.map((p, i) => (
+          <div key={i} className="flex gap-1 items-center">
+            <Input
+              placeholder="key"
+              value={p.key}
+              onChange={(e) => updateRow(i, "key", e.target.value)}
+              className="bg-(--arch-bg) border-(--arch-border) focus:border-(--arch-fg) text-(--arch-fg) font-mono rounded-none text-xs h-8 focus-visible:ring-0 flex-1"
+            />
+            <span className="text-[10px] text-(--arch-muted) font-mono shrink-0">
+              =
+            </span>
+            <Input
+              placeholder="value"
+              value={p.value}
+              onChange={(e) => updateRow(i, "value", e.target.value)}
+              className="bg-(--arch-bg) border-(--arch-border) focus:border-(--arch-fg) text-(--arch-fg) font-mono rounded-none text-xs h-8 focus-visible:ring-0 flex-1"
+            />
+            <button
+              type="button"
+              onClick={() => removeRow(i)}
+              className="shrink-0 text-(--arch-muted) hover:text-(--arch-fg) transition-colors"
+            >
+              <X className="w-3 h-3" />
+            </button>
+          </div>
+        ))}
+      </div>
+      <button
+        type="button"
+        onClick={addRow}
+        className="flex items-center gap-1 text-[11px] font-mono text-(--arch-muted) hover:text-(--arch-fg) transition-colors mt-1"
+      >
+        <Plus className="w-3 h-3" />
+        Add field
+      </button>
+    </div>
+  );
+}
+
+// ─── Stripe Amount Input ─────────────────────────────────────────────────────
+
+const CURRENCIES = ["usd", "eur", "gbp", "cad", "aud", "jpy", "inr", "sgd"];
+const CURRENCY_SYMBOLS: Record<string, string> = {
+  usd: "$", eur: "€", gbp: "£", cad: "CA$", aud: "A$",
+  jpy: "¥", inr: "₹", sgd: "S$",
+};
+
+function StripeAmountInput({
+  amount,
+  currency,
+  onAmountChange,
+  onCurrencyChange,
+}: {
+  amount: string;
+  currency: string;
+  onAmountChange: (cents: string) => void;
+  onCurrencyChange: (currency: string) => void;
+}) {
+  // JPY and similar have no minor unit
+  const isZeroDecimal = ["jpy"].includes(currency.toLowerCase());
+  const cents = parseInt(amount, 10) || 0;
+  const dollars = isZeroDecimal ? cents : cents / 100;
+  const symbol = CURRENCY_SYMBOLS[currency.toLowerCase()] ?? currency.toUpperCase();
+
+  const [dollarInput, setDollarInput] = useState<string>(
+    dollars > 0 ? String(dollars) : "",
+  );
+
+  const handleDollarChange = (val: string) => {
+    setDollarInput(val);
+    const num = parseFloat(val);
+    if (!isNaN(num) && num >= 0) {
+      const c = isZeroDecimal ? Math.round(num) : Math.round(num * 100);
+      onAmountChange(String(c));
+    }
+  };
+
+  return (
+    <>
+      <div className="space-y-2">
+        <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider">
+          Amount
+        </Label>
+        <div className="flex">
+          <span className="inline-flex items-center px-2 border border-r-0 border-(--arch-border) bg-(--arch-bg) text-(--arch-muted) font-mono text-xs">
+            {symbol}
+          </span>
+          <Input
+            type="number"
+            min="0"
+            step={isZeroDecimal ? "1" : "0.01"}
+            placeholder={isZeroDecimal ? "100" : "10.00"}
+            value={dollarInput}
+            onChange={(e) => handleDollarChange(e.target.value)}
+            className="bg-(--arch-bg) border-(--arch-border) focus:border-(--arch-fg) text-(--arch-fg) font-mono rounded-none placeholder:text-(--arch-muted) text-xs h-9 focus-visible:ring-0 flex-1"
+          />
+        </div>
+        {cents > 0 && (
+          <p className="text-[10px] font-mono text-(--arch-muted) border-l-2 border-(--arch-border) pl-2">
+            {cents.toLocaleString()} {isZeroDecimal ? "units" : "cents"} stored
+          </p>
+        )}
+      </div>
+      <div className="space-y-2">
+        <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider">
+          Currency
+        </Label>
+        <Select value={currency.toLowerCase()} onValueChange={onCurrencyChange}>
+          <SelectTrigger className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) rounded-none font-mono text-xs h-9 focus:ring-1 focus:ring-(--arch-fg) hover:border-(--arch-fg) transition-colors">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) rounded-none font-mono z-50">
+            {CURRENCIES.map((c) => (
+              <SelectItem
+                key={c}
+                value={c}
+                className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer font-mono text-xs"
+              >
+                {c.toUpperCase()} {CURRENCY_SYMBOLS[c] ?? ""}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+    </>
   );
 }

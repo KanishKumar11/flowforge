@@ -43,7 +43,10 @@ export const credentialsRouter = createTRPCRouter({
       });
 
       if (!credential) {
-        throw new TRPCError({ code: "NOT_FOUND", message: "Credential not found" });
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Credential not found",
+        });
       }
 
       return credential;
@@ -98,7 +101,10 @@ export const credentialsRouter = createTRPCRouter({
       });
 
       if (!credential) {
-        throw new TRPCError({ code: "NOT_FOUND", message: "Credential not found" });
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Credential not found",
+        });
       }
 
       const data: Record<string, unknown> = {};
@@ -129,7 +135,10 @@ export const credentialsRouter = createTRPCRouter({
       });
 
       if (!credential) {
-        throw new TRPCError({ code: "NOT_FOUND", message: "Credential not found" });
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Credential not found",
+        });
       }
 
       return prisma.credential.delete({
@@ -149,7 +158,10 @@ export const credentialsRouter = createTRPCRouter({
       });
 
       if (!credential) {
-        throw new TRPCError({ code: "NOT_FOUND", message: "Credential not found" });
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Credential not found",
+        });
       }
 
       await prisma.credential.update({

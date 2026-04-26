@@ -320,8 +320,8 @@ model Team {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  members   TeamMember[]
-  workflows Workflow[]   @relation("TeamWorkflows")
+  members     TeamMember[]
+  workflows   Workflow[]   @relation("TeamWorkflows")
   credentials Credential[] @relation("TeamCredentials")
 
   @@map("team")
