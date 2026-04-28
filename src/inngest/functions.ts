@@ -254,9 +254,15 @@ async function executeEmail(
       const cred = await prisma.credential.findFirst({ where: { id: credId } });
       if (cred) {
         const data = decryptCredential(cred.data || "{}");
+        const smtpHost = data.host as string | undefined;
         if (data.user && data.pass) {
+          if (!smtpHost) {
+            throw new Error(
+              `Email node: Your SMTP credential "${cred.name}" is missing a host (e.g. smtp.zoho.com, smtp.gmail.com). Edit the credential and add the SMTP host.`,
+            );
+          }
           smtpConfig = {
-            host: (data.host as string) || "smtp.gmail.com",
+            host: smtpHost,
             port: parseInt(String(data.port || "587")),
             secure: data.secure === true || data.secure === "true",
             user: data.user as string,
@@ -272,8 +278,13 @@ async function executeEmail(
 
   // Fall back to env vars if no credential configured
   if (!smtpConfig && process.env.SMTP_USER && process.env.SMTP_PASS) {
+    if (!process.env.SMTP_HOST) {
+      throw new Error(
+        "Email node: SMTP_HOST env var is not set. Set it to your mail provider's SMTP server (e.g. smtp.zoho.com, smtp.gmail.com).",
+      );
+    }
     smtpConfig = {
-      host: process.env.SMTP_HOST || "smtp.gmail.com",
+      host: process.env.SMTP_HOST,
       port: parseInt(process.env.SMTP_PORT || "587"),
       secure: process.env.SMTP_SECURE === "true",
       user: process.env.SMTP_USER,
