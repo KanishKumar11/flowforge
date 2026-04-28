@@ -76,7 +76,11 @@ export const workflowTemplates: WorkflowTemplate[] = [
         data: {
           type: "email",
           label: "Send Report",
-          config: { to: "team@example.com", subject: "Daily Report", emailBody: "Here is your daily report data:\n\n{{2.data}}" },
+          config: {
+            to: "team@example.com",
+            subject: "Daily Report",
+            emailBody: "Here is your daily report data:\n\n{{2.data}}",
+          },
         },
       },
     ],
@@ -279,7 +283,8 @@ export const workflowTemplates: WorkflowTemplate[] = [
           config: {
             to: "{{trigger.body.email}}",
             subject: "Thanks for your interest!",
-            emailBody: "Hi {{trigger.body.name}}, we received your inquiry and will be in touch shortly.",
+            emailBody:
+              "Hi {{trigger.body.name}}, we received your inquiry and will be in touch shortly.",
           },
         },
       },
@@ -408,7 +413,8 @@ export const workflowTemplates: WorkflowTemplate[] = [
           config: {
             to: "devops@yourcompany.com",
             subject: "⚠️ API DOWN — Health check failed",
-            emailBody: "Your API health check returned status {{2.status}} at {{trigger.triggeredAt}}.",
+            emailBody:
+              "Your API health check returned status {{2.status}} at {{trigger.triggeredAt}}.",
           },
         },
       },
@@ -459,7 +465,10 @@ export const workflowTemplates: WorkflowTemplate[] = [
         data: {
           type: "if",
           label: "Approved?",
-          config: { condition: "String(results['2']?.text || '').includes('\"approved\": true')" },
+          config: {
+            condition:
+              "String(results['2']?.text || '').includes('\"approved\": true')",
+          },
         },
       },
       {
@@ -486,7 +495,8 @@ export const workflowTemplates: WorkflowTemplate[] = [
           config: {
             to: "{{trigger.body.authorEmail}}",
             subject: "Content Review: Revision Needed",
-            emailBody: "Your content '{{trigger.body.title}}' needs revision. Feedback: {{2.text}}",
+            emailBody:
+              "Your content '{{trigger.body.title}}' needs revision. Feedback: {{2.text}}",
           },
         },
       },
@@ -554,7 +564,8 @@ export const workflowTemplates: WorkflowTemplate[] = [
           config: {
             to: "finance@yourcompany.com",
             subject: "New Payment: ${{2.amount}}",
-            emailBody: "A payment of ${{2.amount}} {{2.currency}} was received from customer {{2.customer}}.",
+            emailBody:
+              "A payment of ${{2.amount}} {{2.currency}} was received from customer {{2.customer}}.",
           },
         },
       },
@@ -594,7 +605,8 @@ export const workflowTemplates: WorkflowTemplate[] = [
           config: {
             to: "{{trigger.body.email}}",
             subject: "Welcome to our platform! 🎉",
-            emailBody: "Hi {{trigger.body.name}},\n\nWelcome! We're thrilled to have you.\n\nHere are some things to get you started...",
+            emailBody:
+              "Hi {{trigger.body.name}},\n\nWelcome! We're thrilled to have you.\n\nHere are some things to get you started...",
           },
         },
       },
@@ -618,7 +630,8 @@ export const workflowTemplates: WorkflowTemplate[] = [
           config: {
             to: "{{trigger.body.email}}",
             subject: "How's it going? Need any help?",
-            emailBody: "Hi {{trigger.body.name}},\n\nJust checking in! Have you had a chance to explore the platform?\n\nLet us know if you need any help.",
+            emailBody:
+              "Hi {{trigger.body.name}},\n\nJust checking in! Have you had a chance to explore the platform?\n\nLet us know if you need any help.",
           },
         },
       },
@@ -847,7 +860,8 @@ export const workflowTemplates: WorkflowTemplate[] = [
           config: {
             to: "admin@yourcompany.com",
             subject: "Weekly Error Digest",
-            emailBody: "There were {{5.errorCount}} errors in the last 7 days.\n\nSee attached for details.",
+            emailBody:
+              "There were {{5.errorCount}} errors in the last 7 days.\n\nSee attached for details.",
           },
         },
       },
