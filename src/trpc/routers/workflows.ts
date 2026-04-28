@@ -422,11 +422,17 @@ export const workflowsRouter = createTRPCRouter({
       // is sent. Without it, fire-and-forget tasks are killed in App Router.
       after(async () => {
         try {
-          if (
-            process.env.INNGEST_EVENT_KEY &&
-            process.env.NODE_ENV !== "development"
-          ) {
-            // Production: delegate to Inngest for durability + step.sleep support
+          // Only use Inngest Cloud when deployed with a real public URL.
+          // VERCEL_URL is auto-set on Vercel; INNGEST_APP_URL can be set for other hosts.
+          // Locally (even with `next start`), Inngest Cloud can't reach localhost,
+          // so we always execute directly.
+          const publicHost =
+            process.env.VERCEL_URL || process.env.INNGEST_APP_URL;
+          const useInngest =
+            !!process.env.INNGEST_EVENT_KEY && !!publicHost;
+
+          if (useInngest) {
+            // Deployed: delegate to Inngest for durability + step.sleep support
             await inngest.send({
               name: "workflow/execute",
               data: {
@@ -436,7 +442,7 @@ export const workflowsRouter = createTRPCRouter({
               },
             });
           } else {
-            // Development (or Inngest not configured): execute directly
+            // Local or no public URL: execute directly in-process
             await executeWorkflowDirect(workflow.id, execution.id, triggerData);
           }
         } catch (err) {
