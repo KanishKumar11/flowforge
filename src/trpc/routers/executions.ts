@@ -250,13 +250,10 @@ export const executionsRouter = createTRPCRouter({
         ...(execution.inputData ? { body: execution.inputData } : {}),
       };
 
-      if (process.env.NODE_ENV === "development") {
-        executeWorkflowDirect(
-          newExecution.workflowId,
-          newExecution.id,
-          triggerData,
-        ).catch(() => {});
-      } else {
+      const publicHost = process.env.VERCEL_URL || process.env.INNGEST_APP_URL;
+      const useInngest = !!process.env.INNGEST_EVENT_KEY && !!publicHost;
+
+      if (useInngest) {
         await inngest.send({
           name: "workflow/execute",
           data: {
@@ -265,6 +262,12 @@ export const executionsRouter = createTRPCRouter({
             triggerData,
           },
         });
+      } else {
+        executeWorkflowDirect(
+          newExecution.workflowId,
+          newExecution.id,
+          triggerData,
+        ).catch(() => {});
       }
 
       return newExecution;

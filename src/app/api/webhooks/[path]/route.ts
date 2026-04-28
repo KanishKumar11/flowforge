@@ -1,5 +1,7 @@
 import { inngest } from "@/inngest/client";
+import { executeWorkflowDirect } from "@/inngest/functions";
 import prisma from "@/lib/db";
+import { after } from "next/server";
 import { NextRequest, NextResponse } from "next/server";
 import * as Sentry from "@sentry/nextjs";
 
@@ -106,14 +108,27 @@ async function handleWebhook(request: NextRequest, { path }: { path: string }) {
       data: { lastCalledAt: new Date(), callCount: { increment: 1 } },
     });
 
-    // Queue workflow execution via Inngest for durability and retries
-    await inngest.send({
-      name: "workflow/execute",
-      data: {
-        workflowId: webhook.workflowId,
-        executionId: execution.id,
-        triggerData,
-      },
+    // Execute in background — use Inngest only when deployed with a public URL.
+    // Locally, Inngest Cloud can't reach localhost, so execute directly.
+    const publicHost = process.env.VERCEL_URL || process.env.INNGEST_APP_URL;
+    const useInngest = !!process.env.INNGEST_EVENT_KEY && !!publicHost;
+
+    after(async () => {
+      try {
+        if (useInngest) {
+          await inngest.send({
+            name: "workflow/execute",
+            data: { workflowId: webhook.workflowId, executionId: execution.id, triggerData },
+          });
+        } else {
+          await executeWorkflowDirect(webhook.workflowId, execution.id, triggerData);
+        }
+      } catch (err) {
+        Sentry.captureException(err);
+        await prisma.execution
+          .update({ where: { id: execution.id }, data: { status: "ERROR", finishedAt: new Date(), error: (err as Error).message } })
+          .catch(() => {});
+      }
     });
 
     // Return immediately (async mode)

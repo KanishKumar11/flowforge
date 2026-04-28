@@ -111,15 +111,18 @@ export async function POST(request: NextRequest, { params }: RunParams) {
     data: { lastUsedAt: new Date() },
   });
 
-  if (process.env.NODE_ENV === "development") {
-    executeWorkflowDirect(workflow.id, execution.id, triggerData).catch(
-      () => {},
-    );
-  } else {
+  const publicHost = process.env.VERCEL_URL || process.env.INNGEST_APP_URL;
+  const useInngest = !!process.env.INNGEST_EVENT_KEY && !!publicHost;
+
+  if (useInngest) {
     await inngest.send({
       name: "workflow/execute",
       data: { workflowId: workflow.id, executionId: execution.id, triggerData },
     });
+  } else {
+    executeWorkflowDirect(workflow.id, execution.id, triggerData).catch(
+      () => {},
+    );
   }
 
   return NextResponse.json(

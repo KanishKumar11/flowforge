@@ -41,10 +41,8 @@ import { BallLoader } from "@/components/ui/ball-loader";
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
   DialogTitle,
   DialogDescription,
-  DialogFooter,
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
@@ -495,7 +493,7 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
                 size="sm"
                 onClick={handleExecute}
                 disabled={executeWorkflow.isPending}
-                className="bg-(--arch-fg) text-(--arch-bg) hover:bg-[rgba(var(--arch-fg-rgb)/0.9)] border-0 h-8 rounded-none font-mono uppercase text-xs disabled:opacity-70 transition-all min-w-[100px]"
+                className="bg-(--arch-fg) text-(--arch-bg) hover:bg-[rgba(var(--arch-fg-rgb)/0.9)] border-0 h-8 rounded-none font-mono uppercase text-xs disabled:opacity-70 transition-all min-w-25"
               >
                 {executeWorkflow.isPending ? (
                   <>
@@ -547,56 +545,80 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
 
       {/* Test Input Dialog — shown when executing a webhook-triggered workflow manually */}
       <Dialog open={testInputOpen} onOpenChange={setTestInputOpen}>
-        <DialogContent className="sm:max-w-md font-mono">
-          <DialogHeader>
-            <DialogTitle className="font-mono uppercase text-sm tracking-wider">
-              Test Input Data
-            </DialogTitle>
-            <DialogDescription className="text-xs font-mono">
+        <DialogContent className="sm:max-w-md p-0 rounded-none bg-(--arch-bg) border border-(--arch-border) shadow-2xl font-mono gap-0 overflow-hidden">
+          {/* Header strip */}
+          <div className="bg-(--arch-bg-secondary) border-b border-(--arch-border) px-5 py-4">
+            <div className="flex items-center gap-2 mb-1.5">
+              <div className="h-1.5 w-1.5 bg-(--arch-fg) animate-pulse" />
+              <DialogTitle className="font-mono uppercase text-xs tracking-widest text-(--arch-fg)">
+                Test Input Data
+              </DialogTitle>
+            </div>
+            <DialogDescription className="text-xs font-mono text-(--arch-muted) leading-relaxed">
               This workflow uses a webhook trigger. Provide a sample JSON body
               to populate{" "}
-              <code className="bg-muted px-1">{"{{trigger.body.*}}"}</code>{" "}
+              <code className="bg-[rgba(var(--arch-fg-rgb)/0.12)] text-(--arch-fg) px-1.5 py-0.5 text-[10px]">
+                {"{{trigger.body.*}}"}
+              </code>{" "}
               variables during this test run.
             </DialogDescription>
-          </DialogHeader>
-          <div className="space-y-2">
-            <Label className="text-xs font-mono uppercase">
-              Webhook body (JSON)
-            </Label>
-            <Textarea
-              className="font-mono text-xs h-40 resize-none"
-              value={testInputJson}
-              onChange={(e) => {
-                setTestInputJson(e.target.value);
-                setTestInputError(null);
-              }}
-              spellCheck={false}
-            />
+          </div>
+
+          {/* Body */}
+          <div className="px-5 py-4 space-y-2">
+            <div className="flex items-center justify-between">
+              <Label className="text-[10px] font-mono uppercase tracking-widest text-(--arch-muted)">
+                Webhook Body (JSON)
+              </Label>
+              <span className="text-[9px] font-mono uppercase tracking-wider text-(--arch-fg) bg-[rgba(var(--arch-fg-rgb)/0.1)] border border-[rgba(var(--arch-fg-rgb)/0.25)] px-1.5 py-0.5">
+                JSON
+              </span>
+            </div>
+            <div className="relative">
+              <Textarea
+                className="font-mono text-xs h-44 resize-none bg-(--arch-bg-secondary) border-(--arch-border) text-(--arch-fg) rounded-none focus-visible:ring-1 focus-visible:ring-(--arch-fg) focus-visible:ring-offset-0 placeholder:text-(--arch-muted)"
+                value={testInputJson}
+                onChange={(e) => {
+                  setTestInputJson(e.target.value);
+                  setTestInputError(null);
+                }}
+                spellCheck={false}
+              />
+            </div>
             {testInputError && (
-              <p className="text-destructive text-xs font-mono">
+              <p className="text-destructive text-xs font-mono flex items-center gap-1.5">
+                <span className="inline-block h-1 w-1 bg-destructive" />
                 {testInputError}
               </p>
             )}
           </div>
-          <DialogFooter className="gap-2">
+
+          {/* Footer */}
+          <div className="border-t border-(--arch-border) px-5 py-3 flex items-center justify-end gap-2 bg-(--arch-bg-secondary)">
             <Button
               variant="ghost"
               size="sm"
-              className="font-mono uppercase text-xs rounded-none"
+              className="font-mono uppercase text-xs rounded-none border border-(--arch-border) hover:bg-(--arch-fg) hover:text-(--arch-bg) text-(--arch-fg) h-8 px-4 transition-colors"
               onClick={() => setTestInputOpen(false)}
             >
               Cancel
             </Button>
             <Button
               size="sm"
-              className="font-mono uppercase text-xs rounded-none"
+              className="bg-(--arch-fg) text-(--arch-bg) hover:bg-[rgba(var(--arch-fg-rgb)/0.85)] border-0 rounded-none font-mono uppercase text-xs h-8 px-4 min-w-20 transition-all active:scale-[0.98]"
               onClick={handleTestInputSubmit}
               disabled={executeWorkflow.isPending}
             >
-              <Play className="h-3.5 w-3.5 mr-2 fill-current" />
-              Run
+              {executeWorkflow.isPending ? (
+                <Loader2 className="h-3.5 w-3.5 animate-spin" />
+              ) : (
+                <>
+                  <Play className="h-3 w-3 mr-1.5 fill-current" />
+                  Run
+                </>
+              )}
             </Button>
-          </DialogFooter>
+          </div>
         </DialogContent>
       </Dialog>
     </div>
