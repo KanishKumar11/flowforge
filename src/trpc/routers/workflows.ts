@@ -1,6 +1,7 @@
 import { inngest } from "@/inngest/client";
 import { executeWorkflowDirect } from "@/inngest/functions";
 import prisma from "@/lib/db";
+import { after } from "next/server";
 import {
   createTRPCRouter,
   protectedProcedure,
@@ -417,22 +418,39 @@ export const workflowsRouter = createTRPCRouter({
         ...(input.inputData ? { body: input.inputData } : {}),
       };
 
-      // In development, execute directly (Inngest Cloud can't reach localhost).
-      // In production, use Inngest for durability, retries, and step.sleep().
-      if (process.env.NODE_ENV === "development") {
-        executeWorkflowDirect(workflow.id, execution.id, triggerData).catch(
-          () => {},
-        );
-      } else {
-        await inngest.send({
-          name: "workflow/execute",
-          data: {
-            workflowId: workflow.id,
-            executionId: execution.id,
-            triggerData,
-          },
-        });
-      }
+      // Use `after()` so Next.js keeps the process alive after the HTTP response
+      // is sent. Without it, fire-and-forget tasks are killed in App Router.
+      after(async () => {
+        try {
+          if (process.env.INNGEST_EVENT_KEY && process.env.NODE_ENV !== "development") {
+            // Production: delegate to Inngest for durability + step.sleep support
+            await inngest.send({
+              name: "workflow/execute",
+              data: {
+                workflowId: workflow.id,
+                executionId: execution.id,
+                triggerData,
+              },
+            });
+          } else {
+            // Development (or Inngest not configured): execute directly
+            await executeWorkflowDirect(workflow.id, execution.id, triggerData);
+          }
+        } catch (err) {
+          console.error("[workflow/execute] execution failed:", err);
+          // Mark as error so the UI doesn't stay stuck at PENDING
+          await prisma.execution
+            .update({
+              where: { id: execution.id },
+              data: {
+                status: "ERROR",
+                finishedAt: new Date(),
+                error: (err as Error).message,
+              },
+            })
+            .catch(() => {});
+        }
+      });
 
       return { executionId: execution.id };
     }),

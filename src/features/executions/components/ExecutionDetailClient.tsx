@@ -105,9 +105,17 @@ export function ExecutionDetailClient({
   const trpc = useTRPC();
   const client = useVanillaClient();
 
-  const { data: execution, isLoading } = useQuery(
-    trpc.executions.get.queryOptions({ id: executionId }),
-  );
+  const { data: execution, isLoading } = useQuery({
+    ...trpc.executions.get.queryOptions({ id: executionId }),
+    // Poll every 1.5 s while the execution is still in progress
+    refetchInterval: (query) => {
+      const status = (query.state.data as { status?: string } | undefined)
+        ?.status;
+      return status === "PENDING" || status === "RUNNING" || status === "WAITING"
+        ? 1500
+        : false;
+    },
+  });
 
   const retryExecution = useMutation({
     mutationFn: (data: { id: string }) => client.executions.retry.mutate(data),
