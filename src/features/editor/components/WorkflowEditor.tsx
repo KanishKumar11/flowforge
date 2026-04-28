@@ -214,8 +214,11 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
         e.preventDefault();
         handleSave();
       }
-      // Delete selected node: Backspace or Delete
+      // Delete selected node: Backspace or Delete (skip if focus is in a text field)
       if ((e.key === "Backspace" || e.key === "Delete") && selectedNode) {
+        const tag = (document.activeElement as HTMLElement)?.tagName;
+        const isEditable = (document.activeElement as HTMLElement)?.isContentEditable;
+        if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || isEditable) return;
         setNodes((nds) => nds.filter((n) => n.id !== selectedNode.id));
         setEdges((eds) =>
           eds.filter(
