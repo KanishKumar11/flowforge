@@ -111,7 +111,9 @@ export function ExecutionDetailClient({
     refetchInterval: (query) => {
       const status = (query.state.data as { status?: string } | undefined)
         ?.status;
-      return status === "PENDING" || status === "RUNNING" || status === "WAITING"
+      return status === "PENDING" ||
+        status === "RUNNING" ||
+        status === "WAITING"
         ? 1500
         : false;
     },

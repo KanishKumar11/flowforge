@@ -1306,14 +1306,16 @@ export async function executeWorkflowDirect(
   });
 
   if (!workflow) {
-    await prisma.execution.update({
-      where: { id: executionId },
-      data: {
-        status: "ERROR",
-        finishedAt: new Date(),
-        error: `Workflow ${workflowId} not found`,
-      },
-    }).catch(() => {});
+    await prisma.execution
+      .update({
+        where: { id: executionId },
+        data: {
+          status: "ERROR",
+          finishedAt: new Date(),
+          error: `Workflow ${workflowId} not found`,
+        },
+      })
+      .catch(() => {});
     throw new Error(`Workflow ${workflowId} not found`);
   }
 

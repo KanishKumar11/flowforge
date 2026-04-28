@@ -422,7 +422,10 @@ export const workflowsRouter = createTRPCRouter({
       // is sent. Without it, fire-and-forget tasks are killed in App Router.
       after(async () => {
         try {
-          if (process.env.INNGEST_EVENT_KEY && process.env.NODE_ENV !== "development") {
+          if (
+            process.env.INNGEST_EVENT_KEY &&
+            process.env.NODE_ENV !== "development"
+          ) {
             // Production: delegate to Inngest for durability + step.sleep support
             await inngest.send({
               name: "workflow/execute",
