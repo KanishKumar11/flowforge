@@ -118,15 +118,30 @@ async function handleWebhook(request: NextRequest, { path }: { path: string }) {
         if (useInngest) {
           await inngest.send({
             name: "workflow/execute",
-            data: { workflowId: webhook.workflowId, executionId: execution.id, triggerData },
+            data: {
+              workflowId: webhook.workflowId,
+              executionId: execution.id,
+              triggerData,
+            },
           });
         } else {
-          await executeWorkflowDirect(webhook.workflowId, execution.id, triggerData);
+          await executeWorkflowDirect(
+            webhook.workflowId,
+            execution.id,
+            triggerData,
+          );
         }
       } catch (err) {
         Sentry.captureException(err);
         await prisma.execution
-          .update({ where: { id: execution.id }, data: { status: "ERROR", finishedAt: new Date(), error: (err as Error).message } })
+          .update({
+            where: { id: execution.id },
+            data: {
+              status: "ERROR",
+              finishedAt: new Date(),
+              error: (err as Error).message,
+            },
+          })
           .catch(() => {});
       }
     });
