@@ -112,10 +112,14 @@ async function handleWebhook(request: NextRequest, { path }: { path: string }) {
     // Locally, Inngest Cloud can't reach localhost, so execute directly.
     const publicHost = process.env.VERCEL_URL || process.env.INNGEST_APP_URL;
     const useInngest = !!process.env.INNGEST_EVENT_KEY && !!publicHost;
+    console.log(
+      `[exec:webhook] executionId=${execution.id} workflowId=${webhook.workflowId} useInngest=${useInngest} publicHost=${publicHost ?? "(none)"}`,
+    );
 
     after(async () => {
       try {
         if (useInngest) {
+          console.log(`[exec:webhook] sending to Inngest Cloud`);
           await inngest.send({
             name: "workflow/execute",
             data: {

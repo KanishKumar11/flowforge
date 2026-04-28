@@ -421,17 +421,15 @@ export const workflowsRouter = createTRPCRouter({
       // Use `after()` so Next.js keeps the process alive after the HTTP response
       // is sent. Without it, fire-and-forget tasks are killed in App Router.
       after(async () => {
+        const publicHost =
+          process.env.VERCEL_URL || process.env.INNGEST_APP_URL;
+        const useInngest = !!process.env.INNGEST_EVENT_KEY && !!publicHost;
+        console.log(
+          `[exec:manual] executionId=${execution.id} workflowId=${workflow.id} useInngest=${useInngest} publicHost=${publicHost ?? "(none)"}`,
+        );
         try {
-          // Only use Inngest Cloud when deployed with a real public URL.
-          // VERCEL_URL is auto-set on Vercel; INNGEST_APP_URL can be set for other hosts.
-          // Locally (even with `next start`), Inngest Cloud can't reach localhost,
-          // so we always execute directly.
-          const publicHost =
-            process.env.VERCEL_URL || process.env.INNGEST_APP_URL;
-          const useInngest = !!process.env.INNGEST_EVENT_KEY && !!publicHost;
-
           if (useInngest) {
-            // Deployed: delegate to Inngest for durability + step.sleep support
+            console.log(`[exec:manual] sending to Inngest Cloud`);
             await inngest.send({
               name: "workflow/execute",
               data: {
@@ -440,13 +438,14 @@ export const workflowsRouter = createTRPCRouter({
                 triggerData,
               },
             });
+            console.log(`[exec:manual] Inngest event sent OK`);
           } else {
-            // Local or no public URL: execute directly in-process
+            console.log(`[exec:manual] running executeWorkflowDirect`);
             await executeWorkflowDirect(workflow.id, execution.id, triggerData);
+            console.log(`[exec:manual] executeWorkflowDirect finished`);
           }
         } catch (err) {
-          console.error("[workflow/execute] execution failed:", err);
-          // Mark as error so the UI doesn't stay stuck at PENDING
+          console.error("[exec:manual] execution failed:", err);
           await prisma.execution
             .update({
               where: { id: execution.id },

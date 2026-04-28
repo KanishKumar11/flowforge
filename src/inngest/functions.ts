@@ -1300,12 +1300,14 @@ export async function executeWorkflowDirect(
   executionId: string;
   results: Record<string, unknown>;
 }> {
+  console.log(`[direct] start workflowId=${workflowId} executionId=${executionId}`);
   // Fetch workflow first to check concurrency / timeout settings
   const workflow = await prisma.workflow.findUnique({
     where: { id: workflowId },
   });
 
   if (!workflow) {
+    console.error(`[direct] workflow not found: ${workflowId}`);
     await prisma.execution
       .update({
         where: { id: executionId },
@@ -1319,13 +1321,17 @@ export async function executeWorkflowDirect(
     throw new Error(`Workflow ${workflowId} not found`);
   }
 
+  console.log(`[direct] workflow found: "${workflow.name}" nodes=${Array.isArray(workflow.nodes) ? (workflow.nodes as unknown[]).length : 0}`);
+
   // ── Concurrency check ─────────────────────────────────────────────
   const maxConcurrency = workflow.maxConcurrency ?? 0;
   if (maxConcurrency > 0) {
     const running = await prisma.execution.count({
       where: { workflowId, status: "RUNNING" },
     });
+    console.log(`[direct] concurrency check: running=${running} max=${maxConcurrency}`);
     if (running >= maxConcurrency) {
+      console.warn(`[direct] concurrency limit reached — cancelling execution`);
       await prisma.execution.update({
         where: { id: executionId },
         data: {
@@ -1378,6 +1384,8 @@ export async function executeWorkflowDirect(
         nodeResults: {},
       };
 
+      console.log(`[direct] starting BFS: triggerNode=${triggerNode.id} type=${triggerNode.data.type} totalNodes=${nodes.length} totalEdges=${edges.length}`);
+
       // Execute nodes in order (BFS traversal)
       const executed = new Set<string>();
       const queue: WorkflowNode[] = [triggerNode];
@@ -1389,6 +1397,7 @@ export async function executeWorkflowDirect(
           continue;
         }
 
+        console.log(`[direct] executing node id=${currentNode.id} type=${currentNode.data.type} label="${currentNode.data.label}"`);
         // Execute the node
         const result = await executeNode(currentNode, context);
 
@@ -1398,6 +1407,8 @@ export async function executeWorkflowDirect(
             parseInt(String(currentNode.data.config.duration), 10) || 1000;
           await new Promise((resolve) => setTimeout(resolve, waitMs));
         }
+
+        console.log(`[direct] node ${currentNode.id} (${currentNode.data.type}) result:`, JSON.stringify(result).slice(0, 200));
 
         // Store result and persist incrementally so UI shows real-time progress
         context.nodeResults[currentNode.id] = result;
@@ -1437,6 +1448,8 @@ export async function executeWorkflowDirect(
         }
       }
 
+      console.log(`[direct] all nodes executed (${executed.size}). marking SUCCESS.`);
+
       // Update execution status to success
       const finishedAt = new Date();
       const startRecord = await prisma.execution.findUnique({
@@ -1463,6 +1476,7 @@ export async function executeWorkflowDirect(
         results: context.nodeResults,
       };
     } catch (error) {
+      console.error(`[direct] execution ERROR:`, error);
       // Update execution status to error
       await prisma.execution.update({
         where: { id: executionId },

@@ -252,8 +252,12 @@ export const executionsRouter = createTRPCRouter({
 
       const publicHost = process.env.VERCEL_URL || process.env.INNGEST_APP_URL;
       const useInngest = !!process.env.INNGEST_EVENT_KEY && !!publicHost;
+      console.log(
+        `[exec:retry] executionId=${newExecution.id} workflowId=${newExecution.workflowId} useInngest=${useInngest} publicHost=${publicHost ?? "(none)"}`,
+      );
 
       if (useInngest) {
+        console.log(`[exec:retry] sending to Inngest Cloud`);
         await inngest.send({
           name: "workflow/execute",
           data: {
@@ -262,12 +266,16 @@ export const executionsRouter = createTRPCRouter({
             triggerData,
           },
         });
+        console.log(`[exec:retry] Inngest event sent OK`);
       } else {
+        console.log(`[exec:retry] running executeWorkflowDirect`);
         executeWorkflowDirect(
           newExecution.workflowId,
           newExecution.id,
           triggerData,
-        ).catch(() => {});
+        ).catch((err) =>
+          console.error(`[exec:retry] executeWorkflowDirect failed:`, err),
+        );
       }
 
       return newExecution;
