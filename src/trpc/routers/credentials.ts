@@ -65,13 +65,22 @@ export const credentialsRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const encryptedData = encryptCredential(input.data);
 
-      return prisma.credential.create({
-        data: {
+      return prisma.credential.upsert({
+        where: {
+          userId_name: { userId: ctx.user.id, name: input.name },
+        },
+        create: {
           name: input.name,
           type: input.type,
           provider: input.provider,
           data: encryptedData,
           userId: ctx.user.id,
+          teamId: ctx.team.id,
+        },
+        update: {
+          type: input.type,
+          provider: input.provider,
+          data: encryptedData,
           teamId: ctx.team.id,
         },
         select: {

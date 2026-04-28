@@ -97,7 +97,7 @@ export function NodeConfigPanel({
         smtpPass: "",
         smtpFrom: "",
       });
-      toast.success("Credential created");
+      toast.success("Credential saved");
     },
     onError: (err: Error) =>
       toast.error("Failed to create credential", { description: err.message }),
