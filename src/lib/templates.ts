@@ -76,7 +76,7 @@ export const workflowTemplates: WorkflowTemplate[] = [
         data: {
           type: "email",
           label: "Send Report",
-          config: { to: "team@example.com", subject: "Daily Report" },
+          config: { to: "team@example.com", subject: "Daily Report", emailBody: "Here is your daily report data:\n\n{{2.data}}" },
         },
       },
     ],
@@ -107,7 +107,7 @@ export const workflowTemplates: WorkflowTemplate[] = [
           type: "openai",
           label: "Generate Content",
           config: {
-            model: "gpt-4o-mini",
+            model: "gpt-4o",
             prompt: "Write a blog post about {{trigger.topic}}",
           },
         },
@@ -204,7 +204,7 @@ export const workflowTemplates: WorkflowTemplate[] = [
         data: {
           type: "if",
           label: "Is New Issue?",
-          config: { condition: "trigger.action === 'opened'" },
+          config: { condition: "input?.action === 'opened'" },
         },
       },
       {
@@ -223,7 +223,7 @@ export const workflowTemplates: WorkflowTemplate[] = [
     ],
     edges: [
       { id: "e1-2", source: "1", target: "2" },
-      { id: "e2-3", source: "2", target: "3" },
+      { id: "e2-3", source: "2", target: "3", sourceHandle: "true" },
     ],
     tags: ["github", "webhook", "slack", "developer"],
   },
@@ -252,7 +252,7 @@ export const workflowTemplates: WorkflowTemplate[] = [
         data: {
           type: "if",
           label: "High-Value Lead?",
-          config: { condition: "trigger.body.score >= 80" },
+          config: { condition: "input?.body?.score >= 80" },
         },
       },
       {
@@ -279,15 +279,15 @@ export const workflowTemplates: WorkflowTemplate[] = [
           config: {
             to: "{{trigger.body.email}}",
             subject: "Thanks for your interest!",
-            body: "Hi {{trigger.body.name}}, we received your inquiry and will be in touch shortly.",
+            emailBody: "Hi {{trigger.body.name}}, we received your inquiry and will be in touch shortly.",
           },
         },
       },
     ],
     edges: [
       { id: "e1-2", source: "1", target: "2" },
-      { id: "e2-3", source: "2", target: "3" },
-      { id: "e2-4", source: "2", target: "4" },
+      { id: "e2-3", source: "2", target: "3", sourceHandle: "true" },
+      { id: "e2-4", source: "2", target: "4", sourceHandle: "false" },
     ],
     tags: ["sales", "leads", "webhook", "slack", "email"],
   },
@@ -332,7 +332,7 @@ export const workflowTemplates: WorkflowTemplate[] = [
           config: {
             to: "{{trigger.to}}",
             subject: "{{trigger.subject}}",
-            body: "{{openai.text}}",
+            emailBody: "{{2.text}}",
           },
         },
       },
@@ -381,7 +381,7 @@ export const workflowTemplates: WorkflowTemplate[] = [
         data: {
           type: "if",
           label: "Is Down?",
-          config: { condition: "http_request.status !== 200" },
+          config: { condition: "results['2']?.status !== 200" },
         },
       },
       {
@@ -394,7 +394,7 @@ export const workflowTemplates: WorkflowTemplate[] = [
           config: {
             channel: "#alerts",
             message:
-              "🚨 API Health Check FAILED! Status: {{http_request.status}}. URL: https://your-api.com/health",
+              "🚨 API Health Check FAILED! Status: {{2.status}}. URL: https://your-api.com/health",
           },
         },
       },
@@ -408,7 +408,7 @@ export const workflowTemplates: WorkflowTemplate[] = [
           config: {
             to: "devops@yourcompany.com",
             subject: "⚠️ API DOWN — Health check failed",
-            body: "Your API health check returned status {{http_request.status}} at {{trigger.triggeredAt}}.",
+            emailBody: "Your API health check returned status {{2.status}} at {{trigger.triggeredAt}}.",
           },
         },
       },
@@ -416,8 +416,8 @@ export const workflowTemplates: WorkflowTemplate[] = [
     edges: [
       { id: "e1-2", source: "1", target: "2" },
       { id: "e2-3", source: "2", target: "3" },
-      { id: "e3-4", source: "3", target: "4" },
-      { id: "e3-5", source: "3", target: "5" },
+      { id: "e3-4", source: "3", target: "4", sourceHandle: "true" },
+      { id: "e3-5", source: "3", target: "5", sourceHandle: "true" },
     ],
     tags: ["devops", "monitoring", "health-check", "alerts"],
   },
@@ -459,7 +459,7 @@ export const workflowTemplates: WorkflowTemplate[] = [
         data: {
           type: "if",
           label: "Approved?",
-          config: { condition: "openai.text.includes('\"approved\": true')" },
+          config: { condition: "String(results['2']?.text || '').includes('\"approved\": true')" },
         },
       },
       {
@@ -486,7 +486,7 @@ export const workflowTemplates: WorkflowTemplate[] = [
           config: {
             to: "{{trigger.body.authorEmail}}",
             subject: "Content Review: Revision Needed",
-            body: "Your content '{{trigger.body.title}}' needs revision. Feedback: {{openai.text}}",
+            emailBody: "Your content '{{trigger.body.title}}' needs revision. Feedback: {{2.text}}",
           },
         },
       },
@@ -494,8 +494,8 @@ export const workflowTemplates: WorkflowTemplate[] = [
     edges: [
       { id: "e1-2", source: "1", target: "2" },
       { id: "e2-3", source: "2", target: "3" },
-      { id: "e3-4", source: "3", target: "4" },
-      { id: "e3-5", source: "3", target: "5" },
+      { id: "e3-4", source: "3", target: "4", sourceHandle: "true" },
+      { id: "e3-5", source: "3", target: "5", sourceHandle: "false" },
     ],
     tags: ["ai", "content", "notion", "review"],
   },
@@ -540,7 +540,7 @@ export const workflowTemplates: WorkflowTemplate[] = [
           config: {
             channel: "#payments",
             message:
-              "💰 Payment received! ${{transform.amount}} {{transform.currency}} from customer {{transform.customer}}",
+              "💰 Payment received! ${{2.amount}} {{2.currency}} from customer {{2.customer}}",
           },
         },
       },
@@ -553,8 +553,8 @@ export const workflowTemplates: WorkflowTemplate[] = [
           label: "Email Finance",
           config: {
             to: "finance@yourcompany.com",
-            subject: "New Payment: ${{transform.amount}}",
-            body: "A payment of ${{transform.amount}} {{transform.currency}} was received from customer {{transform.customer}}.",
+            subject: "New Payment: ${{2.amount}}",
+            emailBody: "A payment of ${{2.amount}} {{2.currency}} was received from customer {{2.customer}}.",
           },
         },
       },
@@ -594,7 +594,7 @@ export const workflowTemplates: WorkflowTemplate[] = [
           config: {
             to: "{{trigger.body.email}}",
             subject: "Welcome to our platform! 🎉",
-            body: "Hi {{trigger.body.name}},\n\nWelcome! We're thrilled to have you.\n\nHere are some things to get you started...",
+            emailBody: "Hi {{trigger.body.name}},\n\nWelcome! We're thrilled to have you.\n\nHere are some things to get you started...",
           },
         },
       },
@@ -618,7 +618,7 @@ export const workflowTemplates: WorkflowTemplate[] = [
           config: {
             to: "{{trigger.body.email}}",
             subject: "How's it going? Need any help?",
-            body: "Hi {{trigger.body.name}},\n\nJust checking in! Have you had a chance to explore the platform?\n\nLet us know if you need any help.",
+            emailBody: "Hi {{trigger.body.name}},\n\nJust checking in! Have you had a chance to explore the platform?\n\nLet us know if you need any help.",
           },
         },
       },
@@ -655,7 +655,7 @@ export const workflowTemplates: WorkflowTemplate[] = [
         data: {
           type: "if",
           label: "Is PR Opened?",
-          config: { condition: "trigger.body.action === 'opened'" },
+          config: { condition: "input?.body?.action === 'opened'" },
         },
       },
       {
@@ -687,14 +687,14 @@ export const workflowTemplates: WorkflowTemplate[] = [
             owner: "{{trigger.body.repository.owner.login}}",
             repo: "{{trigger.body.repository.name}}",
             title: "AI Review: {{trigger.body.pull_request.title}}",
-            body: "{{openai.text}}",
+            body: "{{3.text}}",
           },
         },
       },
     ],
     edges: [
       { id: "e1-2", source: "1", target: "2" },
-      { id: "e2-3", source: "2", target: "3" },
+      { id: "e2-3", source: "2", target: "3", sourceHandle: "true" },
       { id: "e3-4", source: "3", target: "4" },
     ],
     tags: ["github", "ai", "code-review", "developer"],
@@ -832,7 +832,7 @@ export const workflowTemplates: WorkflowTemplate[] = [
           config: {
             fields: {
               subject: "Weekly Error Digest — {{trigger.triggeredAt}}",
-              errorCount: "{{filter.length}}",
+              errorCount: "{{3.length}}",
             },
           },
         },
@@ -845,8 +845,9 @@ export const workflowTemplates: WorkflowTemplate[] = [
           type: "email",
           label: "Send Digest",
           config: {
+            to: "admin@yourcompany.com",
             subject: "Weekly Error Digest",
-            body: "There were {{set.errorCount}} errors in the last 7 days.\n\nSee attached for details.",
+            emailBody: "There were {{5.errorCount}} errors in the last 7 days.\n\nSee attached for details.",
           },
         },
       },
@@ -903,13 +904,13 @@ export const workflowTemplates: WorkflowTemplate[] = [
           config: {
             conditions: [
               {
-                field: "http_request.status",
+                field: "2.status",
                 operator: "===",
                 value: "200",
                 combinator: "AND",
               },
             ],
-            condition: "{{http_request.status}} === 200",
+            condition: "results['2']?.status === 200",
           },
         },
       },
@@ -934,7 +935,7 @@ export const workflowTemplates: WorkflowTemplate[] = [
           type: "telegram",
           label: "Failure Alert",
           config: {
-            text: "❌ Deployment FAILED. HTTP status: {{http_request.status}}",
+            text: "❌ Deployment FAILED. HTTP status: {{2.status}}",
             parseMode: "HTML",
           },
         },
@@ -943,8 +944,8 @@ export const workflowTemplates: WorkflowTemplate[] = [
     edges: [
       { id: "e1-2", source: "1", target: "2" },
       { id: "e2-3", source: "2", target: "3" },
-      { id: "e3-4", source: "3", target: "4" },
-      { id: "e3-5", source: "3", target: "5" },
+      { id: "e3-4", source: "3", target: "4", sourceHandle: "true" },
+      { id: "e3-5", source: "3", target: "5", sourceHandle: "false" },
     ],
     tags: ["devops", "deployment", "slack", "telegram", "api-key"],
   },

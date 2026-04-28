@@ -13,27 +13,144 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { type Node } from "@xyflow/react";
 import Editor from "@monaco-editor/react";
-import { X, Plus } from "lucide-react";
-import { useTRPC } from "@/trpc/client";
-import { useQuery } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
+import { X, Plus, Copy, RefreshCw, Loader2 } from "lucide-react";
+import { useTRPC, useVanillaClient } from "@/trpc/client";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 interface NodeConfigPanelProps {
   node: Node | null;
   onClose: () => void;
   onUpdate: (nodeId: string, data: Record<string, unknown>) => void;
+  workflowId: string;
 }
+
+type CredentialProvider = string;
 
 export function NodeConfigPanel({
   node,
   onClose,
   onUpdate,
+  workflowId,
 }: NodeConfigPanelProps) {
   const trpc = useTRPC();
+  const client = useVanillaClient();
+  const queryClient = useQueryClient();
+
   // Fetch credentials for integration nodes
-  const { data: credentials } = useQuery(trpc.credentials.list.queryOptions());
+  const { data: credentials, refetch: refetchCredentials } = useQuery(
+    trpc.credentials.list.queryOptions(),
+  );
+
+  // Fetch webhook endpoints for this workflow (used in webhook node section)
+  const { data: webhookEndpoints, refetch: refetchWebhooks } = useQuery(
+    trpc.webhooks.list.queryOptions({ workflowId }),
+  );
+
+  // Inline create-credential dialog state
+  const [credentialDialog, setCredentialDialog] = useState<{
+    open: boolean;
+    provider: CredentialProvider;
+  }>({ open: false, provider: "custom" });
+  const [newCred, setNewCred] = useState({
+    name: "",
+    type: "apiKey" as "apiKey" | "oauth2" | "basic" | "bearer" | "custom",
+    provider: "custom",
+    apiKey: "",
+    smtpHost: "",
+    smtpPort: "587",
+    smtpSecure: false,
+    smtpUser: "",
+    smtpPass: "",
+    smtpFrom: "",
+  });
+
+  const createCredentialMutation = useMutation({
+    mutationFn: (data: {
+      name: string;
+      type: "apiKey" | "oauth2" | "basic" | "bearer" | "custom";
+      provider: string;
+      data: Record<string, unknown>;
+    }) => client.credentials.create.mutate(data),
+    onSuccess: () => {
+      refetchCredentials();
+      setCredentialDialog({ open: false, provider: "custom" });
+      setNewCred({
+        name: "",
+        type: "apiKey",
+        provider: "custom",
+        apiKey: "",
+        smtpHost: "",
+        smtpPort: "587",
+        smtpSecure: false,
+        smtpUser: "",
+        smtpPass: "",
+        smtpFrom: "",
+      });
+      toast.success("Credential created");
+    },
+    onError: (err: Error) => toast.error("Failed to create credential", { description: err.message }),
+  });
+
+  const createWebhookMutation = useMutation({
+    mutationFn: () =>
+      client.webhooks.create.mutate({ workflowId, method: "POST", isActive: true }),
+    onSuccess: () => refetchWebhooks(),
+    onError: (err: Error) => toast.error("Failed to create webhook endpoint", { description: err.message }),
+  });
+
+  const regenerateWebhookMutation = useMutation({
+    mutationFn: (id: string) => client.webhooks.regenerate.mutate({ id }),
+    onSuccess: () => {
+      refetchWebhooks();
+      toast.success("Webhook URL regenerated");
+    },
+    onError: (err: Error) => toast.error("Failed to regenerate", { description: err.message }),
+  });
+
+  const openCredentialDialog = (provider: CredentialProvider) => {
+    setNewCred((prev) => ({
+      ...prev,
+      provider,
+      name:
+        provider.charAt(0).toUpperCase() + provider.slice(1) + " Credential",
+    }));
+    setCredentialDialog({ open: true, provider });
+  };
+
+  const handleCreateCredential = async () => {
+    if (!newCred.name.trim()) return;
+    const isSmtp = newCred.provider === "smtp";
+    let credData: Record<string, unknown>;
+    if (isSmtp) {
+      credData = {
+        host: newCred.smtpHost || "smtp.gmail.com",
+        port: newCred.smtpPort || "587",
+        secure: newCred.smtpSecure,
+        user: newCred.smtpUser,
+        pass: newCred.smtpPass,
+        ...(newCred.smtpFrom && { from: newCred.smtpFrom }),
+      };
+    } else {
+      credData = { apiKey: newCred.apiKey };
+    }
+    await createCredentialMutation.mutateAsync({
+      name: newCred.name,
+      type: newCred.type,
+      provider: newCred.provider,
+      data: credData,
+    });
+  };
 
   if (!node) return null;
 
@@ -52,6 +169,7 @@ export function NodeConfigPanel({
   };
 
   return (
+    <>
     <div className="w-80 h-full bg-(--arch-bg) border-l border-(--arch-border) flex flex-col shadow-none z-50">
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-(--arch-border)">
@@ -283,19 +401,100 @@ export function NodeConfigPanel({
             </div>
           )}
 
-          {node.data.type === "webhook" && (
-            <div className="space-y-2">
-              <Label>Webhook URL</Label>
-              <div className="p-3 bg-muted rounded-lg">
-                <p className="text-xs text-muted-foreground mb-1">
-                  Your webhook endpoint:
-                </p>
-                <code className="text-xs break-all">
-                  {`${typeof window !== "undefined" ? window.location.origin : ""}/api/webhooks/${node.id}`}
-                </code>
+          {node.data.type === "webhook" && (() => {
+            // Webhook endpoints are stored in DB with a nanoid path, not the node id.
+            // A workflow can have multiple webhook nodes; each node stores its own
+            // webhookEndpointId in its config so the correct URL is always shown.
+            const storedEndpointId = (node.data.config as Record<string, string>)?.webhookEndpointId;
+            const endpoint = webhookEndpoints?.find((w) => w.id === storedEndpointId);
+            const webhookUrl = endpoint
+              ? `${typeof window !== "undefined" ? window.location.origin : ""}/api/webhooks/${endpoint.path}`
+              : null;
+
+            return (
+              <div className="space-y-3">
+                <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider">
+                  Webhook URL
+                </Label>
+
+                {endpoint ? (
+                  <>
+                    <div className="p-3 bg-(--arch-bg-secondary) border border-(--arch-border) space-y-2">
+                      <p className="text-[10px] text-(--arch-muted) font-mono uppercase tracking-wider">
+                        Your webhook endpoint:
+                      </p>
+                      <code className="text-xs break-all text-(--arch-fg) font-mono block">
+                        {webhookUrl}
+                      </code>
+                    </div>
+                    <div className="flex gap-2">
+                      <Button
+                        type="button"
+                        size="sm"
+                        variant="outline"
+                        className="flex-1 h-8 text-xs font-mono rounded-none border-(--arch-border) text-(--arch-fg) hover:bg-(--arch-fg) hover:text-(--arch-bg) transition-colors"
+                        onClick={() => {
+                          if (webhookUrl) {
+                            navigator.clipboard.writeText(webhookUrl);
+                            toast.success("Webhook URL copied");
+                          }
+                        }}
+                      >
+                        <Copy className="w-3 h-3 mr-1.5" />
+                        Copy URL
+                      </Button>
+                      <Button
+                        type="button"
+                        size="sm"
+                        variant="outline"
+                        className="flex-1 h-8 text-xs font-mono rounded-none border-(--arch-border) text-(--arch-muted) hover:border-red-500/50 hover:text-red-400 transition-colors"
+                        disabled={regenerateWebhookMutation.isPending}
+                        onClick={() => regenerateWebhookMutation.mutate(endpoint.id)}
+                      >
+                        {regenerateWebhookMutation.isPending ? (
+                          <Loader2 className="w-3 h-3 mr-1.5 animate-spin" />
+                        ) : (
+                          <RefreshCw className="w-3 h-3 mr-1.5" />
+                        )}
+                        Regenerate
+                      </Button>
+                    </div>
+                    <p className="text-[10px] text-(--arch-muted) font-mono">
+                      Regenerating will invalidate the current URL. Update any
+                      external services that use it.
+                    </p>
+                  </>
+                ) : (
+                  <div className="space-y-2">
+                    <div className="p-3 border border-dashed border-(--arch-border) text-center">
+                      <p className="text-xs text-(--arch-muted) font-mono mb-3">
+                        No webhook endpoint provisioned yet.
+                      </p>
+                      <Button
+                        type="button"
+                        size="sm"
+                        disabled={createWebhookMutation.isPending}
+                        className="h-8 text-xs font-mono rounded-none bg-(--arch-fg) text-(--arch-bg) hover:bg-[rgba(var(--arch-fg-rgb)/0.9)]"
+                        onClick={async () => {
+                          const created = await createWebhookMutation.mutateAsync();
+                          // Store the endpoint id in the node config so this node
+                          // always maps to its own unique webhook URL.
+                          handleConfigChange("webhookEndpointId", created.id);
+                        }}
+                      >
+                        {createWebhookMutation.isPending ? (
+                          <Loader2 className="w-3 h-3 mr-1.5 animate-spin" />
+                        ) : (
+                          <Plus className="w-3 h-3 mr-1.5" />
+                        )}
+                        Provision Webhook URL
+                      </Button>
+                    </div>
+                  </div>
+                )}
               </div>
-            </div>
-          )}
+            );
+          })()}
 
           {node.data.type === "if" && (
             <ConditionBuilder
@@ -364,25 +563,18 @@ export function NodeConfigPanel({
                 </Select>
                 <button
                   type="button"
-                  onClick={() =>
-                    window.open("/credentials?create=smtp", "_blank")
-                  }
+                  onClick={() => openCredentialDialog("smtp")}
                   className="flex items-center gap-1 text-[11px] font-mono text-(--arch-muted) hover:text-(--arch-fg) transition-colors mt-1"
                 >
                   <Plus className="w-3 h-3" />
                   Create new SMTP credential
                 </button>
-                <p className="text-xs text-(--arch-muted) font-mono">
-                  Create an SMTP credential in the Credentials page with: host,
-                  port, user, pass fields.
-                </p>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="to">To</Label>
                 <Input
                   id="to"
-                  type="email"
-                  placeholder="recipient@example.com"
+                  placeholder="recipient@example.com or {{trigger.body.email}}"
                   value={(node.data.config as Record<string, string>)?.to || ""}
                   onChange={(e) => handleConfigChange("to", e.target.value)}
                 />
@@ -530,9 +722,7 @@ export function NodeConfigPanel({
                 </Select>
                 <button
                   type="button"
-                  onClick={() =>
-                    window.open("/credentials?create=slack", "_blank")
-                  }
+                  onClick={() => openCredentialDialog("slack")}
                   className="flex items-center gap-1 text-[11px] font-mono text-(--arch-muted) hover:text-(--arch-fg) transition-colors mt-1"
                 >
                   <Plus className="w-3 h-3" />
@@ -976,7 +1166,7 @@ export function NodeConfigPanel({
                     const provider =
                       (node.data.config as Record<string, string>)?.provider ||
                       "openai";
-                    window.open(`/credentials?create=${provider}`, "_blank");
+                    openCredentialDialog(provider);
                   }}
                   className="flex items-center gap-1 text-[11px] font-mono text-(--arch-muted) hover:text-(--arch-fg) transition-colors mt-1"
                 >
@@ -1660,6 +1850,184 @@ export function NodeConfigPanel({
         </div>
       </ScrollArea>
     </div>
+
+    {/* ── Inline Create Credential Dialog ──────────────────────────────── */}
+    <Dialog
+      open={credentialDialog.open}
+      onOpenChange={(open) => setCredentialDialog((p) => ({ ...p, open }))}
+    >
+      <DialogContent className="sm:max-w-[460px] bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) rounded-none shadow-2xl p-0 overflow-hidden">
+        <DialogHeader className="p-5 border-b border-(--arch-border) bg-(--arch-bg-secondary)">
+          <DialogTitle className="font-mono uppercase text-sm tracking-widest text-(--arch-fg)">
+            New{" "}
+            {credentialDialog.provider.charAt(0).toUpperCase() +
+              credentialDialog.provider.slice(1)}{" "}
+            Credential
+          </DialogTitle>
+          <DialogDescription className="font-mono text-xs text-(--arch-muted) mt-1">
+            Saved credentials are encrypted at rest and scoped to your team.
+          </DialogDescription>
+        </DialogHeader>
+
+        <div className="grid gap-5 p-5">
+          {/* Name */}
+          <div className="space-y-1.5">
+            <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider">
+              Name
+            </Label>
+            <Input
+              placeholder="MY_SMTP_01"
+              value={newCred.name}
+              onChange={(e) => setNewCred({ ...newCred, name: e.target.value })}
+              className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) font-mono text-xs rounded-none h-9 placeholder:text-(--arch-muted) focus-visible:ring-1 focus-visible:ring-(--arch-fg)"
+            />
+          </div>
+
+          {/* SMTP fields */}
+          {newCred.provider === "smtp" ? (
+            <>
+              {/* Provider presets */}
+              <div className="space-y-1.5">
+                <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider">
+                  Email Provider
+                </Label>
+                <div className="grid grid-cols-4 gap-1.5">
+                  {(
+                    [
+                      { label: "Gmail", host: "smtp.gmail.com", port: "587", secure: false },
+                      { label: "Outlook", host: "smtp-mail.outlook.com", port: "587", secure: false },
+                      { label: "Yahoo", host: "smtp.mail.yahoo.com", port: "465", secure: true },
+                      { label: "Custom", host: "", port: "587", secure: false },
+                    ] as const
+                  ).map((preset) => (
+                    <button
+                      key={preset.label}
+                      type="button"
+                      onClick={() =>
+                        setNewCred({
+                          ...newCred,
+                          smtpHost: preset.host,
+                          smtpPort: preset.port,
+                          smtpSecure: preset.secure,
+                        })
+                      }
+                      className={`py-1.5 text-xs font-mono border transition-colors ${
+                        newCred.smtpHost === preset.host
+                          ? "border-(--arch-fg) bg-(--arch-fg) text-(--arch-bg)"
+                          : "border-(--arch-border) text-(--arch-muted) hover:border-(--arch-fg) hover:text-(--arch-fg)"
+                      }`}
+                    >
+                      {preset.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-1.5">
+                  <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider">
+                    SMTP Host
+                  </Label>
+                  <Input
+                    placeholder="smtp.gmail.com"
+                    value={newCred.smtpHost}
+                    onChange={(e) => setNewCred({ ...newCred, smtpHost: e.target.value })}
+                    className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) font-mono text-xs rounded-none h-9 placeholder:text-(--arch-muted) focus-visible:ring-1 focus-visible:ring-(--arch-fg)"
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider">
+                    Port
+                  </Label>
+                  <Input
+                    placeholder="587"
+                    value={newCred.smtpPort}
+                    onChange={(e) => setNewCred({ ...newCred, smtpPort: e.target.value })}
+                    className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) font-mono text-xs rounded-none h-9 placeholder:text-(--arch-muted) focus-visible:ring-1 focus-visible:ring-(--arch-fg)"
+                  />
+                </div>
+              </div>
+              <div className="space-y-1.5">
+                <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider">
+                  Email Address
+                </Label>
+                <Input
+                  placeholder="you@gmail.com"
+                  value={newCred.smtpUser}
+                  onChange={(e) => setNewCred({ ...newCred, smtpUser: e.target.value })}
+                  className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) font-mono text-xs rounded-none h-9 placeholder:text-(--arch-muted) focus-visible:ring-1 focus-visible:ring-(--arch-fg)"
+                />
+              </div>
+              <div className="space-y-1.5">
+                <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider">
+                  Password
+                </Label>
+                <Input
+                  type="password"
+                  placeholder="App password or account password"
+                  value={newCred.smtpPass}
+                  onChange={(e) => setNewCred({ ...newCred, smtpPass: e.target.value })}
+                  className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) font-mono text-xs rounded-none h-9 placeholder:text-(--arch-muted) focus-visible:ring-1 focus-visible:ring-(--arch-fg)"
+                />
+              </div>
+              <div className="space-y-1.5">
+                <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider">
+                  From{" "}
+                  <span className="normal-case text-(--arch-muted)">(optional)</span>
+                </Label>
+                <Input
+                  placeholder='"My App" <noreply@yourdomain.com>'
+                  value={newCred.smtpFrom}
+                  onChange={(e) => setNewCred({ ...newCred, smtpFrom: e.target.value })}
+                  className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) font-mono text-xs rounded-none h-9 placeholder:text-(--arch-muted) focus-visible:ring-1 focus-visible:ring-(--arch-fg)"
+                />
+              </div>
+              {newCred.smtpHost === "smtp.gmail.com" && (
+                <div className="p-3 border border-yellow-500/30 bg-yellow-500/5 text-yellow-600 dark:text-yellow-400 text-xs font-mono">
+                  Gmail requires an <strong>App Password</strong> — your regular
+                  password won&apos;t work. Create one at{" "}
+                  <span className="underline">myaccount.google.com/apppasswords</span>.
+                </div>
+              )}
+            </>
+          ) : (
+            /* Generic API key / bearer token field */
+            <div className="space-y-1.5">
+              <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider">
+                Secret / Token
+              </Label>
+              <Input
+                type="password"
+                placeholder="••••••••••••••••••••"
+                value={newCred.apiKey}
+                onChange={(e) => setNewCred({ ...newCred, apiKey: e.target.value })}
+                className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) font-mono text-xs rounded-none h-9 placeholder:text-(--arch-muted) focus-visible:ring-1 focus-visible:ring-(--arch-fg)"
+              />
+            </div>
+          )}
+        </div>
+
+        <DialogFooter className="p-5 border-t border-(--arch-border) bg-(--arch-bg-secondary) flex justify-end gap-2">
+          <Button
+            variant="ghost"
+            onClick={() => setCredentialDialog({ open: false, provider: "custom" })}
+            className="text-(--arch-muted) hover:text-(--arch-fg) hover:bg-[rgba(var(--arch-fg-rgb)/0.1)] font-mono uppercase text-xs rounded-none"
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={handleCreateCredential}
+            disabled={!newCred.name.trim() || createCredentialMutation.isPending}
+            className="bg-(--arch-fg) text-(--arch-bg) hover:bg-[rgba(var(--arch-fg-rgb)/0.9)] rounded-none font-mono uppercase text-xs px-5"
+          >
+            {createCredentialMutation.isPending && (
+              <Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" />
+            )}
+            Save Credential
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+    </>
   );
 }
 

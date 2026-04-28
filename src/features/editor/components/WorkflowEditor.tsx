@@ -517,6 +517,7 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
           node={nodes.find((n) => n.id === selectedNode.id)!}
           onClose={() => setSelectedNode(null)}
           onUpdate={handleNodeUpdate}
+          workflowId={workflowId}
         />
       )}
 
