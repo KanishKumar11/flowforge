@@ -362,8 +362,28 @@ async function executeEmail(
       timestamp: new Date().toISOString(),
     };
   } catch (error) {
-    console.error(`[email] send failed: ${(error as Error).message}`);
-    throw new Error(`Email send failed: ${(error as Error).message}`);
+    const msg = (error as Error).message;
+    console.error(`[email] send failed: ${msg}`);
+
+    // Provide actionable guidance for common SMTP errors
+    if (msg.includes("535") || msg.includes("Authentication Failed") || msg.includes("Invalid login")) {
+      const host = smtpConfig?.host ?? "";
+      let hint = "";
+      if (host.includes("zoho")) {
+        hint = " → Zoho blocks regular account passwords for SMTP. Go to mail.zoho.com → Settings → Security → App Passwords, generate an App Password, and use that instead.";
+      } else if (host.includes("gmail")) {
+        hint = " → Gmail blocks regular account passwords for SMTP. Go to myaccount.google.com → Security → App Passwords, generate one, and use that instead.";
+      } else {
+        hint = " → Your SMTP provider rejected the password. Check that SMTP access is enabled in your mail account settings and that you are using an App Password if 2FA is active.";
+      }
+      throw new Error(`Email send failed: Authentication rejected by ${host}.${hint}`);
+    }
+
+    if (msg.includes("ECONNREFUSED") || msg.includes("ETIMEDOUT")) {
+      throw new Error(`Email send failed: Could not connect to ${smtpConfig?.host}:${smtpConfig?.port}. Check the host and port in your SMTP credential.`);
+    }
+
+    throw new Error(`Email send failed: ${msg}`);
   }
 }
 

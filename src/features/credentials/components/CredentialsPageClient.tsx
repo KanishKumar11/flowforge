@@ -602,7 +602,7 @@ export function CredentialsPageClient() {
 
       {/* Create Modal */}
       <Dialog open={showCreateModal} onOpenChange={setShowCreateModal}>
-        <DialogContent className="sm:max-w-120 bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) rounded-none shadow-2xl p-0 overflow-hidden">
+        <DialogContent className="sm:max-w-120 bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) rounded-none shadow-2xl p-0 overflow-hidden flex flex-col max-h-[90vh]">
           <DialogHeader className="p-6 border-b border-(--arch-border) bg-(--arch-bg-secondary)">
             <DialogTitle className="font-mono uppercase text-sm tracking-widest text-(--arch-fg) flex items-center gap-2">
               <Terminal className="h-4 w-4" />
@@ -614,7 +614,7 @@ export function CredentialsPageClient() {
                 : "INITIALIZE_NEW_SECURE_OBJECT. AUTHENTICATION_REQUIRED."}
             </DialogDescription>
           </DialogHeader>
-          <div className="grid gap-6 p-6">
+          <div className="grid gap-6 p-6 overflow-y-auto flex-1">
             <div className="space-y-2">
               <Label
                 htmlFor="name"
@@ -777,12 +777,18 @@ export function CredentialsPageClient() {
                   <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider mb-1 block">
                     Email Provider
                   </Label>
-                  <div className="grid grid-cols-4 gap-2">
+                  <div className="grid grid-cols-5 gap-2">
                     {(
                       [
                         {
                           label: "Gmail",
                           host: "smtp.gmail.com",
+                          port: "587",
+                          secure: false,
+                        },
+                        {
+                          label: "Zoho",
+                          host: "smtp.zoho.com",
                           port: "587",
                           secure: false,
                         },
@@ -925,6 +931,20 @@ export function CredentialsPageClient() {
                         myaccount.google.com/apppasswords
                       </span>
                       , create an app password, and paste it above.
+                    </p>
+                  </div>
+                )}
+                {newCredential.smtpHost === "smtp.zoho.com" && (
+                  <div className="p-3 border border-orange-500/30 bg-orange-500/5 text-orange-600 dark:text-orange-400 text-xs font-mono space-y-1">
+                    <p className="font-semibold">
+                      Zoho requires an App-Specific Password
+                    </p>
+                    <p>
+                      Your Zoho login password won&apos;t work. Go to{" "}
+                      <span className="underline">
+                        accounts.zoho.com → Security → App Passwords
+                      </span>
+                      , generate one, and paste it above.
                     </p>
                   </div>
                 )}
