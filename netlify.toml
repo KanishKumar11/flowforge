@@ -4,3 +4,9 @@
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+
+# Run IMAP poll every minute via Netlify Scheduled Functions
+# Requires CRON_SECRET env var set in Netlify dashboard
+[[scheduled_functions]]
+  function = "imap-poll-cron"
+  cron = "* * * * *"

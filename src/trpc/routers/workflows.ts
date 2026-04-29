@@ -1,5 +1,8 @@
 import { inngest } from "@/inngest/client";
-import { executeWorkflowDirect, pollImapWorkflowOnce } from "@/inngest/functions";
+import {
+  executeWorkflowDirect,
+  pollImapWorkflowOnce,
+} from "@/inngest/functions";
 import prisma from "@/lib/db";
 import { after } from "next/server";
 import {
@@ -745,7 +748,10 @@ export const workflowsRouter = createTRPCRouter({
         where: { id: input.id, teamId: ctx.team.id },
       });
       if (!workflow) {
-        throw new TRPCError({ code: "NOT_FOUND", message: "Workflow not found" });
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Workflow not found",
+        });
       }
       return pollImapWorkflowOnce(workflow.id);
     }),

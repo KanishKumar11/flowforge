@@ -1857,7 +1857,12 @@ export async function pollImapWorkflowOnce(workflowId: string): Promise<{
     select: { id: true, nodes: true, teamId: true, settings: true },
   });
   if (!wf) {
-    return { connected: false, emailsFound: 0, executionsCreated: 0, error: "Workflow not found" };
+    return {
+      connected: false,
+      emailsFound: 0,
+      executionsCreated: 0,
+      error: "Workflow not found",
+    };
   }
 
   const nodes = wf.nodes as unknown as WorkflowNode[];
@@ -1865,20 +1870,43 @@ export async function pollImapWorkflowOnce(workflowId: string): Promise<{
     (n) => n.type === "trigger" && n.data.type === "email-inbox",
   );
   if (!triggerNode) {
-    return { connected: false, emailsFound: 0, executionsCreated: 0, error: "No email-inbox trigger node found" };
+    return {
+      connected: false,
+      emailsFound: 0,
+      executionsCreated: 0,
+      error: "No email-inbox trigger node found",
+    };
   }
 
   const cfg = (triggerNode.data.config ?? {}) as Record<string, unknown>;
   const credentialId = cfg.credentialId as string | undefined;
   if (!credentialId) {
-    return { connected: false, emailsFound: 0, executionsCreated: 0, error: "No IMAP credential selected in trigger node" };
+    return {
+      connected: false,
+      emailsFound: 0,
+      executionsCreated: 0,
+      error: "No IMAP credential selected in trigger node",
+    };
   }
 
-  let imapConfig: { host: string; port: number; secure: boolean; user: string; pass: string };
+  let imapConfig: {
+    host: string;
+    port: number;
+    secure: boolean;
+    user: string;
+    pass: string;
+  };
   try {
-    const cred = await prisma.credential.findUnique({ where: { id: credentialId } });
+    const cred = await prisma.credential.findUnique({
+      where: { id: credentialId },
+    });
     if (!cred) {
-      return { connected: false, emailsFound: 0, executionsCreated: 0, error: `Credential not found: ${credentialId}` };
+      return {
+        connected: false,
+        emailsFound: 0,
+        executionsCreated: 0,
+        error: `Credential not found: ${credentialId}`,
+      };
     }
     const decrypted = decryptCredential(cred.data);
     imapConfig = {
@@ -1889,7 +1917,12 @@ export async function pollImapWorkflowOnce(workflowId: string): Promise<{
       pass: (decrypted.pass as string) || "",
     };
   } catch (err) {
-    return { connected: false, emailsFound: 0, executionsCreated: 0, error: `Failed to decrypt credential: ${(err as Error).message}` };
+    return {
+      connected: false,
+      emailsFound: 0,
+      executionsCreated: 0,
+      error: `Failed to decrypt credential: ${(err as Error).message}`,
+    };
   }
 
   const mailbox = (cfg.mailbox as string) || "INBOX";
@@ -1902,7 +1935,9 @@ export async function pollImapWorkflowOnce(workflowId: string): Promise<{
     ? new Date(settings[metaKey] as string)
     : new Date(Date.now() - 5 * 60 * 1000);
 
-  console.log(`[imap] polling ${imapConfig.host} mailbox=${mailbox} since=${lastPoll.toISOString()} workflow=${wf.id}`);
+  console.log(
+    `[imap] polling ${imapConfig.host} mailbox=${mailbox} since=${lastPoll.toISOString()} workflow=${wf.id}`,
+  );
 
   const { ImapFlow } = await import("imapflow");
   const client = new ImapFlow({
@@ -1913,7 +1948,13 @@ export async function pollImapWorkflowOnce(workflowId: string): Promise<{
     logger: false,
   });
 
-  const emails: Array<{ messageId: string; from: string; subject: string; body: string; date: string }> = [];
+  const emails: Array<{
+    messageId: string;
+    from: string;
+    subject: string;
+    body: string;
+    date: string;
+  }> = [];
   let connected = false;
 
   try {
@@ -1931,10 +1972,20 @@ export async function pollImapWorkflowOnce(workflowId: string): Promise<{
         const subject = env.subject ?? "";
         const date = env.date?.toISOString() ?? new Date().toISOString();
         const msgId = env.messageId ?? msg.uid.toString();
-        const body = msg.source ? msg.source.toString("utf8").slice(0, 10000) : "";
+        const body = msg.source
+          ? msg.source.toString("utf8").slice(0, 10000)
+          : "";
 
-        if (filterFrom && !from.toLowerCase().includes(filterFrom.toLowerCase())) continue;
-        if (filterSubject && !subject.toLowerCase().includes(filterSubject.toLowerCase())) continue;
+        if (
+          filterFrom &&
+          !from.toLowerCase().includes(filterFrom.toLowerCase())
+        )
+          continue;
+        if (
+          filterSubject &&
+          !subject.toLowerCase().includes(filterSubject.toLowerCase())
+        )
+          continue;
 
         emails.push({ messageId: msgId, from, subject, body, date });
       }
@@ -1944,15 +1995,27 @@ export async function pollImapWorkflowOnce(workflowId: string): Promise<{
     await client.logout();
   } catch (err) {
     console.error(`[imap] connection error for workflow ${wf.id}:`, err);
-    return { connected, emailsFound: 0, executionsCreated: 0, error: (err as Error).message };
+    return {
+      connected,
+      emailsFound: 0,
+      executionsCreated: 0,
+      error: (err as Error).message,
+    };
   }
 
-  console.log(`[imap] found ${emails.length} new email(s) for workflow ${wf.id}`);
+  console.log(
+    `[imap] found ${emails.length} new email(s) for workflow ${wf.id}`,
+  );
 
   let executionsCreated = 0;
   for (const email of emails) {
     const execution = await prisma.execution.create({
-      data: { workflowId: wf.id, mode: "SCHEDULED", status: "PENDING", inputData: email },
+      data: {
+        workflowId: wf.id,
+        mode: "SCHEDULED",
+        status: "PENDING",
+        inputData: email,
+      },
     });
     await executeWorkflowDirect(wf.id, execution.id, {
       from: email.from,
@@ -1967,7 +2030,9 @@ export async function pollImapWorkflowOnce(workflowId: string): Promise<{
   await prisma.workflow.update({
     where: { id: wf.id },
     data: {
-      settings: JSON.parse(JSON.stringify({ ...settings, [metaKey]: new Date().toISOString() })),
+      settings: JSON.parse(
+        JSON.stringify({ ...settings, [metaKey]: new Date().toISOString() }),
+      ),
     },
   });
 
@@ -1987,8 +2052,11 @@ export const imapPoller = inngest.createFunction(
       return all
         .filter((wf) => {
           const nodes = wf.nodes as unknown as WorkflowNode[];
-          return Array.isArray(nodes) && nodes.some(
-            (n) => n.type === "trigger" && n.data?.type === "email-inbox",
+          return (
+            Array.isArray(nodes) &&
+            nodes.some(
+              (n) => n.type === "trigger" && n.data?.type === "email-inbox",
+            )
           );
         })
         .map((wf) => wf.id);

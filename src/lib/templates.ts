@@ -1071,7 +1071,7 @@ export const workflowTemplates: WorkflowTemplate[] = [
           config: {
             to: "{{trigger.from}}",
             subject: "Re: {{trigger.subject}}",
-            body: "{{2.result}}",
+            body: "{{2.message}}",
           },
         },
       },

@@ -2700,9 +2700,15 @@ function ImapTriggerConfig({
         className="w-full rounded-none font-mono uppercase text-xs border-(--arch-border) text-(--arch-fg) hover:bg-(--arch-fg) hover:text-(--arch-bg) transition-colors"
       >
         {pollNow.isPending ? (
-          <><Loader2 className="w-3 h-3 mr-2 animate-spin" />Polling...</>
+          <>
+            <Loader2 className="w-3 h-3 mr-2 animate-spin" />
+            Polling...
+          </>
         ) : (
-          <><RefreshCw className="w-3 h-3 mr-2" />Poll Inbox Now</>
+          <>
+            <RefreshCw className="w-3 h-3 mr-2" />
+            Poll Inbox Now
+          </>
         )}
       </Button>
       {!config.credentialId && (
