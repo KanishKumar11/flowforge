@@ -1330,6 +1330,7 @@ async function executeNode(
     case "manual":
     case "webhook":
     case "schedule":
+    case "email-inbox":
       // Trigger nodes just pass through the trigger data
       return context.triggerData;
     default:

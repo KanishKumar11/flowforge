@@ -73,6 +73,11 @@ export function NodeConfigPanel({
     smtpUser: "",
     smtpPass: "",
     smtpFrom: "",
+    imapHost: "",
+    imapPort: "993",
+    imapSecure: true,
+    imapUser: "",
+    imapPass: "",
   });
 
   const createCredentialMutation = useMutation({
@@ -96,6 +101,11 @@ export function NodeConfigPanel({
         smtpUser: "",
         smtpPass: "",
         smtpFrom: "",
+        imapHost: "",
+        imapPort: "993",
+        imapSecure: true,
+        imapUser: "",
+        imapPass: "",
       });
       toast.success("Credential saved");
     },
@@ -140,6 +150,7 @@ export function NodeConfigPanel({
   const handleCreateCredential = async () => {
     if (!newCred.name.trim()) return;
     const isSmtp = newCred.provider === "smtp";
+    const isImap = newCred.provider === "imap";
     let credData: Record<string, unknown>;
     if (isSmtp) {
       credData = {
@@ -149,6 +160,14 @@ export function NodeConfigPanel({
         user: newCred.smtpUser,
         pass: newCred.smtpPass,
         ...(newCred.smtpFrom && { from: newCred.smtpFrom }),
+      };
+    } else if (isImap) {
+      credData = {
+        host: newCred.imapHost,
+        port: newCred.imapPort || "993",
+        secure: newCred.imapSecure,
+        user: newCred.imapUser,
+        pass: newCred.imapPass,
       };
     } else {
       credData = { apiKey: newCred.apiKey };
@@ -2094,6 +2113,108 @@ export function NodeConfigPanel({
                       myaccount.google.com/apppasswords
                     </span>
                     .
+                  </div>
+                )}
+              </>
+            ) : newCred.provider === "imap" ? (
+              <>
+                {/* IMAP provider presets */}
+                <div className="space-y-1.5">
+                  <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider">
+                    Email Provider
+                  </Label>
+                  <div className="grid grid-cols-4 gap-1.5">
+                    {(
+                      [
+                        { label: "Gmail", host: "imap.gmail.com", port: "993", secure: true },
+                        { label: "Outlook", host: "outlook.office365.com", port: "993", secure: true },
+                        { label: "Yahoo", host: "imap.mail.yahoo.com", port: "993", secure: true },
+                        { label: "Custom", host: "", port: "993", secure: true },
+                      ] as const
+                    ).map((preset) => (
+                      <button
+                        key={preset.label}
+                        type="button"
+                        onClick={() =>
+                          setNewCred({
+                            ...newCred,
+                            imapHost: preset.host,
+                            imapPort: preset.port,
+                            imapSecure: preset.secure,
+                          })
+                        }
+                        className={`py-1.5 text-xs font-mono border transition-colors ${
+                          newCred.imapHost === preset.host && preset.host !== ""
+                            ? "border-(--arch-fg) bg-(--arch-fg) text-(--arch-bg)"
+                            : "border-(--arch-border) text-(--arch-muted) hover:border-(--arch-fg) hover:text-(--arch-fg)"
+                        }`}
+                      >
+                        {preset.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="space-y-1.5">
+                    <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider">
+                      IMAP Host
+                    </Label>
+                    <Input
+                      placeholder="imap.gmail.com"
+                      value={newCred.imapHost}
+                      onChange={(e) =>
+                        setNewCred({ ...newCred, imapHost: e.target.value })
+                      }
+                      className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) font-mono text-xs rounded-none h-9 placeholder:text-(--arch-muted) focus-visible:ring-1 focus-visible:ring-(--arch-fg)"
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider">
+                      Port
+                    </Label>
+                    <Input
+                      placeholder="993"
+                      value={newCred.imapPort}
+                      onChange={(e) =>
+                        setNewCred({ ...newCred, imapPort: e.target.value })
+                      }
+                      className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) font-mono text-xs rounded-none h-9 placeholder:text-(--arch-muted) focus-visible:ring-1 focus-visible:ring-(--arch-fg)"
+                    />
+                  </div>
+                </div>
+                <div className="space-y-1.5">
+                  <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider">
+                    Email Address
+                  </Label>
+                  <Input
+                    placeholder="you@gmail.com"
+                    value={newCred.imapUser}
+                    onChange={(e) =>
+                      setNewCred({ ...newCred, imapUser: e.target.value })
+                    }
+                    className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) font-mono text-xs rounded-none h-9 placeholder:text-(--arch-muted) focus-visible:ring-1 focus-visible:ring-(--arch-fg)"
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider">
+                    Password / App Password
+                  </Label>
+                  <Input
+                    type="password"
+                    placeholder="••••••••••••••••••••"
+                    value={newCred.imapPass}
+                    onChange={(e) =>
+                      setNewCred({ ...newCred, imapPass: e.target.value })
+                    }
+                    className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) font-mono text-xs rounded-none h-9 placeholder:text-(--arch-muted) focus-visible:ring-1 focus-visible:ring-(--arch-fg)"
+                  />
+                </div>
+                {(newCred.imapHost === "imap.gmail.com" || newCred.imapHost === "imap.mail.yahoo.com") && (
+                  <div className="p-3 border border-yellow-500/30 bg-yellow-500/5 text-yellow-600 dark:text-yellow-400 text-xs font-mono">
+                    Gmail/Yahoo requires an <strong>App Password</strong> — your regular password won&apos;t work.
+                    {newCred.imapHost === "imap.gmail.com" && (
+                      <> Create one at <span className="underline">myaccount.google.com/apppasswords</span>.</>
+                    )}
                   </div>
                 )}
               </>
