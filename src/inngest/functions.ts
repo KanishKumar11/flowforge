@@ -240,6 +240,8 @@ async function executeEmail(
 
   // Resolve SMTP credentials from user's stored credential
   const credId = config.credentialId as string | undefined;
+  console.log(`[email] credentialId=${credId ?? "(none)"} to="${to}" subject="${subject}"`);
+
   let smtpConfig: {
     host: string;
     port: number;
@@ -253,8 +255,13 @@ async function executeEmail(
     try {
       const cred = await prisma.credential.findFirst({ where: { id: credId } });
       if (cred) {
+        console.log(`[email] credential found: id=${cred.id} name="${cred.name}" provider=${cred.provider}`);
         const data = decryptCredential(cred.data || "{}");
         const smtpHost = data.host as string | undefined;
+        const smtpUser = data.user as string | undefined;
+        const smtpPort = String(data.port || "587");
+        const smtpSecure = data.secure === true || data.secure === "true";
+        console.log(`[email] decrypted cred: host=${smtpHost ?? "(missing)"} port=${smtpPort} secure=${smtpSecure} user=${smtpUser ?? "(missing)"} pass=${data.pass ? "[set]" : "(missing)"}`);
         if (data.user && data.pass) {
           if (!smtpHost) {
             throw new Error(
@@ -263,21 +270,27 @@ async function executeEmail(
           }
           smtpConfig = {
             host: smtpHost,
-            port: parseInt(String(data.port || "587")),
-            secure: data.secure === true || data.secure === "true",
+            port: parseInt(smtpPort),
+            secure: smtpSecure,
             user: data.user as string,
             pass: data.pass as string,
             from: data.from as string | undefined,
           };
+        } else {
+          console.log(`[email] credential missing user or pass — fields present: ${Object.keys(data).join(", ")}`);
         }
+      } else {
+        console.log(`[email] credential id=${credId} not found in DB`);
       }
-    } catch {
-      // Credential load failed — fall back to env vars
+    } catch (err) {
+      // Re-throw so the real error surfaces instead of silently falling back
+      throw err;
     }
   }
 
   // Fall back to env vars if no credential configured
   if (!smtpConfig && process.env.SMTP_USER && process.env.SMTP_PASS) {
+    console.log(`[email] falling back to env-var SMTP: host=${process.env.SMTP_HOST ?? "(missing)"} user=${process.env.SMTP_USER}`);
     if (!process.env.SMTP_HOST) {
       throw new Error(
         "Email node: SMTP_HOST env var is not set. Set it to your mail provider's SMTP server (e.g. smtp.zoho.com, smtp.gmail.com).",
@@ -298,18 +311,24 @@ async function executeEmail(
     );
   }
 
+  console.log(`[email] connecting: host=${smtpConfig.host} port=${smtpConfig.port} secure=${smtpConfig.secure} requireTLS=${!smtpConfig.secure} user=${smtpConfig.user}`);
+
   try {
     const transporter = nodemailer.createTransport({
       host: smtpConfig.host,
       port: smtpConfig.port,
-      secure: smtpConfig.secure,
+      secure: smtpConfig.secure, // true = SSL/TLS (port 465), false = STARTTLS (port 587)
+      requireTLS: !smtpConfig.secure, // enforce STARTTLS upgrade on port 587
       auth: { user: smtpConfig.user, pass: smtpConfig.pass },
+      tls: { rejectUnauthorized: true },
     });
 
     const from =
       smtpConfig.from ||
       process.env.SMTP_FROM ||
       `"FlowGent" <${smtpConfig.user}>`;
+
+    console.log(`[email] sending from="${from}" to="${to}"`);
 
     const info = await transporter.sendMail({
       from,
@@ -321,6 +340,8 @@ async function executeEmail(
       text: body || "",
     });
 
+    console.log(`[email] sent OK messageId=${info.messageId}`);
+
     return {
       sent: true,
       to,
@@ -329,6 +350,7 @@ async function executeEmail(
       timestamp: new Date().toISOString(),
     };
   } catch (error) {
+    console.error(`[email] send failed: ${(error as Error).message}`);
     throw new Error(`Email send failed: ${(error as Error).message}`);
   }
 }
