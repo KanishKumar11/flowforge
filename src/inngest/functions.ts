@@ -925,8 +925,10 @@ async function executeOpenAI(
         throw new Error(`Anthropic API error: ${error}`);
       }
       const data = await response.json();
+      const text = data.content?.[0]?.text || "";
       return {
-        message: data.content?.[0]?.text || "",
+        message: text,
+        result: text,
         model,
         usage: data.usage,
       };
@@ -974,8 +976,10 @@ async function executeOpenAI(
         throw new Error(`Gemini API error: ${error}`);
       }
       const data = await response.json();
+      const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
       return {
-        message: data.candidates?.[0]?.content?.parts?.[0]?.text || "",
+        message: text,
+        result: text,
         model,
         usage: data.usageMetadata,
       };
@@ -1018,8 +1022,10 @@ async function executeOpenAI(
     }
 
     const data = await response.json();
+    const text = data.choices?.[0]?.message?.content || "";
     return {
-      message: data.choices?.[0]?.message?.content || "",
+      message: text,
+      result: text,
       model,
       usage: data.usage,
     };
@@ -1930,10 +1936,15 @@ export async function pollImapWorkflowOnce(workflowId: string): Promise<{
   const filterSubject = (cfg.filterSubject as string) || "";
 
   const metaKey = `imap_last_poll_${triggerNode.id}`;
+  const seenKey = `imap_seen_ids_${triggerNode.id}`;
   const settings = (wf.settings ?? {}) as Record<string, unknown>;
   const lastPoll = settings[metaKey]
     ? new Date(settings[metaKey] as string)
     : new Date(Date.now() - 5 * 60 * 1000);
+  // Seen message IDs to prevent re-processing (IMAP SINCE only filters by date, not time)
+  const seenIds = new Set<string>(
+    Array.isArray(settings[seenKey]) ? (settings[seenKey] as string[]) : [],
+  );
 
   console.log(
     `[imap] polling ${imapConfig.host} mailbox=${mailbox} since=${lastPoll.toISOString()} workflow=${wf.id}`,
@@ -1987,6 +1998,9 @@ export async function pollImapWorkflowOnce(workflowId: string): Promise<{
         )
           continue;
 
+        // Skip already-processed messages (IMAP SINCE is date-only, not datetime)
+        if (seenIds.has(msgId)) continue;
+
         emails.push({ messageId: msgId, from, subject, body, date });
       }
     } finally {
@@ -2027,52 +2041,22 @@ export async function pollImapWorkflowOnce(workflowId: string): Promise<{
     executionsCreated++;
   }
 
+  // Persist the updated seen IDs (keep newest 500 to bound storage size)
+  for (const email of emails) seenIds.add(email.messageId);
+  const seenArr = Array.from(seenIds).slice(-500);
+
   await prisma.workflow.update({
     where: { id: wf.id },
     data: {
       settings: JSON.parse(
-        JSON.stringify({ ...settings, [metaKey]: new Date().toISOString() }),
+        JSON.stringify({
+          ...settings,
+          [metaKey]: new Date().toISOString(),
+          [seenKey]: seenArr,
+        }),
       ),
     },
   });
 
   return { connected, emailsFound: emails.length, executionsCreated };
 }
-
-// Runs every minute, finds workflows with email-inbox triggers, polls each mailbox.
-export const imapPoller = inngest.createFunction(
-  { id: "imap-inbox-poller" },
-  { cron: "* * * * *" },
-  async ({ step }) => {
-    const workflows = await step.run("fetch-imap-workflows", async () => {
-      const all = await prisma.workflow.findMany({
-        where: { isActive: true },
-        select: { id: true, nodes: true },
-      });
-      return all
-        .filter((wf) => {
-          const nodes = wf.nodes as unknown as WorkflowNode[];
-          return (
-            Array.isArray(nodes) &&
-            nodes.some(
-              (n) => n.type === "trigger" && n.data?.type === "email-inbox",
-            )
-          );
-        })
-        .map((wf) => wf.id);
-    });
-
-    let totalTriggered = 0;
-    for (const wfId of workflows) {
-      const result = await step.run(`poll-imap-${wfId}`, () =>
-        pollImapWorkflowOnce(wfId),
-      );
-      totalTriggered += result.executionsCreated;
-      if (result.error) {
-        console.warn(`[imap] workflow ${wfId} poll error: ${result.error}`);
-      }
-    }
-
-    return { workflows: workflows.length, triggered: totalTriggered };
-  },
-);
