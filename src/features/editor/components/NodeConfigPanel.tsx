@@ -2515,8 +2515,7 @@ function ImapTriggerConfig({
           <span className="text-(--arch-fg) font-bold">Trigger data:</span>{" "}
           <code>{"{{trigger.from}}"}</code>,{" "}
           <code>{"{{trigger.subject}}"}</code>,{" "}
-          <code>{"{{trigger.body}}"}</code>,{" "}
-          <code>{"{{trigger.date}}"}</code>,{" "}
+          <code>{"{{trigger.body}}"}</code>, <code>{"{{trigger.date}}"}</code>,{" "}
           <code>{"{{trigger.messageId}}"}</code>
         </p>
       </div>

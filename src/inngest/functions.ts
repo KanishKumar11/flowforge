@@ -1852,7 +1852,7 @@ export const imapPoller = inngest.createFunction(
         select: { id: true, nodes: true, teamId: true },
       });
       return all.filter((wf) => {
-        const nodes = (wf.nodes as unknown) as WorkflowNode[];
+        const nodes = wf.nodes as unknown as WorkflowNode[];
         return nodes.some(
           (n) => n.type === "trigger" && n.data.type === "email-inbox",
         );
@@ -1862,7 +1862,7 @@ export const imapPoller = inngest.createFunction(
     let totalTriggered = 0;
 
     for (const wf of workflows) {
-      const nodes = (wf.nodes as unknown) as WorkflowNode[];
+      const nodes = wf.nodes as unknown as WorkflowNode[];
       const triggerNode = nodes.find(
         (n) => n.type === "trigger" && n.data.type === "email-inbox",
       );
@@ -1898,7 +1898,10 @@ export const imapPoller = inngest.createFunction(
             pass: (decrypted.pass as string) || "",
           };
         } catch (err) {
-          console.error(`[imap] failed to decrypt credential ${credentialId}:`, err);
+          console.error(
+            `[imap] failed to decrypt credential ${credentialId}:`,
+            err,
+          );
           return;
         }
 
@@ -1912,7 +1915,10 @@ export const imapPoller = inngest.createFunction(
           where: { id: wf.id },
           select: { settings: true },
         });
-        const settings = (workflowRow?.settings ?? {}) as Record<string, unknown>;
+        const settings = (workflowRow?.settings ?? {}) as Record<
+          string,
+          unknown
+        >;
         const lastPoll = settings[metaKey]
           ? new Date(settings[metaKey] as string)
           : new Date(Date.now() - 5 * 60 * 1000);
@@ -1959,8 +1965,16 @@ export const imapPoller = inngest.createFunction(
                 : "";
 
               // Apply filters
-              if (filterFrom && !from.toLowerCase().includes(filterFrom.toLowerCase())) continue;
-              if (filterSubject && !subject.toLowerCase().includes(filterSubject.toLowerCase())) continue;
+              if (
+                filterFrom &&
+                !from.toLowerCase().includes(filterFrom.toLowerCase())
+              )
+                continue;
+              if (
+                filterSubject &&
+                !subject.toLowerCase().includes(filterSubject.toLowerCase())
+              )
+                continue;
 
               emails.push({ messageId: msgId, from, subject, body, date });
             }
@@ -1973,7 +1987,9 @@ export const imapPoller = inngest.createFunction(
           // Update last poll time even on error so we don't re-poll the same window
         }
 
-        console.log(`[imap] found ${emails.length} new email(s) for workflow ${wf.id}`);
+        console.log(
+          `[imap] found ${emails.length} new email(s) for workflow ${wf.id}`,
+        );
 
         // Trigger an execution for each new email
         for (const email of emails) {
@@ -1999,7 +2015,12 @@ export const imapPoller = inngest.createFunction(
         await prisma.workflow.update({
           where: { id: wf.id },
           data: {
-            settings: JSON.parse(JSON.stringify({ ...settings, [metaKey]: new Date().toISOString() })),
+            settings: JSON.parse(
+              JSON.stringify({
+                ...settings,
+                [metaKey]: new Date().toISOString(),
+              }),
+            ),
           },
         });
       });
@@ -2008,4 +2029,3 @@ export const imapPoller = inngest.createFunction(
     return { workflows: workflows.length, triggered: totalTriggered };
   },
 );
-

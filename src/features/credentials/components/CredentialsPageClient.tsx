@@ -1065,10 +1065,30 @@ export function CredentialsPageClient() {
               <div className="space-y-4">
                 <div className="grid grid-cols-3 gap-2">
                   {[
-                    { label: "Gmail", host: "imap.gmail.com", port: "993", secure: true },
-                    { label: "Outlook", host: "outlook.office365.com", port: "993", secure: true },
-                    { label: "Zoho", host: "imap.zoho.com", port: "993", secure: true },
-                    { label: "Yahoo", host: "imap.mail.yahoo.com", port: "993", secure: true },
+                    {
+                      label: "Gmail",
+                      host: "imap.gmail.com",
+                      port: "993",
+                      secure: true,
+                    },
+                    {
+                      label: "Outlook",
+                      host: "outlook.office365.com",
+                      port: "993",
+                      secure: true,
+                    },
+                    {
+                      label: "Zoho",
+                      host: "imap.zoho.com",
+                      port: "993",
+                      secure: true,
+                    },
+                    {
+                      label: "Yahoo",
+                      host: "imap.mail.yahoo.com",
+                      port: "993",
+                      secure: true,
+                    },
                     { label: "Custom", host: "", port: "993", secure: true },
                   ].map((preset) => (
                     <button
@@ -1083,7 +1103,8 @@ export function CredentialsPageClient() {
                         })
                       }
                       className={`px-2 py-1.5 text-[10px] font-mono uppercase border transition-all ${
-                        newCredential.imapHost === preset.host && preset.host !== ""
+                        newCredential.imapHost === preset.host &&
+                        preset.host !== ""
                           ? "bg-(--arch-fg) text-(--arch-bg) border-(--arch-fg)"
                           : "bg-(--arch-bg) text-(--arch-muted) border-(--arch-border) hover:text-(--arch-fg) hover:border-(--arch-fg)"
                       }`}
@@ -1100,7 +1121,10 @@ export function CredentialsPageClient() {
                     placeholder="imap.gmail.com"
                     value={newCredential.imapHost}
                     onChange={(e) =>
-                      setNewCredential({ ...newCredential, imapHost: e.target.value })
+                      setNewCredential({
+                        ...newCredential,
+                        imapHost: e.target.value,
+                      })
                     }
                     className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) font-mono text-xs rounded-none h-10 placeholder:text-(--arch-muted) focus-visible:ring-1 focus-visible:ring-(--arch-fg)"
                   />
@@ -1114,7 +1138,10 @@ export function CredentialsPageClient() {
                       placeholder="993"
                       value={newCredential.imapPort}
                       onChange={(e) =>
-                        setNewCredential({ ...newCredential, imapPort: e.target.value })
+                        setNewCredential({
+                          ...newCredential,
+                          imapPort: e.target.value,
+                        })
                       }
                       className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) font-mono text-xs rounded-none h-10 placeholder:text-(--arch-muted) focus-visible:ring-1 focus-visible:ring-(--arch-fg)"
                     />
@@ -1126,15 +1153,28 @@ export function CredentialsPageClient() {
                     <Select
                       value={newCredential.imapSecure ? "true" : "false"}
                       onValueChange={(v) =>
-                        setNewCredential({ ...newCredential, imapSecure: v === "true" })
+                        setNewCredential({
+                          ...newCredential,
+                          imapSecure: v === "true",
+                        })
                       }
                     >
                       <SelectTrigger className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) font-mono text-xs rounded-none h-10 focus:ring-1 focus:ring-(--arch-fg)">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) font-mono rounded-none">
-                        <SelectItem value="true" className="font-mono text-xs focus:bg-(--arch-fg) focus:text-(--arch-bg)">SSL/TLS (port 993)</SelectItem>
-                        <SelectItem value="false" className="font-mono text-xs focus:bg-(--arch-fg) focus:text-(--arch-bg)">STARTTLS (port 143)</SelectItem>
+                        <SelectItem
+                          value="true"
+                          className="font-mono text-xs focus:bg-(--arch-fg) focus:text-(--arch-bg)"
+                        >
+                          SSL/TLS (port 993)
+                        </SelectItem>
+                        <SelectItem
+                          value="false"
+                          className="font-mono text-xs focus:bg-(--arch-fg) focus:text-(--arch-bg)"
+                        >
+                          STARTTLS (port 143)
+                        </SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -1147,7 +1187,10 @@ export function CredentialsPageClient() {
                     placeholder="you@example.com"
                     value={newCredential.imapUser}
                     onChange={(e) =>
-                      setNewCredential({ ...newCredential, imapUser: e.target.value })
+                      setNewCredential({
+                        ...newCredential,
+                        imapUser: e.target.value,
+                      })
                     }
                     className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) font-mono text-xs rounded-none h-10 placeholder:text-(--arch-muted) focus-visible:ring-1 focus-visible:ring-(--arch-fg)"
                   />
@@ -1161,16 +1204,21 @@ export function CredentialsPageClient() {
                     placeholder="********************************"
                     value={newCredential.imapPass}
                     onChange={(e) =>
-                      setNewCredential({ ...newCredential, imapPass: e.target.value })
+                      setNewCredential({
+                        ...newCredential,
+                        imapPass: e.target.value,
+                      })
                     }
                     className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) font-mono text-xs rounded-none h-10 placeholder:text-(--arch-muted) focus-visible:ring-1 focus-visible:ring-(--arch-fg)"
                   />
                 </div>
-                {(newCredential.imapHost === "imap.gmail.com" || newCredential.imapHost === "imap.mail.yahoo.com") && (
+                {(newCredential.imapHost === "imap.gmail.com" ||
+                  newCredential.imapHost === "imap.mail.yahoo.com") && (
                   <div className="p-3 border border-yellow-500/30 bg-yellow-500/5">
                     <p className="text-[11px] font-mono text-yellow-500 leading-relaxed">
-                      <strong>App Password required.</strong> Gmail/Yahoo block regular passwords for IMAP.
-                      Enable 2FA then generate an App Password at your account security settings.
+                      <strong>App Password required.</strong> Gmail/Yahoo block
+                      regular passwords for IMAP. Enable 2FA then generate an
+                      App Password at your account security settings.
                     </p>
                   </div>
                 )}
