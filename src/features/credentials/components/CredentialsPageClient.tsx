@@ -214,6 +214,71 @@ export function CredentialsPageClient() {
     c.name.toLowerCase().includes(search.toLowerCase()),
   );
 
+  const handleStartEdit = async (cred: {
+    id: string;
+    name: string;
+    type: string;
+    provider: string;
+  }) => {
+    // Show modal immediately with basic info
+    setNewCredential({
+      name: cred.name,
+      type: cred.type as "apiKey" | "oauth2" | "basic" | "bearer" | "custom",
+      provider: cred.provider,
+      apiKey: "",
+      smtpHost: "",
+      smtpPort: "587",
+      smtpSecure: false,
+      smtpUser: "",
+      smtpPass: "",
+      smtpFrom: "",
+      twilioAccountSid: "",
+      twilioAuthToken: "",
+      twilioPhoneNumber: "",
+    });
+    setEditingCredentialId(cred.id);
+    setShowCreateModal(true);
+
+    // Fetch decrypted data and pre-populate fields
+    try {
+      const decrypted = await client.credentials.getDecrypted.query({
+        id: cred.id,
+      });
+      const d = decrypted.data as Record<string, unknown>;
+
+      if (cred.provider === "smtp") {
+        setNewCredential((prev) => ({
+          ...prev,
+          smtpHost: (d.host as string) || "",
+          smtpPort: String(d.port || "587"),
+          smtpSecure: d.secure === true || d.secure === "true",
+          smtpUser: (d.user as string) || "",
+          smtpPass: (d.pass as string) || "",
+          smtpFrom: (d.from as string) || "",
+        }));
+      } else if (cred.provider === "twilio") {
+        setNewCredential((prev) => ({
+          ...prev,
+          twilioAccountSid: (d.accountSid as string) || "",
+          twilioAuthToken: (d.authToken as string) || "",
+          twilioPhoneNumber: (d.phoneNumber as string) || "",
+        }));
+      } else {
+        setNewCredential((prev) => ({
+          ...prev,
+          apiKey:
+            (d.apiKey as string) ||
+            (d.accessToken as string) ||
+            (d.access_token as string) ||
+            (d.token as string) ||
+            "",
+        }));
+      }
+    } catch {
+      // If fetch fails the user can still type new values
+    }
+  };
+
   const handleCreateOrUpdate = async () => {
     if (!newCredential.name.trim()) return;
 
@@ -223,7 +288,7 @@ export function CredentialsPageClient() {
     let credData: Record<string, unknown>;
     if (isSmtp) {
       credData = {
-        host: newCredential.smtpHost || "smtp.gmail.com",
+        host: newCredential.smtpHost,
         port: newCredential.smtpPort || "587",
         secure: newCredential.smtpSecure,
         user: newCredential.smtpUser,
@@ -241,17 +306,11 @@ export function CredentialsPageClient() {
     }
 
     if (editingCredentialId) {
-      // Update existing credential
+      // Update existing credential — always send data so fields like smtpHost are persisted
       await updateCredential.mutateAsync({
         id: editingCredentialId,
         name: newCredential.name,
-        ...((isSmtp
-          ? newCredential.smtpUser
-          : isTwilio
-            ? newCredential.twilioAccountSid
-            : newCredential.apiKey) && {
-          data: credData,
-        }),
+        data: credData,
       });
     } else {
       // Create new credential
@@ -488,34 +547,11 @@ export function CredentialsPageClient() {
                             </DropdownMenuTrigger>
                             <DropdownMenuContent
                               align="end"
-                              className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) rounded-none font-mono z-50 min-w-[150px]"
+                              className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) rounded-none font-mono z-50 min-w-37.5"
                             >
                               <DropdownMenuItem
                                 className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs uppercase tracking-wider"
-                                onClick={() => {
-                                  setNewCredential({
-                                    name: credential.name,
-                                    type: credential.type as
-                                      | "apiKey"
-                                      | "oauth2"
-                                      | "basic"
-                                      | "bearer"
-                                      | "custom",
-                                    provider: credential.provider,
-                                    apiKey: "",
-                                    smtpHost: "",
-                                    smtpPort: "587",
-                                    smtpSecure: false,
-                                    smtpUser: "",
-                                    smtpPass: "",
-                                    smtpFrom: "",
-                                    twilioAccountSid: "",
-                                    twilioAuthToken: "",
-                                    twilioPhoneNumber: "",
-                                  });
-                                  setEditingCredentialId(credential.id);
-                                  setShowCreateModal(true);
-                                }}
+                                onClick={() => handleStartEdit(credential)}
                               >
                                 <Pencil className="mr-2 h-3.5 w-3.5" />
                                 Edit Config
@@ -566,7 +602,7 @@ export function CredentialsPageClient() {
 
       {/* Create Modal */}
       <Dialog open={showCreateModal} onOpenChange={setShowCreateModal}>
-        <DialogContent className="sm:max-w-[480px] bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) rounded-none shadow-2xl p-0 overflow-hidden">
+        <DialogContent className="sm:max-w-120 bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) rounded-none shadow-2xl p-0 overflow-hidden">
           <DialogHeader className="p-6 border-b border-(--arch-border) bg-(--arch-bg-secondary)">
             <DialogTitle className="font-mono uppercase text-sm tracking-widest text-(--arch-fg) flex items-center gap-2">
               <Terminal className="h-4 w-4" />
