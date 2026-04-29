@@ -1,19 +1,21 @@
 "use client";
 
 import { Handle, Position, type NodeProps } from "@xyflow/react";
-import { Calendar, MousePointer, Play, Webhook } from "lucide-react";
+import { Calendar, Mail, MousePointer, Play, Webhook } from "lucide-react";
 import { memo } from "react";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   manual: MousePointer,
   webhook: Webhook,
   schedule: Calendar,
+  "email-inbox": Mail,
 };
 
 const colorMap: Record<string, string> = {
   manual: "bg-blue-500/10 text-blue-500 border-blue-500/30",
   webhook: "bg-orange-500/10 text-orange-500 border-orange-500/30",
   schedule: "bg-purple-500/10 text-purple-500 border-purple-500/30",
+  "email-inbox": "bg-teal-500/10 text-teal-500 border-teal-500/30",
 };
 
 interface TriggerNodeData {

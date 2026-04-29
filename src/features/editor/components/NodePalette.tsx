@@ -55,6 +55,12 @@ const triggerNodes = [
     icon: Calendar,
     color: "text-purple-500",
   },
+  {
+    type: "email-inbox",
+    label: "Email Inbox (IMAP)",
+    icon: Mail,
+    color: "text-teal-500",
+  },
 ];
 
 const actionNodes = [

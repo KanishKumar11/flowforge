@@ -391,6 +391,16 @@ export function NodeConfigPanel({
               />
             )}
 
+            {node.data.type === "email-inbox" && (
+              <ImapTriggerConfig
+                key={node.id}
+                config={(node.data.config as Record<string, unknown>) || {}}
+                credentials={credentials ?? []}
+                onChange={handleConfigChange}
+                onOpenCredentialDialog={openCredentialDialog}
+              />
+            )}
+
             {node.data.type === "transform" && (
               <div className="space-y-2">
                 <Label htmlFor="expression">
@@ -2391,6 +2401,125 @@ function CronSchedulePicker({
           )}
         </p>
       )}
+    </div>
+  );
+}
+
+// ─── IMAP Trigger Config ─────────────────────────────────────────────────────
+
+interface Credential {
+  id: string;
+  name: string;
+  provider: string;
+}
+
+function ImapTriggerConfig({
+  config,
+  credentials,
+  onChange,
+  onOpenCredentialDialog,
+}: {
+  config: Record<string, unknown>;
+  credentials: Credential[];
+  onChange: (key: string, value: unknown) => void;
+  onOpenCredentialDialog: (provider: string) => void;
+}) {
+  const imapCredentials = credentials.filter((c) => c.provider === "imap");
+
+  return (
+    <div className="space-y-4">
+      <div className="space-y-2">
+        <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider">
+          IMAP Credential
+        </Label>
+        <Select
+          value={(config.credentialId as string) || ""}
+          onValueChange={(v) => onChange("credentialId", v)}
+        >
+          <SelectTrigger className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) rounded-none font-mono text-xs h-9 focus:ring-1 focus:ring-(--arch-fg) hover:border-(--arch-fg) transition-colors">
+            <SelectValue placeholder="Select IMAP credential" />
+          </SelectTrigger>
+          <SelectContent className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) rounded-none font-mono z-50">
+            {imapCredentials.length === 0 && (
+              <div className="px-3 py-2 text-xs text-(--arch-muted) font-mono">
+                No IMAP credentials found
+              </div>
+            )}
+            {imapCredentials.map((c) => (
+              <SelectItem
+                key={c.id}
+                value={c.id}
+                className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer font-mono text-xs"
+              >
+                {c.name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <button
+          type="button"
+          onClick={() => onOpenCredentialDialog("imap")}
+          className="text-[10px] font-mono uppercase text-(--arch-muted) hover:text-(--arch-fg) transition-colors"
+        >
+          + Add IMAP credential
+        </button>
+      </div>
+
+      <div className="space-y-2">
+        <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider">
+          Mailbox / Folder
+        </Label>
+        <Input
+          placeholder="INBOX"
+          value={(config.mailbox as string) || ""}
+          onChange={(e) => onChange("mailbox", e.target.value)}
+          className="bg-(--arch-bg) border-(--arch-border) focus:border-(--arch-fg) text-(--arch-fg) font-mono rounded-none placeholder:text-(--arch-muted) text-xs h-9 focus-visible:ring-0"
+        />
+        <p className="text-[10px] font-mono text-(--arch-muted)">
+          The mailbox to monitor. Defaults to INBOX.
+        </p>
+      </div>
+
+      <div className="space-y-2">
+        <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider">
+          Filter: From Address (optional)
+        </Label>
+        <Input
+          placeholder="alerts@example.com"
+          value={(config.filterFrom as string) || ""}
+          onChange={(e) => onChange("filterFrom", e.target.value)}
+          className="bg-(--arch-bg) border-(--arch-border) focus:border-(--arch-fg) text-(--arch-fg) font-mono rounded-none placeholder:text-(--arch-muted) text-xs h-9 focus-visible:ring-0"
+        />
+        <p className="text-[10px] font-mono text-(--arch-muted)">
+          Only trigger for emails from this address.
+        </p>
+      </div>
+
+      <div className="space-y-2">
+        <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider">
+          Filter: Subject Contains (optional)
+        </Label>
+        <Input
+          placeholder="support ticket"
+          value={(config.filterSubject as string) || ""}
+          onChange={(e) => onChange("filterSubject", e.target.value)}
+          className="bg-(--arch-bg) border-(--arch-border) focus:border-(--arch-fg) text-(--arch-fg) font-mono rounded-none placeholder:text-(--arch-muted) text-xs h-9 focus-visible:ring-0"
+        />
+        <p className="text-[10px] font-mono text-(--arch-muted)">
+          Only trigger when subject contains this text.
+        </p>
+      </div>
+
+      <div className="p-2 border border-(--arch-border) bg-(--arch-bg-secondary)">
+        <p className="text-[10px] font-mono text-(--arch-muted) leading-relaxed">
+          <span className="text-(--arch-fg) font-bold">Trigger data:</span>{" "}
+          <code>{"{{trigger.from}}"}</code>,{" "}
+          <code>{"{{trigger.subject}}"}</code>,{" "}
+          <code>{"{{trigger.body}}"}</code>,{" "}
+          <code>{"{{trigger.date}}"}</code>,{" "}
+          <code>{"{{trigger.messageId}}"}</code>
+        </p>
+      </div>
     </div>
   );
 }

@@ -77,6 +77,7 @@ const providerIcons: Record<
   twilio: Phone,
   smtp: Mail,
   email: Mail,
+  imap: Mail,
   default: Key,
 };
 
@@ -103,6 +104,12 @@ export function CredentialsPageClient() {
     twilioAccountSid: "",
     twilioAuthToken: "",
     twilioPhoneNumber: "",
+    // IMAP-specific fields
+    imapHost: "",
+    imapPort: "993",
+    imapSecure: true,
+    imapUser: "",
+    imapPass: "",
   });
 
   // Auto-open create dialog with pre-selected provider when ?create=X is in URL
@@ -154,6 +161,11 @@ export function CredentialsPageClient() {
         twilioAccountSid: "",
         twilioAuthToken: "",
         twilioPhoneNumber: "",
+        imapHost: "",
+        imapPort: "993",
+        imapSecure: true,
+        imapUser: "",
+        imapPass: "",
       });
       toast.success("Credential created successfully");
     },
@@ -188,6 +200,11 @@ export function CredentialsPageClient() {
         twilioAccountSid: "",
         twilioAuthToken: "",
         twilioPhoneNumber: "",
+        imapHost: "",
+        imapPort: "993",
+        imapSecure: true,
+        imapUser: "",
+        imapPass: "",
       });
       toast.success("Credential updated successfully");
     },
@@ -235,6 +252,11 @@ export function CredentialsPageClient() {
       twilioAccountSid: "",
       twilioAuthToken: "",
       twilioPhoneNumber: "",
+      imapHost: "",
+      imapPort: "993",
+      imapSecure: true,
+      imapUser: "",
+      imapPass: "",
     });
     setEditingCredentialId(cred.id);
     setShowCreateModal(true);
@@ -263,6 +285,15 @@ export function CredentialsPageClient() {
           twilioAuthToken: (d.authToken as string) || "",
           twilioPhoneNumber: (d.phoneNumber as string) || "",
         }));
+      } else if (cred.provider === "imap") {
+        setNewCredential((prev) => ({
+          ...prev,
+          imapHost: (d.host as string) || "",
+          imapPort: String(d.port || "993"),
+          imapSecure: d.secure !== false,
+          imapUser: (d.user as string) || "",
+          imapPass: (d.pass as string) || "",
+        }));
       } else {
         setNewCredential((prev) => ({
           ...prev,
@@ -284,6 +315,7 @@ export function CredentialsPageClient() {
 
     const isSmtp = newCredential.provider === "smtp";
     const isTwilio = newCredential.provider === "twilio";
+    const isImap = newCredential.provider === "imap";
 
     let credData: Record<string, unknown>;
     if (isSmtp) {
@@ -300,6 +332,14 @@ export function CredentialsPageClient() {
         accountSid: newCredential.twilioAccountSid,
         authToken: newCredential.twilioAuthToken,
         phoneNumber: newCredential.twilioPhoneNumber,
+      };
+    } else if (isImap) {
+      credData = {
+        host: newCredential.imapHost,
+        port: newCredential.imapPort || "993",
+        secure: newCredential.imapSecure,
+        user: newCredential.imapUser,
+        pass: newCredential.imapPass,
       };
     } else {
       credData = { apiKey: newCredential.apiKey };
@@ -340,6 +380,11 @@ export function CredentialsPageClient() {
       twilioAccountSid: "",
       twilioAuthToken: "",
       twilioPhoneNumber: "",
+      imapHost: "",
+      imapPort: "993",
+      imapSecure: true,
+      imapUser: "",
+      imapPass: "",
     });
   };
 
@@ -765,6 +810,12 @@ export function CredentialsPageClient() {
                     >
                       SMTP (EMAIL)
                     </SelectItem>
+                    <SelectItem
+                      value="imap"
+                      className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs font-mono"
+                    >
+                      IMAP (EMAIL INBOX)
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -1009,6 +1060,120 @@ export function CredentialsPageClient() {
                     className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) font-mono text-xs rounded-none h-10 placeholder:text-(--arch-muted) focus-visible:ring-1 focus-visible:ring-(--arch-fg)"
                   />
                 </div>
+              </div>
+            ) : newCredential.provider === "imap" ? (
+              <div className="space-y-4">
+                <div className="grid grid-cols-3 gap-2">
+                  {[
+                    { label: "Gmail", host: "imap.gmail.com", port: "993", secure: true },
+                    { label: "Outlook", host: "outlook.office365.com", port: "993", secure: true },
+                    { label: "Zoho", host: "imap.zoho.com", port: "993", secure: true },
+                    { label: "Yahoo", host: "imap.mail.yahoo.com", port: "993", secure: true },
+                    { label: "Custom", host: "", port: "993", secure: true },
+                  ].map((preset) => (
+                    <button
+                      key={preset.label}
+                      type="button"
+                      onClick={() =>
+                        setNewCredential({
+                          ...newCredential,
+                          imapHost: preset.host,
+                          imapPort: preset.port,
+                          imapSecure: preset.secure,
+                        })
+                      }
+                      className={`px-2 py-1.5 text-[10px] font-mono uppercase border transition-all ${
+                        newCredential.imapHost === preset.host && preset.host !== ""
+                          ? "bg-(--arch-fg) text-(--arch-bg) border-(--arch-fg)"
+                          : "bg-(--arch-bg) text-(--arch-muted) border-(--arch-border) hover:text-(--arch-fg) hover:border-(--arch-fg)"
+                      }`}
+                    >
+                      {preset.label}
+                    </button>
+                  ))}
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider mb-1 block">
+                    IMAP Host
+                  </Label>
+                  <Input
+                    placeholder="imap.gmail.com"
+                    value={newCredential.imapHost}
+                    onChange={(e) =>
+                      setNewCredential({ ...newCredential, imapHost: e.target.value })
+                    }
+                    className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) font-mono text-xs rounded-none h-10 placeholder:text-(--arch-muted) focus-visible:ring-1 focus-visible:ring-(--arch-fg)"
+                  />
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="space-y-2">
+                    <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider mb-1 block">
+                      Port
+                    </Label>
+                    <Input
+                      placeholder="993"
+                      value={newCredential.imapPort}
+                      onChange={(e) =>
+                        setNewCredential({ ...newCredential, imapPort: e.target.value })
+                      }
+                      className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) font-mono text-xs rounded-none h-10 placeholder:text-(--arch-muted) focus-visible:ring-1 focus-visible:ring-(--arch-fg)"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider mb-1 block">
+                      TLS / SSL
+                    </Label>
+                    <Select
+                      value={newCredential.imapSecure ? "true" : "false"}
+                      onValueChange={(v) =>
+                        setNewCredential({ ...newCredential, imapSecure: v === "true" })
+                      }
+                    >
+                      <SelectTrigger className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) font-mono text-xs rounded-none h-10 focus:ring-1 focus:ring-(--arch-fg)">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) font-mono rounded-none">
+                        <SelectItem value="true" className="font-mono text-xs focus:bg-(--arch-fg) focus:text-(--arch-bg)">SSL/TLS (port 993)</SelectItem>
+                        <SelectItem value="false" className="font-mono text-xs focus:bg-(--arch-fg) focus:text-(--arch-bg)">STARTTLS (port 143)</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider mb-1 block">
+                    Email / Username
+                  </Label>
+                  <Input
+                    placeholder="you@example.com"
+                    value={newCredential.imapUser}
+                    onChange={(e) =>
+                      setNewCredential({ ...newCredential, imapUser: e.target.value })
+                    }
+                    className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) font-mono text-xs rounded-none h-10 placeholder:text-(--arch-muted) focus-visible:ring-1 focus-visible:ring-(--arch-fg)"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-(--arch-fg) font-mono uppercase text-xs tracking-wider mb-1 block">
+                    Password / App Password
+                  </Label>
+                  <Input
+                    type="password"
+                    placeholder="********************************"
+                    value={newCredential.imapPass}
+                    onChange={(e) =>
+                      setNewCredential({ ...newCredential, imapPass: e.target.value })
+                    }
+                    className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) font-mono text-xs rounded-none h-10 placeholder:text-(--arch-muted) focus-visible:ring-1 focus-visible:ring-(--arch-fg)"
+                  />
+                </div>
+                {(newCredential.imapHost === "imap.gmail.com" || newCredential.imapHost === "imap.mail.yahoo.com") && (
+                  <div className="p-3 border border-yellow-500/30 bg-yellow-500/5">
+                    <p className="text-[11px] font-mono text-yellow-500 leading-relaxed">
+                      <strong>App Password required.</strong> Gmail/Yahoo block regular passwords for IMAP.
+                      Enable 2FA then generate an App Password at your account security settings.
+                    </p>
+                  </div>
+                )}
               </div>
             ) : (
               <div className="space-y-2">

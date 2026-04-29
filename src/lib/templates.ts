@@ -1025,6 +1025,63 @@ export const workflowTemplates: WorkflowTemplate[] = [
     ],
     tags: ["schedule", "backup", "google-sheets", "data"],
   },
+  {
+    id: "ai-email-auto-responder",
+    name: "AI Email Auto-Responder",
+    description:
+      "Monitor your inbox via IMAP, use AI to draft a smart reply, and send it back automatically",
+    category: "AI",
+    icon: "email-inbox",
+    nodes: [
+      {
+        id: "1",
+        type: "trigger",
+        position: { x: 100, y: 150 },
+        data: {
+          type: "email-inbox",
+          label: "Email Inbox (IMAP)",
+          config: {
+            mailbox: "INBOX",
+            filterFrom: "",
+            filterSubject: "",
+          },
+        },
+      },
+      {
+        id: "2",
+        type: "action",
+        position: { x: 400, y: 150 },
+        data: {
+          type: "openai",
+          label: "Draft AI Reply",
+          config: {
+            model: "gpt-4o-mini",
+            prompt:
+              "You received an email from {{trigger.from}} with subject \"{{trigger.subject}}\".\n\nEmail body:\n{{trigger.body}}\n\nWrite a professional, friendly reply. Keep it concise (2-3 paragraphs). Sign off as 'The Team'.",
+          },
+        },
+      },
+      {
+        id: "3",
+        type: "action",
+        position: { x: 700, y: 150 },
+        data: {
+          type: "email",
+          label: "Send Reply",
+          config: {
+            to: "{{trigger.from}}",
+            subject: "Re: {{trigger.subject}}",
+            body: "{{2.result}}",
+          },
+        },
+      },
+    ],
+    edges: [
+      { id: "e1-2", source: "1", target: "2" },
+      { id: "e2-3", source: "2", target: "3" },
+    ],
+    tags: ["ai", "email", "imap", "auto-reply", "openai"],
+  },
 ];
 
 // Get templates by category

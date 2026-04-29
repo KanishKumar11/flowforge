@@ -366,21 +366,32 @@ async function executeEmail(
     console.error(`[email] send failed: ${msg}`);
 
     // Provide actionable guidance for common SMTP errors
-    if (msg.includes("535") || msg.includes("Authentication Failed") || msg.includes("Invalid login")) {
+    if (
+      msg.includes("535") ||
+      msg.includes("Authentication Failed") ||
+      msg.includes("Invalid login")
+    ) {
       const host = smtpConfig?.host ?? "";
       let hint = "";
       if (host.includes("zoho")) {
-        hint = " → Zoho blocks regular account passwords for SMTP. Go to mail.zoho.com → Settings → Security → App Passwords, generate an App Password, and use that instead.";
+        hint =
+          " → Zoho blocks regular account passwords for SMTP. Go to mail.zoho.com → Settings → Security → App Passwords, generate an App Password, and use that instead.";
       } else if (host.includes("gmail")) {
-        hint = " → Gmail blocks regular account passwords for SMTP. Go to myaccount.google.com → Security → App Passwords, generate one, and use that instead.";
+        hint =
+          " → Gmail blocks regular account passwords for SMTP. Go to myaccount.google.com → Security → App Passwords, generate one, and use that instead.";
       } else {
-        hint = " → Your SMTP provider rejected the password. Check that SMTP access is enabled in your mail account settings and that you are using an App Password if 2FA is active.";
+        hint =
+          " → Your SMTP provider rejected the password. Check that SMTP access is enabled in your mail account settings and that you are using an App Password if 2FA is active.";
       }
-      throw new Error(`Email send failed: Authentication rejected by ${host}.${hint}`);
+      throw new Error(
+        `Email send failed: Authentication rejected by ${host}.${hint}`,
+      );
     }
 
     if (msg.includes("ECONNREFUSED") || msg.includes("ETIMEDOUT")) {
-      throw new Error(`Email send failed: Could not connect to ${smtpConfig?.host}:${smtpConfig?.port}. Check the host and port in your SMTP credential.`);
+      throw new Error(
+        `Email send failed: Could not connect to ${smtpConfig?.host}:${smtpConfig?.port}. Check the host and port in your SMTP credential.`,
+      );
     }
 
     throw new Error(`Email send failed: ${msg}`);
@@ -1827,3 +1838,174 @@ export const scheduledWorkflow = inngest.createFunction(
     return { processed: dueSchedules.length };
   },
 );
+
+// ── IMAP Inbox Poller ─────────────────────────────────────────────────────────
+// Runs every minute, finds workflows with email-inbox triggers, polls each mailbox.
+export const imapPoller = inngest.createFunction(
+  { id: "imap-inbox-poller" },
+  { cron: "* * * * *" },
+  async ({ step }) => {
+    // Fetch all active workflows that have an email-inbox trigger node
+    const workflows = await step.run("fetch-imap-workflows", async () => {
+      const all = await prisma.workflow.findMany({
+        where: { isActive: true },
+        select: { id: true, nodes: true, teamId: true },
+      });
+      return all.filter((wf) => {
+        const nodes = (wf.nodes as unknown) as WorkflowNode[];
+        return nodes.some(
+          (n) => n.type === "trigger" && n.data.type === "email-inbox",
+        );
+      });
+    });
+
+    let totalTriggered = 0;
+
+    for (const wf of workflows) {
+      const nodes = (wf.nodes as unknown) as WorkflowNode[];
+      const triggerNode = nodes.find(
+        (n) => n.type === "trigger" && n.data.type === "email-inbox",
+      );
+      if (!triggerNode) continue;
+
+      const cfg = (triggerNode.data.config ?? {}) as Record<string, unknown>;
+      const credentialId = cfg.credentialId as string | undefined;
+      if (!credentialId) continue;
+
+      await step.run(`poll-imap-${wf.id}`, async () => {
+        // Decrypt IMAP credential
+        let imapConfig: {
+          host: string;
+          port: number;
+          secure: boolean;
+          user: string;
+          pass: string;
+        };
+        try {
+          const cred = await prisma.credential.findUnique({
+            where: { id: credentialId },
+          });
+          if (!cred) {
+            console.warn(`[imap] credential not found: ${credentialId}`);
+            return;
+          }
+          const decrypted = decryptCredential(cred.data);
+          imapConfig = {
+            host: (decrypted.host as string) || "",
+            port: Number(decrypted.port ?? 993),
+            secure: decrypted.secure !== false,
+            user: (decrypted.user as string) || "",
+            pass: (decrypted.pass as string) || "",
+          };
+        } catch (err) {
+          console.error(`[imap] failed to decrypt credential ${credentialId}:`, err);
+          return;
+        }
+
+        const mailbox = (cfg.mailbox as string) || "INBOX";
+        const filterFrom = (cfg.filterFrom as string) || "";
+        const filterSubject = (cfg.filterSubject as string) || "";
+
+        // Determine since date: last poll time (stored in workflow settings) or 5 min ago
+        const metaKey = `imap_last_poll_${triggerNode.id}`;
+        const workflowRow = await prisma.workflow.findUnique({
+          where: { id: wf.id },
+          select: { settings: true },
+        });
+        const settings = (workflowRow?.settings ?? {}) as Record<string, unknown>;
+        const lastPoll = settings[metaKey]
+          ? new Date(settings[metaKey] as string)
+          : new Date(Date.now() - 5 * 60 * 1000);
+
+        console.log(
+          `[imap] polling ${imapConfig.host} mailbox=${mailbox} since=${lastPoll.toISOString()} workflow=${wf.id}`,
+        );
+
+        // Dynamic import to keep imapflow server-side only
+        const { ImapFlow } = await import("imapflow");
+
+        const client = new ImapFlow({
+          host: imapConfig.host,
+          port: imapConfig.port,
+          secure: imapConfig.secure,
+          auth: { user: imapConfig.user, pass: imapConfig.pass },
+          logger: false,
+        });
+
+        let emails: Array<{
+          messageId: string;
+          from: string;
+          subject: string;
+          body: string;
+          date: string;
+        }> = [];
+
+        try {
+          await client.connect();
+          const lock = await client.getMailboxLock(mailbox);
+          try {
+            for await (const msg of client.fetch(
+              { since: lastPoll },
+              { envelope: true, bodyStructure: true, source: true },
+            )) {
+              const env = msg.envelope;
+              if (!env) continue;
+              const from = env.from?.[0]?.address ?? "";
+              const subject = env.subject ?? "";
+              const date = env.date?.toISOString() ?? new Date().toISOString();
+              const msgId = env.messageId ?? msg.uid.toString();
+              const body = msg.source
+                ? msg.source.toString("utf8").slice(0, 10000)
+                : "";
+
+              // Apply filters
+              if (filterFrom && !from.toLowerCase().includes(filterFrom.toLowerCase())) continue;
+              if (filterSubject && !subject.toLowerCase().includes(filterSubject.toLowerCase())) continue;
+
+              emails.push({ messageId: msgId, from, subject, body, date });
+            }
+          } finally {
+            lock.release();
+          }
+          await client.logout();
+        } catch (err) {
+          console.error(`[imap] connection error for workflow ${wf.id}:`, err);
+          // Update last poll time even on error so we don't re-poll the same window
+        }
+
+        console.log(`[imap] found ${emails.length} new email(s) for workflow ${wf.id}`);
+
+        // Trigger an execution for each new email
+        for (const email of emails) {
+          const execution = await prisma.execution.create({
+            data: {
+              workflowId: wf.id,
+              mode: "SCHEDULED",
+              status: "PENDING",
+              inputData: email,
+            },
+          });
+          await executeWorkflowDirect(wf.id, execution.id, {
+            from: email.from,
+            subject: email.subject,
+            body: email.body,
+            date: email.date,
+            messageId: email.messageId,
+          });
+          totalTriggered++;
+        }
+
+        // Update last poll timestamp in workflow settings
+        await prisma.workflow.update({
+          where: { id: wf.id },
+          data: {
+            settings: JSON.parse(JSON.stringify({ ...settings, [metaKey]: new Date().toISOString() })),
+          },
+        });
+      });
+    }
+
+    return { workflows: workflows.length, triggered: totalTriggered };
+  },
+);
+
