@@ -2126,10 +2126,30 @@ export function NodeConfigPanel({
                   <div className="grid grid-cols-4 gap-1.5">
                     {(
                       [
-                        { label: "Gmail", host: "imap.gmail.com", port: "993", secure: true },
-                        { label: "Outlook", host: "outlook.office365.com", port: "993", secure: true },
-                        { label: "Yahoo", host: "imap.mail.yahoo.com", port: "993", secure: true },
-                        { label: "Custom", host: "", port: "993", secure: true },
+                        {
+                          label: "Gmail",
+                          host: "imap.gmail.com",
+                          port: "993",
+                          secure: true,
+                        },
+                        {
+                          label: "Outlook",
+                          host: "outlook.office365.com",
+                          port: "993",
+                          secure: true,
+                        },
+                        {
+                          label: "Yahoo",
+                          host: "imap.mail.yahoo.com",
+                          port: "993",
+                          secure: true,
+                        },
+                        {
+                          label: "Custom",
+                          host: "",
+                          port: "993",
+                          secure: true,
+                        },
                       ] as const
                     ).map((preset) => (
                       <button
@@ -2209,11 +2229,20 @@ export function NodeConfigPanel({
                     className="bg-(--arch-bg) border-(--arch-border) text-(--arch-fg) font-mono text-xs rounded-none h-9 placeholder:text-(--arch-muted) focus-visible:ring-1 focus-visible:ring-(--arch-fg)"
                   />
                 </div>
-                {(newCred.imapHost === "imap.gmail.com" || newCred.imapHost === "imap.mail.yahoo.com") && (
+                {(newCred.imapHost === "imap.gmail.com" ||
+                  newCred.imapHost === "imap.mail.yahoo.com") && (
                   <div className="p-3 border border-yellow-500/30 bg-yellow-500/5 text-yellow-600 dark:text-yellow-400 text-xs font-mono">
-                    Gmail/Yahoo requires an <strong>App Password</strong> — your regular password won&apos;t work.
+                    Gmail/Yahoo requires an <strong>App Password</strong> — your
+                    regular password won&apos;t work.
                     {newCred.imapHost === "imap.gmail.com" && (
-                      <> Create one at <span className="underline">myaccount.google.com/apppasswords</span>.</>
+                      <>
+                        {" "}
+                        Create one at{" "}
+                        <span className="underline">
+                          myaccount.google.com/apppasswords
+                        </span>
+                        .
+                      </>
                     )}
                   </div>
                 )}
