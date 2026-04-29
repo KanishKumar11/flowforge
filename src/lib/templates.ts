@@ -1082,6 +1082,76 @@ export const workflowTemplates: WorkflowTemplate[] = [
     ],
     tags: ["ai", "email", "imap", "auto-reply", "openai"],
   },
+  {
+    id: "daily-news-email-digest",
+    name: "Daily AI News Digest",
+    description:
+      "Every morning at 8 AM, fetch the latest headlines from a news API, use AI to write a concise summary, and email it to your inbox — your personal daily briefing, automated.",
+    category: "AI",
+    icon: "schedule",
+    nodes: [
+      {
+        id: "1",
+        type: "trigger",
+        position: { x: 100, y: 200 },
+        data: {
+          type: "schedule",
+          label: "Every Day 8 AM",
+          config: { cron: "0 8 * * *" },
+        },
+      },
+      {
+        id: "2",
+        type: "action",
+        position: { x: 380, y: 200 },
+        data: {
+          type: "http-request",
+          label: "Fetch Top Headlines",
+          config: {
+            url: "https://newsapi.org/v2/top-headlines?country=us&pageSize=10&apiKey=YOUR_NEWSAPI_KEY",
+            method: "GET",
+            headers: {},
+          },
+        },
+      },
+      {
+        id: "3",
+        type: "action",
+        position: { x: 660, y: 200 },
+        data: {
+          type: "openai",
+          label: "Summarise Headlines",
+          config: {
+            model: "gpt-4o-mini",
+            systemPrompt:
+              "You are a concise news editor. Summarise the provided headlines into a clean, easy-to-read daily briefing. Use bullet points. Keep each summary to one sentence. End with a one-line overall takeaway.",
+            prompt:
+              "Today is {{trigger.triggeredAt}}.\n\nHere are the top headlines:\n{{2.body}}\n\nWrite a morning briefing email body (no subject line, just the body).",
+          },
+        },
+      },
+      {
+        id: "4",
+        type: "action",
+        position: { x: 940, y: 200 },
+        data: {
+          type: "email",
+          label: "Send Morning Digest",
+          config: {
+            to: "you@example.com",
+            subject: "Your Daily News Digest — {{trigger.triggeredAt}}",
+            body: "{{3.message}}",
+          },
+        },
+      },
+    ],
+    edges: [
+      { id: "e1-2", source: "1", target: "2" },
+      { id: "e2-3", source: "2", target: "3" },
+      { id: "e3-4", source: "3", target: "4" },
+    ],
+    tags: ["schedule", "ai", "email", "news", "digest", "openai", "daily"],
+  },
 ];
 
 // Get templates by category
