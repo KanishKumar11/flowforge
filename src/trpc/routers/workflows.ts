@@ -1,5 +1,5 @@
 import { inngest } from "@/inngest/client";
-import { executeWorkflowDirect } from "@/inngest/functions";
+import { executeWorkflowDirect, pollImapWorkflowOnce } from "@/inngest/functions";
 import prisma from "@/lib/db";
 import { after } from "next/server";
 import {
@@ -735,5 +735,18 @@ export const workflowsRouter = createTRPCRouter({
           responseFormat: "JSON",
         },
       };
+    }),
+
+  // Manually poll IMAP inbox for a workflow right now (bypasses cron timing)
+  testImapPoll: teamProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const workflow = await prisma.workflow.findFirst({
+        where: { id: input.id, teamId: ctx.team.id },
+      });
+      if (!workflow) {
+        throw new TRPCError({ code: "NOT_FOUND", message: "Workflow not found" });
+      }
+      return pollImapWorkflowOnce(workflow.id);
     }),
 });

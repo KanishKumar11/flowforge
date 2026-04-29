@@ -417,6 +417,7 @@ export function NodeConfigPanel({
                 credentials={credentials ?? []}
                 onChange={handleConfigChange}
                 onOpenCredentialDialog={openCredentialDialog}
+                workflowId={workflowId}
               />
             )}
 
@@ -2568,13 +2569,33 @@ function ImapTriggerConfig({
   credentials,
   onChange,
   onOpenCredentialDialog,
+  workflowId,
 }: {
   config: Record<string, unknown>;
   credentials: Credential[];
   onChange: (key: string, value: unknown) => void;
   onOpenCredentialDialog: (provider: string) => void;
+  workflowId: string;
 }) {
+  const trpc = useTRPC();
   const imapCredentials = credentials.filter((c) => c.provider === "imap");
+
+  const pollNow = useMutation(
+    trpc.workflows.testImapPoll.mutationOptions({
+      onSuccess(data) {
+        if (data.error) {
+          toast.error(`Poll failed: ${data.error}`);
+        } else {
+          toast.success(
+            `Connected. Found ${data.emailsFound} email(s), created ${data.executionsCreated} execution(s).`,
+          );
+        }
+      },
+      onError(err) {
+        toast.error(`Poll error: ${err.message}`);
+      },
+    }),
+  );
 
   return (
     <div className="space-y-4">
@@ -2669,6 +2690,26 @@ function ImapTriggerConfig({
           <code>{"{{trigger.messageId}}"}</code>
         </p>
       </div>
+
+      <Button
+        type="button"
+        variant="outline"
+        size="sm"
+        disabled={pollNow.isPending || !config.credentialId}
+        onClick={() => pollNow.mutate({ id: workflowId })}
+        className="w-full rounded-none font-mono uppercase text-xs border-(--arch-border) text-(--arch-fg) hover:bg-(--arch-fg) hover:text-(--arch-bg) transition-colors"
+      >
+        {pollNow.isPending ? (
+          <><Loader2 className="w-3 h-3 mr-2 animate-spin" />Polling...</>
+        ) : (
+          <><RefreshCw className="w-3 h-3 mr-2" />Poll Inbox Now</>
+        )}
+      </Button>
+      {!config.credentialId && (
+        <p className="text-[10px] font-mono text-(--arch-muted) text-center">
+          Select a credential above to enable polling.
+        </p>
+      )}
     </div>
   );
 }
