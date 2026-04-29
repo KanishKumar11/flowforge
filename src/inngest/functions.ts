@@ -240,7 +240,9 @@ async function executeEmail(
 
   // Resolve SMTP credentials from user's stored credential
   const credId = config.credentialId as string | undefined;
-  console.log(`[email] credentialId=${credId ?? "(none)"} to="${to}" subject="${subject}"`);
+  console.log(
+    `[email] credentialId=${credId ?? "(none)"} to="${to}" subject="${subject}"`,
+  );
 
   let smtpConfig: {
     host: string;
@@ -255,13 +257,17 @@ async function executeEmail(
     try {
       const cred = await prisma.credential.findFirst({ where: { id: credId } });
       if (cred) {
-        console.log(`[email] credential found: id=${cred.id} name="${cred.name}" provider=${cred.provider}`);
+        console.log(
+          `[email] credential found: id=${cred.id} name="${cred.name}" provider=${cred.provider}`,
+        );
         const data = decryptCredential(cred.data || "{}");
         const smtpHost = data.host as string | undefined;
         const smtpUser = data.user as string | undefined;
         const smtpPort = String(data.port || "587");
         const smtpSecure = data.secure === true || data.secure === "true";
-        console.log(`[email] decrypted cred: host=${smtpHost ?? "(missing)"} port=${smtpPort} secure=${smtpSecure} user=${smtpUser ?? "(missing)"} pass=${data.pass ? "[set]" : "(missing)"}`);
+        console.log(
+          `[email] decrypted cred: host=${smtpHost ?? "(missing)"} port=${smtpPort} secure=${smtpSecure} user=${smtpUser ?? "(missing)"} pass=${data.pass ? "[set]" : "(missing)"}`,
+        );
         if (data.user && data.pass) {
           if (!smtpHost) {
             throw new Error(
@@ -277,7 +283,9 @@ async function executeEmail(
             from: data.from as string | undefined,
           };
         } else {
-          console.log(`[email] credential missing user or pass — fields present: ${Object.keys(data).join(", ")}`);
+          console.log(
+            `[email] credential missing user or pass — fields present: ${Object.keys(data).join(", ")}`,
+          );
         }
       } else {
         console.log(`[email] credential id=${credId} not found in DB`);
@@ -290,7 +298,9 @@ async function executeEmail(
 
   // Fall back to env vars if no credential configured
   if (!smtpConfig && process.env.SMTP_USER && process.env.SMTP_PASS) {
-    console.log(`[email] falling back to env-var SMTP: host=${process.env.SMTP_HOST ?? "(missing)"} user=${process.env.SMTP_USER}`);
+    console.log(
+      `[email] falling back to env-var SMTP: host=${process.env.SMTP_HOST ?? "(missing)"} user=${process.env.SMTP_USER}`,
+    );
     if (!process.env.SMTP_HOST) {
       throw new Error(
         "Email node: SMTP_HOST env var is not set. Set it to your mail provider's SMTP server (e.g. smtp.zoho.com, smtp.gmail.com).",
@@ -311,7 +321,9 @@ async function executeEmail(
     );
   }
 
-  console.log(`[email] connecting: host=${smtpConfig.host} port=${smtpConfig.port} secure=${smtpConfig.secure} requireTLS=${!smtpConfig.secure} user=${smtpConfig.user}`);
+  console.log(
+    `[email] connecting: host=${smtpConfig.host} port=${smtpConfig.port} secure=${smtpConfig.secure} requireTLS=${!smtpConfig.secure} user=${smtpConfig.user}`,
+  );
 
   try {
     const transporter = nodemailer.createTransport({

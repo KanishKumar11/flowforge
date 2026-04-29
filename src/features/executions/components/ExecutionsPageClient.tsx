@@ -10,9 +10,9 @@ import {
   AlertCircle,
   CheckCircle2,
   Clock,
+  Eye,
   History,
   Loader2,
-  MoreVertical,
   Play,
   RefreshCw,
   Trash2,
@@ -25,12 +25,6 @@ import { DashboardHeader } from "@/components/DashboardHeader";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import {
   Select,
   SelectContent,
@@ -267,7 +261,7 @@ export function ExecutionsPageClient() {
           {/* Filters */}
           <div className="flex items-center gap-4 p-1 bg-(--arch-bg) border border-(--arch-border) w-fit rounded-none">
             <Select value={statusFilter} onValueChange={setStatusFilter}>
-              <SelectTrigger className="w-[180px] bg-transparent border-none focus:ring-0 text-(--arch-fg) font-mono text-xs uppercase">
+              <SelectTrigger className="w-45 bg-transparent border-none focus:ring-0 text-(--arch-fg) font-mono text-xs uppercase">
                 <SelectValue placeholder="Filter by status" />
               </SelectTrigger>
               <SelectContent className="bg-(--arch-bg) border-(--arch-border) rounded-none">
@@ -446,35 +440,26 @@ const ExecutionCard = ({
                 Retry
               </Button>
             )}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-8 w-8 text-(--arch-muted) hover:text-(--arch-fg) hover:bg-[rgba(var(--arch-fg-rgb)/0.1)] rounded-none"
-                >
-                  <MoreVertical className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                align="end"
-                className="bg-(--arch-bg) border-(--arch-border) rounded-none"
-              >
-                <DropdownMenuItem
-                  asChild
-                  className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer font-mono text-xs uppercase"
-                >
-                  <Link href={`/executions/${execution.id}`}>View Details</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  className="text-red-500 focus:bg-red-500 focus:text-white cursor-pointer font-mono text-xs uppercase"
-                  onClick={() => deleteExecution.mutate({ id: execution.id })}
-                >
-                  <Trash2 className="mr-2 h-4 w-4" />
-                  Delete
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <Button
+              variant="outline"
+              size="sm"
+              asChild
+              className="border-(--arch-border) text-(--arch-fg) hover:bg-(--arch-fg) hover:text-(--arch-bg) rounded-none font-mono uppercase text-xs h-8"
+            >
+              <Link href={`/executions/${execution.id}`}>
+                <Eye className="h-3 w-3 mr-1.5" />
+                Details
+              </Link>
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => deleteExecution.mutate({ id: execution.id })}
+              className="border-red-500/40 text-red-500 hover:bg-red-500 hover:text-white rounded-none font-mono uppercase text-xs h-8"
+            >
+              <Trash2 className="h-3 w-3 mr-1.5" />
+              Delete
+            </Button>
           </div>
         </div>
       </CardHeader>
