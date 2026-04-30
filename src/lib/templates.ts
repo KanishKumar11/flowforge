@@ -1086,7 +1086,7 @@ export const workflowTemplates: WorkflowTemplate[] = [
     id: "daily-news-email-digest",
     name: "Daily AI News Digest",
     description:
-      "Every morning at 8 AM, fetch the latest headlines from a news API, use AI to write a concise summary, and email it to your inbox — your personal daily briefing, automated.",
+      "Every morning at 8 AM, fetch the top stories from Hacker News (no API key needed), use AI to write a concise summary, and email it to your inbox — your personal daily briefing, automated.",
     category: "AI",
     icon: "schedule",
     nodes: [
@@ -1108,7 +1108,7 @@ export const workflowTemplates: WorkflowTemplate[] = [
           type: "http-request",
           label: "Fetch Top Headlines",
           config: {
-            url: "https://newsapi.org/v2/top-headlines?country=us&pageSize=10&apiKey=YOUR_NEWSAPI_KEY",
+            url: "https://hn.algolia.com/api/v1/search?tags=front_page&hitsPerPage=10",
             method: "GET",
             headers: {},
           },
@@ -1126,7 +1126,7 @@ export const workflowTemplates: WorkflowTemplate[] = [
             systemPrompt:
               "You are a concise news editor. Summarise the provided headlines into a clean, easy-to-read daily briefing. Use bullet points. Keep each summary to one sentence. End with a one-line overall takeaway.",
             prompt:
-              "Today is {{trigger.triggeredAt}}.\n\nHere are the top headlines:\n{{2.body}}\n\nWrite a morning briefing email body (no subject line, just the body).",
+              "Today is {{trigger.triggeredAt}}.\n\nHere are the top Hacker News stories:\n{{2.data.hits}}\n\nEach story has a 'title', 'url', and 'points' field. Write a morning briefing email body (no subject line, just the body).",
           },
         },
       },
