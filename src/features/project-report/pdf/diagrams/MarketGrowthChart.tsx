@@ -13,6 +13,8 @@ export default function MarketGrowthChart() {
   const chartY = 50;
   const chartW = 400;
   const chartH = 210;
+  const legendW = 140;
+  const legendX = chartX - chartW - legendW - 24;
 
   const data = [
     { year: "2022", value: 9.4, projected: false },
@@ -29,6 +31,7 @@ export default function MarketGrowthChart() {
   const maxVal = 50;
   const barW = 34;
   const barGap = (chartW - data.length * barW) / (data.length + 1);
+  const projectionLineX = chartX + 3 * barW + 3.5 * barGap;
   const yGridValues = [0, 10, 20, 30, 40, 50];
 
   return (
@@ -43,9 +46,9 @@ export default function MarketGrowthChart() {
         Global Workflow Automation Market Size (USD Billions)
       </SvgText>
 
-      {/* CAGR annotation - positioned prominently */}
+      {/* CAGR annotation */}
       <SvgText
-        x={cx - 30}
+        x={cx}
         y={42}
         textAnchor="middle"
         style={{ fontSize: 9, fontFamily: "Times-Bold", fill: "#dc2626" }}
@@ -73,7 +76,7 @@ export default function MarketGrowthChart() {
               style={{
                 fontSize: 7,
                 fontFamily: "Times-Roman",
-                fill: "#555555",
+                fill: "#475569",
               }}
             >
               {`$${val}B`}
@@ -88,17 +91,35 @@ export default function MarketGrowthChart() {
         y1={chartY}
         x2={chartX}
         y2={chartY + chartH}
-        stroke="#333"
-        strokeWidth={1}
+        stroke="#475569"
+        strokeWidth={0.8}
       />
       <Line
         x1={chartX}
         y1={chartY + chartH}
         x2={chartX + chartW}
         y2={chartY + chartH}
-        stroke="#333"
-        strokeWidth={1}
+        stroke="#475569"
+        strokeWidth={0.8}
       />
+
+      {/* Projection boundary */}
+      <Line
+        x1={projectionLineX}
+        y1={chartY}
+        x2={projectionLineX}
+        y2={chartY + chartH}
+        stroke="#cbd5e1"
+        strokeWidth={0.5}
+        strokeDasharray="2,2"
+      />
+      <SvgText
+        x={projectionLineX + 6}
+        y={chartY + 10}
+        style={{ fontSize: 6.5, fontFamily: "Times-Italic", fill: "#475569" }}
+      >
+        Projection begins
+      </SvgText>
 
       {/* Trend line (dashed) */}
       <Line
@@ -162,52 +183,52 @@ export default function MarketGrowthChart() {
       {/* Legend */}
       <G>
         <Rect
-          x={chartX + chartW - 145}
+          x={legendX}
           y={chartY + 5}
-          width={140}
-          height={35}
-          rx={3}
-          fill="white"
-          stroke="#ddd"
+          width={legendW}
+          height={36}
+          rx={4}
+          fill="#f8fafc"
+          stroke="#cbd5e1"
           strokeWidth={0.8}
         />
         <Rect
-          x={chartX + chartW - 137}
-          y={chartY + 13}
+          x={legendX + 8}
+          y={chartY + 14}
           width={12}
           height={8}
           rx={1}
           fill="#2563eb"
         />
         <SvgText
-          x={chartX + chartW - 120}
-          y={chartY + 20}
-          style={{ fontSize: 7, fontFamily: "Times-Roman", fill: "#333" }}
+          x={legendX + 32}
+          y={chartY + 21}
+          style={{ fontSize: 7, fontFamily: "Times-Roman", fill: "#334155" }}
         >
           Actual
         </SvgText>
         <Rect
-          x={chartX + chartW - 80}
-          y={chartY + 13}
+          x={legendX + 84}
+          y={chartY + 14}
           width={12}
           height={8}
           rx={1}
           fill="#93c5fd"
         />
         <SvgText
-          x={chartX + chartW - 63}
-          y={chartY + 20}
-          style={{ fontSize: 7, fontFamily: "Times-Roman", fill: "#333" }}
+          x={legendX + 108}
+          y={chartY + 21}
+          style={{ fontSize: 7, fontFamily: "Times-Roman", fill: "#334155" }}
         >
           Projected
         </SvgText>
         <SvgText
-          x={chartX + chartW - 137}
-          y={chartY + 33}
+          x={legendX + 8}
+          y={chartY + 35}
           style={{
-            fontSize: 7,
+            fontSize: 6.5,
             fontFamily: "Times-Italic",
-            fill: "#555555",
+            fill: "#475569",
           }}
         >
           Source: Grand View Research, 2024

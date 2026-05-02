@@ -18,7 +18,7 @@ export default function TestingPyramid() {
 
   const colors = {
     text: "#1a1a1a",
-    label: "#666666",
+    label: "#475569",
     unit: "#4CAF50",
     unitLight: "#E8F5E9",
     integration: "#2196F3",
@@ -37,7 +37,7 @@ export default function TestingPyramid() {
   const layers = [
     {
       label: "Unit Tests",
-      count: "24 Test Cases",
+      count: "69 Test Cases",
       coverage: "85%",
       color: colors.unit,
       lightColor: colors.unitLight,
@@ -45,7 +45,7 @@ export default function TestingPyramid() {
     },
     {
       label: "Integration Tests",
-      count: "12 Test Cases",
+      count: "29 Test Cases",
       coverage: "78%",
       color: colors.integration,
       lightColor: colors.integrationLight,
@@ -53,7 +53,7 @@ export default function TestingPyramid() {
     },
     {
       label: "System Tests",
-      count: "8 Test Cases",
+      count: "6 Test Cases",
       coverage: "92%",
       color: colors.system,
       lightColor: colors.systemLight,
@@ -61,7 +61,7 @@ export default function TestingPyramid() {
     },
     {
       label: "UI/UX Tests",
-      count: "6 Test Cases",
+      count: "29 Test Cases",
       coverage: "100%",
       color: colors.uiux,
       lightColor: colors.uiuxLight,
@@ -109,7 +109,7 @@ export default function TestingPyramid() {
         textAnchor="middle"
         style={{ fontSize: 7, fontFamily: "Times-Italic", fill: colors.label }}
       >
-        59 Total Test Cases Across 6 Testing Levels
+        142 Total Test Cases Across 6 Testing Levels
       </SvgText>
 
       {/* Draw pyramid layers from bottom to top */}
@@ -126,6 +126,8 @@ export default function TestingPyramid() {
         const x2Top = pyramidRight - topInset;
         const x1Bot = pyramidLeft + bottomInset;
         const x2Bot = pyramidRight - bottomInset;
+        const trapTopWidth = x2Top - x1Top;
+        const isNarrow = trapTopWidth < 90;
 
         return (
           <G key={idx}>
@@ -143,6 +145,8 @@ export default function TestingPyramid() {
               const countY = isBottom
                 ? y + layerH / 2 + 6
                 : y + layerH / 2 + 10;
+              const labelFont = isNarrow ? 7 : 8;
+              const countFont = isNarrow ? 6.5 : 7;
               return (
                 <G>
                   <SvgText
@@ -150,7 +154,7 @@ export default function TestingPyramid() {
                     y={labelY}
                     textAnchor="middle"
                     style={{
-                      fontSize: 8,
+                      fontSize: labelFont,
                       fontFamily: "Times-Bold",
                       fill: l.color,
                     }}
@@ -162,7 +166,7 @@ export default function TestingPyramid() {
                     y={countY}
                     textAnchor="middle"
                     style={{
-                      fontSize: 7,
+                      fontSize: countFont,
                       fontFamily: "Times-Roman",
                       fill: colors.text,
                     }}
@@ -173,22 +177,23 @@ export default function TestingPyramid() {
               );
             })()}
 
-            {/* Right side: tools label */}
+            {/* Right side: tools label (fixed x for alignment) */}
             {(() => {
               const isBottom = idx === 0;
               const lineY = isBottom ? y + layerH / 2 - 4 : y + layerH / 2;
+              const labelX = pyramidRight + 18;
               return (
                 <G>
                   <Line
                     x1={x2Top}
                     y1={lineY}
-                    x2={x2Top + 15}
+                    x2={labelX - 3}
                     y2={lineY}
                     stroke={l.color}
                     strokeWidth={0.8}
                   />
                   <SvgText
-                    x={x2Top + 18}
+                    x={labelX}
                     y={lineY - 3}
                     textAnchor="start"
                     style={{
@@ -200,7 +205,7 @@ export default function TestingPyramid() {
                     {l.tools}
                   </SvgText>
                   <SvgText
-                    x={x2Top + 18}
+                    x={labelX}
                     y={lineY + 6}
                     textAnchor="start"
                     style={{
@@ -215,13 +220,13 @@ export default function TestingPyramid() {
               );
             })()}
 
-            {/* Left side: count indicator bar */}
+            {/* Left side: count indicator bar (fixed x for alignment) */}
             {(() => {
               const barMaxW = 60;
               const pct = parseInt(l.coverage) / 100;
               const barW = barMaxW * pct;
               const barY = idx === 0 ? y + layerH / 2 - 6 : y + layerH / 2 - 4;
-              const barX = x1Top - barMaxW - 12;
+              const barX = pyramidLeft - barMaxW - 12;
               return (
                 <G>
                   <Rect

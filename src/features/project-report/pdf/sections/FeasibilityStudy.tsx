@@ -45,19 +45,12 @@ export default function FeasibilityStudy() {
 
       <Text style={styles.h2}>4.1 Introduction</Text>
       <Text style={styles.paragraphIndent}>
-        A feasibility study is a critical preliminary analysis conducted before
-        committing resources to a project. It evaluates whether the proposed
-        project is technically possible, economically viable, and operationally
-        practical. This section presents the comprehensive feasibility analysis
-        conducted for the Flowgent workflow automation platform.
-      </Text>
-      <Text style={styles.paragraphIndent}>
-        The feasibility study examines five dimensions: technical feasibility
-        (can we build it?), economic feasibility (is it cost-effective?),
-        operational feasibility (will it work in practice?), schedule
-        feasibility (can we complete it in time?), and legal feasibility (are
-        there regulatory concerns?). Each dimension contributes to the overall
-        project viability assessment.
+        A feasibility study evaluates whether a proposed project is technically
+        possible, economically viable, and operationally practical before
+        resources are committed. This section presents that analysis for
+        Flowgent across five dimensions — technical, economic, operational,
+        schedule, and legal — each contributing to the overall viability
+        assessment.
       </Text>
 
       <Text style={styles.h2}>4.2 Technical Feasibility</Text>
@@ -75,7 +68,7 @@ export default function FeasibilityStudy() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 8,
         }}
@@ -83,9 +76,9 @@ export default function FeasibilityStudy() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -95,7 +88,7 @@ export default function FeasibilityStudy() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Technology
@@ -107,7 +100,7 @@ export default function FeasibilityStudy() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Assessment
@@ -167,7 +160,7 @@ export default function FeasibilityStudy() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 8 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -177,7 +170,7 @@ export default function FeasibilityStudy() {
                 fontSize: 8,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -188,7 +181,7 @@ export default function FeasibilityStudy() {
                 padding: 3,
                 fontSize: 8,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -199,7 +192,7 @@ export default function FeasibilityStudy() {
                 padding: 3,
                 fontSize: 8,
                 textAlign: "center",
-                color: "#006600",
+                color: "#16a34a",
               }}
             >
               {row[2]}
@@ -225,7 +218,7 @@ export default function FeasibilityStudy() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 8,
         }}
@@ -233,9 +226,9 @@ export default function FeasibilityStudy() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -245,7 +238,7 @@ export default function FeasibilityStudy() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Integration
@@ -257,7 +250,7 @@ export default function FeasibilityStudy() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             SDK/API Available
@@ -269,7 +262,7 @@ export default function FeasibilityStudy() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Documentation
@@ -297,7 +290,7 @@ export default function FeasibilityStudy() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 4 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -307,7 +300,7 @@ export default function FeasibilityStudy() {
                 fontSize: 8,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -318,7 +311,7 @@ export default function FeasibilityStudy() {
                 padding: 3,
                 fontSize: 8,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -330,7 +323,7 @@ export default function FeasibilityStudy() {
                 fontSize: 8,
                 textAlign: "center",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[2]}
@@ -341,7 +334,7 @@ export default function FeasibilityStudy() {
                 padding: 3,
                 fontSize: 8,
                 textAlign: "center",
-                color: "#006600",
+                color: "#16a34a",
               }}
             >
               {row[3]}
@@ -357,7 +350,7 @@ export default function FeasibilityStudy() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 8,
         }}
@@ -365,9 +358,9 @@ export default function FeasibilityStudy() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -377,7 +370,7 @@ export default function FeasibilityStudy() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Risk
@@ -389,7 +382,7 @@ export default function FeasibilityStudy() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Likelihood
@@ -401,7 +394,7 @@ export default function FeasibilityStudy() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Impact
@@ -454,7 +447,7 @@ export default function FeasibilityStudy() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 4 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -464,7 +457,7 @@ export default function FeasibilityStudy() {
                 fontSize: 8,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -476,7 +469,7 @@ export default function FeasibilityStudy() {
                 fontSize: 8,
                 textAlign: "center",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -488,7 +481,7 @@ export default function FeasibilityStudy() {
                 fontSize: 8,
                 textAlign: "center",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[2]}
@@ -536,7 +529,7 @@ export default function FeasibilityStudy() {
           style={{
             fontSize: 11,
             fontFamily: "Times-Bold",
-            color: "#006600",
+            color: "#16a34a",
             textAlign: "center",
           }}
         >
@@ -580,7 +573,7 @@ export default function FeasibilityStudy() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 8,
         }}
@@ -588,9 +581,9 @@ export default function FeasibilityStudy() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -600,7 +593,7 @@ export default function FeasibilityStudy() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Category
@@ -612,7 +605,7 @@ export default function FeasibilityStudy() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Description
@@ -661,7 +654,7 @@ export default function FeasibilityStudy() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 5 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -671,7 +664,7 @@ export default function FeasibilityStudy() {
                 fontSize: 8,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -682,7 +675,7 @@ export default function FeasibilityStudy() {
                 padding: 3,
                 fontSize: 8,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -708,7 +701,7 @@ export default function FeasibilityStudy() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 8,
         }}
@@ -716,9 +709,9 @@ export default function FeasibilityStudy() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -728,7 +721,7 @@ export default function FeasibilityStudy() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Service
@@ -740,7 +733,7 @@ export default function FeasibilityStudy() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Plan
@@ -752,7 +745,7 @@ export default function FeasibilityStudy() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Development
@@ -782,7 +775,7 @@ export default function FeasibilityStudy() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 6 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -792,7 +785,7 @@ export default function FeasibilityStudy() {
                 fontSize: 8,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -803,7 +796,7 @@ export default function FeasibilityStudy() {
                 padding: 3,
                 fontSize: 8,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -815,7 +808,7 @@ export default function FeasibilityStudy() {
                 fontSize: 8,
                 textAlign: "right",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[2]}
@@ -832,7 +825,7 @@ export default function FeasibilityStudy() {
             </Text>
           </View>
         ))}
-        <View style={{ flexDirection: "row", backgroundColor: "#D9E2F3" }}>
+        <View style={{ flexDirection: "row", backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6 }}>
           <Text
             style={{
               width: "50%",
@@ -840,7 +833,7 @@ export default function FeasibilityStudy() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Total Monthly
@@ -853,7 +846,7 @@ export default function FeasibilityStudy() {
               fontFamily: "Times-Bold",
               textAlign: "right",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             INR500
@@ -889,7 +882,7 @@ export default function FeasibilityStudy() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 8,
         }}
@@ -897,9 +890,9 @@ export default function FeasibilityStudy() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -909,7 +902,7 @@ export default function FeasibilityStudy() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Costs (1st Year)
@@ -929,14 +922,14 @@ export default function FeasibilityStudy() {
           style={{
             flexDirection: "row",
             borderBottomWidth: 1,
-            borderBottomColor: "#cccccc",
+            borderBottomColor: "#cbd5e1",
           }}
         >
           <View
             style={{
               width: "50%",
               borderRightWidth: 1,
-              borderRightColor: "#cccccc",
+              borderRightColor: "#cbd5e1",
               padding: 6,
             }}
           >
@@ -992,7 +985,7 @@ export default function FeasibilityStudy() {
           style={{
             fontSize: 11,
             fontFamily: "Times-Bold",
-            color: "#006600",
+            color: "#16a34a",
             textAlign: "center",
           }}
         >
@@ -1038,7 +1031,7 @@ export default function FeasibilityStudy() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 8,
         }}
@@ -1046,9 +1039,9 @@ export default function FeasibilityStudy() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -1058,7 +1051,7 @@ export default function FeasibilityStudy() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Factor
@@ -1070,7 +1063,7 @@ export default function FeasibilityStudy() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Assessment
@@ -1123,7 +1116,7 @@ export default function FeasibilityStudy() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 5 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -1133,7 +1126,7 @@ export default function FeasibilityStudy() {
                 fontSize: 8,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -1144,7 +1137,7 @@ export default function FeasibilityStudy() {
                 padding: 3,
                 fontSize: 8,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -1224,7 +1217,7 @@ export default function FeasibilityStudy() {
           style={{
             fontSize: 11,
             fontFamily: "Times-Bold",
-            color: "#006600",
+            color: "#16a34a",
             textAlign: "center",
           }}
         >
@@ -1251,7 +1244,7 @@ export default function FeasibilityStudy() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 8,
         }}
@@ -1259,9 +1252,9 @@ export default function FeasibilityStudy() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -1271,7 +1264,7 @@ export default function FeasibilityStudy() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Phase
@@ -1283,7 +1276,7 @@ export default function FeasibilityStudy() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Allocated
@@ -1295,7 +1288,7 @@ export default function FeasibilityStudy() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Key Deliverables
@@ -1324,7 +1317,7 @@ export default function FeasibilityStudy() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 5 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -1334,7 +1327,7 @@ export default function FeasibilityStudy() {
                 fontSize: 8,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -1346,7 +1339,7 @@ export default function FeasibilityStudy() {
                 fontSize: 8,
                 textAlign: "center",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -1357,7 +1350,7 @@ export default function FeasibilityStudy() {
                 padding: 3,
                 fontSize: 8,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[2]}
@@ -1411,7 +1404,7 @@ export default function FeasibilityStudy() {
           style={{
             fontSize: 11,
             fontFamily: "Times-Bold",
-            color: "#006600",
+            color: "#16a34a",
             textAlign: "center",
           }}
         >
@@ -1452,7 +1445,7 @@ export default function FeasibilityStudy() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 8,
         }}
@@ -1460,9 +1453,9 @@ export default function FeasibilityStudy() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -1472,7 +1465,7 @@ export default function FeasibilityStudy() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Dependency
@@ -1484,7 +1477,7 @@ export default function FeasibilityStudy() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             License
@@ -1496,7 +1489,7 @@ export default function FeasibilityStudy() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Compatible
@@ -1524,7 +1517,7 @@ export default function FeasibilityStudy() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 4 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -1534,7 +1527,7 @@ export default function FeasibilityStudy() {
                 fontSize: 8,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -1545,7 +1538,7 @@ export default function FeasibilityStudy() {
                 padding: 3,
                 fontSize: 8,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -1556,7 +1549,7 @@ export default function FeasibilityStudy() {
                 padding: 3,
                 fontSize: 8,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[2]}
@@ -1567,7 +1560,7 @@ export default function FeasibilityStudy() {
                 padding: 3,
                 fontSize: 8,
                 textAlign: "center",
-                color: "#006600",
+                color: "#16a34a",
               }}
             >
               {row[3]}
@@ -1611,7 +1604,7 @@ export default function FeasibilityStudy() {
           style={{
             fontSize: 11,
             fontFamily: "Times-Bold",
-            color: "#006600",
+            color: "#16a34a",
             textAlign: "center",
           }}
         >
@@ -1651,7 +1644,7 @@ export default function FeasibilityStudy() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 12,
           marginBottom: 12,
         }}
@@ -1659,9 +1652,9 @@ export default function FeasibilityStudy() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -1671,7 +1664,7 @@ export default function FeasibilityStudy() {
               fontSize: 10,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Feasibility Dimension
@@ -1683,7 +1676,7 @@ export default function FeasibilityStudy() {
               fontSize: 10,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Key Finding
@@ -1711,7 +1704,7 @@ export default function FeasibilityStudy() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 4 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -1721,7 +1714,7 @@ export default function FeasibilityStudy() {
                 fontSize: 9,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -1732,7 +1725,7 @@ export default function FeasibilityStudy() {
                 padding: 5,
                 fontSize: 9,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -1743,7 +1736,7 @@ export default function FeasibilityStudy() {
                 padding: 5,
                 fontSize: 9,
                 textAlign: "center",
-                color: "#006600",
+                color: "#16a34a",
                 fontFamily: "Times-Bold",
               }}
             >
@@ -1815,7 +1808,7 @@ export default function FeasibilityStudy() {
         }}
       >
         <Text
-          style={{ fontSize: 14, fontFamily: "Times-Bold", color: "#006600" }}
+          style={{ fontSize: 14, fontFamily: "Times-Bold", color: "#16a34a" }}
         >
           OVERALL FEASIBILITY ASSESSMENT
         </Text>
@@ -1823,7 +1816,7 @@ export default function FeasibilityStudy() {
           style={{
             fontSize: 18,
             fontFamily: "Times-Bold",
-            color: "#006600",
+            color: "#16a34a",
             marginTop: 8,
           }}
         >

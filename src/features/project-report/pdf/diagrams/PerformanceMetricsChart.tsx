@@ -19,7 +19,7 @@ export default function PerformanceMetricsChart() {
   const colors = {
     text: "#1a1a1a",
     label: "#333333",
-    sublabel: "#555555",
+    sublabel: "#475569",
     target: "#C62828",
     targetLine: "#EF5350",
     actual: "#2E7D32",

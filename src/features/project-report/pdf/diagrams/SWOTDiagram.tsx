@@ -19,7 +19,7 @@ export default function SWOTDiagram() {
     {
       title: "STRENGTHS",
       color: "#059669",
-      bgColor: "#f0fdf4",
+      bgColor: "#d1fae5",
       x: startX,
       y: startY,
       items: [
@@ -34,7 +34,7 @@ export default function SWOTDiagram() {
     {
       title: "WEAKNESSES",
       color: "#d97706",
-      bgColor: "#fffbeb",
+      bgColor: "#fde68a",
       x: startX + quadW + gap,
       y: startY,
       items: [
@@ -48,7 +48,7 @@ export default function SWOTDiagram() {
     {
       title: "OPPORTUNITIES",
       color: "#2563eb",
-      bgColor: "#eff6ff",
+      bgColor: "#bfdbfe",
       x: startX,
       y: startY + quadH + gap,
       items: [
@@ -62,7 +62,7 @@ export default function SWOTDiagram() {
     {
       title: "THREATS",
       color: "#dc2626",
-      bgColor: "#fef2f2",
+      bgColor: "#fecaca",
       x: startX + quadW + gap,
       y: startY + quadH + gap,
       items: [
@@ -126,57 +126,60 @@ export default function SWOTDiagram() {
       {/* Quadrants */}
       {quadrants.map((q, i) => (
         <G key={i}>
-          {/* Background */}
+          {/* Background (body area below header band) */}
           <Rect
             x={q.x}
             y={q.y}
             width={quadW}
             height={quadH}
-            rx={5}
-            fill={q.bgColor}
+            rx={6}
+            fill="#ffffff"
             stroke={q.color}
-            strokeWidth={1.5}
+            strokeWidth={2}
           />
-          {/* Title */}
+          {/* Solid header band */}
+          <Rect
+            x={q.x}
+            y={q.y}
+            width={quadW}
+            height={24}
+            rx={6}
+            fill={q.color}
+          />
+          {/* Header band square-off bottom corners */}
+          <Rect x={q.x} y={q.y + 12} width={quadW} height={12} fill={q.color} />
+          {/* Title (white text on solid band) */}
           <SvgText
-            x={q.x + 10}
+            x={q.x + quadW / 2}
             y={q.y + 16}
+            textAnchor="middle"
             style={{
-              fontSize: 9,
+              fontSize: 9.5,
               fontFamily: "Times-Bold",
-              fill: q.color,
+              fill: "#ffffff",
+              letterSpacing: 0.8,
             }}
           >
             {q.title}
           </SvgText>
-          {/* Divider */}
-          <Line
-            x1={q.x + 8}
-            y1={q.y + 22}
-            x2={q.x + quadW - 8}
-            y2={q.y + 22}
-            stroke={q.color}
-            strokeWidth={0.8}
-            opacity={1}
-          />
           {/* Items */}
           {q.items.map((item, j) => (
             <G key={`item-${j}`}>
               <Rect
-                x={q.x + 12}
-                y={q.y + 29 + j * 17}
-                width={5}
-                height={5}
-                rx={1}
+                x={q.x + 10}
+                y={q.y + 30 + j * 18}
+                width={6}
+                height={6}
+                rx={1.5}
                 fill={q.color}
               />
               <SvgText
                 x={q.x + 22}
-                y={q.y + 34 + j * 17}
+                y={q.y + 37 + j * 18}
                 style={{
-                  fontSize: 7,
+                  fontSize: 7.5,
                   fontFamily: "Times-Roman",
-                  fill: "#333",
+                  fill: "#1a1a1a",
                 }}
               >
                 {item}

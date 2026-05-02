@@ -116,9 +116,10 @@ const tables = [
   { number: "9.11", title: "Complete Test Results Summary", page: "100" },
 
   // Chapter 10 - User Manual
-  { number: "10.1", title: "Common Cron Schedule Examples", page: "100" },
-  { number: "10.2", title: "Team Role Permissions Matrix", page: "100" },
-  { number: "10.3", title: "Common Issues & Resolutions", page: "101" },
+  { number: "10.1", title: "Flowgent Node Catalog", page: "99" },
+  { number: "10.2", title: "Common Cron Schedule Examples", page: "100" },
+  { number: "10.3", title: "Team Role Permissions Matrix", page: "100" },
+  { number: "10.4", title: "Common Issues & Resolutions", page: "101" },
 
   // Chapter 12 - Conclusions
   { number: "12.1", title: "Project Objectives Achievement", page: "108" },

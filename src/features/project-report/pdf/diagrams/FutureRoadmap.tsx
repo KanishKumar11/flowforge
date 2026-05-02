@@ -19,7 +19,7 @@ export default function FutureRoadmap() {
 
   const colors = {
     text: "#1a1a1a",
-    label: "#555555",
+    label: "#475569",
     timeline: "#333333",
     shortTerm: "#1565C0",
     shortTermLight: "#E3F2FD",

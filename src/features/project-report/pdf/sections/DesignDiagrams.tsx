@@ -85,7 +85,7 @@ export default function DesignDiagrams() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 12,
           marginBottom: 8,
         }}
@@ -93,9 +93,9 @@ export default function DesignDiagrams() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -105,7 +105,7 @@ export default function DesignDiagrams() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Entity
@@ -117,7 +117,7 @@ export default function DesignDiagrams() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Data to System
@@ -152,7 +152,7 @@ export default function DesignDiagrams() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 3 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -162,7 +162,7 @@ export default function DesignDiagrams() {
                 fontSize: 8,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -173,7 +173,7 @@ export default function DesignDiagrams() {
                 padding: 4,
                 fontSize: 8,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -275,7 +275,7 @@ export default function DesignDiagrams() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 12,
         }}
@@ -283,9 +283,9 @@ export default function DesignDiagrams() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -295,7 +295,7 @@ export default function DesignDiagrams() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Actor
@@ -307,7 +307,7 @@ export default function DesignDiagrams() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Description
@@ -345,7 +345,7 @@ export default function DesignDiagrams() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 2 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -355,7 +355,7 @@ export default function DesignDiagrams() {
                 fontSize: 8,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -366,7 +366,7 @@ export default function DesignDiagrams() {
                 padding: 4,
                 fontSize: 8,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -383,7 +383,7 @@ export default function DesignDiagrams() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 8,
         }}
@@ -391,9 +391,9 @@ export default function DesignDiagrams() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -403,7 +403,7 @@ export default function DesignDiagrams() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             ID
@@ -415,7 +415,7 @@ export default function DesignDiagrams() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Use Case
@@ -427,7 +427,7 @@ export default function DesignDiagrams() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Actor
@@ -510,7 +510,7 @@ export default function DesignDiagrams() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 9 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -520,7 +520,7 @@ export default function DesignDiagrams() {
                 fontSize: 7,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -531,7 +531,7 @@ export default function DesignDiagrams() {
                 padding: 3,
                 fontSize: 7,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -542,7 +542,7 @@ export default function DesignDiagrams() {
                 padding: 3,
                 fontSize: 7,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[2]}
@@ -590,7 +590,7 @@ export default function DesignDiagrams() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 8,
         }}
@@ -598,9 +598,9 @@ export default function DesignDiagrams() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -610,7 +610,7 @@ export default function DesignDiagrams() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Entity
@@ -622,7 +622,7 @@ export default function DesignDiagrams() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Key Attributes
@@ -672,7 +672,7 @@ export default function DesignDiagrams() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 6 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -682,7 +682,7 @@ export default function DesignDiagrams() {
                 fontSize: 8,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -693,7 +693,7 @@ export default function DesignDiagrams() {
                 padding: 3,
                 fontSize: 7,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -710,7 +710,7 @@ export default function DesignDiagrams() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 8,
         }}
@@ -718,9 +718,9 @@ export default function DesignDiagrams() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -730,7 +730,7 @@ export default function DesignDiagrams() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Relationship
@@ -742,7 +742,7 @@ export default function DesignDiagrams() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Cardinality
@@ -772,7 +772,7 @@ export default function DesignDiagrams() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 6 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -782,7 +782,7 @@ export default function DesignDiagrams() {
                 fontSize: 8,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -794,7 +794,7 @@ export default function DesignDiagrams() {
                 fontSize: 8,
                 textAlign: "center",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -827,7 +827,7 @@ export default function DesignDiagrams() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 12,
         }}
@@ -835,9 +835,9 @@ export default function DesignDiagrams() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -847,7 +847,7 @@ export default function DesignDiagrams() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Layer
@@ -859,7 +859,7 @@ export default function DesignDiagrams() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Technologies
@@ -898,7 +898,7 @@ export default function DesignDiagrams() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 3 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -908,7 +908,7 @@ export default function DesignDiagrams() {
                 fontSize: 8,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -919,7 +919,7 @@ export default function DesignDiagrams() {
                 padding: 4,
                 fontSize: 8,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -1092,23 +1092,6 @@ export default function DesignDiagrams() {
         </Text>
       </View>
 
-      <Text style={styles.h2} break>
-        7.10 Summary
-      </Text>
-      <Text style={styles.paragraphIndent}>
-        This chapter presented the comprehensive system design for Flowgent.
-        Data Flow Diagrams illustrated how data moves through the system at
-        context and decomposed levels. Use Case Diagrams documented 10 primary
-        use cases across three actor types. The Entity-Relationship Diagram
-        defined 7 core entities and their relationships.
-      </Text>
-      <Text style={styles.paragraphIndent}>
-        The system architecture follows a modern three-tier pattern with clear
-        separation of concerns. The database schema leverages Prisma ORM for
-        type-safe database access. Design patterns ensure extensibility, and
-        security measures protect user data and credentials throughout the
-        system.
-      </Text>
     </BookPageLayout>
   );
 }

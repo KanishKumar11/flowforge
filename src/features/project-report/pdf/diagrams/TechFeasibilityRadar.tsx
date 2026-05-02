@@ -71,7 +71,7 @@ export default function TechFeasibilityRadar() {
             <SvgText
               x={cx + 3}
               y={cy - (level / 10) * maxR + 3}
-              style={{ fontSize: 7, fill: "#555555" }}
+              style={{ fontSize: 7, fill: "#475569" }}
             >
               {level}
             </SvgText>

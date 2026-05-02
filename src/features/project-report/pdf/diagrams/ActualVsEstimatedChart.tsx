@@ -84,7 +84,7 @@ export default function ActualVsEstimatedChart() {
         style={{
           fontSize: 8,
           fontFamily: "Times-Italic",
-          fill: "#555555",
+          fill: "#475569",
         }}
       >
         Demonstrates significant over-estimation by COCOMO I for agile
@@ -183,7 +183,7 @@ export default function ActualVsEstimatedChart() {
               style={{
                 fontSize: 7,
                 fontFamily: "Times-Italic",
-                fill: "#555555",
+                fill: "#475569",
               }}
             >
               {m.unit}

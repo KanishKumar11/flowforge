@@ -80,13 +80,15 @@ export const styles = StyleSheet.create({
     marginBottom: 14,
     paddingBottom: 8,
     borderBottomWidth: 1.5,
-    borderBottomColor: "#222222",
+    borderBottomColor: "#1e293b",
+    minPresenceAhead: 100,
   },
   h3: {
     fontSize: 16,
     fontFamily: "Times-Bold",
     marginBottom: 10,
     marginTop: 6,
+    minPresenceAhead: 72,
   },
   paragraph: {
     fontSize: 12,
@@ -174,18 +176,18 @@ export const styles = StyleSheet.create({
   tableRow: {
     flexDirection: "row",
     borderBottomWidth: 0.5,
-    borderBottomColor: "#444444",
+    borderBottomColor: "#e2e8f0",
   },
   tableHeader: {
     flexDirection: "row",
-    borderBottomWidth: 1.5,
-    borderBottomColor: "#222222",
-    backgroundColor: "#D9E2F3",
+    borderBottomWidth: 1,
+    borderBottomColor: "#93c5fd",
+    backgroundColor: "#dbeafe",
     fontFamily: "Times-Bold",
   },
   tableCell: {
-    padding: 10,
-    fontSize: 11,
+    padding: 9,
+    fontSize: 10,
     lineHeight: 1.4,
   },
 

@@ -5,6 +5,8 @@ import { styles } from "../styles";
 import BookPageLayout from "../components/BookPageLayout";
 import DeploymentDiagram from "../diagrams/DeploymentDiagram";
 import AINodeFlowDiagram from "../diagrams/AINodeFlowDiagram";
+import NodeExecutionStateMachine from "../diagrams/NodeExecutionStateMachine";
+import ServiceIntegrationMatrix from "../diagrams/ServiceIntegrationMatrix";
 import BFSFlowchart from "../diagrams/BFSFlowchart";
 
 /**
@@ -76,7 +78,7 @@ export default function Implementation() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 12,
           marginBottom: 8,
         }}
@@ -84,9 +86,9 @@ export default function Implementation() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -96,7 +98,7 @@ export default function Implementation() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Directory
@@ -131,7 +133,7 @@ export default function Implementation() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 8 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -141,7 +143,7 @@ export default function Implementation() {
                 fontSize: 8,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -210,7 +212,7 @@ export default function Implementation() {
       </Text>
       <View
         style={{
-          backgroundColor: "#f5f5f5",
+          backgroundColor: "#f8fafc",
           borderWidth: 1,
           borderColor: "#cccccc",
           padding: 10,
@@ -305,7 +307,7 @@ export function useWorkflowEditor(workflowId: string) {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 12,
           marginBottom: 8,
         }}
@@ -313,9 +315,9 @@ export function useWorkflowEditor(workflowId: string) {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -325,7 +327,7 @@ export function useWorkflowEditor(workflowId: string) {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Router
@@ -337,7 +339,7 @@ export function useWorkflowEditor(workflowId: string) {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Procedures
@@ -395,7 +397,7 @@ export function useWorkflowEditor(workflowId: string) {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 6 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -405,7 +407,7 @@ export function useWorkflowEditor(workflowId: string) {
                 fontSize: 8,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -417,7 +419,7 @@ export function useWorkflowEditor(workflowId: string) {
                 fontSize: 8,
                 textAlign: "center",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -429,7 +431,7 @@ export function useWorkflowEditor(workflowId: string) {
             </Text>
           </View>
         ))}
-        <View style={{ flexDirection: "row", backgroundColor: "#D9E2F3" }}>
+        <View style={{ flexDirection: "row", backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6 }}>
           <Text
             style={{
               width: "20%",
@@ -437,7 +439,7 @@ export function useWorkflowEditor(workflowId: string) {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Total
@@ -472,7 +474,7 @@ export function useWorkflowEditor(workflowId: string) {
       </Text>
       <View
         style={{
-          backgroundColor: "#f5f5f5",
+          backgroundColor: "#f8fafc",
           borderWidth: 1,
           borderColor: "#cccccc",
           padding: 10,
@@ -511,7 +513,7 @@ export type AppRouter = typeof appRouter;`}
       </Text>
       <View
         style={{
-          backgroundColor: "#f5f5f5",
+          backgroundColor: "#f8fafc",
           borderWidth: 1,
           borderColor: "#cccccc",
           padding: 10,
@@ -544,7 +546,7 @@ export const protectedProcedure = t.procedure.use(async ({ ctx, next }) => {
       </Text>
       <View
         style={{
-          backgroundColor: "#f5f5f5",
+          backgroundColor: "#f8fafc",
           borderWidth: 1,
           borderColor: "#cccccc",
           padding: 10,
@@ -594,7 +596,7 @@ export const workflowRouter = createTRPCRouter({
       </Text>
       <View
         style={{
-          backgroundColor: "#f5f5f5",
+          backgroundColor: "#f8fafc",
           borderWidth: 1,
           borderColor: "#cccccc",
           padding: 10,
@@ -646,7 +648,7 @@ export const workflowRouter = createTRPCRouter({
       </Text>
       <View
         style={{
-          backgroundColor: "#f5f5f5",
+          backgroundColor: "#f8fafc",
           borderWidth: 1,
           borderColor: "#cccccc",
           padding: 10,
@@ -696,7 +698,7 @@ export const auth = betterAuth({
       </Text>
       <View
         style={{
-          backgroundColor: "#f5f5f5",
+          backgroundColor: "#f8fafc",
           borderWidth: 1,
           borderColor: "#cccccc",
           padding: 10,
@@ -752,6 +754,23 @@ export const executeWorkflow = inngest.createFunction(
         Figure 8.1: BFS Workflow Execution Algorithm — Flowchart
       </Text>
 
+      <View
+        wrap={false}
+        style={{ alignItems: "center", marginTop: 8, marginBottom: 4 }}
+      >
+        <NodeExecutionStateMachine />
+      </View>
+      <Text
+        style={{
+          fontSize: 9,
+          fontFamily: "Times-Italic",
+          textAlign: "center",
+          marginBottom: 12,
+        }}
+      >
+        Figure 8.2: Node Execution State Machine
+      </Text>
+
       <Text style={styles.h3}>8.5.2 Node Executors</Text>
       <Text style={styles.paragraphIndent}>
         Each of the 24 node types has a dedicated executor function that handles
@@ -768,7 +787,7 @@ export const executeWorkflow = inngest.createFunction(
       </Text>
       <View
         style={{
-          backgroundColor: "#f5f5f5",
+          backgroundColor: "#f8fafc",
           borderWidth: 1,
           borderColor: "#cccccc",
           padding: 10,
@@ -824,7 +843,7 @@ export async function executeHttpRequest(
       </Text>
       <View
         style={{
-          backgroundColor: "#f5f5f5",
+          backgroundColor: "#f8fafc",
           borderWidth: 1,
           borderColor: "#cccccc",
           padding: 10,
@@ -877,7 +896,7 @@ export const pollSchedules = inngest.createFunction(
       <View
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 12,
           marginBottom: 8,
         }}
@@ -885,9 +904,9 @@ export const pollSchedules = inngest.createFunction(
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -897,7 +916,7 @@ export const pollSchedules = inngest.createFunction(
               fontSize: 8,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Category
@@ -909,7 +928,7 @@ export const pollSchedules = inngest.createFunction(
               fontSize: 8,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Node Type
@@ -1037,7 +1056,7 @@ export const pollSchedules = inngest.createFunction(
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 24 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -1047,7 +1066,7 @@ export const pollSchedules = inngest.createFunction(
                 fontSize: 7,
                 fontFamily: row[0] ? "Times-Bold" : "Times-Roman",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -1059,7 +1078,7 @@ export const pollSchedules = inngest.createFunction(
                 fontSize: 7,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -1085,6 +1104,23 @@ export const pollSchedules = inngest.createFunction(
 
       {/* 8.7 Integration Implementation */}
       <Text style={styles.h2}>8.7 Integration Implementation</Text>
+
+      <View
+        wrap={false}
+        style={{ alignItems: "center", marginTop: 8, marginBottom: 4 }}
+      >
+        <ServiceIntegrationMatrix />
+      </View>
+      <Text
+        style={{
+          fontSize: 9,
+          fontFamily: "Times-Italic",
+          textAlign: "center",
+          marginBottom: 12,
+        }}
+      >
+        Figure 8.4: Service Integration Matrix
+      </Text>
 
       <Text style={styles.h3}>8.7.1 OAuth2 Flow</Text>
       <Text style={styles.paragraphIndent}>
@@ -1144,7 +1180,7 @@ export const pollSchedules = inngest.createFunction(
           marginBottom: 12,
         }}
       >
-        Figure 8.2: AI Node Execution Pipeline
+        Figure 8.3: AI Node Execution Pipeline
       </Text>
       <View style={{ marginLeft: 24, marginBottom: 12 }}>
         <Text style={{ fontSize: 10, marginBottom: 6, lineHeight: 1.5 }}>
@@ -1220,7 +1256,7 @@ export const pollSchedules = inngest.createFunction(
       </Text>
       <View
         style={{
-          backgroundColor: "#f5f5f5",
+          backgroundColor: "#f8fafc",
           borderWidth: 1,
           borderColor: "#cccccc",
           padding: 10,
@@ -1283,7 +1319,7 @@ export function decryptCredential(stored: { iv: string; encrypted: string; tag: 
       </Text>
       <View
         style={{
-          backgroundColor: "#f5f5f5",
+          backgroundColor: "#f8fafc",
           borderWidth: 1,
           borderColor: "#cccccc",
           padding: 10,
@@ -1331,7 +1367,7 @@ export function WorkflowEditor({ workflowId }: { workflowId: string }) {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 8,
         }}
@@ -1339,9 +1375,9 @@ export function WorkflowEditor({ workflowId }: { workflowId: string }) {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -1351,7 +1387,7 @@ export function WorkflowEditor({ workflowId }: { workflowId: string }) {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Template
@@ -1363,7 +1399,7 @@ export function WorkflowEditor({ workflowId }: { workflowId: string }) {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Category
@@ -1399,7 +1435,7 @@ export function WorkflowEditor({ workflowId }: { workflowId: string }) {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 4 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -1408,7 +1444,7 @@ export function WorkflowEditor({ workflowId }: { workflowId: string }) {
                 padding: 3,
                 fontSize: 8,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -1419,7 +1455,7 @@ export function WorkflowEditor({ workflowId }: { workflowId: string }) {
                 padding: 3,
                 fontSize: 8,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -1484,7 +1520,7 @@ export function WorkflowEditor({ workflowId }: { workflowId: string }) {
       </Text>
       <View
         style={{
-          backgroundColor: "#f5f5f5",
+          backgroundColor: "#f8fafc",
           borderWidth: 1,
           borderColor: "#cccccc",
           padding: 10,
@@ -1536,7 +1572,7 @@ export async function requireTeamRole(
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 12,
           marginBottom: 8,
         }}
@@ -1544,9 +1580,9 @@ export async function requireTeamRole(
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -1556,7 +1592,7 @@ export async function requireTeamRole(
               fontSize: 8,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Route
@@ -1568,7 +1604,7 @@ export async function requireTeamRole(
               fontSize: 8,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Methods
@@ -1626,7 +1662,7 @@ export async function requireTeamRole(
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 6 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -1636,7 +1672,7 @@ export async function requireTeamRole(
                 fontSize: 7,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -1648,7 +1684,7 @@ export async function requireTeamRole(
                 fontSize: 7,
                 textAlign: "center",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -1677,7 +1713,7 @@ export async function requireTeamRole(
       </Text>
       <View
         style={{
-          backgroundColor: "#f5f5f5",
+          backgroundColor: "#f8fafc",
           borderWidth: 1,
           borderColor: "#cccccc",
           padding: 10,
@@ -1736,7 +1772,7 @@ export async function POST(
             marginBottom: 12,
           }}
         >
-          Figure 8.3: Deployment Architecture
+          Figure 8.5: Deployment Architecture
         </Text>
       </View>
       <View style={{ marginLeft: 24, marginBottom: 12 }}>
@@ -1785,8 +1821,8 @@ export async function POST(
           marginTop: 16,
           padding: 12,
           borderWidth: 1,
-          borderColor: "#333333",
-          backgroundColor: "#f9f9f9",
+          borderColor: "#94a3b8", borderRadius: 6,
+          backgroundColor: "#f8fafc",
         }}
       >
         <Text

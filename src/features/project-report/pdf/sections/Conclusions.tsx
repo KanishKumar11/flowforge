@@ -58,7 +58,7 @@ export default function Conclusions() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 12,
           marginBottom: 12,
         }}
@@ -66,9 +66,9 @@ export default function Conclusions() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -78,7 +78,7 @@ export default function Conclusions() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Objective
@@ -90,7 +90,7 @@ export default function Conclusions() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Achievement
@@ -148,7 +148,7 @@ export default function Conclusions() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 9 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -158,7 +158,7 @@ export default function Conclusions() {
                 fontSize: 8,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -169,7 +169,7 @@ export default function Conclusions() {
                 padding: 4,
                 fontSize: 8,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -179,7 +179,7 @@ export default function Conclusions() {
                 width: "30%",
                 padding: 4,
                 fontSize: 8,
-                color: "#006600",
+                color: "#16a34a",
               }}
             >
               {row[2]}
@@ -199,31 +199,96 @@ export default function Conclusions() {
       </Text>
 
       <Text style={styles.h2}>12.3 Technical Accomplishments</Text>
-      <View style={{ marginLeft: 24, marginBottom: 8 }}>
-        <Text style={{ fontSize: 10, marginBottom: 4 }}>
-          <Text style={styles.bold}>Frontend:</Text> Modern React 19 with
-          Next.js 16 App Router, TypeScript, Tailwind CSS
-        </Text>
-        <Text style={{ fontSize: 10, marginBottom: 4 }}>
-          <Text style={styles.bold}>Backend:</Text> Type-safe API with tRPC (7
-          routers, 59 procedures), Prisma ORM, PostgreSQL
-        </Text>
-        <Text style={{ fontSize: 10, marginBottom: 4 }}>
-          <Text style={styles.bold}>Execution:</Text> Durable workflow execution
-          with Inngest, BFS traversal, automatic retries
-        </Text>
-        <Text style={{ fontSize: 10, marginBottom: 4 }}>
-          <Text style={styles.bold}>Security:</Text> Better Auth with OAuth2
-          (Google, GitHub), RBAC, AES-256 encrypted credentials
-        </Text>
-        <Text style={{ fontSize: 10, marginBottom: 4 }}>
-          <Text style={styles.bold}>Integrations:</Text> 24 node types including
-          Slack, Google Sheets, GitHub, Notion, Stripe, Twilio, AI providers
-        </Text>
-        <Text style={{ fontSize: 10, marginBottom: 4 }}>
-          <Text style={styles.bold}>Deployment:</Text> Netlify hosting, Neon
-          PostgreSQL, Inngest Cloud, Sentry monitoring
-        </Text>
+      <View style={{ marginBottom: 10 }}>
+        {[
+          {
+            label: "Frontend",
+            color: "#1d4ed8",
+            bg: "#dbeafe",
+            detail:
+              "React 19 with Next.js 16 App Router, TypeScript, Tailwind CSS, shadcn/ui component library",
+          },
+          {
+            label: "Backend",
+            color: "#16a34a",
+            bg: "#dcfce7",
+            detail:
+              "Type-safe API with tRPC (7 routers, 59 procedures), Prisma ORM, PostgreSQL database",
+          },
+          {
+            label: "Execution",
+            color: "#7c3aed",
+            bg: "#ede9fe",
+            detail:
+              "Durable workflow execution with Inngest, BFS graph traversal, automatic retries with exponential backoff",
+          },
+          {
+            label: "Security",
+            color: "#dc2626",
+            bg: "#fee2e2",
+            detail:
+              "Better Auth with OAuth2 (Google, GitHub), role-based access control (4 levels), AES-256 encrypted credentials",
+          },
+          {
+            label: "Integrations",
+            color: "#0891b2",
+            bg: "#cffafe",
+            detail:
+              "24 node types — Slack, Google Sheets, GitHub, Notion, Stripe, Twilio, OpenAI, Anthropic, Gemini",
+          },
+          {
+            label: "Deployment",
+            color: "#ea580c",
+            bg: "#ffedd5",
+            detail:
+              "Netlify hosting, Neon PostgreSQL, Inngest Cloud functions, Sentry error monitoring",
+          },
+        ].map((item) => (
+          <View
+            key={item.label}
+            style={{
+              flexDirection: "row",
+              alignItems: "stretch",
+              marginBottom: 5,
+              borderRadius: 3,
+              overflow: "hidden",
+              borderWidth: 1,
+              borderColor: item.color,
+            }}
+          >
+            <View
+              style={{
+                width: 72,
+                backgroundColor: item.color,
+                paddingVertical: 6,
+                paddingHorizontal: 5,
+                justifyContent: "center",
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 8,
+                  fontFamily: "Times-Bold",
+                  color: "#ffffff",
+                  textAlign: "center",
+                }}
+              >
+                {item.label}
+              </Text>
+            </View>
+            <View
+              style={{
+                flex: 1,
+                backgroundColor: item.bg,
+                paddingVertical: 6,
+                paddingHorizontal: 8,
+                justifyContent: "center",
+              }}
+            >
+              <Text style={{ fontSize: 9 }}>{item.detail}</Text>
+            </View>
+          </View>
+        ))}
       </View>
 
       <Text style={styles.h2}>12.4 Limitations</Text>
@@ -237,7 +302,7 @@ export default function Conclusions() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 12,
           marginBottom: 12,
         }}
@@ -245,9 +310,9 @@ export default function Conclusions() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -257,7 +322,7 @@ export default function Conclusions() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Limitation
@@ -269,7 +334,7 @@ export default function Conclusions() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Description
@@ -317,7 +382,7 @@ export default function Conclusions() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 4 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -327,7 +392,7 @@ export default function Conclusions() {
                 fontSize: 8,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -338,7 +403,7 @@ export default function Conclusions() {
                 padding: 4,
                 fontSize: 8,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -360,44 +425,18 @@ export default function Conclusions() {
         Table 12.2: Current Limitations
       </Text>
 
-      <Text style={styles.h2}>12.5 Lessons Learned</Text>
-      <View style={{ marginLeft: 24, marginBottom: 12 }}>
-        <Text style={{ fontSize: 10, marginBottom: 6 }}>
-          <Text style={styles.bold}>Technology Selection:</Text> Choosing
-          mature, well-documented frameworks (Next.js, Prisma) significantly
-          reduced development friction.
-        </Text>
-        <Text style={{ fontSize: 10, marginBottom: 6 }}>
-          <Text style={styles.bold}>Type Safety:</Text> TypeScript and tRPC's
-          end-to-end type safety prevented numerous bugs during development.
-        </Text>
-        <Text style={{ fontSize: 10, marginBottom: 6 }}>
-          <Text style={styles.bold}>Managed Services:</Text> Using Inngest for
-          execution and Netlify for hosting eliminated infrastructure
-          complexity.
-        </Text>
-        <Text style={{ fontSize: 10, marginBottom: 6 }}>
-          <Text style={styles.bold}>Iterative Development:</Text> Agile sprints
-          allowed for rapid iteration and early feedback incorporation.
-        </Text>
-        <Text style={{ fontSize: 10, marginBottom: 6 }}>
-          <Text style={styles.bold}>Documentation:</Text> Maintaining inline
-          documentation facilitated code understanding during refactoring.
-        </Text>
-      </View>
-
-      <Text style={styles.h2}>12.6 Future Scope</Text>
+      <Text style={styles.h2}>12.5 Future Scope</Text>
       <Text style={styles.paragraphIndent}>
         The following enhancements are planned for future versions of Flowgent
         to address current limitations and expand platform capabilities.
       </Text>
 
-      <Text style={styles.h3}>12.6.1 Short-Term Roadmap (v1.1 - v1.5)</Text>
+      <Text style={styles.h3}>12.5.1 Short-Term Roadmap (v1.1 - v1.5)</Text>
       <View
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 12,
         }}
@@ -405,9 +444,9 @@ export default function Conclusions() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -417,7 +456,7 @@ export default function Conclusions() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Version
@@ -429,7 +468,7 @@ export default function Conclusions() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Feature
@@ -441,7 +480,7 @@ export default function Conclusions() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Description
@@ -494,7 +533,7 @@ export default function Conclusions() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 4 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -504,7 +543,7 @@ export default function Conclusions() {
                 fontSize: 8,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -515,7 +554,7 @@ export default function Conclusions() {
                 padding: 3,
                 fontSize: 8,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -526,7 +565,7 @@ export default function Conclusions() {
                 padding: 3,
                 fontSize: 8,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[2]}
@@ -559,35 +598,77 @@ export default function Conclusions() {
         Figure 12.1: Flowgent Development Roadmap — Short-Term & Long-Term
       </Text>
 
-      <Text style={styles.h3}>12.6.2 Long-Term Vision (v2.0+)</Text>
-      <View style={{ marginLeft: 24, marginBottom: 12 }}>
-        <Text style={{ fontSize: 10, marginBottom: 6 }}>
-          <Text style={styles.bold}>AI Workflow Builder:</Text> Natural language
-          to workflow generation using LLMs. Users describe automation in plain
-          English and receive a complete workflow draft.
-        </Text>
-        <Text style={{ fontSize: 10, marginBottom: 6 }}>
-          <Text style={styles.bold}>Node Marketplace:</Text>{" "}
-          Community-contributed custom nodes and templates with rating and
-          review system.
-        </Text>
-        <Text style={{ fontSize: 10, marginBottom: 6 }}>
-          <Text style={styles.bold}>Mobile Applications:</Text> Native iOS and
-          Android apps for workflow monitoring, execution control, and push
-          notifications.
-        </Text>
-        <Text style={{ fontSize: 10, marginBottom: 6 }}>
-          <Text style={styles.bold}>Enterprise Features:</Text> SSO integration,
-          audit logging, compliance certifications (SOC 2, GDPR), and dedicated
-          support.
-        </Text>
-        <Text style={{ fontSize: 10, marginBottom: 6 }}>
-          <Text style={styles.bold}>On-Premise Deployment:</Text> Self-hosted
-          option for organizations with strict data residency requirements.
-        </Text>
+      <Text style={styles.h3} break>
+        12.5.2 Long-Term Vision (v2.0+)
+      </Text>
+      <View style={{ marginBottom: 12 }}>
+        {[
+          {
+            icon: "AI",
+            color: "#7c3aed",
+            label: "AI Workflow Builder",
+            detail:
+              "Natural language to workflow generation using LLMs — describe automation in plain English and receive a complete workflow draft.",
+          },
+          {
+            icon: "MKT",
+            color: "#0891b2",
+            label: "Node Marketplace",
+            detail:
+              "Community-contributed custom nodes and templates with rating, review, and one-click installation.",
+          },
+          {
+            icon: "MOB",
+            color: "#1d4ed8",
+            label: "Mobile Applications",
+            detail:
+              "Native iOS and Android apps for workflow monitoring, execution control, and push notification alerts.",
+          },
+          {
+            icon: "ENT",
+            color: "#ea580c",
+            label: "Enterprise Features",
+            detail:
+              "SSO integration, audit logging, SOC 2 / GDPR compliance certifications, and dedicated support tier.",
+          },
+          {
+            icon: "OPN",
+            color: "#16a34a",
+            label: "On-Premise Deployment",
+            detail:
+              "Self-hosted option for organizations with strict data residency or air-gap requirements.",
+          },
+        ].map((item) => (
+          <View
+            key={item.label}
+            style={{
+              flexDirection: "row",
+              marginBottom: 6,
+              borderLeftWidth: 3,
+              borderLeftColor: item.color,
+              paddingLeft: 9,
+              paddingVertical: 2,
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 9.5,
+                fontFamily: "Times-Bold",
+                color: item.color,
+                width: 120,
+                flexShrink: 0,
+              }}
+            >
+              {item.label}:
+            </Text>
+            <Text style={{ fontSize: 9.5, flex: 1, lineHeight: 1.4 }}>
+              {item.detail}
+            </Text>
+          </View>
+        ))}
       </View>
 
-      <Text style={styles.h3}>12.6.3 Commercial Potential</Text>
+      <Text style={styles.h3}>12.5.3 Commercial Potential</Text>
       <Text style={styles.paragraphIndent}>
         Flowgent has significant commercial potential in the growing workflow
         automation market. The freemium SaaS model with tiered pricing (Free,
@@ -595,7 +676,7 @@ export default function Conclusions() {
         accessibility for individual users and small teams.
       </Text>
 
-      <Text style={styles.h2}>12.7 Conclusion</Text>
+      <Text style={styles.h2}>12.6 Conclusion</Text>
       <Text style={styles.paragraphIndent}>
         The development of Flowgent 1.0 has been a comprehensive journey through
         modern full-stack web development, from requirements gathering through
@@ -620,9 +701,9 @@ export default function Conclusions() {
         style={{
           marginTop: 20,
           padding: 16,
-          backgroundColor: "#f8f8f8",
+          backgroundColor: "#f8fafc",
           borderLeftWidth: 4,
-          borderLeftColor: "#333333",
+          borderLeftColor: "#1e293b",
         }}
       >
         <Text
@@ -648,7 +729,7 @@ export default function Conclusions() {
         }}
       >
         <Text
-          style={{ fontSize: 14, fontFamily: "Times-Bold", color: "#006600" }}
+          style={{ fontSize: 14, fontFamily: "Times-Bold", color: "#16a34a" }}
         >
           PROJECT COMPLETED SUCCESSFULLY
         </Text>

@@ -19,7 +19,7 @@ export default function ProblemAnalysisDiagram() {
 
   const colors = {
     text: "#1a1a1a",
-    label: "#555555",
+    label: "#475569",
     problem: "#C62828",
     problemBg: "#FFEBEE",
     impact: "#E65100",
@@ -28,7 +28,7 @@ export default function ProblemAnalysisDiagram() {
     solutionBg: "#E3F2FD",
     center: "#2E7D32",
     centerBg: "#E8F5E9",
-    arrow: "#888888",
+    arrow: "#64748b",
     connector: "#BDBDBD",
   };
 
@@ -58,14 +58,14 @@ export default function ProblemAnalysisDiagram() {
   const centerX = width / 2;
   const centerY = height / 2 + 5;
 
-  // Problem cards on left, solution cards on right
-  const colProblemX = 15;
-  const colImpactX = 155;
-  const colSolutionX = 345;
-  const cardW = 135;
-  const cardH = 58;
+  // Problem cards on left, impact in center, solutions on right
+  const colProblemX = 14;
+  const colImpactX = 177;
+  const colSolutionX = 340;
+  const cardW = 145;
+  const cardH = 66;
   const cardGap = 16;
-  const cardsStartY = 72;
+  const cardsStartY = 76;
 
   return (
     <Svg width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
@@ -157,15 +157,16 @@ export default function ProblemAnalysisDiagram() {
             />
             <SvgText
               x={colProblemX + 16}
-              y={y + 20}
+              y={y + 18}
               textAnchor="middle"
               style={{ fontSize: 8, fontFamily: "Times-Bold", fill: "#FFFFFF" }}
             >
               {i + 1}
             </SvgText>
             <SvgText
-              x={colProblemX + 32}
+              x={colProblemX + 34}
               y={y + 18}
+              textAnchor="start"
               style={{
                 fontSize: 8,
                 fontFamily: "Times-Bold",
@@ -175,17 +176,18 @@ export default function ProblemAnalysisDiagram() {
               {item.title}
             </SvgText>
             <Line
-              x1={colProblemX + 8}
-              y1={y + 30}
-              x2={colProblemX + cardW - 8}
-              y2={y + 30}
+              x1={colProblemX + 12}
+              y1={y + 32}
+              x2={colProblemX + cardW - 12}
+              y2={y + 32}
               stroke={colors.problem}
               strokeWidth={0.5}
               opacity={0.3}
             />
             <SvgText
-              x={colProblemX + 10}
-              y={y + 44}
+              x={colProblemX + 34}
+              y={y + 46}
+              textAnchor="start"
               style={{
                 fontSize: 7,
                 fontFamily: "Times-Roman",
@@ -203,9 +205,9 @@ export default function ProblemAnalysisDiagram() {
 
             {/* Arrow: Problem → Impact */}
             <Line
-              x1={colProblemX + cardW + 2}
+              x1={colProblemX + cardW + 5}
               y1={midY}
-              x2={colImpactX - 4}
+              x2={colImpactX - 5}
               y2={midY}
               stroke={colors.arrow}
               strokeWidth={1}
@@ -268,9 +270,9 @@ export default function ProblemAnalysisDiagram() {
 
             {/* Arrow: Impact → Solution */}
             <Line
-              x1={colImpactX + cardW + 2}
+              x1={colImpactX + cardW + 5}
               y1={midY}
-              x2={colSolutionX - 4}
+              x2={colSolutionX - 5}
               y2={midY}
               stroke={colors.arrow}
               strokeWidth={1}
@@ -338,9 +340,9 @@ export default function ProblemAnalysisDiagram() {
       <G>
         <Rect
           x={15}
-          y={height - 38}
+          y={height - 44}
           width={465}
-          height={28}
+          height={34}
           rx={5}
           fill={colors.centerBg}
           stroke={colors.center}
@@ -348,12 +350,19 @@ export default function ProblemAnalysisDiagram() {
         />
         <SvgText
           x={centerX}
-          y={height - 23}
+          y={height - 29}
           textAnchor="middle"
-          style={{ fontSize: 9, fontFamily: "Times-Bold", fill: colors.center }}
+          style={{ fontSize: 8.5, fontFamily: "Times-Bold", fill: colors.center }}
         >
-          Flowgent addresses all four critical gaps with a unified, open-source
-          platform
+          Flowgent addresses all four critical gaps
+        </SvgText>
+        <SvgText
+          x={centerX}
+          y={height - 17}
+          textAnchor="middle"
+          style={{ fontSize: 7.5, fontFamily: "Times-Roman", fill: colors.center }}
+        >
+          with a unified, open-source platform
         </SvgText>
       </G>
     </Svg>

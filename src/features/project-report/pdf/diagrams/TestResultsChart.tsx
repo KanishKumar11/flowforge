@@ -26,15 +26,15 @@ export default function TestResultsChart() {
   };
 
   const categories = [
-    { name: "Unit Tests", total: 35, passed: 35 },
-    { name: "Integration Tests", total: 18, passed: 18 },
-    { name: "UI/UX Tests", total: 15, passed: 15 },
-    { name: "System Tests", total: 12, passed: 12 },
-    { name: "Security Tests", total: 10, passed: 10 },
-    { name: "Performance Tests", total: 8, passed: 8 },
+    { name: "Unit Tests", total: 69, passed: 69 },
+    { name: "Integration Tests", total: 29, passed: 29 },
+    { name: "UI/UX Tests", total: 29, passed: 29 },
+    { name: "System Tests", total: 6, passed: 6 },
+    { name: "Security Tests", total: 5, passed: 5 },
+    { name: "Performance Tests", total: 4, passed: 4 },
   ];
 
-  const maxVal = 40;
+  const maxVal = 80;
   const chartLeft = 140;
   const chartRight = width - 60;
   const chartTop = 55;
@@ -42,7 +42,7 @@ export default function TestResultsChart() {
   const barGap = 10;
   const chartW = chartRight - chartLeft;
 
-  const gridSteps = [0, 10, 20, 30, 40];
+  const gridSteps = [0, 20, 40, 60, 80];
 
   return (
     <Svg width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
@@ -57,7 +57,7 @@ export default function TestResultsChart() {
           fill: colors.text,
         }}
       >
-        Test Results Summary — 98 Tests, 100% Pass Rate
+        Test Results Summary — 142 Tests, 100% Pass Rate
       </SvgText>
 
       {/* Subtitle */}
@@ -68,10 +68,10 @@ export default function TestResultsChart() {
         style={{
           fontSize: 8,
           fontFamily: "Times-Italic",
-          fill: "#555555",
+          fill: "#475569",
         }}
       >
-        All 98 test cases passed across 6 testing levels
+        All 142 test cases passed across 6 testing levels
       </SvgText>
 
       {/* Grid lines */}
@@ -94,7 +94,7 @@ export default function TestResultsChart() {
               style={{
                 fontSize: 7,
                 fontFamily: "Times-Roman",
-                fill: "#555555",
+                fill: "#475569",
               }}
             >
               {val}
@@ -107,6 +107,8 @@ export default function TestResultsChart() {
       {categories.map((cat, i) => {
         const y = chartTop + i * (barH + barGap);
         const barW = (cat.total / maxVal) * chartW;
+        const countText = `${cat.passed} / ${cat.total}`;
+        const placeOutside = barW < 44;
 
         return (
           <G key={`bar-${i}`}>
@@ -134,19 +136,34 @@ export default function TestResultsChart() {
               fill={colors.pass}
             />
 
-            {/* Count inside bar */}
-            <SvgText
-              x={chartLeft + barW / 2}
-              y={y + barH / 2 + 3}
-              textAnchor="middle"
-              style={{
-                fontSize: 9,
-                fontFamily: "Times-Bold",
-                fill: "#FFFFFF",
-              }}
-            >
-              {cat.passed} / {cat.total}
-            </SvgText>
+            {/* Count label */}
+            {placeOutside ? (
+              <SvgText
+                x={chartLeft + barW + 32}
+                y={y + barH / 2 + 3}
+                textAnchor="start"
+                style={{
+                  fontSize: 8,
+                  fontFamily: "Times-Bold",
+                  fill: colors.text,
+                }}
+              >
+                {countText}
+              </SvgText>
+            ) : (
+              <SvgText
+                x={chartLeft + barW / 2}
+                y={y + barH / 2 + 3}
+                textAnchor="middle"
+                style={{
+                  fontSize: 9,
+                  fontFamily: "Times-Bold",
+                  fill: "#FFFFFF",
+                }}
+              >
+                {countText}
+              </SvgText>
+            )}
 
             {/* Checkmark */}
             <Circle
@@ -195,7 +212,7 @@ export default function TestResultsChart() {
             fill: colors.pass,
           }}
         >
-          Overall: 98 / 98 Tests Passed — 100% Pass Rate
+          Overall: 142 / 142 Tests Passed — 100% Pass Rate
         </SvgText>
         <SvgText
           x={chartLeft + (chartW + 30) / 2}
@@ -204,7 +221,7 @@ export default function TestResultsChart() {
           style={{
             fontSize: 8,
             fontFamily: "Times-Italic",
-            fill: "#555555",
+            fill: "#475569",
           }}
         >
           Zero defects remaining — all 5 discovered defects resolved during

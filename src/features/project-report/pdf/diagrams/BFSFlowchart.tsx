@@ -15,11 +15,11 @@ import {
 
 export default function BFSFlowchart() {
   const width = 495;
-  const height = 480;
+  const height = 520;
 
   const colors = {
     text: "#1a1a1a",
-    label: "#555555",
+    label: "#475569",
     process: "#E3F2FD",
     processBorder: "#1565C0",
     decision: "#FFF3E0",
@@ -163,7 +163,7 @@ export default function BFSFlowchart() {
             style={{
               fontSize: 7,
               fontFamily: "Times-Bold",
-              fill: "#555555",
+              fill: "#475569",
             }}
           >
             {label}
@@ -205,7 +205,7 @@ export default function BFSFlowchart() {
         style={{
           fontSize: 7,
           fontFamily: "Times-Italic",
-          fill: "#555555",
+          fill: "#475569",
         }}
       >
         {text}
@@ -298,30 +298,15 @@ export default function BFSFlowchart() {
       <Arrow x1={cx} y1={196} x2={cx} y2={218} />
       <Decision x={cx} y={236} size={34} label="Queue Empty?" />
 
-      {/* Yes → End */}
-      <Line
-        x1={cx + 17}
-        y1={236}
-        x2={cx + 90}
-        y2={236}
-        stroke={colors.arrow}
-        strokeWidth={1}
-      />
-      <SvgText
-        x={cx + 50}
-        y={222}
-        textAnchor="middle"
-        style={{ fontSize: 7, fontFamily: "Times-Bold", fill: "#2E7D32" }}
-      >
-        Yes
-      </SvgText>
-      <Arrow x1={cx + 90} y1={236} x2={cx + 90} y2={450} />
+      {/* Yes -> End */}
+      <Arrow x1={cx + 17} y1={236} x2={cx + 110} y2={236} label="Yes" labelDy={-2} />
+      <Arrow x1={cx + 110} y1={236} x2={cx + 110} y2={472} />
       {/* End node at bottom connected later */}
 
       {/* No → Dequeue */}
       <SvgText
         x={cx + 8}
-        y={256}
+        y={266}
         style={{ fontSize: 7, fontFamily: "Times-Bold", fill: "#C62828" }}
       >
         No
@@ -341,7 +326,7 @@ export default function BFSFlowchart() {
       <Arrow x1={cx} y1={306} x2={cx} y2={326} />
       <Decision x={cx} y={342} size={34} label="Visited?" />
 
-      {/* Yes → skip, loop back */}
+      {/* Yes → skip, loop back (feeds into shared left-margin vertical) */}
       <Line
         x1={cx - 17}
         y1={342}
@@ -358,15 +343,16 @@ export default function BFSFlowchart() {
       >
         Yes (Skip)
       </SvgText>
+      {/* Shared left-margin vertical — both Yes-Skip and main BFS loop feed here */}
       <Line
         x1={cx - 100}
-        y1={342}
+        y1={254}
         x2={cx - 100}
-        y2={236}
+        y2={468}
         stroke={colors.arrow}
         strokeWidth={1}
       />
-      <Arrow x1={cx - 100} y1={236} x2={cx - 17} y2={236} />
+      <Arrow x1={cx - 100} y1={254} x2={cx - 17} y2={254} />
 
       {/* No → Execute */}
       <SvgText
@@ -413,39 +399,37 @@ export default function BFSFlowchart() {
         text="if/switch: match only"
       />
 
-      {/* Loop back to Queue Empty? */}
-      <Arrow x1={cx} y1={456} x2={cx} y2={468} />
+      {/* Loop back to Queue Empty? — joins the shared left-margin vertical at cx-100 */}
       <Line
         x1={cx}
-        y1={468}
-        x2={cx - 140}
+        y1={456}
+        x2={cx}
         y2={468}
         stroke={colors.arrow}
         strokeWidth={1}
       />
       <Line
-        x1={cx - 140}
+        x1={cx}
         y1={468}
-        x2={cx - 140}
-        y2={236}
+        x2={cx - 100}
+        y2={468}
         stroke={colors.arrow}
         strokeWidth={1}
       />
-      <Arrow x1={cx - 140} y1={236} x2={cx - 100} y2={236} />
 
       {/* End node */}
       <Circle
-        cx={cx + 90}
-        cy={460}
+        cx={cx + 110}
+        cy={482}
         r={10}
         fill="none"
         stroke={colors.end}
         strokeWidth={1.5}
       />
-      <Circle cx={cx + 90} cy={460} r={6} fill={colors.end} />
+      <Circle cx={cx + 110} cy={482} r={6} fill={colors.end} />
       <SvgText
-        x={cx + 90}
-        y={476}
+        x={cx + 110}
+        y={498}
         textAnchor="middle"
         style={{ fontSize: 7, fontFamily: "Times-Bold", fill: colors.label }}
       >

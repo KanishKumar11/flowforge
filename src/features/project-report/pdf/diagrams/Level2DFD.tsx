@@ -223,7 +223,7 @@ export default function Level2DFD() {
       <SvgText
         x={50}
         y={108}
-        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#555555" }}
+        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#475569" }}
       >
         Workflow JSON
       </SvgText>
@@ -234,7 +234,7 @@ export default function Level2DFD() {
       <SvgText
         x={200}
         y={43}
-        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#555555" }}
+        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#475569" }}
       >
         Parsed nodes
       </SvgText>
@@ -245,7 +245,7 @@ export default function Level2DFD() {
       <SvgText
         x={355}
         y={105}
-        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#555555" }}
+        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#475569" }}
       >
         Ordered queue
       </SvgText>
@@ -256,7 +256,7 @@ export default function Level2DFD() {
       <SvgText
         x={415}
         y={230}
-        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#555555" }}
+        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#475569" }}
       >
         AI nodes
       </SvgText>
@@ -265,13 +265,16 @@ export default function Level2DFD() {
       <Line x1={420} y1={310} x2={450} y2={355} stroke="#666" strokeWidth={1} />
       <Polygon points="450,355 444,350 450,347" fill="#666" />
 
-      {/* 3.3 → 3.5 (results) */}
-      <Line x1={342} y1={175} x2={158} y2={280} stroke="#666" strokeWidth={1} />
-      <Polygon points="158,280 162,272 167,278" fill="#666" />
+      {/* 3.3 → 3.5 (results) — routes BELOW Process 3.6 (bottom y=234) */}
+      <Line x1={390} y1={189} x2={390} y2={241} stroke="#666" strokeWidth={1} />
+      <Line x1={390} y1={241} x2={110} y2={241} stroke="#666" strokeWidth={1} />
+      <Line x1={110} y1={241} x2={110} y2={266} stroke="#666" strokeWidth={1} />
+      <Polygon points="110,266 106,260 114,260" fill="#666" />
       <SvgText
-        x={260}
-        y={245}
-        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#555555" }}
+        x={268}
+        y={237}
+        textAnchor="middle"
+        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#475569" }}
       >
         Node results
       </SvgText>
@@ -282,7 +285,7 @@ export default function Level2DFD() {
       <SvgText
         x={100}
         y={332}
-        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#555555" }}
+        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#475569" }}
       >
         Exec logs
       </SvgText>
@@ -299,8 +302,8 @@ export default function Level2DFD() {
       />
       <Polygon points="288,200 294,195 293,202" fill="#dc2626" />
       <SvgText
-        x={330}
-        y={198}
+        x={358}
+        y={196}
         style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#dc2626" }}
       >
         On error
@@ -318,27 +321,23 @@ export default function Level2DFD() {
       />
       <Polygon points="350,170 344,173 345,167" fill="#dc2626" />
       <SvgText
-        x={310}
-        y={180}
+        x={291}
+        y={178}
         style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#dc2626" }}
       >
         Retry
       </SvgText>
 
-      {/* D4 → 3.3 (creds) */}
-      <Line
-        x1={100}
-        y1={248}
-        x2={342}
-        y2={175}
-        stroke="#666"
-        strokeWidth={1}
-        strokeDasharray="3,2"
-      />
+      {/* D4 → 3.3 (creds) — routes along right margin, avoids all center crossings */}
+      <Line x1={100} y1={251} x2={463} y2={251} stroke="#666" strokeWidth={1} strokeDasharray="3,2" />
+      <Line x1={463} y1={251} x2={463} y2={165} stroke="#666" strokeWidth={1} strokeDasharray="3,2" />
+      <Line x1={463} y1={165} x2={438} y2={165} stroke="#666" strokeWidth={1} strokeDasharray="3,2" />
+      <Polygon points="438,165 444,161 444,169" fill="#666" />
       <SvgText
-        x={210}
-        y={200}
-        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#555555" }}
+        x={282}
+        y={248}
+        textAnchor="middle"
+        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#475569" }}
       >
         Decrypted credentials
       </SvgText>

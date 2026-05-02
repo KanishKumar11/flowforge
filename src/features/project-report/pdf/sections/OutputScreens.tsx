@@ -6,10 +6,63 @@ import BookPageLayout from "../components/BookPageLayout";
 
 /**
  * Chapter 11: Output & Screenshots
- * Describes each screen/page of the application with textual descriptions.
+ * Concise per-screen captions accompanying full-size screenshots.
  */
 export default function OutputScreens() {
-  const CONTENT_WIDTH = 595 - PAGE_MARGINS.left - PAGE_MARGINS.right; // A4 width minus margins
+  const CONTENT_WIDTH = 595 - PAGE_MARGINS.left - PAGE_MARGINS.right;
+
+  // Helper components
+  const Screen = ({
+    title,
+    url,
+    description,
+    src,
+  }: {
+    title: string;
+    url?: string;
+    description: string;
+    src?: string;
+  }) => (
+    <View>
+      <View
+        wrap={false}
+        style={{
+          borderLeftWidth: 3,
+          borderLeftColor: "#1a1a1a",
+          paddingLeft: 10,
+          marginTop: 8,
+          marginBottom: 8,
+        }}
+      >
+        <Text
+          style={{
+            fontSize: 10,
+            fontFamily: "Times-Bold",
+            marginBottom: 2,
+          }}
+        >
+          {title}
+          {url && (
+            <Text
+              style={{
+                fontSize: 9,
+                fontFamily: "Courier",
+                color: "#475569",
+              }}
+            >
+              {`  (${url})`}
+            </Text>
+          )}
+        </Text>
+        <Text style={{ fontSize: 9, lineHeight: 1.5 }}>{description}</Text>
+      </View>
+      {src && (
+        <View style={{ marginTop: 4, marginBottom: 14, alignItems: "center" }}>
+          <Image src={src} style={{ width: CONTENT_WIDTH }} />
+        </View>
+      )}
+    </View>
+  );
 
   return (
     <BookPageLayout chapterTitle="Output & Screenshots" chapterNum="11">
@@ -35,503 +88,133 @@ export default function OutputScreens() {
             textTransform: "uppercase",
           }}
         >
-          OUTPUT & SCREENSHOTS
+          OUTPUT &amp; SCREENSHOTS
         </Text>
         <View style={{ width: 60, height: 3, backgroundColor: "#000000" }} />
       </View>
 
       <Text style={styles.paragraphIndent}>
-        This chapter presents the key screens and outputs of the Flowgent 1.0
-        platform. The application is deployed and accessible at{" "}
-        <Text style={styles.bold}>https://flowgent.app</Text>. Each screen is
-        described with its purpose, layout, and key interactive elements. The
-        application supports both <Text style={styles.bold}>Light</Text> and{" "}
-        <Text style={styles.bold}>Dark</Text> themes.
+        This chapter presents the key screens of the deployed Flowgent 1.0
+        platform (<Text style={styles.bold}>https://flowgent.app</Text>). All
+        screens support both Light and Dark themes; screenshots are taken in
+        the Light theme.
       </Text>
 
-      {/* Screen 1: Login */}
-      <Text style={styles.h2}>11.1 Authentication Screens</Text>
+      {/* ── 11.1 Authentication ── */}
+      <Text style={styles.h2}>11.1 Authentication</Text>
 
-      <Text style={styles.h3}>11.1.1 Login Page</Text>
-      <View
-        wrap={false}
-        style={{
-          borderWidth: 1,
-          borderColor: "#333333",
-          padding: 12,
-          marginTop: 8,
-          marginBottom: 12,
-          backgroundColor: "#fafafa",
-        }}
-      >
-        <Text
-          style={{ fontSize: 10, fontFamily: "Times-Bold", marginBottom: 6 }}
-        >
-          Screen: Login Page (URL: /login)
-        </Text>
-        <Text style={{ fontSize: 9, lineHeight: 1.5, marginBottom: 4 }}>
-          <Text style={styles.bold}>Layout:</Text> Centered card on a clean
-          background. Left section displays the Flowgent branding with an
-          animated workflow visualizer showing nodes connecting in real-time.
-          Right section contains the login form.
-        </Text>
-        <Text style={{ fontSize: 9, lineHeight: 1.5, marginBottom: 4 }}>
-          <Text style={styles.bold}>Elements:</Text> Email input field •
-          Password input field with show/hide toggle • "Sign In" primary button
-          • "Forgot Password?" link • Divider with "OR" • Social login buttons
-          (Google, GitHub) with provider icons • "Don't have an account? Sign
-          up" link at the bottom.
-        </Text>
-        <Text style={{ fontSize: 9, lineHeight: 1.5 }}>
-          <Text style={styles.bold}>Behavior:</Text> Form validation with inline
-          error messages. Loading spinner on submit. Redirects to dashboard on
-          successful authentication.
-        </Text>
-      </View>
+      <Screen
+        title="11.1.1 Login Page"
+        url="/login"
+        description="A centred card with the Flowgent branding and an animated workflow visualizer on the left, and the login form (email, password, OAuth Google/GitHub) on the right. Inline validation; redirect to dashboard on success."
+        src="/outputs/login.png"
+      />
 
-      {/* Full-size screenshot: Login */}
-      <View style={{ marginTop: 8, marginBottom: 12, alignItems: "center" }}>
-        <Image src="/outputs/login.png" style={{ width: CONTENT_WIDTH }} />
-      </View>
+      <Screen
+        title="11.1.2 Sign Up Page"
+        url="/signup"
+        description="Full name, email, password (with strength indicator), and OAuth buttons. Auto sign-in after registration; a personal team workspace is created with the OWNER role."
+        src="/outputs/signup.png"
+      />
 
-      <Text style={styles.h3}>11.1.2 Sign Up Page</Text>
-      <View
-        wrap={false}
-        style={{
-          borderWidth: 1,
-          borderColor: "#333333",
-          padding: 12,
-          marginTop: 8,
-          marginBottom: 12,
-          backgroundColor: "#fafafa",
-        }}
-      >
-        <Text
-          style={{ fontSize: 10, fontFamily: "Times-Bold", marginBottom: 6 }}
-        >
-          Screen: Sign Up Page (URL: /signup)
-        </Text>
-        <Text style={{ fontSize: 9, lineHeight: 1.5, marginBottom: 4 }}>
-          <Text style={styles.bold}>Elements:</Text> Full name input • Email
-          input • Password input (with strength indicator) • Confirm password
-          input • "Create Account" button • Social signup (Google, GitHub) •
-          "Already have an account? Sign in" link.
-        </Text>
-        <Text style={{ fontSize: 9, lineHeight: 1.5 }}>
-          <Text style={styles.bold}>Behavior:</Text> Auto sign-in after
-          successful registration. Automatically creates a personal team
-          workspace with OWNER role.
-        </Text>
-      </View>
-
-      {/* Full-size screenshot: Sign Up */}
-      <View style={{ marginTop: 8, marginBottom: 12, alignItems: "center" }}>
-        <Image src="/outputs/signup.png" style={{ width: CONTENT_WIDTH }} />
-      </View>
-
-      {/* Screen 2: Dashboard */}
+      {/* ── 11.2 Dashboard ── */}
       <Text style={styles.h2}>11.2 Dashboard</Text>
-      <View
-        wrap={false}
-        style={{
-          borderWidth: 1,
-          borderColor: "#333333",
-          padding: 12,
-          marginTop: 8,
-          marginBottom: 12,
-          backgroundColor: "#fafafa",
-        }}
-      >
-        <Text
-          style={{ fontSize: 10, fontFamily: "Times-Bold", marginBottom: 6 }}
-        >
-          Screen: Dashboard Home (URL: /dashboard)
-        </Text>
-        <Text style={{ fontSize: 9, lineHeight: 1.5, marginBottom: 4 }}>
-          <Text style={styles.bold}>Layout:</Text> Left sidebar navigation
-          (collapsible) with links to Dashboard, Workflows, Executions,
-          Credentials, Teams, and Settings. Top header with search bar,
-          notification bell, theme toggle (sun/moon icon), and user avatar
-          dropdown.
-        </Text>
-        <Text style={{ fontSize: 9, lineHeight: 1.5, marginBottom: 4 }}>
-          <Text style={styles.bold}>Stats Cards (Top Row):</Text> Four metric
-          cards displaying — Total Workflows (count), Total Executions (count),
-          Success Rate (percentage with green/red indicator), Active Schedules
-          (count).
-        </Text>
-        <Text style={{ fontSize: 9, lineHeight: 1.5, marginBottom: 4 }}>
-          <Text style={styles.bold}>Quick Actions:</Text> Three action buttons —
-          "Create Workflow" (opens creation dialog), "Browse Templates" (opens
-          template browser), "Manage Credentials" (navigates to credentials
-          page).
-        </Text>
-        <Text style={{ fontSize: 9, lineHeight: 1.5 }}>
-          <Text style={styles.bold}>Recent Workflows:</Text> Grid/list of
-          recently updated workflows showing name, last modified date, execution
-          status badge, and quick-action buttons (Edit, Run, Delete).
-        </Text>
-      </View>
 
-      {/* Full-size screenshot: Dashboard */}
-      <View style={{ marginTop: 8, marginBottom: 12, alignItems: "center" }}>
-        <Image src="/outputs/dashboard.png" style={{ width: CONTENT_WIDTH }} />
-      </View>
+      <Screen
+        title="11.2.1 Dashboard Home"
+        url="/dashboard"
+        description="Sidebar nav (Workflows, Executions, Credentials, Teams, Settings) and a top header with search, notifications, theme toggle, and user menu. Four metric cards (Total Workflows, Total Executions, Success Rate, Active Schedules), three quick-action buttons (Create Workflow, Browse Templates, Manage Credentials), and a Recent Workflows grid."
+        src="/outputs/dashboard.png"
+      />
 
-      {/* Screen 3: Workflow Editor */}
+      {/* ── 11.3 Workflow Editor ── */}
       <Text style={styles.h2}>11.3 Visual Workflow Editor</Text>
-      <View
-        wrap={false}
-        style={{
-          borderWidth: 1,
-          borderColor: "#333333",
-          padding: 12,
-          marginTop: 8,
-          marginBottom: 12,
-          backgroundColor: "#fafafa",
-        }}
-      >
-        <Text
-          style={{ fontSize: 10, fontFamily: "Times-Bold", marginBottom: 6 }}
-        >
-          Screen: Workflow Editor (URL: /workflows/[id])
-        </Text>
-        <Text style={{ fontSize: 9, lineHeight: 1.5, marginBottom: 4 }}>
-          <Text style={styles.bold}>Canvas Area (Center):</Text> Full-screen
-          React Flow canvas with a dotted grid background. Supports zoom (scroll
-          wheel), pan (click-drag on background), and selection (click-drag on
-          nodes). MiniMap in the bottom-right corner shows a bird's eye view of
-          the workflow. Controls panel in bottom-left provides zoom-in,
-          zoom-out, fit-to-view, and lock buttons.
-        </Text>
-        <Text style={{ fontSize: 9, lineHeight: 1.5, marginBottom: 4 }}>
-          <Text style={styles.bold}>Node Palette (Left Panel):</Text>{" "}
-          Collapsible panel with search input at the top. Nodes organized into
-          categories: Triggers (Manual, Webhook, Schedule), Logic (IF, Switch,
-          Loop, Filter, Merge), Data (Set, Sort, Code, Wait), HTTP (HTTP
-          Request, Email), AI (OpenAI/Anthropic/Gemini), Integrations (Slack,
-          Google Sheets, GitHub, Notion, Stripe, Twilio), Other (Sub-Workflow,
-          Comment). Each node shows an icon, name, and can be dragged onto the
-          canvas.
-        </Text>
-        <Text style={{ fontSize: 9, lineHeight: 1.5, marginBottom: 4 }}>
-          <Text style={styles.bold}>Node Configuration (Right Panel):</Text>{" "}
-          When a node is selected, a side panel slides in showing the node's
-          configuration form. Form fields are dynamic based on node type (e.g.,
-          HTTP node shows URL, method, headers, body fields; AI node shows
-          provider, model, prompt, temperature, max tokens fields). Credential
-          selection dropdown for nodes requiring authentication.
-        </Text>
-        <Text style={{ fontSize: 9, lineHeight: 1.5, marginBottom: 4 }}>
-          <Text style={styles.bold}>Toolbar (Top):</Text> Workflow name
-          (editable inline) • Save button (with auto-save indicator) • Execute
-          button (triggers manual run) • Undo/Redo buttons • Version history
-          button • Export/Import buttons • Error alert settings button •
-          Active/Inactive toggle.
-        </Text>
-        <Text style={{ fontSize: 9, lineHeight: 1.5 }}>
-          <Text style={styles.bold}>Nodes on Canvas:</Text> Each node displays
-          as a rounded rectangle with — an icon (top-left), node type label,
-          node name, connection handles (input on left, output on right), and a
-          status indicator (green checkmark for success, red X for error,
-          spinner for running). Edges between nodes are animated curved lines
-          with directional arrows.
-        </Text>
-      </View>
 
-      {/* Full-size screenshot: Workflow Editor */}
-      <View style={{ marginTop: 8, marginBottom: 12, alignItems: "center" }}>
-        <Image
-          src="/outputs/workflow_editor.png"
-          style={{ width: CONTENT_WIDTH }}
-        />
-      </View>
+      <Screen
+        title="11.3.1 Editor Canvas"
+        url="/workflows/[id]"
+        description="Full-screen React Flow canvas with dotted grid, MiniMap (bottom-right), and zoom/lock controls (bottom-left). The left palette groups 24 nodes by category (Triggers, Logic, Data, HTTP, AI, Integrations, Other); the right config panel renders dynamic forms per node type with a credential dropdown. The toolbar exposes save (auto-save indicator), execute, undo/redo, version history, export/import, and an active/inactive toggle. Edges are animated curves with directional arrows; node status (green/red/spinner) updates in real time."
+        src="/outputs/workflow_editor.png"
+      />
 
-      {/* Screen 4: Workflows List */}
+      {/* ── 11.4 Workflows ── */}
       <Text style={styles.h2}>11.4 Workflows Management</Text>
-      <View
-        wrap={false}
-        style={{
-          borderWidth: 1,
-          borderColor: "#333333",
-          padding: 12,
-          marginTop: 8,
-          marginBottom: 12,
-          backgroundColor: "#fafafa",
-        }}
-      >
-        <Text
-          style={{ fontSize: 10, fontFamily: "Times-Bold", marginBottom: 6 }}
-        >
-          Screen: Workflows List (URL: /workflows)
-        </Text>
-        <Text style={{ fontSize: 9, lineHeight: 1.5, marginBottom: 4 }}>
-          <Text style={styles.bold}>Elements:</Text> "Create Workflow" and
-          "Browse Templates" buttons (top-right) • Search bar with full-text
-          search across name, description, tags, folder • Filter by folder and
-          tags • Sort by name, date, or status • Grid/list view toggle.
-        </Text>
-        <Text style={{ fontSize: 9, lineHeight: 1.5, marginBottom: 4 }}>
-          <Text style={styles.bold}>Workflow Cards:</Text> Each card shows —
-          workflow name, description (truncated), creation date, last modified
-          timestamp, active/inactive badge, execution count, favorite star
-          toggle, folder tag, and action buttons (Edit, Duplicate, Export,
-          Delete).
-        </Text>
-        <Text style={{ fontSize: 9, lineHeight: 1.5 }}>
-          <Text style={styles.bold}>Template Browser:</Text> Modal dialog
-          displaying 5 built-in templates with category badges, description, and
-          "Use Template" button. Each template shows the node types it uses.
-        </Text>
-      </View>
 
-      {/* Full-size screenshot: Workflows List */}
-      <View style={{ marginTop: 8, marginBottom: 12, alignItems: "center" }}>
-        <Image src="/outputs/workflows.png" style={{ width: CONTENT_WIDTH }} />
-      </View>
+      <Screen
+        title="11.4.1 Workflows List"
+        url="/workflows"
+        description="Create / Browse Templates buttons (top-right), full-text search across name/description/tags/folder, filters (folder, tags), sort and grid/list toggle. Each card shows name, description, dates, active badge, execution count, favorite star, folder tag, and per-card actions (Edit, Duplicate, Export, Delete). The Templates dialog ships with 5 built-in templates."
+        src="/outputs/workflows.png"
+      />
 
-      {/* Screen 5: Execution History */}
+      {/* ── 11.5 Executions ── */}
       <Text style={styles.h2}>11.5 Execution History</Text>
-      <View
-        wrap={false}
-        style={{
-          borderWidth: 1,
-          borderColor: "#333333",
-          padding: 12,
-          marginTop: 8,
-          marginBottom: 12,
-          backgroundColor: "#fafafa",
-        }}
-      >
-        <Text
-          style={{ fontSize: 10, fontFamily: "Times-Bold", marginBottom: 6 }}
-        >
-          Screen: Executions List (URL: /executions)
-        </Text>
-        <Text style={{ fontSize: 9, lineHeight: 1.5, marginBottom: 4 }}>
-          <Text style={styles.bold}>Elements:</Text> Execution statistics
-          summary bar (total, success, failed, running) • Filter by status
-          (PENDING, RUNNING, SUCCESS, ERROR, CANCELLED) • Filter by workflow •
-          Timeline view showing hourly execution breakdown • Cursor-based
-          pagination.
-        </Text>
-        <Text style={{ fontSize: 9, lineHeight: 1.5, marginBottom: 4 }}>
-          <Text style={styles.bold}>Table Columns:</Text> Execution ID •
-          Workflow Name • Status (color-coded badge) • Mode (Manual, Scheduled,
-          Webhook) • Started At • Duration • Actions (View Detail, Retry,
-          Cancel, Delete).
-        </Text>
-        <Text style={{ fontSize: 9, lineHeight: 1.5, marginBottom: 4 }}>
-          <Text style={styles.bold}>Execution Detail View:</Text> Shows complete
-          execution information — trigger data, node-by-node results in
-          execution order, input/output data for each step, error messages with
-          stack traces for failed nodes, execution timing breakdown, and retry
-          information.
-        </Text>
-      </View>
 
-      {/* Full-size screenshot: Execution / History placeholder */}
-      <View style={{ marginTop: 8, marginBottom: 12, alignItems: "center" }}>
-        <View
-          style={{
-            width: CONTENT_WIDTH,
-            height: 160,
-            borderWidth: 1,
-            borderColor: "#cccccc",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 9,
-              fontFamily: "Times-Italic",
-              color: "#999999",
-            }}
-          >
-            Placeholder: Execution History screenshot — add
-            '/public/outputs/execution_history.png' to replace
-          </Text>
-        </View>
-      </View>
+      <Screen
+        title="11.5.1 Executions List"
+        url="/executions"
+        description="Status summary bar (total / success / failed / running) plus filters (status, workflow) and an hourly timeline with cursor-based pagination. Table columns: Execution ID, Workflow, Status, Mode (Manual / Scheduled / Webhook), Started At, Duration, Actions. The Detail view shows trigger data, per-node input/output, error messages with stack traces, timing breakdown, and retry info."
+      />
 
-      {/* Screen 6: Credentials */}
+      <Screen
+        title="11.5.1 Executions List"
+        url="/executions"
+        description="Status summary bar (total / success / failed / running) plus filters (status, workflow) and an hourly timeline with cursor-based pagination. Table columns: Execution ID, Workflow, Status, Mode (Manual / Scheduled / Webhook), Started At, Duration, Actions. The Detail view shows trigger data, per-node input/output, error messages with stack traces, timing breakdown, and retry info."
+        src="@file:execution_history.png"
+      />
+
+      {/* ── 11.6 Credentials ── */}
       <Text style={styles.h2}>11.6 Credential Management</Text>
-      <View
-        wrap={false}
-        style={{
-          borderWidth: 1,
-          borderColor: "#333333",
-          padding: 12,
-          marginTop: 8,
-          marginBottom: 12,
-          backgroundColor: "#fafafa",
-        }}
-      >
-        <Text
-          style={{ fontSize: 10, fontFamily: "Times-Bold", marginBottom: 6 }}
-        >
-          Screen: Credentials Page (URL: /credentials)
-        </Text>
-        <Text style={{ fontSize: 9, lineHeight: 1.5, marginBottom: 4 }}>
-          <Text style={styles.bold}>Elements:</Text> "Add Credential" button •
-          List of stored credentials showing name, provider icon, type (API Key,
-          OAuth, Bearer Token), created date, and expiry status • Action buttons
-          (Edit, Delete) • OAuth "Connect" buttons for Slack, Google, GitHub,
-          Notion that initiate the OAuth2 flow.
-        </Text>
-        <Text style={{ fontSize: 9, lineHeight: 1.5 }}>
-          <Text style={styles.bold}>Add Credential Dialog:</Text> Form with
-          credential name, type selector (API Key, Bearer Token, OAuth2,
-          Custom), provider dropdown, and dynamic fields for the selected type
-          (e.g., API Key shows a single key input field; custom shows key-value
-          pairs).
-        </Text>
-      </View>
 
-      {/* Full-size screenshot: Credentials */}
-      <View style={{ marginTop: 8, marginBottom: 12, alignItems: "center" }}>
-        <Image
-          src="/outputs/credentials.png"
-          style={{ width: CONTENT_WIDTH }}
-        />
-      </View>
+      <Screen
+        title="11.6.1 Credentials Page"
+        url="/credentials"
+        description="Lists stored credentials with provider icon, type (API Key, OAuth, Bearer Token), creation date, and expiry status. OAuth Connect buttons launch the OAuth2 flow for Slack, Google, GitHub, and Notion. The Add Credential dialog renders dynamic fields based on the selected type."
+        src="/outputs/credentials.png"
+      />
 
-      {/* Screen 7: Teams */}
+      {/* ── 11.7 Teams ── */}
       <Text style={styles.h2}>11.7 Team Management</Text>
-      <View
-        wrap={false}
-        style={{
-          borderWidth: 1,
-          borderColor: "#333333",
-          padding: 12,
-          marginTop: 8,
-          marginBottom: 12,
-          backgroundColor: "#fafafa",
-        }}
-      >
-        <Text
-          style={{ fontSize: 10, fontFamily: "Times-Bold", marginBottom: 6 }}
-        >
-          Screen: Teams Page (URL: /teams)
-        </Text>
-        <Text style={{ fontSize: 9, lineHeight: 1.5, marginBottom: 4 }}>
-          <Text style={styles.bold}>Elements:</Text> "Create Team" button • Team
-          list showing team name, member count, workflow count, and plan badge •
-          Team detail view with member list (avatar, name, email, role badge),
-          "Invite Member" button, and role management dropdown (Owner, Admin,
-          Member, Viewer).
-        </Text>
-        <Text style={{ fontSize: 9, lineHeight: 1.5 }}>
-          <Text style={styles.bold}>Invite Dialog:</Text> Email input field •
-          Role selector • Send invitation button. Invitations are sent via email
-          with a 7-day expiry token link.
-        </Text>
-      </View>
 
-      {/* Full-size screenshot: Teams */}
-      <View style={{ marginTop: 8, marginBottom: 12, alignItems: "center" }}>
-        <Image src="/outputs/team.png" style={{ width: CONTENT_WIDTH }} />
-      </View>
+      <Screen
+        title="11.7.1 Teams Page"
+        url="/teams"
+        description="Team list with name, member count, workflow count, and plan badge. The team detail view lists members (avatar, name, email, role badge) with role management (Owner / Admin / Member / Viewer) and an Invite Member dialog. Invitations are sent via email with a 7-day expiry token."
+        src="/outputs/team.png"
+      />
 
-      {/* Screen 8: Schedules */}
+      {/* ── 11.8 Schedules ── */}
       <Text style={styles.h2}>11.8 Schedule Configuration</Text>
-      <View
-        wrap={false}
-        style={{
-          borderWidth: 1,
-          borderColor: "#333333",
-          padding: 12,
-          marginTop: 8,
-          marginBottom: 12,
-          backgroundColor: "#fafafa",
-        }}
-      >
-        <Text
-          style={{ fontSize: 10, fontFamily: "Times-Bold", marginBottom: 6 }}
-        >
-          Screen: Schedule Configuration (within Workflow Settings)
-        </Text>
-        <Text style={{ fontSize: 9, lineHeight: 1.5, marginBottom: 4 }}>
-          <Text style={styles.bold}>CronPicker Component:</Text> Visual cron
-          expression builder with preset buttons (Every minute, Every 5 minutes,
-          Every hour, Every day at midnight, etc.) • Custom cron expression
-          input with validation • Human-readable description of the cron
-          expression (e.g., "Runs every weekday at 9:00 AM") • Timezone selector
-          • Next 5 run times preview.
-        </Text>
-        <Text style={{ fontSize: 9, lineHeight: 1.5 }}>
-          <Text style={styles.bold}>Schedule List:</Text> Active/inactive toggle
-          for each schedule • Last run time and next run time display •
-          Execution count.
-        </Text>
-      </View>
 
-      {/* Screen 9: Version History */}
+      <Screen
+        title="11.8.1 CronPicker (Workflow Settings)"
+        description="Visual cron builder with presets (Every minute, Every hour, etc.) and a custom expression input with validation. Shows a human-readable description, timezone selector, and a preview of the next 5 run times. The Schedule list provides per-schedule active toggles, last/next run timestamps, and execution counts."
+      />
+
+      {/* ── 11.9 Version History ── */}
       <Text style={styles.h2}>11.9 Version History</Text>
-      <View
-        wrap={false}
-        style={{
-          borderWidth: 1,
-          borderColor: "#333333",
-          padding: 12,
-          marginTop: 8,
-          marginBottom: 12,
-          backgroundColor: "#fafafa",
-        }}
-      >
-        <Text
-          style={{ fontSize: 10, fontFamily: "Times-Bold", marginBottom: 6 }}
-        >
-          Screen: Version History Panel (within Workflow Editor)
-        </Text>
-        <Text style={{ fontSize: 9, lineHeight: 1.5 }}>
-          <Text style={styles.bold}>Elements:</Text> Slide-in panel from the
-          right showing a chronological list of all workflow versions. Each
-          entry shows version number, creation timestamp, change message (if
-          any), and a "Rollback" button. Clicking rollback restores the workflow
-          to that version's nodes, edges, and settings.
-        </Text>
-      </View>
 
-      {/* Screen 10: Webhook Docs */}
+      <Screen
+        title="11.9.1 Version History Panel"
+        description="Slide-in panel listing every workflow version chronologically with version number, timestamp, optional change message, and a Rollback button that restores the workflow's nodes, edges, and settings."
+      />
+
+      {/* ── 11.10 Webhook Docs ── */}
       <Text style={styles.h2}>11.10 Webhook Documentation</Text>
-      <View
-        wrap={false}
-        style={{
-          borderWidth: 1,
-          borderColor: "#333333",
-          padding: 12,
-          marginTop: 8,
-          marginBottom: 12,
-          backgroundColor: "#fafafa",
-        }}
-      >
-        <Text
-          style={{ fontSize: 10, fontFamily: "Times-Bold", marginBottom: 6 }}
-        >
-          Screen: Auto-generated Webhook API Documentation
-        </Text>
-        <Text style={{ fontSize: 9, lineHeight: 1.5 }}>
-          <Text style={styles.bold}>Elements:</Text> Displays the unique webhook
-          URL for the workflow • HTTP method badge (GET, POST, PUT, DELETE) •
-          Auto-generated cURL command example that can be copied to clipboard •
-          IP allowlist configuration • Secret hash for webhook signature
-          validation • Call count tracker.
-        </Text>
-      </View>
 
-      {/* 11.11 Summary */}
+      <Screen
+        title="11.10.1 Auto-generated Webhook Docs"
+        description="Displays the unique webhook URL, HTTP method badge, copy-to-clipboard cURL example, IP allowlist, secret hash for signature validation, and a call counter."
+      />
+
+      {/* ── 11.11 Summary ── */}
       <Text style={styles.h2}>11.11 Summary</Text>
       <Text style={styles.paragraphIndent}>
-        Flowgent 1.0 provides a comprehensive set of user interfaces covering
-        all aspects of the workflow automation lifecycle — from authentication
-        and dashboard overview, through visual workflow design and
-        configuration, to execution monitoring and team management. The
-        application is live and accessible at{" "}
-        <Text style={styles.bold}>https://flowgent.app</Text>, providing users
-        with a modern, responsive interface that supports both light and dark
-        themes across all screens.
+        Flowgent 1.0 ships a complete set of UI surfaces covering authentication,
+        dashboard overview, visual workflow design and configuration, execution
+        monitoring, and team management — all live at{" "}
+        <Text style={styles.bold}>https://flowgent.app</Text> with full
+        light/dark theme support.
       </Text>
 
       <View
@@ -540,8 +223,8 @@ export default function OutputScreens() {
           marginTop: 16,
           padding: 12,
           borderWidth: 1,
-          borderColor: "#333333",
-          backgroundColor: "#f9f9f9",
+          borderColor: "#94a3b8", borderRadius: 6,
+          backgroundColor: "#f8fafc",
         }}
       >
         <Text

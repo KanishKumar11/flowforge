@@ -43,7 +43,7 @@ export default function ScheduleTimeline() {
             x={chartLeft + i * weekWidth + weekWidth / 2}
             y={chartTop - 5}
             textAnchor="middle"
-            style={{ fontSize: 7, fill: "#666" }}
+            style={{ fontSize: 7.5, fontFamily: "Times-Bold", fill: "#1a1a1a" }}
           >
             W{i + 1}
           </SvgText>
@@ -158,25 +158,40 @@ export default function ScheduleTimeline() {
         x={chartLeft + weekWidth * 2}
         y={height - 34}
         textAnchor="middle"
-        style={{ fontSize: 7, fill: "#555555" }}
+        style={{
+          fontSize: 8,
+          fontFamily: "Times-Bold",
+          fill: "#1a1a1a",
+          letterSpacing: 0.5,
+        }}
       >
-        Month 1
+        MONTH 1
       </SvgText>
       <SvgText
         x={chartLeft + weekWidth * 6}
         y={height - 34}
         textAnchor="middle"
-        style={{ fontSize: 7, fill: "#555555" }}
+        style={{
+          fontSize: 8,
+          fontFamily: "Times-Bold",
+          fill: "#1a1a1a",
+          letterSpacing: 0.5,
+        }}
       >
-        Month 2
+        MONTH 2
       </SvgText>
       <SvgText
         x={chartLeft + weekWidth * 10}
         y={height - 34}
         textAnchor="middle"
-        style={{ fontSize: 7, fill: "#555555" }}
+        style={{
+          fontSize: 8,
+          fontFamily: "Times-Bold",
+          fill: "#1a1a1a",
+          letterSpacing: 0.5,
+        }}
       >
-        Month 3
+        MONTH 3
       </SvgText>
     </Svg>
   );

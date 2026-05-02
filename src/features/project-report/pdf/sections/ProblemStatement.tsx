@@ -59,12 +59,6 @@ export default function ProblemStatement() {
         existing solutions and their shortcomings, and establishes the
         foundation for the proposed Flowgent platform.
       </Text>
-      <Text style={styles.paragraphIndent}>
-        The need for accessible, reliable, and intelligent workflow automation
-        has never been greater. Organizations that fail to adopt automation face
-        reduced productivity, increased operational costs, and diminished
-        competitive advantage in an increasingly digital marketplace.
-      </Text>
 
       {/* 2.2 Problem Statement */}
       <Text style={styles.h2}>2.2 Problem Statement</Text>
@@ -90,35 +84,28 @@ export default function ProblemStatement() {
       </Text>
       <View style={{ marginLeft: 24, marginBottom: 12 }}>
         <Text style={{ fontSize: 11, marginBottom: 6, lineHeight: 1.5 }}>
-          <Text style={styles.bold}>• Data Entry and Transfer:</Text> Employees
-          frequently copy data manually between systems, such as transferring
-          customer information from web forms to CRM systems, updating
-          spreadsheets with data from emails, or synchronizing inventory levels
-          across multiple platforms.
+          <Text style={styles.bold}>• Data Entry and Transfer:</Text> Manually
+          copying data between web forms, CRM systems, and spreadsheets is
+          error-prone and time-consuming.
         </Text>
         <Text style={{ fontSize: 11, marginBottom: 6, lineHeight: 1.5 }}>
-          <Text style={styles.bold}>• Report Generation:</Text> Creating
-          periodic reports often involves gathering data from multiple sources,
-          formatting it consistently, and distributing it to stakeholders—a
-          process that can consume hours of valuable time each week.
+          <Text style={styles.bold}>• Report Generation:</Text> Gathering data
+          from multiple sources, formatting, and distributing reports can
+          consume several hours per week.
         </Text>
         <Text style={{ fontSize: 11, marginBottom: 6, lineHeight: 1.5 }}>
           <Text style={styles.bold}>• Notification Management:</Text> Sending
-          timely notifications to team members, customers, or partners based on
-          specific events or conditions typically requires constant monitoring
-          and manual intervention.
+          event-triggered alerts requires constant monitoring and manual action.
         </Text>
         <Text style={{ fontSize: 11, marginBottom: 6, lineHeight: 1.5 }}>
-          <Text style={styles.bold}>• File Processing:</Text> Tasks such as
-          converting file formats, extracting information from documents,
-          organizing files into appropriate folders, and backing up important
-          data are often performed manually.
+          <Text style={styles.bold}>• File Processing:</Text> Format conversion,
+          document extraction, and file organization are routinely performed by
+          hand.
         </Text>
         <Text style={{ fontSize: 11, marginBottom: 6, lineHeight: 1.5 }}>
           <Text style={styles.bold}>• Cross-System Synchronization:</Text>{" "}
-          Maintaining consistency across multiple software platforms requires
-          regular manual updates, leading to data discrepancies and outdated
-          information.
+          Keeping data consistent across platforms requires manual updates,
+          leading to discrepancies.
         </Text>
       </View>
       <Text style={styles.paragraphIndent}>
@@ -144,30 +131,24 @@ export default function ProblemStatement() {
       </Text>
       <View style={{ marginLeft: 24, marginBottom: 12 }}>
         <Text style={{ fontSize: 11, marginBottom: 6, lineHeight: 1.5 }}>
-          <Text style={styles.bold}>• Programming Requirements:</Text> Many
-          automation platforms require users to write code in languages such as
-          Python, JavaScript, or proprietary scripting languages. Even
-          "low-code" solutions often require understanding of programming
-          concepts like variables, conditionals, and loops.
+          <Text style={styles.bold}>• Programming Requirements:</Text> Most
+          platforms expect knowledge of scripting languages and programming
+          concepts, excluding non-technical users.
         </Text>
         <Text style={{ fontSize: 11, marginBottom: 6, lineHeight: 1.5 }}>
-          <Text style={styles.bold}>• API Comprehension:</Text> Integrating with
-          external services requires understanding REST APIs, authentication
-          mechanisms (OAuth, API keys), request/response formats (JSON, XML),
-          and error handling—concepts unfamiliar to most non-technical users.
+          <Text style={styles.bold}>• API Comprehension:</Text> Integrating
+          external services requires familiarity with REST, OAuth, JSON, and
+          error handling — inaccessible to business users.
         </Text>
         <Text style={{ fontSize: 11, marginBottom: 6, lineHeight: 1.5 }}>
-          <Text style={styles.bold}>• Debugging Complexity:</Text> When
-          automations fail, diagnosing the root cause often requires technical
-          analysis of logs, stack traces, and system behavior that business
-          users are ill-equipped to perform.
+          <Text style={styles.bold}>• Debugging Complexity:</Text> Diagnosing
+          failures through logs and stack traces demands technical expertise
+          most teams do not possess.
         </Text>
         <Text style={{ fontSize: 11, marginBottom: 6, lineHeight: 1.5 }}>
-          <Text style={styles.bold}>• Dependency on IT Teams:</Text>{" "}
-          Organizations frequently rely on IT departments or external developers
-          to create and maintain automations, creating bottlenecks and
-          increasing costs. IT teams, already stretched thin managing critical
-          infrastructure, may deprioritize automation requests.
+          <Text style={styles.bold}>• Dependency on IT Teams:</Text> Automation
+          requests queue behind infrastructure priorities, creating bottlenecks
+          and delaying business improvements.
         </Text>
       </View>
       <Text style={styles.paragraphIndent}>
@@ -192,34 +173,29 @@ export default function ProblemStatement() {
       </Text>
       <View style={{ marginLeft: 24, marginBottom: 12 }}>
         <Text style={{ fontSize: 11, marginBottom: 6, lineHeight: 1.5 }}>
-          <Text style={styles.bold}>• Diverse API Standards:</Text> Different
-          services implement their APIs using various standards, authentication
-          methods, data formats, and conventions. What works for one API may not
-          work for another, requiring unique integration code for each service.
+          <Text style={styles.bold}>• Diverse API Standards:</Text> Each service
+          uses its own standards, authentication methods, and data formats,
+          requiring unique integration code per service.
         </Text>
         <Text style={{ fontSize: 11, marginBottom: 6, lineHeight: 1.5 }}>
-          <Text style={styles.bold}>• Authentication Challenges:</Text> Services
-          use different authentication mechanisms including API keys, OAuth 2.0,
-          JWT tokens, and basic authentication. Managing credentials securely
-          across multiple integrations adds complexity.
+          <Text style={styles.bold}>• Authentication Challenges:</Text> Securely
+          managing API keys, OAuth tokens, and JWT credentials across many
+          integrations adds significant complexity.
         </Text>
         <Text style={{ fontSize: 11, marginBottom: 6, lineHeight: 1.5 }}>
           <Text style={styles.bold}>• Data Transformation Requirements:</Text>{" "}
-          Data from one system often needs to be transformed before it can be
-          used by another. This includes format conversion, field mapping, data
-          validation, and handling missing or null values.
+          Data must often be converted, mapped, and validated before being
+          consumed by a target system.
         </Text>
         <Text style={{ fontSize: 11, marginBottom: 6, lineHeight: 1.5 }}>
-          <Text style={styles.bold}>• Rate Limiting and Quotas:</Text> Most APIs
-          impose rate limits and usage quotas that integrations must respect.
-          Building systems that gracefully handle these constraints without
-          losing data requires sophisticated retry logic.
+          <Text style={styles.bold}>• Rate Limiting and Quotas:</Text> APIs
+          impose rate limits that require sophisticated retry logic to handle
+          gracefully without losing data.
         </Text>
         <Text style={{ fontSize: 11, marginBottom: 6, lineHeight: 1.5 }}>
-          <Text style={styles.bold}>• Version Management:</Text> APIs evolve
-          over time, and integrations must adapt to breaking changes, deprecated
-          endpoints, and new functionality while maintaining backward
-          compatibility.
+          <Text style={styles.bold}>• Version Management:</Text> API changes and
+          deprecated endpoints force integrations to adapt continuously to avoid
+          breakage.
         </Text>
       </View>
       <Text style={styles.paragraphIndent}>
@@ -243,36 +219,28 @@ export default function ProblemStatement() {
       <View style={{ marginLeft: 24, marginBottom: 12 }}>
         <Text style={{ fontSize: 11, marginBottom: 6, lineHeight: 1.5 }}>
           <Text style={styles.bold}>• Transient Failures:</Text> Network
-          timeouts, temporary service outages, and rate limiting can cause
-          workflow steps to fail even when the underlying logic is correct.
-          Systems must handle these failures gracefully without losing work or
-          creating inconsistent states.
+          timeouts, outages, and rate limits can fail workflow steps even when
+          logic is correct — requiring graceful retry without data loss.
         </Text>
         <Text style={{ fontSize: 11, marginBottom: 6, lineHeight: 1.5 }}>
           <Text style={styles.bold}>• State Management:</Text> Long-running
-          workflows may span hours or days, requiring the system to maintain
-          state across execution steps. If the automation platform experiences
-          downtime, it must be able to resume workflows from where they left
-          off.
+          workflows must persist state across steps and resume correctly after
+          platform downtime.
         </Text>
         <Text style={{ fontSize: 11, marginBottom: 6, lineHeight: 1.5 }}>
-          <Text style={styles.bold}>• Error Visibility:</Text> When failures
-          occur, users need clear, actionable information about what went wrong
-          and how to fix it. Cryptic error messages or missing context make
-          troubleshooting difficult and time-consuming.
+          <Text style={styles.bold}>• Error Visibility:</Text> Users need
+          actionable error context; cryptic messages make troubleshooting
+          difficult without developer assistance.
         </Text>
         <Text style={{ fontSize: 11, marginBottom: 6, lineHeight: 1.5 }}>
-          <Text style={styles.bold}>• Execution Monitoring:</Text> Operators
-          need real-time visibility into workflow execution status, including
-          which steps are running, which have completed, and which have failed.
-          Historical execution data enables performance analysis and
-          optimization.
+          <Text style={styles.bold}>• Execution Monitoring:</Text> Real-time
+          visibility into running, completed, and failed steps — and historical
+          logs for performance analysis — are essential.
         </Text>
         <Text style={{ fontSize: 11, marginBottom: 6, lineHeight: 1.5 }}>
-          <Text style={styles.bold}>• Audit Requirements:</Text> For compliance
-          and security purposes, organizations often need detailed audit trails
-          showing who created or modified workflows, when executions occurred,
-          and what data was processed.
+          <Text style={styles.bold}>• Audit Requirements:</Text> Compliance
+          demands detailed audit trails covering workflow modifications,
+          execution timestamps, and data processed.
         </Text>
       </View>
 
@@ -537,7 +505,7 @@ export default function ProblemStatement() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 16,
           marginBottom: 8,
         }}
@@ -546,9 +514,9 @@ export default function ProblemStatement() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -558,7 +526,7 @@ export default function ProblemStatement() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Feature
@@ -570,7 +538,7 @@ export default function ProblemStatement() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Zapier
@@ -582,7 +550,7 @@ export default function ProblemStatement() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             n8n
@@ -594,7 +562,7 @@ export default function ProblemStatement() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Make
@@ -606,7 +574,7 @@ export default function ProblemStatement() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Power Auto
@@ -668,7 +636,7 @@ export default function ProblemStatement() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 9 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -678,7 +646,7 @@ export default function ProblemStatement() {
                 fontSize: 8,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -690,7 +658,7 @@ export default function ProblemStatement() {
                 fontSize: 8,
                 textAlign: "center",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -702,7 +670,7 @@ export default function ProblemStatement() {
                 fontSize: 8,
                 textAlign: "center",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[2]}
@@ -714,7 +682,7 @@ export default function ProblemStatement() {
                 fontSize: 8,
                 textAlign: "center",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[3]}
@@ -726,7 +694,7 @@ export default function ProblemStatement() {
                 fontSize: 8,
                 textAlign: "center",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[4]}
@@ -767,7 +735,7 @@ export default function ProblemStatement() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 8,
         }}
@@ -775,9 +743,9 @@ export default function ProblemStatement() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -787,7 +755,7 @@ export default function ProblemStatement() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Feature
@@ -799,7 +767,7 @@ export default function ProblemStatement() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             n8n
@@ -882,7 +850,7 @@ export default function ProblemStatement() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 15 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -892,7 +860,7 @@ export default function ProblemStatement() {
                 fontSize: 7.5,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -903,7 +871,7 @@ export default function ProblemStatement() {
                 padding: 4,
                 fontSize: 7.5,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}

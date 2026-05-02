@@ -18,7 +18,7 @@ export default function ComponentDiagram() {
 
   const colors = {
     text: "#1a1a1a",
-    label: "#666666",
+    label: "#475569",
     page: "#1565C0",
     pageLight: "#E3F2FD",
     layout: "#2E7D32",
@@ -31,7 +31,7 @@ export default function ComponentDiagram() {
     hookLight: "#E0F2F1",
     provider: "#C62828",
     providerLight: "#FFEBEE",
-    connector: "#aaaaaa",
+    connector: "#94a3b8",
   };
 
   // Component box helper

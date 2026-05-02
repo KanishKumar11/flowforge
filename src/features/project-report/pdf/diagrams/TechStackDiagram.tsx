@@ -18,19 +18,19 @@ export default function TechStackDiagram() {
 
   const colors = {
     text: "#1a1a1a",
-    label: "#555555",
-    // Layer colors
-    frontend: "#1565C0",
-    frontendBg: "#E3F2FD",
-    backend: "#2E7D32",
-    backendBg: "#E8F5E9",
-    database: "#6A1B9A",
-    databaseBg: "#F3E5F5",
-    infra: "#E65100",
-    infraBg: "#FFF3E0",
-    devtools: "#00695C",
-    devtoolsBg: "#E0F2F1",
-    arrow: "#888888",
+    label: "#475569",
+    // Layer colors — vibrant
+    frontend: "#1d4ed8",
+    frontendBg: "#dbeafe",
+    backend: "#16a34a",
+    backendBg: "#bbf7d0",
+    database: "#7c3aed",
+    databaseBg: "#ede9fe",
+    infra: "#ea580c",
+    infraBg: "#ffedd5",
+    devtools: "#0891b2",
+    devtoolsBg: "#cffafe",
+    arrow: "#64748b",
   };
 
   const layerX = 30;
@@ -193,10 +193,9 @@ export default function TechStackDiagram() {
                     width={tw}
                     height={layerH - 12}
                     rx={4}
-                    fill="#FFFFFF"
+                    fill={layer.bg}
                     stroke={layer.color}
                     strokeWidth={0.8}
-                    opacity={0.9}
                   />
                   <SvgText
                     x={tx + tw / 2}

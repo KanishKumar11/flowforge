@@ -3,7 +3,7 @@
 import { View, Text } from "@react-pdf/renderer";
 import { styles } from "../styles";
 import BookPageLayout from "../components/BookPageLayout";
-import SDLCDiagram from "../diagrams/SDLCDiagram";
+import SDLCDiagram, { SDLCDiagramDeliverables } from "../diagrams/SDLCDiagram";
 import SDLCEffortPieChart from "../diagrams/SDLCEffortPieChart";
 import SurveyResultsChart from "../diagrams/SurveyResultsChart";
 
@@ -70,49 +70,13 @@ export default function SDLCOverview() {
       {/* 6.1.1 Importance of SDLC */}
       <Text style={styles.h3}>6.1.1 Importance of SDLC</Text>
       <Text style={styles.paragraphIndent}>
-        Following a structured SDLC methodology provides numerous benefits that
-        contribute to project success. These benefits are particularly relevant
-        for complex systems like Flowgent that involve multiple technologies,
-        integration points, and user-facing features.
-      </Text>
-
-      <Text style={styles.h3}>6.1.1.1 Quality Assurance</Text>
-      <Text style={styles.paragraphIndent}>
-        A structured SDLC incorporates quality checkpoints at each phase,
-        ensuring that defects are identified and addressed early when they are
-        less expensive to fix. Testing is not relegated to the end of
-        development but is woven throughout the lifecycle. For Flowgent, this
-        meant continuous testing during development, reducing the risk of
-        critical bugs in production.
-      </Text>
-
-      <Text style={styles.h3}>6.1.1.2 Risk Management</Text>
-      <Text style={styles.paragraphIndent}>
-        By requiring feasibility analysis and careful planning before
-        implementation, the SDLC helps identify and mitigate risks early.
-        Technical risks (such as technology selection), schedule risks
-        (realistic timeline estimation), and resource risks (skill requirements)
-        are all addressed systematically rather than discovered during
-        implementation.
-      </Text>
-
-      <Text style={styles.h3}>6.1.1.3 Resource Optimization</Text>
-      <Text style={styles.paragraphIndent}>
-        Clear phase definitions and deliverables enable efficient allocation of
-        time and effort. Rather than pursuing multiple directions
-        simultaneously, the team can focus on phase-appropriate activities.
-        Requirements gathering precedes design, which precedes
-        implementation—each phase building on the outputs of the previous phase.
-      </Text>
-
-      <Text style={styles.h3}>
-        6.1.1.4 Documentation and Knowledge Transfer
-      </Text>
-      <Text style={styles.paragraphIndent}>
-        SDLC phases produce documentation artifacts that capture decisions,
-        designs, and implementation details. This documentation serves multiple
-        purposes: guiding development, enabling review and feedback, supporting
-        maintenance, and facilitating knowledge transfer to future maintainers.
+        A structured SDLC ensures quality checkpoints at every phase, early risk
+        identification (technical, schedule, and resource), efficient allocation
+        of effort by keeping each phase focused on its deliverables, and the
+        generation of documentation that supports maintenance and knowledge
+        transfer. For Flowgent — a system spanning multiple technologies and
+        integration points — these benefits were directly observable throughout
+        the project lifecycle.
       </Text>
 
       {/* 6.1.2 SDLC Phases Overview */}
@@ -138,13 +102,27 @@ export default function SDLCOverview() {
           Figure 6.1: SDLC Phases Flow Diagram
         </Text>
       </View>
+      <View style={{ marginTop: 16, marginBottom: 8 }}>
+        <SDLCDiagramDeliverables />
+        <Text
+          style={{
+            fontSize: 9,
+            fontFamily: "Times-Italic",
+            textAlign: "center",
+            marginTop: 4,
+            marginBottom: 12,
+          }}
+        >
+          Figure 6.1 (continued): SDLC Deliverables & Feedback Loop
+        </Text>
+      </View>
 
       {/* Phases Overview Table */}
       <View
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 16,
           marginBottom: 8,
         }}
@@ -152,9 +130,9 @@ export default function SDLCOverview() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -164,7 +142,7 @@ export default function SDLCOverview() {
               fontSize: 10,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Phase
@@ -176,7 +154,7 @@ export default function SDLCOverview() {
               fontSize: 10,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Key Activities
@@ -229,7 +207,7 @@ export default function SDLCOverview() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 5 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -239,7 +217,7 @@ export default function SDLCOverview() {
                 fontSize: 9,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -251,7 +229,7 @@ export default function SDLCOverview() {
                 fontSize: 9,
                 lineHeight: 1.4,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -588,7 +566,7 @@ export default function SDLCOverview() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 12,
           marginBottom: 8,
         }}
@@ -596,9 +574,9 @@ export default function SDLCOverview() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -608,7 +586,7 @@ export default function SDLCOverview() {
               fontSize: 10,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Phase
@@ -620,7 +598,7 @@ export default function SDLCOverview() {
               fontSize: 10,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Duration
@@ -632,7 +610,7 @@ export default function SDLCOverview() {
               fontSize: 10,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Weeks
@@ -661,7 +639,7 @@ export default function SDLCOverview() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 5 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -671,7 +649,7 @@ export default function SDLCOverview() {
                 fontSize: 9,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -683,7 +661,7 @@ export default function SDLCOverview() {
                 fontSize: 9,
                 textAlign: "center",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -695,7 +673,7 @@ export default function SDLCOverview() {
                 fontSize: 9,
                 textAlign: "center",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[2]}

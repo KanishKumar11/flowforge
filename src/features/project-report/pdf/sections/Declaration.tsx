@@ -17,7 +17,7 @@ export default function Declaration({ pageNumber }: DeclarationProps) {
     <PreliminaryPageLayout pageNumber={pageNumber}>
       {/* Title */}
       <View style={{ alignItems: "center", marginBottom: 32 }}>
-        <Text style={styles.h1}>DECLARATION</Text>
+        <Text style={styles.h1}>SELF DECLARATION</Text>
         <View style={{ width: 80, height: 4, backgroundColor: "#000000", marginTop: 8 }} />
       </View>
 
@@ -28,16 +28,7 @@ export default function Declaration({ pageNumber }: DeclarationProps) {
           <Text style={styles.bold}>
             "FLOWGENT 1.0 - Visual Workflow Automation Platform"
           </Text>{" "}
-          submitted by me to{" "}
-          <Text style={styles.bold}>Hindu College, Amritsar</Text> in partial
-          fulfillment of the requirements for the award of the degree of{" "}
-          <Text style={styles.bold}>
-            Bachelor of Computer Applications (BCA)
-          </Text>{" "}
-          is a bonafide record of work carried out by me under the supervision
-          and guidance of{" "}
-          <Text style={styles.bold}>Mr. Anshuman Sharma</Text> and{" "}
-          <Text style={styles.bold}>Dr. Sunny Sharma</Text>.
+          submitted by me to <Text style={styles.bold}>Hindu College, Amritsar</Text> in partial fulfillment of the requirements for the award of the degree of <Text style={styles.bold}>Bachelor of Computer Applications (BCA)</Text> is a bonafide record of work carried out by me under the supervision and guidance of <Text style={styles.bold}>Mr. Anshuman Sharma</Text> and <Text style={styles.bold}>Dr. Sunny Sharma</Text>.
         </Text>
 
         <Text style={[styles.paragraph, { marginTop: 16 }]}>

@@ -85,7 +85,7 @@ export default function SDLCEffortPieChart() {
         style={{
           fontSize: 8,
           fontFamily: "Times-Italic",
-          fill: "#555555",
+          fill: "#475569",
         }}
       >
         Total Duration: 12 Weeks (Jan 6 – Mar 15, 2026)
@@ -155,7 +155,7 @@ export default function SDLCEffortPieChart() {
         style={{
           fontSize: 8,
           fontFamily: "Times-Roman",
-          fill: "#555555",
+          fill: "#475569",
         }}
       >
         Weeks
@@ -192,7 +192,7 @@ export default function SDLCEffortPieChart() {
               style={{
                 fontSize: 7,
                 fontFamily: "Times-Roman",
-                fill: "#555555",
+                fill: "#475569",
               }}
             >
               {phase.weeks} week{phase.weeks > 1 ? "s" : ""} ({phase.pct}%)

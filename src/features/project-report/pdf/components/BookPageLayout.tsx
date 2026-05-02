@@ -111,7 +111,7 @@ export default function BookPageLayout({
           color: "#666666",
         }}
       >
-        Flowgent 1.0 — Project Report
+        Flowgent 1.0
       </Text>
     </Page>
   );

@@ -188,7 +188,7 @@ export default function ComparisonRadar() {
         x={cx}
         y={height - 8}
         textAnchor="middle"
-        style={{ fontSize: 7, fill: "#555555" }}
+        style={{ fontSize: 7, fill: "#475569" }}
       >
         Scale: 1 (Poor) — 10 (Excellent)
       </SvgText>
