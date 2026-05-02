@@ -69,7 +69,7 @@ export default function RequirementGathering() {
         style={{
           borderWidth: 1,
           borderColor: "#999999",
-          backgroundColor: "#f9f9f9",
+          backgroundColor: "#f8fafc",
           padding: 12,
           marginTop: 12,
           marginBottom: 12,
@@ -154,7 +154,7 @@ export default function RequirementGathering() {
         style={{
           borderWidth: 1,
           borderColor: "#999999",
-          backgroundColor: "#f9f9f9",
+          backgroundColor: "#f8fafc",
           padding: 12,
           marginBottom: 12,
         }}
@@ -229,7 +229,7 @@ export default function RequirementGathering() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 8,
         }}
@@ -237,9 +237,9 @@ export default function RequirementGathering() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -249,7 +249,7 @@ export default function RequirementGathering() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             #
@@ -261,7 +261,7 @@ export default function RequirementGathering() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Role
@@ -273,7 +273,7 @@ export default function RequirementGathering() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Industry
@@ -324,7 +324,7 @@ export default function RequirementGathering() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 7 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -334,7 +334,7 @@ export default function RequirementGathering() {
                 fontSize: 8,
                 textAlign: "center",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -345,7 +345,7 @@ export default function RequirementGathering() {
                 padding: 4,
                 fontSize: 8,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -356,7 +356,7 @@ export default function RequirementGathering() {
                 padding: 4,
                 fontSize: 8,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[2]}
@@ -417,7 +417,7 @@ export default function RequirementGathering() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 8,
         }}
@@ -425,9 +425,9 @@ export default function RequirementGathering() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -437,7 +437,7 @@ export default function RequirementGathering() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Category
@@ -449,7 +449,7 @@ export default function RequirementGathering() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Options
@@ -484,7 +484,7 @@ export default function RequirementGathering() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 11 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -494,7 +494,7 @@ export default function RequirementGathering() {
                 fontSize: 8,
                 fontFamily: row[0] ? "Times-Bold" : "Times-Roman",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -505,7 +505,7 @@ export default function RequirementGathering() {
                 padding: 4,
                 fontSize: 8,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -541,7 +541,7 @@ export default function RequirementGathering() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 8,
         }}
@@ -549,9 +549,9 @@ export default function RequirementGathering() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -561,7 +561,7 @@ export default function RequirementGathering() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Previous Tool
@@ -573,7 +573,7 @@ export default function RequirementGathering() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Usage %
@@ -602,7 +602,7 @@ export default function RequirementGathering() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 5 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -612,7 +612,7 @@ export default function RequirementGathering() {
                 fontSize: 8,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -624,7 +624,7 @@ export default function RequirementGathering() {
                 fontSize: 8,
                 textAlign: "center",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -661,79 +661,95 @@ export default function RequirementGathering() {
         requirements:
       </Text>
 
-      <Text style={styles.paragraph}>
-        <Text style={styles.bold}>
-          Finding 1: Learning Curve is a Major Barrier (85%)
-        </Text>
-      </Text>
-      <Text style={styles.paragraphIndent}>
-        85% of respondents reported struggling with the learning curve of
-        existing automation tools. Many commented that while features were
-        powerful, the time investment to learn the platform was prohibitive.
-        This finding emphasized the need for an intuitive, visual interface that
-        reduces the barrier to entry.
-      </Text>
-
-      <Text style={styles.paragraph}>
-        <Text style={styles.bold}>
-          Finding 2: HTTP API Integration is Essential (70%)
-        </Text>
-      </Text>
-      <Text style={styles.paragraphIndent}>
-        70% of respondents indicated that HTTP API integration was their most
-        common use case. Many workflows involve calling external APIs, webhooks,
-        or custom services. This finding prioritized robust HTTP Request node
-        capabilities with support for all common methods, authentication types,
-        and response handling.
-      </Text>
-
-      <Text style={styles.paragraph}>
-        <Text style={styles.bold}>
-          Finding 3: AI Features are Increasingly Desired (65%)
-        </Text>
-      </Text>
-      <Text style={styles.paragraphIndent}>
-        65% of respondents expressed interest in AI-powered automation features.
-        Use cases included content generation, data analysis, intelligent
-        routing, and natural language processing. This finding validated the
-        decision to include native AI integration as a core feature.
-      </Text>
-
-      <Text style={styles.paragraph}>
-        <Text style={styles.bold}>
-          Finding 4: Team Collaboration is Critical (80%)
-        </Text>
-      </Text>
-      <Text style={styles.paragraphIndent}>
-        80% of respondents worked in team environments and required
-        collaboration features. Many were frustrated that RBAC and team features
-        were locked behind expensive enterprise plans. This finding established
-        team collaboration as a core requirement rather than a premium add-on.
-      </Text>
-
-      <Text style={styles.paragraph}>
-        <Text style={styles.bold}>
-          Finding 5: Monitoring is Non-Negotiable (90%)
-        </Text>
-      </Text>
-      <Text style={styles.paragraphIndent}>
-        90% of respondents emphasized the importance of execution monitoring and
-        debugging. When automations fail, users need clear visibility into what
-        went wrong. This finding prioritized comprehensive logging, execution
-        history, and error reporting.
-      </Text>
-
-      <Text style={styles.paragraph}>
-        <Text style={styles.bold}>
-          Finding 6: Visual Interface Preferred (75%)
-        </Text>
-      </Text>
-      <Text style={styles.paragraphIndent}>
-        75% of respondents preferred visual/drag-drop workflow design over
-        code-based solutions. Even technically proficient users appreciated the
-        visual representation for understanding complex workflows. This finding
-        reinforced the visual-first design approach.
-      </Text>
+      {[
+        {
+          num: 1,
+          pct: "85%",
+          color: "#dc2626",
+          title: "Learning Curve is a Major Barrier",
+          desc: "85% of respondents reported struggling with the learning curve of existing automation tools. The time investment to learn the platform was prohibitive — emphasizing the need for an intuitive, visual interface that reduces the barrier to entry.",
+        },
+        {
+          num: 2,
+          pct: "70%",
+          color: "#d97706",
+          title: "HTTP API Integration is Essential",
+          desc: "70% indicated that HTTP API integration was their most common use case. This prioritized robust HTTP Request node capabilities with support for all common methods, authentication types, and response handling.",
+        },
+        {
+          num: 3,
+          pct: "65%",
+          color: "#7c3aed",
+          title: "AI Features are Increasingly Desired",
+          desc: "65% expressed interest in AI-powered automation for content generation, data analysis, intelligent routing, and NLP — validating the decision to include native AI integration as a core feature.",
+        },
+        {
+          num: 4,
+          pct: "80%",
+          color: "#0891b2",
+          title: "Team Collaboration is Critical",
+          desc: "80% worked in team environments and required collaboration. Many were frustrated that RBAC was locked behind expensive enterprise plans — establishing team features as a core requirement, not a premium add-on.",
+        },
+        {
+          num: 5,
+          pct: "90%",
+          color: "#16a34a",
+          title: "Monitoring is Non-Negotiable",
+          desc: "90% emphasized the importance of execution monitoring and debugging. This prioritized comprehensive logging, execution history, and real-time error reporting as first-class features.",
+        },
+        {
+          num: 6,
+          pct: "75%",
+          color: "#1d4ed8",
+          title: "Visual Interface Preferred",
+          desc: "75% preferred visual drag-and-drop workflow design over code-based solutions. Even technically proficient users appreciated the visual representation — reinforcing the visual-first design approach.",
+        },
+      ].map((f) => (
+        <View
+          key={f.num}
+          style={{
+            flexDirection: "row",
+            marginBottom: 9,
+            borderLeftWidth: 3,
+            borderLeftColor: f.color,
+            paddingLeft: 10,
+          }}
+        >
+          <View style={{ flex: 1 }}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                marginBottom: 3,
+              }}
+            >
+              <View
+                style={{
+                  backgroundColor: f.color,
+                  paddingHorizontal: 5,
+                  paddingVertical: 2,
+                  marginRight: 7,
+                  borderRadius: 2,
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 8,
+                    color: "#ffffff",
+                    fontFamily: "Times-Bold",
+                  }}
+                >
+                  {f.pct}
+                </Text>
+              </View>
+              <Text style={{ fontSize: 10, fontFamily: "Times-Bold" }}>
+                Finding {f.num}: {f.title}
+              </Text>
+            </View>
+            <Text style={{ fontSize: 9.5, lineHeight: 1.45 }}>{f.desc}</Text>
+          </View>
+        </View>
+      ))}
 
       {/* 6.3.6 Use Case Identification */}
       <Text style={styles.h3}>6.3.6 Use Case Identification</Text>
@@ -746,7 +762,7 @@ export default function RequirementGathering() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 12,
           marginBottom: 8,
         }}
@@ -754,9 +770,9 @@ export default function RequirementGathering() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -766,7 +782,7 @@ export default function RequirementGathering() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             UC#
@@ -778,7 +794,7 @@ export default function RequirementGathering() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Use Case
@@ -790,7 +806,7 @@ export default function RequirementGathering() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Actor
@@ -846,7 +862,7 @@ export default function RequirementGathering() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 7 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -856,7 +872,7 @@ export default function RequirementGathering() {
                 fontSize: 8,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -867,7 +883,7 @@ export default function RequirementGathering() {
                 padding: 4,
                 fontSize: 8,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -879,7 +895,7 @@ export default function RequirementGathering() {
                 fontSize: 8,
                 textAlign: "center",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[2]}
@@ -913,7 +929,7 @@ export default function RequirementGathering() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 12,
           marginBottom: 8,
         }}
@@ -921,9 +937,9 @@ export default function RequirementGathering() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -933,7 +949,7 @@ export default function RequirementGathering() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Stakeholder
@@ -945,7 +961,7 @@ export default function RequirementGathering() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Primary Concerns
@@ -993,7 +1009,7 @@ export default function RequirementGathering() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 4 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -1003,7 +1019,7 @@ export default function RequirementGathering() {
                 fontSize: 8,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -1015,7 +1031,7 @@ export default function RequirementGathering() {
                 fontSize: 8,
                 lineHeight: 1.3,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -1156,7 +1172,7 @@ export default function RequirementGathering() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 12,
           marginBottom: 8,
         }}
@@ -1164,9 +1180,9 @@ export default function RequirementGathering() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -1176,7 +1192,7 @@ export default function RequirementGathering() {
               fontSize: 8,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Req#
@@ -1188,7 +1204,7 @@ export default function RequirementGathering() {
               fontSize: 8,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Requirement
@@ -1200,7 +1216,7 @@ export default function RequirementGathering() {
               fontSize: 8,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Source
@@ -1212,7 +1228,7 @@ export default function RequirementGathering() {
               fontSize: 8,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Priority
@@ -1289,7 +1305,7 @@ export default function RequirementGathering() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 11 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -1299,7 +1315,7 @@ export default function RequirementGathering() {
                 fontSize: 7,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -1310,7 +1326,7 @@ export default function RequirementGathering() {
                 padding: 3,
                 fontSize: 7,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -1322,7 +1338,7 @@ export default function RequirementGathering() {
                 fontSize: 7,
                 textAlign: "center",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[2]}
@@ -1334,7 +1350,7 @@ export default function RequirementGathering() {
                 fontSize: 7,
                 textAlign: "center",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[3]}

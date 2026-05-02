@@ -21,7 +21,7 @@ export default function ActivityDiagram() {
 
   const colors = {
     text: "#1a1a1a",
-    label: "#555555",
+    label: "#475569",
     activity: "#E3F2FD",
     activityBorder: "#1565C0",
     decision: "#FFF3E0",
@@ -411,14 +411,14 @@ export default function ActivityDiagram() {
       <Decision cx={c1} cy={478} size={28} label="Success?" />
 
       {/* Yes to end */}
+      <Arrow x1={c1} y1={492} x2={c1} y2={512} />
       <SvgText
-        x={c1 + 18}
-        y={472}
+        x={c1 + 5}
+        y={504}
         style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#2E7D32" }}
       >
         [Yes]
       </SvgText>
-      <Arrow x1={c1} y1={492} x2={c1} y2={512} />
 
       {/* No - show retry */}
       <Line
@@ -437,12 +437,11 @@ export default function ActivityDiagram() {
         [No]
       </SvgText>
       <SvgText
-        x={c1 - 70}
-        y={484}
-        textAnchor="end"
+        x={lane1X + 8}
+        y={490}
         style={{ fontSize: 7, fontFamily: "Times-Roman", fill: colors.label }}
       >
-        Retry / Debug
+        Debug
       </SvgText>
 
       {/* End node (bullseye) */}

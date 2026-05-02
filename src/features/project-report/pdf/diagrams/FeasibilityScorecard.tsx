@@ -98,7 +98,7 @@ export default function FeasibilityScorecard() {
               width={barMaxWidth}
               height={barHeight}
               rx={4}
-              fill="#f3f4f6"
+              fill="#e2e8f0"
             />
 
             {/* Fill bar */}
@@ -109,7 +109,6 @@ export default function FeasibilityScorecard() {
               height={barHeight}
               rx={4}
               fill={dim.color}
-              opacity={0.75}
             />
 
             {/* Score text on bar */}

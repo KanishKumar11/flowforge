@@ -81,7 +81,7 @@ export default function COCOMOEstimation() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 12,
           marginBottom: 8,
         }}
@@ -89,9 +89,9 @@ export default function COCOMOEstimation() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -101,7 +101,7 @@ export default function COCOMOEstimation() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Module
@@ -114,7 +114,7 @@ export default function COCOMOEstimation() {
               fontFamily: "Times-Bold",
               textAlign: "center",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             LOC
@@ -127,7 +127,7 @@ export default function COCOMOEstimation() {
               fontFamily: "Times-Bold",
               textAlign: "center",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             KLOC
@@ -157,7 +157,7 @@ export default function COCOMOEstimation() {
             style={{
               flexDirection: "row",
               borderBottomWidth: 1,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -166,7 +166,7 @@ export default function COCOMOEstimation() {
                 padding: 4,
                 fontSize: 8,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -178,7 +178,7 @@ export default function COCOMOEstimation() {
                 fontSize: 8,
                 textAlign: "right",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -190,7 +190,7 @@ export default function COCOMOEstimation() {
                 fontSize: 8,
                 textAlign: "right",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[2]}
@@ -200,7 +200,7 @@ export default function COCOMOEstimation() {
             </Text>
           </View>
         ))}
-        <View style={{ flexDirection: "row", backgroundColor: "#D9E2F3" }}>
+        <View style={{ flexDirection: "row", backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6 }}>
           <Text
             style={{
               width: "45%",
@@ -208,7 +208,7 @@ export default function COCOMOEstimation() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Total
@@ -221,7 +221,7 @@ export default function COCOMOEstimation() {
               fontFamily: "Times-Bold",
               textAlign: "right",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             18,000
@@ -234,7 +234,7 @@ export default function COCOMOEstimation() {
               fontFamily: "Times-Bold",
               textAlign: "right",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             18.0
@@ -288,7 +288,7 @@ export default function COCOMOEstimation() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 12,
         }}
@@ -296,9 +296,9 @@ export default function COCOMOEstimation() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -308,7 +308,7 @@ export default function COCOMOEstimation() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Mode
@@ -320,7 +320,7 @@ export default function COCOMOEstimation() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Characteristics
@@ -346,7 +346,7 @@ export default function COCOMOEstimation() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 2 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -356,7 +356,7 @@ export default function COCOMOEstimation() {
                 fontSize: 8,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -367,7 +367,7 @@ export default function COCOMOEstimation() {
                 padding: 4,
                 fontSize: 8,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -402,7 +402,7 @@ export default function COCOMOEstimation() {
           E = 2.4 × (18.0)^1.05
         </Text>
         <Text
-          style={{ fontSize: 10, fontFamily: "Times-Bold", color: "#006600" }}
+          style={{ fontSize: 10, fontFamily: "Times-Bold", color: "#16a34a" }}
         >
           E = 49.9 person-months
         </Text>
@@ -432,7 +432,7 @@ export default function COCOMOEstimation() {
           TDEV = 2.5 × (49.9)^0.38
         </Text>
         <Text
-          style={{ fontSize: 10, fontFamily: "Times-Bold", color: "#006600" }}
+          style={{ fontSize: 10, fontFamily: "Times-Bold", color: "#16a34a" }}
         >
           TDEV = 11.0 months
         </Text>
@@ -461,7 +461,7 @@ export default function COCOMOEstimation() {
           Team Size = 49.9 / 11.0
         </Text>
         <Text
-          style={{ fontSize: 10, fontFamily: "Times-Bold", color: "#006600" }}
+          style={{ fontSize: 10, fontFamily: "Times-Bold", color: "#16a34a" }}
         >
           {"Team Size = ~5 persons"}
         </Text>
@@ -478,7 +478,7 @@ export default function COCOMOEstimation() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 8,
         }}
@@ -486,9 +486,9 @@ export default function COCOMOEstimation() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -498,7 +498,7 @@ export default function COCOMOEstimation() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Cost Driver
@@ -510,7 +510,7 @@ export default function COCOMOEstimation() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Rating
@@ -522,7 +522,7 @@ export default function COCOMOEstimation() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Value
@@ -559,7 +559,7 @@ export default function COCOMOEstimation() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 12 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
               backgroundColor: row[1] === "" ? "#f9f9f9" : "transparent",
             }}
           >
@@ -570,7 +570,7 @@ export default function COCOMOEstimation() {
                 fontSize: 8,
                 fontFamily: row[1] === "" ? "Times-Bold" : "Times-Roman",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -581,7 +581,7 @@ export default function COCOMOEstimation() {
                 padding: 3,
                 fontSize: 8,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -593,7 +593,7 @@ export default function COCOMOEstimation() {
                 fontSize: 8,
                 textAlign: "center",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[2]}
@@ -610,7 +610,7 @@ export default function COCOMOEstimation() {
             </Text>
           </View>
         ))}
-        <View style={{ flexDirection: "row", backgroundColor: "#D9E2F3" }}>
+        <View style={{ flexDirection: "row", backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6 }}>
           <Text
             style={{
               width: "60%",
@@ -618,7 +618,7 @@ export default function COCOMOEstimation() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Effort Adjustment Factor (EAF)
@@ -663,7 +663,7 @@ export default function COCOMOEstimation() {
           E_adjusted = 49.9 × 0.58
         </Text>
         <Text
-          style={{ fontSize: 10, fontFamily: "Times-Bold", color: "#006600" }}
+          style={{ fontSize: 10, fontFamily: "Times-Bold", color: "#16a34a" }}
         >
           E_adjusted = 28.7 person-months
         </Text>
@@ -697,7 +697,7 @@ export default function COCOMOEstimation() {
             {`Overhead (25%): INR ${Math.round(laborCostINR * 0.25).toLocaleString("en-IN")}`}
           </Text>
           <Text
-            style={{ fontSize: 10, fontFamily: "Times-Bold", color: "#006600" }}
+            style={{ fontSize: 10, fontFamily: "Times-Bold", color: "#16a34a" }}
           >
             {`Total Estimated Cost = INR ${totalCostINR.toLocaleString("en-IN")}`}
           </Text>
@@ -729,7 +729,7 @@ export default function COCOMOEstimation() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 12,
           marginBottom: 8,
         }}
@@ -737,9 +737,9 @@ export default function COCOMOEstimation() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -749,7 +749,7 @@ export default function COCOMOEstimation() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Risk
@@ -761,7 +761,7 @@ export default function COCOMOEstimation() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Prob
@@ -773,7 +773,7 @@ export default function COCOMOEstimation() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Impact
@@ -832,7 +832,7 @@ export default function COCOMOEstimation() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 5 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -841,7 +841,7 @@ export default function COCOMOEstimation() {
                 padding: 3,
                 fontSize: 8,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -853,7 +853,7 @@ export default function COCOMOEstimation() {
                 fontSize: 8,
                 textAlign: "center",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -865,7 +865,7 @@ export default function COCOMOEstimation() {
                 fontSize: 8,
                 textAlign: "center",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[2]}
@@ -931,7 +931,7 @@ export default function COCOMOEstimation() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 8,
         }}
@@ -939,9 +939,9 @@ export default function COCOMOEstimation() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -951,7 +951,7 @@ export default function COCOMOEstimation() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Metric
@@ -963,7 +963,7 @@ export default function COCOMOEstimation() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             COCOMO Estimate
@@ -994,7 +994,7 @@ export default function COCOMOEstimation() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 3 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -1004,7 +1004,7 @@ export default function COCOMOEstimation() {
                 fontSize: 8,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -1015,7 +1015,7 @@ export default function COCOMOEstimation() {
                 padding: 4,
                 fontSize: 8,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -1081,8 +1081,8 @@ export default function COCOMOEstimation() {
           marginTop: 16,
           padding: 12,
           borderWidth: 1,
-          borderColor: "#333333",
-          backgroundColor: "#f9f9f9",
+          borderColor: "#94a3b8", borderRadius: 6,
+          backgroundColor: "#f8fafc",
         }}
       >
         <Text

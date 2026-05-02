@@ -58,7 +58,7 @@ export default function GanttChart() {
             x={chartX + i * weekW + weekW / 2}
             y={chartY + 12}
             textAnchor="middle"
-            style={{ fontSize: 7, fontFamily: "Times-Bold", fill: "#555" }}
+            style={{ fontSize: 7.5, fontFamily: "Times-Bold", fill: "#1a1a1a" }}
           >
             W{i + 1}
           </SvgText>
@@ -178,26 +178,61 @@ export default function GanttChart() {
         x={chartX + 2 * weekW}
         y={chartY + chartH + 15}
         textAnchor="middle"
-        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#555555" }}
+        style={{
+          fontSize: 8,
+          fontFamily: "Times-Bold",
+          fill: "#1a1a1a",
+          letterSpacing: 0.5,
+        }}
       >
-        Month 1
+        MONTH 1
       </SvgText>
       <SvgText
         x={chartX + 6 * weekW}
         y={chartY + chartH + 15}
         textAnchor="middle"
-        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#555555" }}
+        style={{
+          fontSize: 8,
+          fontFamily: "Times-Bold",
+          fill: "#1a1a1a",
+          letterSpacing: 0.5,
+        }}
       >
-        Month 2
+        MONTH 2
       </SvgText>
       <SvgText
         x={chartX + 10 * weekW}
         y={chartY + chartH + 15}
         textAnchor="middle"
-        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#555555" }}
+        style={{
+          fontSize: 8,
+          fontFamily: "Times-Bold",
+          fill: "#1a1a1a",
+          letterSpacing: 0.5,
+        }}
       >
-        Month 3
+        MONTH 3
       </SvgText>
+
+      {/* Month separators */}
+      <Line
+        x1={chartX + 4 * weekW}
+        y1={chartY}
+        x2={chartX + 4 * weekW}
+        y2={chartY + chartH + 4}
+        stroke="#94a3b8"
+        strokeWidth={1.2}
+        strokeDasharray="3,2"
+      />
+      <Line
+        x1={chartX + 8 * weekW}
+        y1={chartY}
+        x2={chartX + 8 * weekW}
+        y2={chartY + chartH + 4}
+        stroke="#94a3b8"
+        strokeWidth={1.2}
+        strokeDasharray="3,2"
+      />
 
       {/* Caption */}
       <SvgText

@@ -232,7 +232,7 @@ export default function References() {
         style={{
           marginTop: 24,
           padding: 12,
-          backgroundColor: "#f8f8f8",
+          backgroundColor: "#f8fafc",
           borderWidth: 1,
           borderColor: "#cccccc",
         }}

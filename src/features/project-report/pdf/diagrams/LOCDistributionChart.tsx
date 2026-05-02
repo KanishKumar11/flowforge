@@ -10,18 +10,12 @@ export default function LOCDistributionChart() {
   const height = 300;
 
   const colors = {
-    text: "#1a1a1a",
-    label: "#333333",
-    grid: "#E0E0E0",
-    bar: [
-      "#1565C0",
-      "#1976D2",
-      "#1E88E5",
-      "#2196F3",
-      "#42A5F5",
-      "#64B5F6",
-      "#90CAF9",
-    ],
+    text: "#0f172a",
+    label: "#334155",
+    grid: "#cbd5e1",
+    panel: "#f8fafc",
+    accent: "#1d4ed8",
+    accentSoft: "#c7d9f8",
   };
 
   const modules = [
@@ -34,47 +28,74 @@ export default function LOCDistributionChart() {
     { name: "Authentication", loc: 1100 },
   ];
 
+  const totalLOC = 18000;
+  const averageLOC = totalLOC / modules.length;
   const maxLOC = 5000;
   const chartLeft = 160;
   const chartRight = width - 30;
-  const chartTop = 45;
+  const chartTop = 58;
   const barH = 26;
-  const barGap = 8;
+  const barGap = 10;
   const chartW = chartRight - chartLeft;
-
   const gridSteps = [0, 1000, 2000, 3000, 4000, 5000];
 
   return (
     <Svg width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
-      {/* Title */}
       <SvgText
         x={width / 2}
         y={18}
         textAnchor="middle"
-        style={{
-          fontSize: 11,
-          fontFamily: "Times-Bold",
-          fill: colors.text,
-        }}
+        style={{ fontSize: 11, fontFamily: "Times-Bold", fill: colors.text }}
       >
         Lines of Code Distribution by Module
       </SvgText>
-
-      {/* Subtitle */}
       <SvgText
         x={width / 2}
-        y={32}
+        y={30}
         textAnchor="middle"
-        style={{
-          fontSize: 8,
-          fontFamily: "Times-Italic",
-          fill: "#555555",
-        }}
+        style={{ fontSize: 8, fontFamily: "Times-Italic", fill: "#475569" }}
       >
-        Total: 18,000 LOC (18.0 KLOC)
+        Total: 18,000 LOC across seven core project modules
       </SvgText>
 
-      {/* Grid lines */}
+      <Rect
+        x={chartLeft - 12}
+        y={chartTop - 10}
+        width={chartW + 24}
+        height={modules.length * (barH + barGap) - barGap + 20}
+        rx={14}
+        fill={colors.panel}
+        stroke={colors.grid}
+        strokeWidth={0.8}
+      />
+
+      <Rect
+        x={chartLeft - 128}
+        y={chartTop - 34}
+        width={116}
+        height={30}
+        rx={10}
+        fill="#ffffff"
+        stroke={colors.grid}
+        strokeWidth={0.8}
+      />
+      <SvgText
+        x={chartLeft - 70}
+        y={chartTop - 20}
+        textAnchor="middle"
+        style={{ fontSize: 7.5, fontFamily: "Times-Bold", fill: colors.text }}
+      >
+        Snapshot
+      </SvgText>
+      <SvgText
+        x={chartLeft - 70}
+        y={chartTop - 10}
+        textAnchor="middle"
+        style={{ fontSize: 7, fontFamily: "Times-Roman", fill: "#475569" }}
+      >
+        Avg. 2.6K LOC per module
+      </SvgText>
+
       {gridSteps.map((val, i) => {
         const x = chartLeft + (val / maxLOC) * chartW;
         return (
@@ -83,18 +104,18 @@ export default function LOCDistributionChart() {
               x1={x}
               y1={chartTop}
               x2={x}
-              y2={chartTop + modules.length * (barH + barGap) - barGap + 5}
+              y2={chartTop + modules.length * (barH + barGap) - barGap + 4}
               stroke={colors.grid}
               strokeWidth={0.8}
             />
             <SvgText
               x={x}
-              y={chartTop - 5}
+              y={chartTop - 8}
               textAnchor="middle"
               style={{
                 fontSize: 7,
                 fontFamily: "Times-Roman",
-                fill: "#555555",
+                fill: "#64748b",
               }}
             >
               {val.toLocaleString()}
@@ -103,75 +124,100 @@ export default function LOCDistributionChart() {
         );
       })}
 
-      {/* Bars */}
+      <Line
+        x1={chartLeft + (averageLOC / maxLOC) * chartW}
+        y1={chartTop}
+        x2={chartLeft + (averageLOC / maxLOC) * chartW}
+        y2={chartTop + modules.length * (barH + barGap) - barGap + 4}
+        stroke="#64748b"
+        strokeWidth={0.8}
+        strokeDasharray="3,2"
+      />
+      <SvgText
+        x={chartLeft + (averageLOC / maxLOC) * chartW + 18}
+        y={chartTop + 12}
+        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#475569" }}
+      >
+        Avg
+      </SvgText>
+
       {modules.map((mod, i) => {
         const y = chartTop + i * (barH + barGap);
         const barW = (mod.loc / maxLOC) * chartW;
+        const opacity = 1 - i * 0.06;
         return (
           <G key={`bar-${i}`}>
-            {/* Module label */}
             <SvgText
-              x={chartLeft - 8}
+              x={chartLeft - 14}
               y={y + barH / 2 + 3}
               textAnchor="end"
               style={{
                 fontSize: 8,
-                fontFamily: "Times-Roman",
+                fontFamily: "Times-Bold",
                 fill: colors.label,
               }}
             >
               {mod.name}
             </SvgText>
-
-            {/* Bar */}
+            <Rect
+              x={chartLeft}
+              y={y}
+              width={chartW}
+              height={barH}
+              rx={10}
+              fill="#ffffff"
+            />
             <Rect
               x={chartLeft}
               y={y}
               width={barW}
               height={barH}
-              rx={3}
-              fill={colors.bar[i]}
+              rx={10}
+              fill={colors.accent}
+              opacity={opacity}
             />
-
-            {/* Value label */}
+            <Rect
+              x={chartLeft + barW - 4}
+              y={y + 4}
+              width={8}
+              height={barH - 8}
+              rx={4}
+              fill={colors.accentSoft}
+              opacity={0.75}
+            />
             <SvgText
-              x={chartLeft + barW + 6}
+              x={chartLeft + barW + 8}
               y={y + barH / 2 + 3}
+              textAnchor="start"
               style={{
-                fontSize: 8,
+                fontSize: 7.5,
                 fontFamily: "Times-Bold",
                 fill: colors.text,
               }}
             >
               {mod.loc.toLocaleString()}
             </SvgText>
-
-            {/* Percentage */}
             <SvgText
-              x={chartLeft + barW + 40}
-              y={y + barH / 2 + 3}
+              x={chartLeft + barW + 8}
+              y={y + barH / 2 + 12}
+              textAnchor="start"
               style={{
-                fontSize: 7,
+                fontSize: 6.5,
                 fontFamily: "Times-Italic",
-                fill: "#555555",
+                fill: "#64748b",
               }}
             >
-              ({((mod.loc / 18000) * 100).toFixed(1)}%)
+              {((mod.loc / totalLOC) * 100).toFixed(1)}%
             </SvgText>
           </G>
         );
       })}
 
-      {/* X-axis label */}
       <SvgText
         x={chartLeft + chartW / 2}
         y={height - 18}
         textAnchor="middle"
-        style={{
-          fontSize: 8,
-          fontFamily: "Times-Italic",
-          fill: "#555555",
-        }}
+        style={{ fontSize: 8, fontFamily: "Times-Italic", fill: "#475569" }}
       >
         Lines of Code
       </SvgText>

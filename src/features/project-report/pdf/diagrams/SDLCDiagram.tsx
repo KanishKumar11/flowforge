@@ -5,33 +5,28 @@ import {
   Text as SvgText,
   Line,
   Polygon,
+  Circle,
 } from "@react-pdf/renderer";
 
-/**
- * SDLC Lifecycle Diagram - Linear flow with 6 phases connected by arrows
- * Shows: Requirements → Feasibility → Design → Development → Testing → Deployment
- */
-export default function SDLCDiagram() {
+const phaseNodes = [
+  { label: "Requirements", detail: "Gathering", color: "#1d4ed8", icon: "1" },
+  { label: "Feasibility", detail: "Study", color: "#0f766e", icon: "2" },
+  { label: "Design", detail: "System", color: "#0ea5e9", icon: "3" },
+  { label: "Develop", detail: "& Coding", color: "#475569", icon: "4" },
+  { label: "Testing", detail: "& QA", color: "#f59e0b", icon: "5" },
+  { label: "Deploy", detail: "& Maintain", color: "#ef4444", icon: "6" },
+];
+
+function PhaseFlowDiagram() {
   const width = 495;
-  const height = 320;
-
-  const phases = [
-    { label: "Requirements\nGathering", color: "#2563eb", icon: "1" },
-    { label: "Feasibility\nStudy", color: "#7c3aed", icon: "2" },
-    { label: "System\nDesign", color: "#0891b2", icon: "3" },
-    { label: "Development\n& Coding", color: "#059669", icon: "4" },
-    { label: "Testing &\nQA", color: "#d97706", icon: "5" },
-    { label: "Deployment\n& Maintenance", color: "#dc2626", icon: "6" },
-  ];
-
-  const boxW = 130;
-  const boxH = 50;
-  const gapX = 25;
+  const height = 220;
+  const boxW = 150;
+  const boxH = 48;
+  const gapX = 18;
   const gapY = 70;
-  const startX = 30;
-  const startY = 30;
+  const startX = 24;
+  const startY = 42;
 
-  // 2 rows x 3 columns layout
   const positions = [
     { x: startX, y: startY },
     { x: startX + boxW + gapX, y: startY },
@@ -43,215 +38,328 @@ export default function SDLCDiagram() {
 
   return (
     <Svg width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
-      {/* Title */}
       <SvgText
         x={width / 2}
-        y={height - 15}
+        y={18}
         textAnchor="middle"
-        style={{ fontSize: 10, fontFamily: "Times-Bold", fill: "#333333" }}
+        style={{ fontSize: 10.5, fontFamily: "Times-Bold", fill: "#0f172a" }}
       >
-        Figure: SDLC Phase Flow — Iterative Model with Feedback Loops
+        SDLC Phase Flow
+      </SvgText>
+      <SvgText
+        x={width / 2}
+        y={30}
+        textAnchor="middle"
+        style={{ fontSize: 7.5, fontFamily: "Times-Italic", fill: "#475569" }}
+      >
+        Six phases arranged as a directional iteration path
       </SvgText>
 
-      {/* Phase boxes */}
-      {phases.map((phase, i) => {
-        const pos = positions[i];
+      {phaseNodes.map((phase, index) => {
+        const pos = positions[index];
         return (
-          <G key={i}>
-            {/* Shadow */}
+          <G key={phase.label}>
             <Rect
               x={pos.x + 2}
               y={pos.y + 2}
               width={boxW}
               height={boxH}
-              rx={6}
-              fill="#e0e0e0"
+              rx={10}
+              fill="#e2e8f0"
             />
-            {/* Box */}
             <Rect
               x={pos.x}
               y={pos.y}
               width={boxW}
               height={boxH}
-              rx={6}
-              fill={phase.color}
-              stroke={phase.color}
-              strokeWidth={1.5}
+              rx={10}
+              fill="#ffffff"
+              stroke="#cbd5e1"
+              strokeWidth={1}
             />
-            {/* Phase number circle */}
             <Rect
-              x={pos.x + 5}
-              y={pos.y + 5}
-              width={18}
-              height={18}
-              rx={9}
-              fill="white"
-              opacity={0.3}
+              x={pos.x}
+              y={pos.y}
+              width={boxW}
+              height={12}
+              rx={10}
+              fill={phase.color}
+            />
+            <Rect
+              x={pos.x + 10}
+              y={pos.y + 16}
+              width={24}
+              height={24}
+              rx={12}
+              fill={phase.color}
             />
             <SvgText
-              x={pos.x + 14}
-              y={pos.y + 17}
+              x={pos.x + 22}
+              y={pos.y + 32}
               textAnchor="middle"
-              style={{
-                fontSize: 9,
-                fontFamily: "Times-Bold",
-                fill: "white",
-              }}
+              style={{ fontSize: 10, fontFamily: "Times-Bold", fill: "white" }}
             >
               {phase.icon}
             </SvgText>
-            {/* Label - first line */}
             <SvgText
               x={pos.x + boxW / 2}
-              y={pos.y + boxH / 2 - 3}
+              y={pos.y + 34}
               textAnchor="middle"
               style={{
-                fontSize: 9,
+                fontSize: 8.5,
                 fontFamily: "Times-Bold",
-                fill: "white",
+                fill: "#0f172a",
               }}
             >
-              {phase.label.split("\n")[0]}
+              {phase.label}
             </SvgText>
-            {/* Label - second line */}
             <SvgText
               x={pos.x + boxW / 2}
-              y={pos.y + boxH / 2 + 10}
+              y={pos.y + 44}
               textAnchor="middle"
               style={{
-                fontSize: 9,
-                fontFamily: "Times-Bold",
-                fill: "white",
+                fontSize: 7.5,
+                fontFamily: "Times-Italic",
+                fill: "#475569",
               }}
             >
-              {phase.label.split("\n")[1]}
+              {phase.detail}
             </SvgText>
           </G>
         );
       })}
 
-      {/* Arrows connecting phases */}
-      {/* 1→2 (right) */}
       <Line
         x1={positions[0].x + boxW}
         y1={positions[0].y + boxH / 2}
-        x2={positions[1].x - 5}
+        x2={positions[1].x - 6}
         y2={positions[1].y + boxH / 2}
-        stroke="#666666"
-        strokeWidth={1.5}
+        stroke="#475569"
+        strokeWidth={1.4}
       />
       <Polygon
-        points={`${positions[1].x - 5},${positions[1].y + boxH / 2 - 4} ${positions[1].x},${positions[1].y + boxH / 2} ${positions[1].x - 5},${positions[1].y + boxH / 2 + 4}`}
-        fill="#666666"
+        points={`${positions[1].x - 6},${positions[1].y + boxH / 2 - 4} ${positions[1].x - 1},${positions[1].y + boxH / 2} ${positions[1].x - 6},${positions[1].y + boxH / 2 + 4}`}
+        fill="#475569"
       />
-
-      {/* 2→3 (right) */}
       <Line
         x1={positions[1].x + boxW}
         y1={positions[1].y + boxH / 2}
-        x2={positions[2].x - 5}
+        x2={positions[2].x - 6}
         y2={positions[2].y + boxH / 2}
-        stroke="#666666"
-        strokeWidth={1.5}
+        stroke="#475569"
+        strokeWidth={1.4}
       />
       <Polygon
-        points={`${positions[2].x - 5},${positions[2].y + boxH / 2 - 4} ${positions[2].x},${positions[2].y + boxH / 2} ${positions[2].x - 5},${positions[2].y + boxH / 2 + 4}`}
-        fill="#666666"
+        points={`${positions[2].x - 6},${positions[2].y + boxH / 2 - 4} ${positions[2].x - 1},${positions[2].y + boxH / 2} ${positions[2].x - 6},${positions[2].y + boxH / 2 + 4}`}
+        fill="#475569"
       />
-
-      {/* 3→4 (down) */}
       <Line
         x1={positions[2].x + boxW / 2}
         y1={positions[2].y + boxH}
         x2={positions[3].x + boxW / 2}
-        y2={positions[3].y - 5}
-        stroke="#666666"
-        strokeWidth={1.5}
+        y2={positions[3].y - 6}
+        stroke="#475569"
+        strokeWidth={1.4}
       />
       <Polygon
-        points={`${positions[3].x + boxW / 2 - 4},${positions[3].y - 5} ${positions[3].x + boxW / 2},${positions[3].y} ${positions[3].x + boxW / 2 + 4},${positions[3].y - 5}`}
-        fill="#666666"
+        points={`${positions[3].x + boxW / 2 - 4},${positions[3].y - 6} ${positions[3].x + boxW / 2},${positions[3].y - 1} ${positions[3].x + boxW / 2 + 4},${positions[3].y - 6}`}
+        fill="#475569"
       />
-
-      {/* 4→5 (left) */}
       <Line
         x1={positions[3].x}
         y1={positions[3].y + boxH / 2}
         x2={positions[4].x + boxW + 5}
         y2={positions[4].y + boxH / 2}
-        stroke="#666666"
-        strokeWidth={1.5}
+        stroke="#475569"
+        strokeWidth={1.4}
       />
       <Polygon
-        points={`${positions[4].x + boxW + 5},${positions[4].y + boxH / 2 - 4} ${positions[4].x + boxW},${positions[4].y + boxH / 2} ${positions[4].x + boxW + 5},${positions[4].y + boxH / 2 + 4}`}
-        fill="#666666"
+        points={`${positions[4].x + boxW + 5},${positions[4].y + boxH / 2 - 4} ${positions[4].x + boxW + 1},${positions[4].y + boxH / 2} ${positions[4].x + boxW + 5},${positions[4].y + boxH / 2 + 4}`}
+        fill="#475569"
       />
-
-      {/* 5→6 (left) */}
       <Line
         x1={positions[4].x}
         y1={positions[4].y + boxH / 2}
         x2={positions[5].x + boxW + 5}
         y2={positions[5].y + boxH / 2}
-        stroke="#666666"
-        strokeWidth={1.5}
+        stroke="#475569"
+        strokeWidth={1.4}
       />
       <Polygon
-        points={`${positions[5].x + boxW + 5},${positions[5].y + boxH / 2 - 4} ${positions[5].x + boxW},${positions[5].y + boxH / 2} ${positions[5].x + boxW + 5},${positions[5].y + boxH / 2 + 4}`}
-        fill="#666666"
+        points={`${positions[5].x + boxW + 5},${positions[5].y + boxH / 2 - 4} ${positions[5].x + boxW + 1},${positions[5].y + boxH / 2} ${positions[5].x + boxW + 5},${positions[5].y + boxH / 2 + 4}`}
+        fill="#475569"
       />
-
-      {/* Feedback loop arrow (6 back to 1) — curved via dashed line */}
-      <Line
-        x1={positions[5].x + boxW / 2}
-        y1={positions[5].y + boxH}
-        x2={positions[5].x + boxW / 2}
-        y2={height - 45}
-        stroke="#999999"
-        strokeWidth={1}
-        strokeDasharray="4,3"
-      />
-      <Line
-        x1={positions[5].x + boxW / 2}
-        y1={height - 45}
-        x2={positions[0].x + boxW / 2}
-        y2={height - 45}
-        stroke="#999999"
-        strokeWidth={1}
-        strokeDasharray="4,3"
-      />
-      <SvgText
-        x={width / 2}
-        y={height - 48}
-        textAnchor="middle"
-        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#555555" }}
-      >
-        Feedback & Iteration Loop
-      </SvgText>
-
-      {/* Deliverables labels under each phase */}
-      {[
-        "SRS Document",
-        "Feasibility Report",
-        "DFDs, ER Diagram",
-        "Source Code",
-        "Test Reports",
-        "Live System",
-      ].map((label, i) => (
-        <SvgText
-          key={`del-${i}`}
-          x={positions[i].x + boxW / 2}
-          y={positions[i].y + boxH + 14}
-          textAnchor="middle"
-          style={{
-            fontSize: 7,
-            fontFamily: "Times-Italic",
-            fill: "#555555",
-          }}
-        >
-          {label}
-        </SvgText>
-      ))}
     </Svg>
   );
 }
+
+function DeliverablesDiagram() {
+  const width = 495;
+  const height = 210;
+  const cardW = 118;
+  const cardH = 46;
+  const startX = 22;
+  const startY = 44;
+  const gapX = 16;
+  const gapY = 16;
+
+  const phaseColors = [
+    "#1d4ed8",
+    "#0f766e",
+    "#0ea5e9",
+    "#475569",
+    "#f59e0b",
+    "#ef4444",
+  ];
+
+  const deliverables = [
+    "SRS Document",
+    "Feasibility Report",
+    "DFDs & ER Diagram",
+    "Source Code",
+    "Test Reports",
+    "Production System",
+  ];
+
+  const positions = deliverables.map((_, i) => ({
+    x: startX + (i % 3) * (cardW + gapX),
+    y: startY + Math.floor(i / 3) * (cardH + gapY),
+    color: phaseColors[i],
+  }));
+
+  const srcCX = positions[0].x + cardW / 2;
+  const dstCX = positions[5].x + cardW / 2;
+  const row1Bottom = startY + cardH;
+  const row2Bottom = startY + cardH + gapY + cardH;
+  const arcY = row2Bottom + 18;
+
+  return (
+    <Svg width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
+      <SvgText
+        x={width / 2}
+        y={18}
+        textAnchor="middle"
+        style={{ fontSize: 10.5, fontFamily: "Times-Bold", fill: "#0f172a" }}
+      >
+        Deliverables & Iteration Loop
+      </SvgText>
+      <SvgText
+        x={width / 2}
+        y={30}
+        textAnchor="middle"
+        style={{ fontSize: 7.5, fontFamily: "Times-Italic", fill: "#475569" }}
+      >
+        Output artifacts mapped to each development phase
+      </SvgText>
+
+      {/* Feedback arc rendered first — cards overlap it on top */}
+      <Line
+        x1={dstCX}
+        y1={row2Bottom}
+        x2={dstCX}
+        y2={arcY}
+        stroke="#94a3b8"
+        strokeWidth={1.2}
+        strokeDasharray="3,2"
+      />
+      <Line
+        x1={srcCX}
+        y1={arcY}
+        x2={dstCX}
+        y2={arcY}
+        stroke="#94a3b8"
+        strokeWidth={1.2}
+        strokeDasharray="3,2"
+      />
+      <Line
+        x1={srcCX}
+        y1={arcY}
+        x2={srcCX}
+        y2={row1Bottom + 8}
+        stroke="#94a3b8"
+        strokeWidth={1.2}
+        strokeDasharray="3,2"
+      />
+      <Polygon
+        points={`${srcCX},${row1Bottom - 1} ${srcCX - 4},${row1Bottom + 7} ${srcCX + 4},${row1Bottom + 7}`}
+        fill="#94a3b8"
+      />
+
+      {/* Deliverable cards */}
+      {deliverables.map((label, i) => {
+        const pos = positions[i];
+        return (
+          <G key={label}>
+            <Rect
+              x={pos.x + 2}
+              y={pos.y + 2}
+              width={cardW}
+              height={cardH}
+              rx={8}
+              fill="#e2e8f0"
+            />
+            <Rect
+              x={pos.x}
+              y={pos.y}
+              width={cardW}
+              height={cardH}
+              rx={8}
+              fill="#ffffff"
+              stroke="#e2e8f0"
+              strokeWidth={1}
+            />
+            <Rect
+              x={pos.x}
+              y={pos.y}
+              width={5}
+              height={cardH}
+              rx={3}
+              fill={pos.color}
+            />
+            <Circle
+              cx={pos.x + 18}
+              cy={pos.y + cardH / 2}
+              r={9}
+              fill={pos.color}
+            />
+            <SvgText
+              x={pos.x + 18}
+              y={pos.y + cardH / 2 + 3.5}
+              textAnchor="middle"
+              style={{ fontSize: 8, fontFamily: "Times-Bold", fill: "#ffffff" }}
+            >
+              {String(i + 1)}
+            </SvgText>
+            <SvgText
+              x={pos.x + 34}
+              y={pos.y + cardH / 2 + 4}
+              textAnchor="start"
+              style={{
+                fontSize: 8.5,
+                fontFamily: "Times-Bold",
+                fill: "#0f172a",
+              }}
+            >
+              {label}
+            </SvgText>
+          </G>
+        );
+      })}
+
+      <SvgText
+        x={width / 2}
+        y={arcY + 15}
+        textAnchor="middle"
+        style={{ fontSize: 7.5, fontFamily: "Times-Italic", fill: "#64748b" }}
+      >
+        Delivered outputs cycle back as inputs for future planning
+      </SvgText>
+    </Svg>
+  );
+}
+
+export default PhaseFlowDiagram;
+export {
+  PhaseFlowDiagram as SDLCDiagramPhaseFlow,
+  DeliverablesDiagram as SDLCDiagramDeliverables,
+};

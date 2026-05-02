@@ -12,7 +12,7 @@ export default function ObjectivesHierarchy() {
 
   const colors = {
     text: "#1a1a1a",
-    label: "#555555",
+    label: "#475569",
     root: "#1565C0",
     rootText: "#FFFFFF",
     primary: "#E3F2FD",
@@ -21,7 +21,7 @@ export default function ObjectivesHierarchy() {
     secondaryBorder: "#E65100",
     technical: "#E8F5E9",
     technicalBorder: "#2E7D32",
-    connector: "#999999",
+    connector: "#94a3b8",
   };
 
   // Root box
@@ -194,7 +194,7 @@ export default function ObjectivesHierarchy() {
               x2={catCx}
               y2={subStartY}
               stroke={cat.stroke}
-              strokeWidth={0.8}
+              strokeWidth={1.2}
               strokeDasharray="3,2"
             />
 
@@ -213,7 +213,7 @@ export default function ObjectivesHierarchy() {
                       x2={catCx}
                       y2={subY}
                       stroke={cat.stroke}
-                      strokeWidth={0.8}
+                      strokeWidth={1.2}
                       strokeDasharray="2,2"
                     />
                   )}

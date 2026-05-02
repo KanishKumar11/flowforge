@@ -41,7 +41,7 @@ export default function Annexures() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 10,
           marginBottom: 4,
         }}
@@ -52,7 +52,7 @@ export default function Annexures() {
             flexDirection: "row",
             backgroundColor: "#e8e8e8",
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -62,7 +62,7 @@ export default function Annexures() {
               fontSize: 8,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
               textAlign: "center",
             }}
           >
@@ -75,7 +75,7 @@ export default function Annexures() {
               fontSize: 8,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Model
@@ -87,7 +87,7 @@ export default function Annexures() {
               fontSize: 8,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Key Fields
@@ -195,7 +195,7 @@ export default function Annexures() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 13 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -205,7 +205,7 @@ export default function Annexures() {
                 fontSize: 7,
                 textAlign: "center",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -217,7 +217,7 @@ export default function Annexures() {
                 fontSize: 7,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -228,7 +228,7 @@ export default function Annexures() {
                 padding: 3,
                 fontSize: 7,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[2]}
@@ -262,7 +262,7 @@ export default function Annexures() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 10,
           marginBottom: 4,
         }}
@@ -272,7 +272,7 @@ export default function Annexures() {
             flexDirection: "row",
             backgroundColor: "#e8e8e8",
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -282,7 +282,7 @@ export default function Annexures() {
               fontSize: 8,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Method
@@ -294,7 +294,7 @@ export default function Annexures() {
               fontSize: 8,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Endpoint
@@ -353,7 +353,7 @@ export default function Annexures() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 7 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -363,7 +363,7 @@ export default function Annexures() {
                 fontSize: 7,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -374,7 +374,7 @@ export default function Annexures() {
                 padding: 3,
                 fontSize: 7,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -408,7 +408,7 @@ export default function Annexures() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 10,
           marginBottom: 4,
         }}
@@ -418,7 +418,7 @@ export default function Annexures() {
             flexDirection: "row",
             backgroundColor: "#e8e8e8",
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -428,7 +428,7 @@ export default function Annexures() {
               fontSize: 8,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Router
@@ -440,7 +440,7 @@ export default function Annexures() {
               fontSize: 8,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
               textAlign: "center",
             }}
           >
@@ -499,7 +499,7 @@ export default function Annexures() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 6 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -509,7 +509,7 @@ export default function Annexures() {
                 fontSize: 7,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -521,7 +521,7 @@ export default function Annexures() {
                 fontSize: 7,
                 textAlign: "center",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -555,7 +555,7 @@ export default function Annexures() {
       <View
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 10,
           marginBottom: 4,
         }}
@@ -565,7 +565,7 @@ export default function Annexures() {
             flexDirection: "row",
             backgroundColor: "#e8e8e8",
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -575,7 +575,7 @@ export default function Annexures() {
               fontSize: 8,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Variable
@@ -618,7 +618,7 @@ export default function Annexures() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 16 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -628,7 +628,7 @@ export default function Annexures() {
                 fontSize: 7,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -660,7 +660,7 @@ export default function Annexures() {
       <View
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 10,
           marginBottom: 4,
         }}
@@ -670,7 +670,7 @@ export default function Annexures() {
             flexDirection: "row",
             backgroundColor: "#e8e8e8",
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -680,7 +680,7 @@ export default function Annexures() {
               fontSize: 8,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Category
@@ -692,7 +692,7 @@ export default function Annexures() {
               fontSize: 8,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Node Type
@@ -791,7 +791,7 @@ export default function Annexures() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 23 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -801,7 +801,7 @@ export default function Annexures() {
                 fontSize: 7,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -812,7 +812,7 @@ export default function Annexures() {
                 padding: 2,
                 fontSize: 7,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -842,8 +842,8 @@ export default function Annexures() {
           marginTop: 16,
           padding: 12,
           borderWidth: 1,
-          borderColor: "#333333",
-          backgroundColor: "#f9f9f9",
+          borderColor: "#94a3b8", borderRadius: 6,
+          backgroundColor: "#f8fafc",
         }}
       >
         <Text

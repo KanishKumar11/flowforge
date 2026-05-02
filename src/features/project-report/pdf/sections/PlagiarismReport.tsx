@@ -67,7 +67,7 @@ export default function PlagiarismReport({
         style={{
           marginTop: 28,
           borderWidth: 1,
-          borderColor: "#000000",
+          borderColor: "#94a3b8", borderRadius: 6,
           padding: 16,
         }}
       >

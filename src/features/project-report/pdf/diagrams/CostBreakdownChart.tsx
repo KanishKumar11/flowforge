@@ -94,7 +94,7 @@ export default function CostBreakdownChart() {
             x={chartLeft + scale(v)}
             y={chartTop - 8}
             textAnchor="middle"
-            style={{ fontSize: 7, fill: "#555555" }}
+            style={{ fontSize: 7, fill: "#475569" }}
           >
             {v === 0 ? "0" : `${(v / 1000).toFixed(0)}K`}
           </SvgText>

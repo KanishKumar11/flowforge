@@ -12,7 +12,7 @@ export default function SurveyResultsChart() {
   const colors = {
     text: "#1a1a1a",
     label: "#333333",
-    sublabel: "#555555",
+    sublabel: "#475569",
     grid: "#E0E0E0",
     bars: ["#0D47A1", "#1565C0", "#1976D2", "#2196F3", "#42A5F5", "#64B5F6"],
     satisfaction: "#E65100",

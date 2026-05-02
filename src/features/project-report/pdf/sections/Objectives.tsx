@@ -42,31 +42,11 @@ export default function Objectives() {
       {/* 3.1 Introduction */}
       <Text style={styles.h2}>3.1 Introduction</Text>
       <Text style={styles.paragraphIndent}>
-        The objectives of this project have been carefully formulated based on
-        the comprehensive problem analysis presented in the previous chapter.
-        These objectives serve as the guiding principles for all design
-        decisions, implementation choices, and validation criteria throughout
-        the software development lifecycle.
-      </Text>
-      <Text style={styles.paragraphIndent}>
-        The objectives are organized into three categories: primary objectives
-        that represent the core functionality and value proposition of the
-        platform, secondary objectives that enhance usability and enterprise
-        readiness, and technical objectives that ensure quality,
-        maintainability, and scalability of the implementation.
-      </Text>
-      <Text style={styles.paragraphIndent}>
-        Each objective has been evaluated against the SMART criteria—Specific,
-        Measurable, Achievable, Relevant, and Time-bound—to ensure clarity and
-        feasibility within the project timeline. Success criteria for each
-        objective are defined to enable objective evaluation upon project
-        completion.
-      </Text>
-
-      <Text style={styles.paragraphIndent}>
-        Figure 3.1 presents the objectives hierarchy, illustrating how the three
-        categories relate to specific sub-objectives that collectively define
-        the project scope.
+        The objectives below are derived from the problem analysis in Chapter 2
+        and are organized into three categories: primary objectives (core
+        functionality), secondary objectives (enterprise readiness), and
+        technical objectives (quality and scalability). Each objective is stated
+        with specific deliverables and measurable success criteria.
       </Text>
       <View style={{ marginTop: 16, marginBottom: 8 }}>
         <ObjectivesHierarchy />
@@ -475,7 +455,7 @@ export default function Objectives() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 8,
         }}
@@ -483,9 +463,9 @@ export default function Objectives() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -495,7 +475,7 @@ export default function Objectives() {
               fontSize: 10,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Layer
@@ -507,7 +487,7 @@ export default function Objectives() {
               fontSize: 10,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Technology
@@ -552,7 +532,7 @@ export default function Objectives() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 9 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -562,7 +542,7 @@ export default function Objectives() {
                 fontSize: 9,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -573,7 +553,7 @@ export default function Objectives() {
                 padding: 5,
                 fontSize: 9,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -711,24 +691,6 @@ export default function Objectives() {
           development, software engineering principles, and the full SDLC.
         </Text>
       </View>
-
-      {/* 3.6 Summary */}
-      <Text style={styles.h2}>3.6 Summary</Text>
-      <Text style={styles.paragraphIndent}>
-        This chapter has defined the comprehensive objectives for the Flowgent
-        workflow automation platform. The primary objectives address the core
-        functionality including visual workflow design, reliable execution,
-        multiple trigger types, service integrations, and AI capabilities.
-        Secondary objectives enhance the platform for team use with RBAC,
-        credential management, monitoring, version control, and audit trails.
-      </Text>
-      <Text style={styles.paragraphIndent}>
-        Technical objectives ensure a high-quality implementation using modern
-        technologies, type-safe architecture, responsive design, and security
-        best practices. These objectives collectively define a platform that
-        addresses the market gaps identified in Chapter 2 while remaining
-        achievable within the project timeline.
-      </Text>
     </BookPageLayout>
   );
 }

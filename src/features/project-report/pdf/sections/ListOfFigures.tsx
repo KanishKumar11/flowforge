@@ -78,8 +78,10 @@ const figures = [
     title: "BFS Workflow Execution Algorithm — Flowchart",
     page: "80",
   },
-  { number: "8.2", title: "AI Node Execution Pipeline", page: "84" },
-  { number: "8.3", title: "Deployment Architecture", page: "86" },
+  { number: "8.2", title: "Node Execution State Machine", page: "82" },
+  { number: "8.3", title: "AI Node Execution Pipeline", page: "84" },
+  { number: "8.4", title: "Service Integration Matrix", page: "85" },
+  { number: "8.5", title: "Deployment Architecture", page: "86" },
   { number: "9.1", title: "Testing Pyramid", page: "89" },
   {
     number: "9.2",
@@ -87,8 +89,8 @@ const figures = [
     page: "92",
   },
   {
-    number: "9.3",
-    title: "Test Results Summary — 98 Tests, 100% Pass Rate",
+    number: "9.4",
+    title: "Test Results Summary — 142 Tests, 100% Pass Rate",
     page: "94",
   },
   {

@@ -105,14 +105,19 @@ export default function UseCaseDiagram() {
         rx={8}
         fill="#f8faff"
         stroke="#2563eb"
-        strokeWidth={1.5}
+        strokeWidth={2}
         strokeDasharray="6,3"
       />
       <SvgText
         x={265}
         y={36}
         textAnchor="middle"
-        style={{ fontSize: 9, fontFamily: "Times-Bold", fill: "#2563eb" }}
+        style={{
+          fontSize: 10,
+          fontFamily: "Times-Bold",
+          fill: "#2563eb",
+          letterSpacing: 0.5,
+        }}
       >
         Flowgent System
       </SvgText>
@@ -190,14 +195,14 @@ export default function UseCaseDiagram() {
         y1={148}
         x2={260}
         y2={157}
-        stroke="#666"
-        strokeWidth={0.8}
+        stroke="#475569"
+        strokeWidth={1}
         strokeDasharray="3,2"
       />
       <SvgText
         x={305}
         y={155}
-        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#666" }}
+        style={{ fontSize: 7.5, fontFamily: "Times-Bold", fill: "#475569" }}
       >
         {"<<include>>"}
       </SvgText>
@@ -207,14 +212,14 @@ export default function UseCaseDiagram() {
         y1={298}
         x2={280}
         y2={307}
-        stroke="#666"
-        strokeWidth={0.8}
+        stroke="#475569"
+        strokeWidth={1}
         strokeDasharray="3,2"
       />
       <SvgText
         x={325}
         y={305}
-        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#666" }}
+        style={{ fontSize: 7.5, fontFamily: "Times-Bold", fill: "#475569" }}
       >
         {"<<include>>"}
       </SvgText>
@@ -224,14 +229,14 @@ export default function UseCaseDiagram() {
         y1={413}
         x2={230}
         y2={422}
-        stroke="#666"
-        strokeWidth={0.8}
+        stroke="#a855f7"
+        strokeWidth={1}
         strokeDasharray="3,2"
       />
       <SvgText
         x={275}
         y={420}
-        style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#666" }}
+        style={{ fontSize: 7.5, fontFamily: "Times-Bold", fill: "#a855f7" }}
       >
         {"<<extend>>"}
       </SvgText>

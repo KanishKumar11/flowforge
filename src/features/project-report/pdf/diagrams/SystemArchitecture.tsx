@@ -20,20 +20,20 @@ export default function SystemArchitecture() {
 
   const colors = {
     text: "#1a1a1a",
-    label: "#555555",
-    user: "#1565C0",
-    userBg: "#E3F2FD",
-    design: "#2E7D32",
-    designBg: "#E8F5E9",
-    execute: "#E65100",
-    executeBg: "#FFF3E0",
-    monitor: "#6A1B9A",
-    monitorBg: "#F3E5F5",
-    integrate: "#00695C",
-    integrateBg: "#E0F2F1",
-    arrow: "#888888",
-    core: "#1565C0",
-    coreBg: "#F0F7FF",
+    label: "#475569",
+    user: "#1d4ed8",
+    userBg: "#dbeafe",
+    design: "#16a34a",
+    designBg: "#bbf7d0",
+    execute: "#ea580c",
+    executeBg: "#ffedd5",
+    monitor: "#7c3aed",
+    monitorBg: "#ede9fe",
+    integrate: "#0891b2",
+    integrateBg: "#cffafe",
+    arrow: "#64748b",
+    core: "#1d4ed8",
+    coreBg: "#dbeafe",
   };
 
   const arrow = (
@@ -147,17 +147,17 @@ export default function SystemArchitecture() {
       </SvgText>
 
       {/* Arrow: User → Core */}
-      {arrow(78, 90, coreX - 2, 145, colors.user)}
+      {arrow(67, 85, coreX - 2, 125, colors.user)}
       <SvgText
-        x={100}
-        y={108}
+        x={96}
+        y={92}
         style={{ fontSize: 7, fontFamily: "Times-Italic", fill: colors.label }}
       >
         Build &
       </SvgText>
       <SvgText
-        x={100}
-        y={116}
+        x={96}
+        y={100}
         style={{ fontSize: 7, fontFamily: "Times-Italic", fill: colors.label }}
       >
         Trigger
@@ -311,17 +311,17 @@ export default function SystemArchitecture() {
       </SvgText>
 
       {/* Arrow: Core → User (feedback) */}
-      {arrow(coreX - 2, 250, 78, 95, colors.monitor)}
+      {arrow(coreX - 2, 180, 67, 95, colors.monitor)}
       <SvgText
-        x={88}
-        y={195}
+        x={90}
+        y={170}
         style={{ fontSize: 7, fontFamily: "Times-Italic", fill: colors.label }}
       >
         Results &
       </SvgText>
       <SvgText
-        x={88}
-        y={203}
+        x={90}
+        y={178}
         style={{ fontSize: 7, fontFamily: "Times-Italic", fill: colors.label }}
       >
         Alerts

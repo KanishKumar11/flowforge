@@ -61,7 +61,7 @@ export default function SRS() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 12,
         }}
@@ -69,9 +69,9 @@ export default function SRS() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -81,7 +81,7 @@ export default function SRS() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             ID
@@ -93,7 +93,7 @@ export default function SRS() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Requirement
@@ -156,7 +156,7 @@ export default function SRS() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 7 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -166,7 +166,7 @@ export default function SRS() {
                 fontSize: 8,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -177,7 +177,7 @@ export default function SRS() {
                 padding: 3,
                 fontSize: 8,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -203,7 +203,7 @@ export default function SRS() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 12,
         }}
@@ -211,9 +211,9 @@ export default function SRS() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -223,7 +223,7 @@ export default function SRS() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             ID
@@ -235,7 +235,7 @@ export default function SRS() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Requirement
@@ -288,7 +288,7 @@ export default function SRS() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 5 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -298,7 +298,7 @@ export default function SRS() {
                 fontSize: 8,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -309,7 +309,7 @@ export default function SRS() {
                 padding: 3,
                 fontSize: 8,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -335,7 +335,7 @@ export default function SRS() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 12,
         }}
@@ -343,9 +343,9 @@ export default function SRS() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -355,7 +355,7 @@ export default function SRS() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             ID
@@ -367,7 +367,7 @@ export default function SRS() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Requirement
@@ -413,7 +413,7 @@ export default function SRS() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 6 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -423,7 +423,7 @@ export default function SRS() {
                 fontSize: 8,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -434,7 +434,7 @@ export default function SRS() {
                 padding: 3,
                 fontSize: 8,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -460,7 +460,7 @@ export default function SRS() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 8,
         }}
@@ -468,9 +468,9 @@ export default function SRS() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -480,7 +480,7 @@ export default function SRS() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             ID
@@ -492,7 +492,7 @@ export default function SRS() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Requirement
@@ -536,7 +536,7 @@ export default function SRS() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 4 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -546,7 +546,7 @@ export default function SRS() {
                 fontSize: 8,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -557,7 +557,7 @@ export default function SRS() {
                 padding: 3,
                 fontSize: 8,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -583,7 +583,7 @@ export default function SRS() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 12,
         }}
@@ -591,9 +591,9 @@ export default function SRS() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -603,7 +603,7 @@ export default function SRS() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             ID
@@ -615,7 +615,7 @@ export default function SRS() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Requirement
@@ -660,7 +660,7 @@ export default function SRS() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 5 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -670,7 +670,7 @@ export default function SRS() {
                 fontSize: 8,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -681,7 +681,7 @@ export default function SRS() {
                 padding: 3,
                 fontSize: 8,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -707,7 +707,7 @@ export default function SRS() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 12,
         }}
@@ -715,9 +715,9 @@ export default function SRS() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -727,7 +727,7 @@ export default function SRS() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             ID
@@ -739,7 +739,7 @@ export default function SRS() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Requirement
@@ -781,7 +781,7 @@ export default function SRS() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 6 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -791,7 +791,7 @@ export default function SRS() {
                 fontSize: 8,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -802,7 +802,7 @@ export default function SRS() {
                 padding: 3,
                 fontSize: 8,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -828,7 +828,7 @@ export default function SRS() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 8,
         }}
@@ -836,9 +836,9 @@ export default function SRS() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -848,7 +848,7 @@ export default function SRS() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             ID
@@ -860,7 +860,7 @@ export default function SRS() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Requirement
@@ -895,7 +895,7 @@ export default function SRS() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 3 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -905,7 +905,7 @@ export default function SRS() {
                 fontSize: 8,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -916,7 +916,7 @@ export default function SRS() {
                 padding: 3,
                 fontSize: 8,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -949,7 +949,7 @@ export default function SRS() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 12,
         }}
@@ -957,9 +957,9 @@ export default function SRS() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -969,7 +969,7 @@ export default function SRS() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             ID
@@ -981,7 +981,7 @@ export default function SRS() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Requirement
@@ -1017,7 +1017,7 @@ export default function SRS() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 4 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -1027,7 +1027,7 @@ export default function SRS() {
                 fontSize: 8,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -1038,7 +1038,7 @@ export default function SRS() {
                 padding: 3,
                 fontSize: 8,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -1057,7 +1057,7 @@ export default function SRS() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 12,
         }}
@@ -1065,9 +1065,9 @@ export default function SRS() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -1077,7 +1077,7 @@ export default function SRS() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             ID
@@ -1089,7 +1089,7 @@ export default function SRS() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Requirement
@@ -1122,7 +1122,7 @@ export default function SRS() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 5 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -1132,7 +1132,7 @@ export default function SRS() {
                 fontSize: 8,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -1143,7 +1143,7 @@ export default function SRS() {
                 padding: 3,
                 fontSize: 8,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -1162,7 +1162,7 @@ export default function SRS() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 8,
         }}
@@ -1170,9 +1170,9 @@ export default function SRS() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -1182,7 +1182,7 @@ export default function SRS() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             ID
@@ -1194,7 +1194,7 @@ export default function SRS() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Requirement
@@ -1225,7 +1225,7 @@ export default function SRS() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 3 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -1235,7 +1235,7 @@ export default function SRS() {
                 fontSize: 8,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -1246,7 +1246,7 @@ export default function SRS() {
                 padding: 3,
                 fontSize: 8,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -1265,7 +1265,7 @@ export default function SRS() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 12,
         }}
@@ -1273,9 +1273,9 @@ export default function SRS() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -1285,7 +1285,7 @@ export default function SRS() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             ID
@@ -1297,7 +1297,7 @@ export default function SRS() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Requirement
@@ -1325,7 +1325,7 @@ export default function SRS() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 4 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -1335,7 +1335,7 @@ export default function SRS() {
                 fontSize: 8,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -1346,7 +1346,7 @@ export default function SRS() {
                 padding: 3,
                 fontSize: 8,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -1384,7 +1384,7 @@ export default function SRS() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 8,
         }}
@@ -1392,9 +1392,9 @@ export default function SRS() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -1404,7 +1404,7 @@ export default function SRS() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Component
@@ -1416,7 +1416,7 @@ export default function SRS() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Required Version
@@ -1442,7 +1442,7 @@ export default function SRS() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 2 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -1452,7 +1452,7 @@ export default function SRS() {
                 fontSize: 8,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -1463,7 +1463,7 @@ export default function SRS() {
                 padding: 3,
                 fontSize: 8,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -1503,8 +1503,8 @@ export default function SRS() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
-          backgroundColor: "#f9f9f9",
+          borderColor: "#94a3b8", borderRadius: 6,
+          backgroundColor: "#f8fafc",
           padding: 10,
           marginTop: 12,
           marginBottom: 12,
@@ -1562,8 +1562,8 @@ export default function SRS() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
-          backgroundColor: "#f9f9f9",
+          borderColor: "#94a3b8", borderRadius: 6,
+          backgroundColor: "#f8fafc",
           padding: 10,
           marginBottom: 12,
         }}
@@ -1617,8 +1617,8 @@ export default function SRS() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
-          backgroundColor: "#f9f9f9",
+          borderColor: "#94a3b8", borderRadius: 6,
+          backgroundColor: "#f8fafc",
           padding: 10,
           marginBottom: 8,
         }}
@@ -1672,8 +1672,8 @@ export default function SRS() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
-          backgroundColor: "#f9f9f9",
+          borderColor: "#94a3b8", borderRadius: 6,
+          backgroundColor: "#f8fafc",
           padding: 10,
           marginBottom: 12,
         }}
@@ -1724,7 +1724,7 @@ export default function SRS() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 12,
           marginBottom: 8,
         }}
@@ -1732,9 +1732,9 @@ export default function SRS() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -1744,7 +1744,7 @@ export default function SRS() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Entity
@@ -1756,7 +1756,7 @@ export default function SRS() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Description
@@ -1798,7 +1798,7 @@ export default function SRS() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 6 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -1808,7 +1808,7 @@ export default function SRS() {
                 fontSize: 8,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -1819,7 +1819,7 @@ export default function SRS() {
                 padding: 3,
                 fontSize: 8,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -1957,7 +1957,7 @@ export default function SRS() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 8,
         }}
@@ -1965,9 +1965,9 @@ export default function SRS() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -1977,7 +1977,7 @@ export default function SRS() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Dependency
@@ -1989,7 +1989,7 @@ export default function SRS() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Purpose
@@ -2017,7 +2017,7 @@ export default function SRS() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 4 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -2027,7 +2027,7 @@ export default function SRS() {
                 fontSize: 8,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -2038,7 +2038,7 @@ export default function SRS() {
                 padding: 3,
                 fontSize: 8,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -2109,7 +2109,7 @@ export default function SRS() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 12,
           marginBottom: 8,
         }}
@@ -2117,9 +2117,9 @@ export default function SRS() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -2129,7 +2129,7 @@ export default function SRS() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Category
@@ -2141,7 +2141,7 @@ export default function SRS() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Must
@@ -2153,7 +2153,7 @@ export default function SRS() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Should
@@ -2184,8 +2184,8 @@ export default function SRS() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 7 ? 1 : 0,
-              borderBottomColor: "#cccccc",
-              backgroundColor: i === 7 ? "#D9E2F3" : "transparent",
+              borderBottomColor: "#cbd5e1",
+              backgroundColor: i === 7 ? "#bfdbfe" : "transparent",
             }}
           >
             <Text
@@ -2195,7 +2195,7 @@ export default function SRS() {
                 fontSize: 8,
                 fontFamily: i === 7 ? "Times-Bold" : "Times-Roman",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -2208,7 +2208,7 @@ export default function SRS() {
                 textAlign: "center",
                 fontFamily: i === 7 ? "Times-Bold" : "Times-Roman",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -2221,7 +2221,7 @@ export default function SRS() {
                 textAlign: "center",
                 fontFamily: i === 7 ? "Times-Bold" : "Times-Roman",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[2]}
@@ -2259,13 +2259,13 @@ export default function SRS() {
         traceability from requirements through delivery.
       </Text>
 
-      <View style={{ borderWidth: 1, borderColor: "#333333", marginTop: 12 }}>
+      <View style={{ borderWidth: 1, borderColor: "#94a3b8", borderRadius: 6, marginTop: 12 }}>
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -2275,7 +2275,7 @@ export default function SRS() {
               fontSize: 8,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Req. ID
@@ -2287,7 +2287,7 @@ export default function SRS() {
               fontSize: 8,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Requirement
@@ -2299,7 +2299,7 @@ export default function SRS() {
               fontSize: 8,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Design Component
@@ -2311,7 +2311,7 @@ export default function SRS() {
               fontSize: 8,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Implementation
@@ -2433,7 +2433,7 @@ export default function SRS() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 14 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -2443,7 +2443,7 @@ export default function SRS() {
                 fontSize: 7,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -2454,7 +2454,7 @@ export default function SRS() {
                 padding: 3,
                 fontSize: 7,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -2465,7 +2465,7 @@ export default function SRS() {
                 padding: 3,
                 fontSize: 7,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[2]}
@@ -2476,7 +2476,7 @@ export default function SRS() {
                 padding: 3,
                 fontSize: 7,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[3]}

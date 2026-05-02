@@ -52,47 +52,6 @@ export default function Preface({ pageNumber }: PrefaceProps) {
           estimation using the COCOMO model.
         </Text>
 
-        {/* Technologies Box */}
-        <View
-          style={{
-            borderWidth: 1,
-            borderColor: "#999999",
-            padding: 14,
-            marginTop: 14,
-            marginBottom: 14,
-          }}
-        >
-          <Text style={{ fontFamily: "Times-Bold", marginBottom: 8 }}>
-            Technologies Explored:
-          </Text>
-          <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
-            <Text style={{ fontSize: 10, width: "50%", marginBottom: 3 }}>
-              • Next.js 16 & React 19
-            </Text>
-            <Text style={{ fontSize: 10, width: "50%", marginBottom: 3 }}>
-              • TypeScript & Tailwind CSS
-            </Text>
-            <Text style={{ fontSize: 10, width: "50%", marginBottom: 3 }}>
-              • PostgreSQL & Prisma ORM
-            </Text>
-            <Text style={{ fontSize: 10, width: "50%", marginBottom: 3 }}>
-              • Inngest for Durable Execution
-            </Text>
-            <Text style={{ fontSize: 10, width: "50%", marginBottom: 3 }}>
-              • React Flow for Visual Editor
-            </Text>
-            <Text style={{ fontSize: 10, width: "50%", marginBottom: 3 }}>
-              • tRPC for Type-Safe APIs
-            </Text>
-            <Text style={{ fontSize: 10, width: "50%", marginBottom: 3 }}>
-              • Better Auth for Authentication
-            </Text>
-            <Text style={{ fontSize: 10, width: "50%", marginBottom: 3 }}>
-              • AI SDKs (OpenAI, Anthropic)
-            </Text>
-          </View>
-        </View>
-
         <Text style={styles.paragraph}>
           The implementation chapter includes carefully selected code snippets
           that demonstrate key concepts, covering the full technology stack from
@@ -111,20 +70,6 @@ export default function Preface({ pageNumber }: PrefaceProps) {
           useful reference for anyone interested in building similar full-stack
           applications.
         </Text>
-
-        <View
-          style={{
-            borderWidth: 1,
-            borderColor: "#cccccc",
-            padding: 10,
-            marginTop: 14,
-            alignItems: "center",
-          }}
-        >
-          <Text style={{ fontSize: 10, fontFamily: "Times-Italic" }}>
-            Your feedback and suggestions are welcome to help improve this work.
-          </Text>
-        </View>
       </View>
     </PreliminaryPageLayout>
   );

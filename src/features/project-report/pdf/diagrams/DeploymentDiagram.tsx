@@ -13,8 +13,8 @@ import {
 } from "@react-pdf/renderer";
 
 export default function DeploymentDiagram() {
-  const width = 495;
-  const height = 420;
+  const width = 520;
+  const height = 514;
 
   // Colors
   const colors = {
@@ -29,8 +29,8 @@ export default function DeploymentDiagram() {
     queue: "#FFF8E1",
     queueBorder: "#F57F17",
     text: "#1a1a1a",
-    label: "#666666",
-    arrow: "#555555",
+    label: "#475569",
+    arrow: "#475569",
   };
 
   // Helper: draw a deployment node box
@@ -77,10 +77,10 @@ export default function DeploymentDiagram() {
         <SvgText
           key={i}
           x={x + w / 2}
-          y={y + 30 + i * 12}
+          y={y + 32 + i * 11}
           textAnchor="middle"
           style={{
-            fontSize: 7,
+            fontSize: 7.5,
             fontFamily: "Times-Roman",
             fill: colors.text,
           }}
@@ -143,316 +143,115 @@ export default function DeploymentDiagram() {
       {/* Title */}
       <SvgText
         x={width / 2}
-        y={14}
+        y={16}
         textAnchor="middle"
-        style={{ fontSize: 10, fontFamily: "Times-Bold", fill: colors.text }}
+        style={{ fontSize: 11, fontFamily: "Times-Bold", fill: colors.text }}
       >
         Deployment Architecture
       </SvgText>
-
-      {/* Layer Labels */}
       <SvgText
-        x={8}
-        y={42}
-        style={{ fontSize: 7, fontFamily: "Times-Bold", fill: colors.label }}
+        x={width / 2}
+        y={30}
+        textAnchor="middle"
+        style={{ fontSize: 8, fontFamily: "Times-Italic", fill: colors.label }}
       >
-        CLIENT TIER
+        4-tier topology — Client → Edge → Application → Data
       </SvgText>
-      <Line
-        x1={8}
-        y1={45}
-        x2={487}
-        y2={45}
-        stroke="#dddddd"
-        strokeWidth={0.8}
-      />
 
-      <SvgText
-        x={8}
-        y={132}
-        style={{ fontSize: 7, fontFamily: "Times-Bold", fill: colors.label }}
-      >
-        EDGE / CDN
-      </SvgText>
-      <Line
-        x1={8}
-        y1={135}
-        x2={487}
-        y2={135}
-        stroke="#dddddd"
-        strokeWidth={0.8}
-      />
+      {/* ── Tier background panels ─────────────────────────────── */}
+      {/* CLIENT: y=40, h=102 */}
+      <Rect x={5} y={40} width={width - 10} height={102} fill="#f1f5f9" rx={4} />
+      {/* EDGE/CDN: y=158, h=100 */}
+      <Rect x={5} y={158} width={width - 10} height={100} fill="#fff7ed" rx={4} />
+      {/* APPLICATION: y=274, h=116 */}
+      <Rect x={5} y={274} width={width - 10} height={116} fill="#f0fdf4" rx={4} />
+      {/* DATA: y=406, h=104 */}
+      <Rect x={5} y={406} width={width - 10} height={104} fill="#faf5ff" rx={4} />
 
-      <SvgText
-        x={8}
-        y={222}
-        style={{ fontSize: 7, fontFamily: "Times-Bold", fill: colors.label }}
-      >
-        APPLICATION TIER
-      </SvgText>
-      <Line
-        x1={8}
-        y1={225}
-        x2={487}
-        y2={225}
-        stroke="#dddddd"
-        strokeWidth={0.8}
-      />
+      {/* ── Tier label pills — placed at top of each band ─────── */}
+      {/* CLIENT TIER label: y=46 (6px from band top) */}
+      <G>
+        <Rect x={12} y={46} width={120} height={16} rx={4} fill="#ffffff" stroke={colors.clientBorder} strokeWidth={0.9} />
+        <SvgText x={72} y={58} textAnchor="middle"
+          style={{ fontSize: 8, fontFamily: "Times-Bold", fill: colors.clientBorder, letterSpacing: 1 }}>
+          CLIENT TIER
+        </SvgText>
+      </G>
+      {/* EDGE / CDN label: y=164 */}
+      <G>
+        <Rect x={12} y={164} width={120} height={16} rx={4} fill="#ffffff" stroke={colors.cdnBorder} strokeWidth={0.9} />
+        <SvgText x={72} y={176} textAnchor="middle"
+          style={{ fontSize: 8, fontFamily: "Times-Bold", fill: colors.cdnBorder, letterSpacing: 1 }}>
+          EDGE / CDN
+        </SvgText>
+      </G>
+      {/* APPLICATION TIER label: y=280 */}
+      <G>
+        <Rect x={12} y={280} width={140} height={16} rx={4} fill="#ffffff" stroke={colors.serverBorder} strokeWidth={0.9} />
+        <SvgText x={82} y={292} textAnchor="middle"
+          style={{ fontSize: 8, fontFamily: "Times-Bold", fill: colors.serverBorder, letterSpacing: 1 }}>
+          APPLICATION TIER
+        </SvgText>
+      </G>
+      {/* DATA / SERVICES TIER label: y=412 */}
+      <G>
+        <Rect x={12} y={412} width={150} height={16} rx={4} fill="#ffffff" stroke={colors.dbBorder} strokeWidth={0.9} />
+        <SvgText x={87} y={424} textAnchor="middle"
+          style={{ fontSize: 8, fontFamily: "Times-Bold", fill: colors.dbBorder, letterSpacing: 1 }}>
+          DATA / SERVICES TIER
+        </SvgText>
+      </G>
 
-      <SvgText
-        x={8}
-        y={332}
-        style={{ fontSize: 7, fontFamily: "Times-Bold", fill: colors.label }}
-      >
-        DATA / SERVICES TIER
-      </SvgText>
-      <Line
-        x1={8}
-        y1={335}
-        x2={487}
-        y2={335}
-        stroke="#dddddd"
-        strokeWidth={0.8}
-      />
+      {/* ── CLIENT TIER — nodes start at y=68 (6px below label bottom) */}
+      <Node x={50}  y={68} w={110} h={70} fill={colors.client} stroke={colors.clientBorder}
+        title="Web Browser" items={["React 19 SPA", "Next.js 16 Client", "React Flow Editor"]} />
+      <Node x={205} y={68} w={110} h={70} fill={colors.client} stroke={colors.clientBorder}
+        title="Mobile Browser" items={["Responsive PWA", "Touch-optimized UI"]} />
+      <Node x={360} y={68} w={110} h={70} fill={colors.client} stroke={colors.clientBorder}
+        title="External Systems" items={["Webhook Callers", "API Consumers", "OAuth2 Providers"]} />
 
-      {/* Client Tier */}
-      <Node
-        x={40}
-        y={52}
-        w={120}
-        h={65}
-        fill={colors.client}
-        stroke={colors.clientBorder}
-        title="Web Browser"
-        items={["React 19 SPA", "Next.js 16 Client", "React Flow Editor"]}
-      />
-      <Node
-        x={190}
-        y={52}
-        w={120}
-        h={65}
-        fill={colors.client}
-        stroke={colors.clientBorder}
-        title="Mobile Browser"
-        items={["Responsive PWA", "Touch-optimized UI"]}
-      />
-      <Node
-        x={340}
-        y={52}
-        w={120}
-        h={65}
-        fill={colors.client}
-        stroke={colors.clientBorder}
-        title="External Systems"
-        items={["Webhook Callers", "API Consumers", "OAuth2 Providers"]}
-      />
+      {/* ── EDGE / CDN TIER — nodes start at y=186 */}
+      <Node x={68}  y={186} w={160} h={68} fill={colors.cdn} stroke={colors.cdnBorder}
+        title="Netlify Edge Network" items={["Global CDN", "Edge Middleware", "SSL/TLS Termination"]} />
+      <Node x={291} y={186} w={160} h={68} fill={colors.cdn} stroke={colors.cdnBorder}
+        title="DNS & Routing" items={["Custom Domain", "Geo-routing", "Load Balancing"]} />
 
-      {/* Edge / CDN */}
-      <Node
-        x={100}
-        y={142}
-        w={150}
-        h={65}
-        fill={colors.cdn}
-        stroke={colors.cdnBorder}
-        title="Vercel Edge Network"
-        items={["Global CDN", "Edge Middleware", "SSL/TLS Termination"]}
-      />
-      <Node
-        x={280}
-        y={142}
-        w={150}
-        h={65}
-        fill={colors.cdn}
-        stroke={colors.cdnBorder}
-        title="DNS & Routing"
-        items={["Custom Domain", "Geo-routing", "Load Balancing"]}
-      />
-
-      {/* Application Tier */}
-      <Node
-        x={20}
-        y={235}
-        w={130}
-        h={80}
-        fill={colors.server}
-        stroke={colors.serverBorder}
+      {/* ── APPLICATION TIER — nodes start at y=302 */}
+      <Node x={23}  y={302} w={145} h={84} fill={colors.server} stroke={colors.serverBorder}
         title="Next.js App Server"
-        items={[
-          "Server Components",
-          "tRPC API Layer",
-          "Auth (Better Auth)",
-          "API Routes",
-        ]}
-      />
-      <Node
-        x={170}
-        y={235}
-        w={130}
-        h={80}
-        fill={colors.server}
-        stroke={colors.serverBorder}
+        items={["Server Components", "tRPC API Layer", "Auth (Better Auth)", "API Routes"]} />
+      <Node x={186} y={302} w={145} h={84} fill={colors.server} stroke={colors.serverBorder}
         title="Inngest Worker"
-        items={[
-          "Workflow Executor",
-          "BFS Graph Traversal",
-          "Scheduled Jobs",
-          "Event-driven Tasks",
-        ]}
-      />
-      <Node
-        x={320}
-        y={235}
-        w={150}
-        h={80}
-        fill={colors.server}
-        stroke={colors.serverBorder}
+        items={["Workflow Executor", "BFS Graph Traversal", "Scheduled Jobs", "Event-driven Tasks"]} />
+      <Node x={349} y={302} w={145} h={84} fill={colors.server} stroke={colors.serverBorder}
         title="Serverless Functions"
-        items={[
-          "Webhook Handlers",
-          "OAuth2 Callbacks",
-          "Cron Triggers",
-          "Sentry Error Tracking",
-        ]}
-      />
+        items={["Webhook Handlers", "OAuth2 Callbacks", "Cron Triggers", "Sentry Error Tracking"]} />
 
-      {/* Data Tier */}
-      <Node
-        x={20}
-        y={345}
-        w={110}
-        h={60}
-        fill={colors.db}
-        stroke={colors.dbBorder}
-        title="Neon PostgreSQL"
-        items={["Primary Database", "Prisma ORM", "Connection Pooling"]}
-      />
-      <Node
-        x={150}
-        y={345}
-        w={110}
-        h={60}
-        fill={colors.db}
-        stroke={colors.dbBorder}
-        title="Blob Storage"
-        items={["Workflow Exports", "User Avatars", "Report Outputs"]}
-      />
-      <Node
-        x={280}
-        y={345}
-        w={100}
-        h={60}
-        fill={colors.queue}
-        stroke={colors.queueBorder}
-        title="Inngest Cloud"
-        items={["Event Queue", "Job Scheduling", "Retry Logic"]}
-      />
-      <Node
-        x={400}
-        y={345}
-        w={80}
-        h={60}
-        fill={colors.db}
-        stroke={colors.dbBorder}
-        title="External APIs"
-        items={["OpenAI", "Google", "Slack"]}
-      />
+      {/* ── DATA TIER — nodes start at y=434 */}
+      <Node x={19}  y={434} w={118} h={68} fill={colors.db}    stroke={colors.dbBorder}
+        title="Neon PostgreSQL" items={["Primary Database", "Prisma ORM", "Connection Pooling"]} />
+      <Node x={151} y={434} w={118} h={68} fill={colors.db}    stroke={colors.dbBorder}
+        title="Blob Storage" items={["Workflow Exports", "User Avatars", "Report Outputs"]} />
+      <Node x={283} y={434} w={110} h={68} fill={colors.queue} stroke={colors.queueBorder}
+        title="Inngest Cloud" items={["Event Queue", "Job Scheduling", "Retry Logic"]} />
+      <Node x={407} y={434} w={90}  h={68} fill={colors.db}    stroke={colors.dbBorder}
+        title="External APIs" items={["OpenAI", "Google", "Slack"]} />
 
-      {/* Arrows - Client to Edge */}
-      <Arrow
-        x1={100}
-        y1={117}
-        x2={150}
-        y2={142}
-        label="HTTPS"
-        labelX={110}
-        labelY={130}
-      />
-      <Arrow
-        x1={250}
-        y1={117}
-        x2={220}
-        y2={142}
-        label="HTTPS"
-        labelX={250}
-        labelY={130}
-      />
-      <Arrow
-        x1={400}
-        y1={117}
-        x2={380}
-        y2={142}
-        label="Webhooks"
-        labelX={405}
-        labelY={130}
-      />
+      {/* ── Arrows: Client → Edge (node bottoms y=138, edge tops y=186) ── */}
+      <Arrow x1={105} y1={138} x2={148} y2={186} label="HTTPS"    labelX={124} labelY={159} />
+      <Arrow x1={260} y1={138} x2={260} y2={186} label="HTTPS"    labelX={260} labelY={159} />
+      <Arrow x1={415} y1={138} x2={371} y2={186} label="Webhooks" labelX={395} labelY={159} />
 
-      {/* Edge to App */}
-      <Arrow
-        x1={155}
-        y1={207}
-        x2={100}
-        y2={235}
-        label="SSR/ISR"
-        labelX={112}
-        labelY={222}
-      />
-      <Arrow
-        x1={200}
-        y1={207}
-        x2={235}
-        y2={235}
-        label="Events"
-        labelX={230}
-        labelY={222}
-      />
-      <Arrow
-        x1={380}
-        y1={207}
-        x2={395}
-        y2={235}
-        label="Routes"
-        labelX={400}
-        labelY={222}
-      />
+      {/* ── Arrows: Edge → App (edge bottoms y=254, app tops y=302) ─── */}
+      <Arrow x1={148} y1={254} x2={96}  y2={302} label="SSR/ISR" labelX={118} labelY={275} />
+      <Arrow x1={148} y1={254} x2={259} y2={302} label="Events"  labelX={198} labelY={275} />
+      <Arrow x1={371} y1={254} x2={422} y2={302} label="Routes"  labelX={397} labelY={275} />
 
-      {/* App to Data */}
-      <Arrow
-        x1={85}
-        y1={315}
-        x2={75}
-        y2={345}
-        label="Prisma"
-        labelX={65}
-        labelY={332}
-      />
-      <Arrow
-        x1={235}
-        y1={315}
-        x2={205}
-        y2={345}
-        label="Files"
-        labelX={230}
-        labelY={332}
-      />
-      <Arrow
-        x1={235}
-        y1={315}
-        x2={330}
-        y2={345}
-        label="Events"
-        labelX={295}
-        labelY={332}
-      />
-      <Arrow
-        x1={395}
-        y1={315}
-        x2={440}
-        y2={345}
-        label="REST"
-        labelX={430}
-        labelY={332}
-      />
+      {/* ── Arrows: App → Data (app bottoms y=386, data tops y=434) ─── */}
+      <Arrow x1={96}  y1={386} x2={78}  y2={434} label="Prisma"  labelX={84}  labelY={408} />
+      <Arrow x1={259} y1={386} x2={210} y2={434} label="Files"   labelX={232} labelY={408} />
+      <Arrow x1={259} y1={386} x2={338} y2={434} label="Events"  labelX={300} labelY={408} />
+      <Arrow x1={422} y1={386} x2={452} y2={434} label="REST"    labelX={439} labelY={408} />
     </Svg>
   );
 }

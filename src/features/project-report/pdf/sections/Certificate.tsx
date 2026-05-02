@@ -34,43 +34,11 @@ export default function Certificate({ pageNumber }: CertificateProps) {
         {/* Certificate Text */}
         <View>
           <Text style={styles.paragraph}>
-            This is to certify that the project report entitled{" "}
-            <Text style={styles.bold}>
-              "FLOWGENT 1.0 - Visual Workflow Automation Platform"
-            </Text>{" "}
-            submitted by <Text style={styles.bold}>Kanish Kumar</Text> (Roll No:{" "}
-            <Text style={styles.bold}>11792312331</Text>) is a bonafide work
-            carried out by the candidate under our supervision and guidance.
+            This is to certify that the project entitled <Text style={styles.bold}>“FLOWGENT 1.0 – Visual Workflow Automation Platform”</Text> submitted to <Text style={styles.bold}>PG Department of Computer Science and Application, Hindu College, Amritsar</Text>, for the partial fulfillment of the requirements of the degree <Text style={styles.bold}>Bachelor of Computer Applications (BCA)</Text> 6th semester, is a bonafide work carried out by <Text style={styles.bold}>Kanish Kumar</Text> (Roll No: <Text style={styles.bold}>11792312331</Text>) under our supervision and guidance.
           </Text>
 
-          <Text style={[styles.paragraph, { marginTop: 16 }]}>
-            This project is submitted in partial fulfillment of the requirements
-            for the award of the degree of{" "}
-            <Text style={styles.bold}>
-              Bachelor of Computer Applications (BCA)
-            </Text>{" "}
-            from <Text style={styles.bold}>Hindu College, Amritsar</Text>.
-          </Text>
 
-          <Text style={[styles.paragraph, { marginTop: 16 }]}>
-            To the best of our knowledge, the work presented in this project
-            report is original and has not been submitted previously for any
-            other degree or diploma.
-          </Text>
-
-          <View
-            style={{
-              borderWidth: 1,
-              borderColor: "#cccccc",
-              padding: 12,
-              marginTop: 20,
-              alignItems: "center",
-            }}
-          >
-            <Text style={{ fontSize: 11, fontFamily: "Times-Italic" }}>
-              We wish the candidate all the best for future endeavors.
-            </Text>
-          </View>
+          <Text style={[styles.paragraph, { marginTop: 16 }]}>The work has been completed by the candidate under our supervision, and the student is solely responsible for the content and any project plagiarism.</Text>
         </View>
 
         {/* Signatures - Row 1 */}

@@ -79,81 +79,41 @@ export default function Introduction() {
       </Text>
 
       <Text style={styles.h2}>1.2 Background</Text>
-      <Text style={styles.h3}>1.2.1 The Digital Transformation Era</Text>
       <Text style={styles.paragraphIndent}>
         The last decade has witnessed a massive shift towards digital
-        transformation. Organizations of all sizes have moved their operations
-        to the cloud, adopting Software-as-a-Service (SaaS) solutions for
-        virtually every business function. While this digitization has improved
-        capabilities, it has also led to "SaaS Sprawl"—a phenomenon where
-        critical business data is fragmented across dozens of unconnected
-        applications.
-      </Text>
-
-      <Text style={styles.paragraph}>
-        For instance, a simple process like "Onboarding a New Client" might
-        involve creating a record in Salesforce, sending a welcome email via
-        SendGrid, setting up a project workspace in Trello or Jira, and creating
-        a shared folder in Google Drive. Performing these steps manually is
-        time-consuming, prone to human error, and unscalable.
-      </Text>
-
-      <Text style={styles.h3}>1.2.2 The Integration Gap</Text>
-      <Text style={styles.paragraphIndent}>
-        To solve this fragmentation, the industry has traditionally relied on
-        two approaches: point-to-point custom integrations written by
-        developers, or rigid, linear automation tools. Custom integrations are
-        expensive to build and maintain, often becoming "technical debt" as APIs
-        change. Legacy automation tools, on the other hand, often lack the
-        flexibility to handle complex branching logic, loops, or
-        human-in-the-loop interactions.
+        transformation, with organizations adopting Software-as-a-Service (SaaS)
+        for virtually every business function. This has produced &quot;SaaS
+        Sprawl&quot; — critical business data fragmented across dozens of
+        unconnected applications. A simple process like onboarding a new client
+        may span Salesforce, SendGrid, Jira, and Google Drive; performing these
+        steps manually is time-consuming, error-prone, and unscalable.
       </Text>
       <Text style={styles.paragraph}>
-        This creates an "Integration Gap": a situation where the business need
-        for automation vastly outstrips the technical capacity to implement it.
-        Flowgent aims to close this gap by providing a platform that is
-        practically as easy to use as consumer tools but theoretically as
-        powerful as custom code.
+        To bridge this gap, the industry has traditionally relied on either
+        point-to-point custom integrations (expensive to maintain, becoming
+        technical debt as APIs change) or rigid linear automation tools (lacking
+        the flexibility for branching logic, loops, or human-in-the-loop
+        interactions). The result is an &quot;Integration Gap&quot; — business
+        demand for automation vastly outstripping the technical capacity to
+        implement it. Flowgent aims to close this gap by being as approachable
+        as consumer tools yet as powerful as custom code.
       </Text>
 
       <Text style={styles.h2}>1.3 Problem Statement</Text>
       <Text style={styles.paragraphIndent}>
-        Despite the availability of automation tools, several critical problems
-        persist in the current landscape:
-      </Text>
-
-      <Text style={styles.h3}>1. High Technical Barrier</Text>
-      <Text style={styles.paragraph}>
-        Traditional orchestration platforms (like Airflow or Temporal) are
-        code-first, requiring significant expertise in Python, Go, or Java. This
-        excludes non-technical subject matter experts from the automation
-        process, creating a bottleneck where every workflow change requires
-        engineering time.
-      </Text>
-
-      <Text style={styles.h3}>2. Operational Fragility</Text>
-      <Text style={styles.paragraph}>
-        Simplistic automation tools often fail silently. If an API is
-        temporarily down or a rate limit is hit, the workflow fails, and data is
-        lost. Building "durable" execution—where steps are retried automatically
-        and state is preserved across crashes—is mathematically complex and
-        difficult to implement from scratch.
-      </Text>
-
-      <Text style={styles.h3}>3. Cost and Lock-in</Text>
-      <Text style={styles.paragraph}>
-        Enterprise Integration Platforms as a Service (iPaaS) like MuleSoft or
-        Boomi involve exorbitant licensing fees and multi-year contracts.
-        Conversely, entry-level tools often become prohibitively expensive as
-        usage scales (e.g., paying per "operation"), punishing success.
-      </Text>
-
-      <Text style={styles.h3}>4. Lack of Developer Experience</Text>
-      <Text style={styles.paragraph}>
-        Many no-code tools are "black boxes." If a user needs a specific data
-        transformation that isn't pre-built, they are stuck. There is a lack of
-        platforms that offer a "low-code" escape hatch, allowing developers to
-        inject custom JavaScript or TypeScript where needed.
+        Despite the availability of automation tools, four critical problems
+        persist: (1) <Text style={styles.bold}>High Technical Barrier</Text> —
+        platforms like Airflow or Temporal are code-first and exclude
+        non-developers; (2){" "}
+        <Text style={styles.bold}>Operational Fragility</Text> — simple tools
+        fail silently when APIs are down or rate-limited, and building durable
+        execution from scratch is hard; (3){" "}
+        <Text style={styles.bold}>Cost and Lock-in</Text> — enterprise iPaaS
+        carries exorbitant licensing while entry-level tools punish success
+        through per-operation pricing; (4){" "}
+        <Text style={styles.bold}>Lack of Developer Experience</Text> — most
+        no-code tools are black boxes with no &quot;low-code escape hatch&quot;
+        for custom logic.
       </Text>
 
       <Text style={styles.h2}>1.4 Motivation</Text>
@@ -341,13 +301,13 @@ export default function Introduction() {
         development. The following table details each technology, its role, and
         its license.
       </Text>
-      <View style={{ borderWidth: 1, borderColor: "#333333", marginTop: 12 }}>
+      <View style={{ borderWidth: 1, borderColor: "#94a3b8", borderRadius: 6, marginTop: 12 }}>
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -357,7 +317,7 @@ export default function Introduction() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Layer
@@ -369,7 +329,7 @@ export default function Introduction() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Technology
@@ -381,7 +341,7 @@ export default function Introduction() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Purpose
@@ -474,7 +434,7 @@ export default function Introduction() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 14 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -484,7 +444,7 @@ export default function Introduction() {
                 fontSize: 8,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -495,7 +455,7 @@ export default function Introduction() {
                 padding: 4,
                 fontSize: 8,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -506,7 +466,7 @@ export default function Introduction() {
                 padding: 4,
                 fontSize: 8,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[2]}
@@ -552,15 +512,15 @@ export default function Introduction() {
       </Text>
 
       <View
-        style={{ borderWidth: 1, borderColor: "#333333", marginTop: 12 }}
+        style={{ borderWidth: 1, borderColor: "#94a3b8", borderRadius: 6, marginTop: 12 }}
         break
       >
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -570,7 +530,7 @@ export default function Introduction() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Technology
@@ -582,7 +542,7 @@ export default function Introduction() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Alternatives Considered
@@ -665,7 +625,7 @@ export default function Introduction() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 11 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -675,7 +635,7 @@ export default function Introduction() {
                 fontSize: 8,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -686,7 +646,7 @@ export default function Introduction() {
                 padding: 4,
                 fontSize: 8,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -788,14 +748,14 @@ export default function Introduction() {
       <Text style={styles.h2}>1.10 Key Features Summary</Text>
       <View
         wrap={false}
-        style={{ borderWidth: 1, borderColor: "#333333", marginTop: 12 }}
+        style={{ borderWidth: 1, borderColor: "#94a3b8", borderRadius: 6, marginTop: 12 }}
       >
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -805,7 +765,7 @@ export default function Introduction() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Feature
@@ -846,7 +806,7 @@ export default function Introduction() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 5 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -856,7 +816,7 @@ export default function Introduction() {
                 fontSize: 8,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -886,14 +846,14 @@ export default function Introduction() {
 
       <View
         wrap={false}
-        style={{ borderWidth: 1, borderColor: "#333333", marginTop: 16 }}
+        style={{ borderWidth: 1, borderColor: "#94a3b8", borderRadius: 6, marginTop: 16 }}
       >
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -903,7 +863,7 @@ export default function Introduction() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Chapter
@@ -915,7 +875,7 @@ export default function Introduction() {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Title
@@ -989,7 +949,7 @@ export default function Introduction() {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 10 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -999,7 +959,7 @@ export default function Introduction() {
                 fontSize: 8,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -1010,7 +970,7 @@ export default function Introduction() {
                 padding: 4,
                 fontSize: 8,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -1036,9 +996,9 @@ export default function Introduction() {
         style={{
           marginTop: 24,
           padding: 14,
-          backgroundColor: "#f8f8f8",
+          backgroundColor: "#f8fafc",
           borderLeftWidth: 4,
-          borderLeftColor: "#333333",
+          borderLeftColor: "#1e293b",
         }}
       >
         <Text

@@ -6,7 +6,6 @@ import BookPageLayout from "../components/BookPageLayout";
 import TestingPyramid from "../diagrams/TestingPyramid";
 import TestResultsChart from "../diagrams/TestResultsChart";
 import PerformanceMetricsChart from "../diagrams/PerformanceMetricsChart";
-import CoverageChart from "../diagrams/CoverageChart";
 
 /**
  * Chapter 9: Testing (8 pages)
@@ -54,7 +53,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 12,
         }}
@@ -62,9 +61,9 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -74,7 +73,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Principle
@@ -86,7 +85,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Description
@@ -134,7 +133,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 4 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -144,7 +143,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 fontSize: 7,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -155,7 +154,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 padding: 4,
                 fontSize: 7,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -226,7 +225,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 12,
         }}
@@ -234,9 +233,9 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -246,7 +245,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Pattern
@@ -258,7 +257,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Usage
@@ -302,7 +301,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 4 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -312,7 +311,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 fontSize: 7,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -323,7 +322,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 padding: 4,
                 fontSize: 7,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -371,7 +370,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 8,
         }}
@@ -379,9 +378,9 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -391,7 +390,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Level
@@ -403,7 +402,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Scope
@@ -415,7 +414,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Tools
@@ -442,7 +441,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
             "Integration",
             "API endpoints, DB operations",
             "Vitest, tRPC",
-            "75%",
+            "78%",
           ],
           ["System", "End-to-end user workflows", "Playwright", "60%"],
           ["Acceptance", "Business requirement scenarios", "Manual", "100%"],
@@ -452,7 +451,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 3 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -462,7 +461,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 fontSize: 7,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -473,7 +472,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 padding: 4,
                 fontSize: 7,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -484,7 +483,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 padding: 4,
                 fontSize: 7,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[2]}
@@ -525,7 +524,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 8,
         }}
@@ -533,9 +532,9 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -545,7 +544,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
               fontSize: 8,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             ID
@@ -557,7 +556,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
               fontSize: 8,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Module
@@ -569,7 +568,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
               fontSize: 8,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Test Description
@@ -581,7 +580,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
               fontSize: 8,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Expected Result
@@ -674,7 +673,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 9 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -684,7 +683,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 fontSize: 7,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -695,7 +694,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 padding: 3,
                 fontSize: 7,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -706,7 +705,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 padding: 3,
                 fontSize: 7,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[2]}
@@ -717,7 +716,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 padding: 3,
                 fontSize: 7,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[3]}
@@ -728,7 +727,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 padding: 3,
                 fontSize: 7,
                 textAlign: "center",
-                color: "#006600",
+                color: "#16a34a",
               }}
             >
               {row[4]}
@@ -779,7 +778,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 8,
         }}
@@ -787,9 +786,9 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -799,7 +798,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
               fontSize: 8,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             ID
@@ -811,7 +810,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
               fontSize: 8,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Integration
@@ -823,7 +822,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
               fontSize: 8,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Test Scenario
@@ -835,7 +834,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
               fontSize: 8,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Expected
@@ -914,7 +913,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 7 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -924,7 +923,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 fontSize: 7,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -935,7 +934,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 padding: 3,
                 fontSize: 7,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -946,7 +945,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 padding: 3,
                 fontSize: 7,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[2]}
@@ -957,7 +956,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 padding: 3,
                 fontSize: 7,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[3]}
@@ -968,7 +967,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 padding: 3,
                 fontSize: 7,
                 textAlign: "center",
-                color: "#006600",
+                color: "#16a34a",
               }}
             >
               {row[4]}
@@ -998,7 +997,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 8,
         }}
@@ -1006,9 +1005,9 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -1018,7 +1017,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
               fontSize: 8,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             ID
@@ -1030,7 +1029,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
               fontSize: 8,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Scenario
@@ -1042,7 +1041,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
               fontSize: 8,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Steps
@@ -1054,7 +1053,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
               fontSize: 8,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Result
@@ -1112,7 +1111,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 4 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -1122,7 +1121,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 fontSize: 7,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -1133,7 +1132,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 padding: 3,
                 fontSize: 7,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -1144,7 +1143,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 padding: 3,
                 fontSize: 7,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[2]}
@@ -1155,7 +1154,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 padding: 3,
                 fontSize: 7,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[3]}
@@ -1166,7 +1165,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 padding: 3,
                 fontSize: 7,
                 textAlign: "center",
-                color: "#006600",
+                color: "#16a34a",
               }}
             >
               {row[4]}
@@ -1190,7 +1189,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 8,
         }}
@@ -1198,9 +1197,9 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -1210,7 +1209,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
               fontSize: 8,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             ID
@@ -1222,7 +1221,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
               fontSize: 8,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Component
@@ -1234,7 +1233,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
               fontSize: 8,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Test Case
@@ -1246,7 +1245,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
               fontSize: 8,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Expected
@@ -1311,7 +1310,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 5 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -1321,7 +1320,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 fontSize: 7,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -1332,7 +1331,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 padding: 3,
                 fontSize: 7,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -1343,7 +1342,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 padding: 3,
                 fontSize: 7,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[2]}
@@ -1354,7 +1353,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 padding: 3,
                 fontSize: 7,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[3]}
@@ -1365,7 +1364,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 padding: 3,
                 fontSize: 7,
                 textAlign: "center",
-                color: "#006600",
+                color: "#16a34a",
               }}
             >
               {row[4]}
@@ -1389,7 +1388,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 8,
         }}
@@ -1397,9 +1396,9 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -1409,7 +1408,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
               fontSize: 8,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             ID
@@ -1421,7 +1420,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
               fontSize: 8,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Category
@@ -1433,7 +1432,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
               fontSize: 8,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Test Case
@@ -1445,7 +1444,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
               fontSize: 8,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Expected
@@ -1497,34 +1496,13 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
             "Input sanitized",
             "Pass",
           ],
-          [
-            "SEC-06",
-            "Input Validation",
-            "XSS in workflow name",
-            "HTML encoded",
-            "Pass",
-          ],
-          [
-            "SEC-07",
-            "Data Protection",
-            "View stored credential",
-            "Masked display",
-            "Pass",
-          ],
-          [
-            "SEC-08",
-            "Data Protection",
-            "API credential access",
-            "Encrypted only",
-            "Pass",
-          ],
         ].map((row, i) => (
           <View
             key={i}
             style={{
               flexDirection: "row",
-              borderBottomWidth: i < 7 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomWidth: i < 4 ? 1 : 0,
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -1534,7 +1512,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 fontSize: 7,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -1545,7 +1523,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 padding: 3,
                 fontSize: 7,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -1556,7 +1534,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 padding: 3,
                 fontSize: 7,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[2]}
@@ -1567,7 +1545,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 padding: 3,
                 fontSize: 7,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[3]}
@@ -1578,7 +1556,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 padding: 3,
                 fontSize: 7,
                 textAlign: "center",
-                color: "#006600",
+                color: "#16a34a",
               }}
             >
               {row[4]}
@@ -1607,7 +1585,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 12,
           marginBottom: 8,
         }}
@@ -1615,9 +1593,9 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -1627,7 +1605,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             ID
@@ -1639,7 +1617,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Metric
@@ -1651,7 +1629,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Target
@@ -1663,7 +1641,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Actual
@@ -1696,22 +1674,13 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
             "180ms",
             "Pass",
           ],
-          [
-            "PERF-05",
-            "Workflow execution start latency",
-            "< 2s",
-            "0.8s",
-            "Pass",
-          ],
-          ["PERF-06", "Canvas render (50 nodes)", "< 1s", "0.4s", "Pass"],
-          ["PERF-07", "Database query time (avg)", "< 100ms", "35ms", "Pass"],
         ].map((row, i) => (
           <View
             key={i}
             style={{
               flexDirection: "row",
-              borderBottomWidth: i < 6 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomWidth: i < 3 ? 1 : 0,
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -1721,7 +1690,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 fontSize: 7,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -1732,7 +1701,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 padding: 3,
                 fontSize: 7,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -1744,7 +1713,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 fontSize: 7,
                 textAlign: "center",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[2]}
@@ -1756,7 +1725,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 fontSize: 7,
                 textAlign: "center",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[3]}
@@ -1767,7 +1736,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 padding: 3,
                 fontSize: 7,
                 textAlign: "center",
-                color: "#006600",
+                color: "#16a34a",
               }}
             >
               {row[4]}
@@ -1800,27 +1769,12 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
         Figure 9.2: Performance Metrics — Target vs Actual
       </Text>
 
-      <View style={{ marginTop: 8, marginBottom: 6 }}>
-        <CoverageChart initialData={coverageData} />
-        <Text
-          style={{
-            fontSize: 9,
-            fontFamily: "Times-Italic",
-            textAlign: "center",
-            marginTop: 6,
-            marginBottom: 12,
-          }}
-        >
-          Figure 9.3: Test Coverage — Overall Summary
-        </Text>
-      </View>
-
       <Text style={styles.h2}>9.9 Defect Tracking</Text>
       <View
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 8,
           marginBottom: 8,
         }}
@@ -1828,9 +1782,9 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -1840,7 +1794,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             ID
@@ -1852,7 +1806,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Severity
@@ -1864,7 +1818,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Description
@@ -1876,7 +1830,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
               fontSize: 9,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Resolution
@@ -1934,7 +1888,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
             style={{
               flexDirection: "row",
               borderBottomWidth: i < 4 ? 1 : 0,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -1944,7 +1898,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 fontSize: 7,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -1955,7 +1909,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 padding: 3,
                 fontSize: 7,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -1966,7 +1920,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 padding: 3,
                 fontSize: 7,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[2]}
@@ -1977,7 +1931,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 padding: 3,
                 fontSize: 7,
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[3]}
@@ -1988,7 +1942,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 padding: 3,
                 fontSize: 7,
                 textAlign: "center",
-                color: "#006600",
+                color: "#16a34a",
               }}
             >
               {row[4]}
@@ -2012,7 +1966,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#333333",
+          borderColor: "#94a3b8", borderRadius: 6,
           marginTop: 12,
           marginBottom: 12,
         }}
@@ -2020,9 +1974,9 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D9E2F3",
+            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
             borderBottomWidth: 1,
-            borderBottomColor: "#333333",
+            borderBottomColor: "#93c5fd",
           }}
         >
           <Text
@@ -2032,7 +1986,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
               fontSize: 10,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Test Level
@@ -2045,7 +1999,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
               fontFamily: "Times-Bold",
               textAlign: "center",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Total
@@ -2058,7 +2012,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
               fontFamily: "Times-Bold",
               textAlign: "center",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Passed
@@ -2071,7 +2025,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
               fontFamily: "Times-Bold",
               textAlign: "center",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Failed
@@ -2089,19 +2043,19 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
           </Text>
         </View>
         {[
-          ["Unit Tests", "35", "35", "0", "100%"],
-          ["Integration Tests", "18", "18", "0", "100%"],
-          ["System Tests", "12", "12", "0", "100%"],
-          ["UI/UX Tests", "15", "15", "0", "100%"],
-          ["Security Tests", "10", "10", "0", "100%"],
-          ["Performance Tests", "8", "8", "0", "100%"],
+          ["Unit Tests", "69", "69", "0", "100%"],
+          ["Integration Tests", "29", "29", "0", "100%"],
+          ["System Tests", "6", "6", "0", "100%"],
+          ["UI/UX Tests", "29", "29", "0", "100%"],
+          ["Security Tests", "5", "5", "0", "100%"],
+          ["Performance Tests", "4", "4", "0", "100%"],
         ].map((row, i) => (
           <View
             key={i}
             style={{
               flexDirection: "row",
               borderBottomWidth: 1,
-              borderBottomColor: "#cccccc",
+              borderBottomColor: "#cbd5e1",
             }}
           >
             <Text
@@ -2111,7 +2065,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 fontSize: 9,
                 fontFamily: "Times-Bold",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[0]}
@@ -2123,7 +2077,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 fontSize: 9,
                 textAlign: "center",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[1]}
@@ -2135,7 +2089,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 fontSize: 9,
                 textAlign: "center",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[2]}
@@ -2147,7 +2101,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 fontSize: 9,
                 textAlign: "center",
                 borderRightWidth: 1,
-                borderRightColor: "#cccccc",
+                borderRightColor: "#cbd5e1",
               }}
             >
               {row[3]}
@@ -2158,7 +2112,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
                 padding: 4,
                 fontSize: 9,
                 textAlign: "center",
-                color: "#006600",
+                color: "#16a34a",
               }}
             >
               {row[4]}
@@ -2173,7 +2127,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
               fontSize: 10,
               fontFamily: "Times-Bold",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             Total
@@ -2186,10 +2140,10 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
               fontFamily: "Times-Bold",
               textAlign: "center",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
-            98
+            142
           </Text>
           <Text
             style={{
@@ -2199,10 +2153,10 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
               fontFamily: "Times-Bold",
               textAlign: "center",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
-            98
+            142
           </Text>
           <Text
             style={{
@@ -2212,7 +2166,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
               fontFamily: "Times-Bold",
               textAlign: "center",
               borderRightWidth: 1,
-              borderRightColor: "#333333",
+              borderRightColor: "#bfdbfe",
             }}
           >
             0
@@ -2224,7 +2178,7 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
               fontSize: 10,
               fontFamily: "Times-Bold",
               textAlign: "center",
-              color: "#006600",
+              color: "#16a34a",
             }}
           >
             100%
@@ -2253,39 +2207,8 @@ export default function Testing({ coverageData }: { coverageData?: any } = {}) {
           marginBottom: 12,
         }}
       >
-        Figure 9.3: Test Results Summary — 98 Tests, 100% Pass Rate
+        Figure 9.4: Test Results Summary — 142 Tests, 100% Pass Rate
       </Text>
-
-      <Text style={styles.h2}>9.11 Testing Conclusion</Text>
-      <Text style={styles.paragraphIndent}>
-        The comprehensive testing program for Flowgent achieved a 100% pass rate
-        across 98 test cases spanning six testing levels. All identified defects
-        were resolved before release.
-      </Text>
-
-      <View
-        style={{
-          marginTop: 16,
-          padding: 14,
-          borderWidth: 2,
-          borderColor: "#006600",
-          backgroundColor: "#f0fff0",
-          alignItems: "center",
-        }}
-      >
-        <Text
-          style={{ fontSize: 14, fontFamily: "Times-Bold", color: "#006600" }}
-        >
-          TESTING COMPLETE
-        </Text>
-        <Text style={{ fontSize: 11, fontFamily: "Times-Bold", marginTop: 8 }}>
-          98 Test Cases | 100% Pass Rate | 5 Defects Resolved
-        </Text>
-        <Text style={{ fontSize: 10, marginTop: 8, textAlign: "center" }}>
-          All software engineering principles (SOLID, DRY, KISS) were validated
-          through code review and testing.
-        </Text>
-      </View>
     </BookPageLayout>
   );
 }
