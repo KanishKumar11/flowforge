@@ -78,11 +78,19 @@ const figures = [
     title: "BFS Workflow Execution Algorithm — Flowchart",
     page: "115",
   },
+<<<<<<< HEAD
   { number: "8.2", title: "Node Execution State Machine", page: "116" },
   { number: "8.3", title: "AI Node Execution Pipeline", page: "116" },
   { number: "8.4", title: "Service Integration Matrix", page: "119" },
   { number: "8.5", title: "Deployment Architecture", page: "121" },
   { number: "9.1", title: "Testing Pyramid", page: "128" },
+=======
+  { number: "8.2", title: "Node Execution State Machine", page: "82" },
+  { number: "8.3", title: "AI Node Execution Pipeline", page: "84" },
+  { number: "8.4", title: "Service Integration Matrix", page: "85" },
+  { number: "8.5", title: "Deployment Architecture", page: "86" },
+  { number: "9.1", title: "Testing Pyramid", page: "89" },
+>>>>>>> 7ee487ff45e6c74e190c28b867faabef13249665
   {
     number: "9.2",
     title: "Performance Metrics — Target vs Actual",
@@ -91,7 +99,11 @@ const figures = [
   {
     number: "9.4",
     title: "Test Results Summary — 142 Tests, 100% Pass Rate",
+<<<<<<< HEAD
     page: "135",
+=======
+    page: "94",
+>>>>>>> 7ee487ff45e6c74e190c28b867faabef13249665
   },
   {
     number: "10.1",

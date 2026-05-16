@@ -45,12 +45,21 @@ const tocItems = [
   { chapter: "", title: "2.9 Summary", page: "23", type: "sub" },
 
   // Chapter 3: OBJECTIVES
+<<<<<<< HEAD
   { chapter: "03", title: "OBJECTIVES", page: "24", type: "main" },
   { chapter: "", title: "3.1 Introduction", page: "24", type: "sub" },
   { chapter: "", title: "3.2 Primary Objectives", page: "25", type: "sub" },
   { chapter: "", title: "3.3 Secondary Objectives", page: "27", type: "sub" },
   { chapter: "", title: "3.4 Technical Objectives", page: "29", type: "sub" },
   { chapter: "", title: "3.5 Expected Outcomes", page: "31", type: "sub" },
+=======
+  { chapter: "03", title: "OBJECTIVES", page: "26", type: "main" },
+  { chapter: "", title: "3.1 Introduction", page: "26", type: "sub" },
+  { chapter: "", title: "3.2 Primary Objectives", page: "27", type: "sub" },
+  { chapter: "", title: "3.3 Secondary Objectives", page: "30", type: "sub" },
+  { chapter: "", title: "3.4 Technical Objectives", page: "32", type: "sub" },
+  { chapter: "", title: "3.5 Expected Outcomes", page: "34", type: "sub" },
+>>>>>>> 7ee487ff45e6c74e190c28b867faabef13249665
 
   // Chapter 4: FEASIBILITY STUDY
   { chapter: "04", title: "FEASIBILITY STUDY", page: "32", type: "main" },
@@ -75,6 +84,7 @@ const tocItems = [
   { chapter: "", title: "5.7 Summary", page: "49", type: "sub" },
 
   // Chapter 6: SDLC
+<<<<<<< HEAD
   { chapter: "06", title: "SOFTWARE DEVELOPMENT LIFE CYCLE", page: "51", type: "main" },
   { chapter: "", title: "6.1 Introduction to SDLC", page: "51", type: "sub" },
   { chapter: "", title: "6.2 Process Model", page: "59", type: "sub" },
@@ -163,6 +173,207 @@ const tocItems = [
     chapter: "",
     title: "Annexure A: Complete Database Schema",
     page: "156",
+=======
+  {
+    chapter: "06",
+    title: "SOFTWARE DEVELOPMENT LIFE CYCLE",
+    page: "55",
+    type: "main",
+  },
+  { chapter: "", title: "6.1 Introduction to SDLC", page: "55", type: "sub" },
+  { chapter: "", title: "6.2 Process Model", page: "64", type: "sub" },
+  { chapter: "", title: "6.3 Requirement Gathering", page: "66", type: "sub" },
+  {
+    chapter: "",
+    title: "6.4 Software Requirement Specification",
+    page: "75",
+    type: "sub",
+  },
+
+  // Chapter 7: SYSTEM DESIGN
+  { chapter: "07", title: "SYSTEM DESIGN", page: "87", type: "main" },
+  { chapter: "", title: "7.1 Introduction", page: "87", type: "sub" },
+  { chapter: "", title: "7.2 Data Flow Diagrams", page: "87", type: "sub" },
+  { chapter: "", title: "7.3 Use Case Diagrams", page: "90", type: "sub" },
+  {
+    chapter: "",
+    title: "7.4 Entity-Relationship Diagram",
+    page: "92",
+    type: "sub",
+  },
+  { chapter: "", title: "7.5 System Architecture", page: "94", type: "sub" },
+  { chapter: "", title: "7.6 Database Schema", page: "96", type: "sub" },
+  { chapter: "", title: "7.7 Design Patterns", page: "108", type: "sub" },
+  { chapter: "", title: "7.8 Security Design", page: "108", type: "sub" },
+  { chapter: "", title: "7.9 Interaction Design", page: "108", type: "sub" },
+  // Chapter 8: IMPLEMENTATION
+  { chapter: "08", title: "IMPLEMENTATION", page: "112", type: "main" },
+  { chapter: "", title: "8.1 Introduction", page: "112", type: "sub" },
+  { chapter: "", title: "8.2 Project Structure", page: "112", type: "sub" },
+  {
+    chapter: "",
+    title: "8.3 Frontend Implementation",
+    page: "113",
+    type: "sub",
+  },
+  {
+    chapter: "",
+    title: "8.4 Backend Implementation",
+    page: "114",
+    type: "sub",
+  },
+  {
+    chapter: "",
+    title: "8.5 Workflow Execution Engine",
+    page: "117",
+    type: "sub",
+  },
+  {
+    chapter: "",
+    title: "8.6 Node Types Implementation",
+    page: "121",
+    type: "sub",
+  },
+  {
+    chapter: "",
+    title: "8.7 Integration Implementation",
+    page: "122",
+    type: "sub",
+  },
+  {
+    chapter: "",
+    title: "8.8 Key Features Implementation",
+    page: "123",
+    type: "sub",
+  },
+  { chapter: "", title: "8.9 API Routes", page: "127", type: "sub" },
+  { chapter: "", title: "8.10 Deployment", page: "128", type: "sub" },
+  { chapter: "", title: "8.11 Summary", page: "129", type: "sub" },
+
+  // Chapter 9: TESTING
+  { chapter: "09", title: "TESTING", page: "130", type: "main" },
+  {
+    chapter: "",
+    title: "9.1 Software Engineering Principles",
+    page: "130",
+    type: "sub",
+  },
+  { chapter: "", title: "9.2 Testing Strategy", page: "131", type: "sub" },
+  { chapter: "", title: "9.3 Unit Testing", page: "132", type: "sub" },
+  { chapter: "", title: "9.4 Integration Testing", page: "133", type: "sub" },
+  { chapter: "", title: "9.5 System Testing", page: "134", type: "sub" },
+  { chapter: "", title: "9.6 UI/UX Testing", page: "134", type: "sub" },
+  { chapter: "", title: "9.7 Security Testing", page: "135", type: "sub" },
+  { chapter: "", title: "9.8 Performance Testing", page: "135", type: "sub" },
+  { chapter: "", title: "9.9 Defect Tracking", page: "137", type: "sub" },
+  { chapter: "", title: "9.10 Test Results Summary", page: "137", type: "sub" },
+  { chapter: "", title: "9.11 Testing Conclusion", page: "138", type: "sub" },
+
+  // Chapter 10: USER MANUAL
+  { chapter: "10", title: "USER MANUAL", page: "139", type: "main" },
+  { chapter: "", title: "10.1 Getting Started", page: "139", type: "sub" },
+  { chapter: "", title: "10.2 Dashboard Navigation", page: "140", type: "sub" },
+  { chapter: "", title: "10.3 Creating a Workflow", page: "141", type: "sub" },
+  {
+    chapter: "",
+    title: "10.4 Node Types & Configuration",
+    page: "141",
+    type: "sub",
+  },
+  {
+    chapter: "",
+    title: "10.5 Credential Management",
+    page: "143",
+    type: "sub",
+  },
+  {
+    chapter: "",
+    title: "10.6 Executing & Monitoring Workflows",
+    page: "144",
+    type: "sub",
+  },
+  { chapter: "", title: "10.7 Scheduling Workflows", page: "144", type: "sub" },
+  { chapter: "", title: "10.8 Team Collaboration", page: "145", type: "sub" },
+  { chapter: "", title: "10.9 Version History", page: "146", type: "sub" },
+  {
+    chapter: "",
+    title: "10.10 Webhook Configuration",
+    page: "146",
+    type: "sub",
+  },
+  {
+    chapter: "",
+    title: "10.11 Troubleshooting & FAQ",
+    page: "147",
+    type: "sub",
+  },
+
+  // Chapter 11: OUTPUT & SCREENSHOTS
+  { chapter: "11", title: "OUTPUT & SCREENSHOTS", page: "148", type: "main" },
+  {
+    chapter: "",
+    title: "11.1 Authentication Screens",
+    page: "148",
+    type: "sub",
+  },
+  { chapter: "", title: "11.2 Dashboard", page: "149", type: "sub" },
+  {
+    chapter: "",
+    title: "11.3 Visual Workflow Editor",
+    page: "150",
+    type: "sub",
+  },
+  { chapter: "", title: "11.4 Workflows Management", page: "151", type: "sub" },
+  { chapter: "", title: "11.5 Execution History", page: "152", type: "sub" },
+  {
+    chapter: "",
+    title: "11.6 Credential Management",
+    page: "153",
+    type: "sub",
+  },
+  { chapter: "", title: "11.7 Team Management", page: "153", type: "sub" },
+  {
+    chapter: "",
+    title: "11.8 Schedule Configuration",
+    page: "154",
+    type: "sub",
+  },
+  { chapter: "", title: "11.9 Version History", page: "154", type: "sub" },
+  {
+    chapter: "",
+    title: "11.10 Webhook Documentation",
+    page: "154",
+    type: "sub",
+  },
+  { chapter: "", title: "11.11 Summary", page: "155", type: "sub" },
+
+  // Chapter 12: CONCLUSIONS
+  {
+    chapter: "12",
+    title: "CONCLUSIONS & FUTURE SCOPE",
+    page: "156",
+    type: "main",
+  },
+  { chapter: "", title: "12.1 Project Summary", page: "156", type: "sub" },
+  { chapter: "", title: "12.2 Key Achievements", page: "156", type: "sub" },
+  {
+    chapter: "",
+    title: "12.3 Technical Accomplishments",
+    page: "157",
+    type: "sub",
+  },
+  { chapter: "", title: "12.4 Limitations", page: "157", type: "sub" },
+  { chapter: "", title: "12.5 Future Scope", page: "158", type: "sub" },
+  { chapter: "", title: "12.6 Conclusion", page: "160", type: "sub" },
+
+  // Back Matter
+  { chapter: "", title: "REFERENCES", page: "161", type: "main", noNum: true },
+  { chapter: "", title: "ANNEXURES", page: "163", type: "main", noNum: true },
+  {
+    chapter: "",
+    title: "Annexure A: Complete Database Schema",
+    page: "163",
+>>>>>>> 7ee487ff45e6c74e190c28b867faabef13249665
     type: "sub",
     noNum: true,
   },
