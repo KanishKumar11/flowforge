@@ -299,7 +299,14 @@ export default function BFSFlowchart() {
       <Decision x={cx} y={236} size={34} label="Queue Empty?" />
 
       {/* Yes -> End */}
-      <Arrow x1={cx + 17} y1={236} x2={cx + 110} y2={236} label="Yes" labelDy={-2} />
+      <Arrow
+        x1={cx + 17}
+        y1={236}
+        x2={cx + 110}
+        y2={236}
+        label="Yes"
+        labelDy={-2}
+      />
       <Arrow x1={cx + 110} y1={236} x2={cx + 110} y2={472} />
       {/* End node at bottom connected later */}
 

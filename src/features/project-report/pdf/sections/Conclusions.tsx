@@ -58,7 +58,8 @@ export default function Conclusions() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#94a3b8", borderRadius: 6,
+          borderColor: "#94a3b8",
+          borderRadius: 6,
           marginTop: 12,
           marginBottom: 12,
         }}
@@ -66,7 +67,9 @@ export default function Conclusions() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
+            backgroundColor: "#dbeafe",
+            borderTopLeftRadius: 6,
+            borderTopRightRadius: 6,
             borderBottomWidth: 1,
             borderBottomColor: "#93c5fd",
           }}
@@ -302,7 +305,8 @@ export default function Conclusions() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#94a3b8", borderRadius: 6,
+          borderColor: "#94a3b8",
+          borderRadius: 6,
           marginTop: 12,
           marginBottom: 12,
         }}
@@ -310,7 +314,9 @@ export default function Conclusions() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
+            backgroundColor: "#dbeafe",
+            borderTopLeftRadius: 6,
+            borderTopRightRadius: 6,
             borderBottomWidth: 1,
             borderBottomColor: "#93c5fd",
           }}
@@ -436,7 +442,8 @@ export default function Conclusions() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#94a3b8", borderRadius: 6,
+          borderColor: "#94a3b8",
+          borderRadius: 6,
           marginTop: 8,
           marginBottom: 12,
         }}
@@ -444,7 +451,9 @@ export default function Conclusions() {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
+            backgroundColor: "#dbeafe",
+            borderTopLeftRadius: 6,
+            borderTopRightRadius: 6,
             borderBottomWidth: 1,
             borderBottomColor: "#93c5fd",
           }}

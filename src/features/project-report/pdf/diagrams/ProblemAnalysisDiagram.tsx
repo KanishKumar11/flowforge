@@ -352,7 +352,11 @@ export default function ProblemAnalysisDiagram() {
           x={centerX}
           y={height - 29}
           textAnchor="middle"
-          style={{ fontSize: 8.5, fontFamily: "Times-Bold", fill: colors.center }}
+          style={{
+            fontSize: 8.5,
+            fontFamily: "Times-Bold",
+            fill: colors.center,
+          }}
         >
           Flowgent addresses all four critical gaps
         </SvgText>
@@ -360,7 +364,11 @@ export default function ProblemAnalysisDiagram() {
           x={centerX}
           y={height - 17}
           textAnchor="middle"
-          style={{ fontSize: 7.5, fontFamily: "Times-Roman", fill: colors.center }}
+          style={{
+            fontSize: 7.5,
+            fontFamily: "Times-Roman",
+            fill: colors.center,
+          }}
         >
           with a unified, open-source platform
         </SvgText>

@@ -22,12 +22,32 @@ export default function AgileSprintDiagram() {
   const nodeH = 38;
 
   const phases = [
-    { label: "Product", sub: "Backlog",    color: "#1d4ed8", note: "Prioritised items" },
-    { label: "Sprint",  sub: "Planning",   color: "#0f766e", note: "Selected stories" },
-    { label: "Sprint",  sub: "2-Week Run", color: "#0369a1", note: "Working increment" },
-    { label: "Daily",   sub: "Standup",    color: "#0891b2", note: "15-min sync" },
-    { label: "Sprint",  sub: "Review",     color: "#d97706", note: "Demo & feedback" },
-    { label: "Sprint",  sub: "Retro",      color: "#dc2626", note: "Improvements" },
+    {
+      label: "Product",
+      sub: "Backlog",
+      color: "#1d4ed8",
+      note: "Prioritised items",
+    },
+    {
+      label: "Sprint",
+      sub: "Planning",
+      color: "#0f766e",
+      note: "Selected stories",
+    },
+    {
+      label: "Sprint",
+      sub: "2-Week Run",
+      color: "#0369a1",
+      note: "Working increment",
+    },
+    { label: "Daily", sub: "Standup", color: "#0891b2", note: "15-min sync" },
+    {
+      label: "Sprint",
+      sub: "Review",
+      color: "#d97706",
+      note: "Demo & feedback",
+    },
+    { label: "Sprint", sub: "Retro", color: "#dc2626", note: "Improvements" },
   ];
 
   // Evenly space 6 nodes on ring; start at top-left (210 deg) so flow is clockwise
@@ -107,7 +127,14 @@ export default function AgileSprintDiagram() {
       />
 
       {/* Hub */}
-      <Circle cx={cx} cy={cy} r={38} fill="#f8fafc" stroke="#e2e8f0" strokeWidth={1.5} />
+      <Circle
+        cx={cx}
+        cy={cy}
+        r={38}
+        fill="#f8fafc"
+        stroke="#e2e8f0"
+        strokeWidth={1.5}
+      />
       <Circle cx={cx} cy={cy} r={34} fill="#1d4ed8" />
       <SvgText
         x={cx}
@@ -130,8 +157,12 @@ export default function AgileSprintDiagram() {
       {arrows.map((a, i) => (
         <G key={`arrow-${i}`}>
           <Line
-            x1={a.x1} y1={a.y1} x2={a.x2} y2={a.y2}
-            stroke="#94a3b8" strokeWidth={1.4}
+            x1={a.x1}
+            y1={a.y1}
+            x2={a.x2}
+            y2={a.y2}
+            stroke="#94a3b8"
+            strokeWidth={1.4}
           />
           <Polygon
             points={`${a.x2},${a.y2} ${a.ax1},${a.ay1} ${a.ax2},${a.ay2}`}
@@ -148,33 +179,73 @@ export default function AgileSprintDiagram() {
         return (
           <G key={`node-${i}`}>
             {/* Drop shadow */}
-            <Rect x={nx + 2} y={ny + 2} width={nodeW} height={nodeH} rx={8} fill="#e2e8f0" />
+            <Rect
+              x={nx + 2}
+              y={ny + 2}
+              width={nodeW}
+              height={nodeH}
+              rx={8}
+              fill="#e2e8f0"
+            />
             {/* Card */}
-            <Rect x={nx} y={ny} width={nodeW} height={nodeH} rx={8} fill="#ffffff" stroke="#e2e8f0" strokeWidth={1} />
+            <Rect
+              x={nx}
+              y={ny}
+              width={nodeW}
+              height={nodeH}
+              rx={8}
+              fill="#ffffff"
+              stroke="#e2e8f0"
+              strokeWidth={1}
+            />
             {/* Colour top bar */}
-            <Rect x={nx} y={ny} width={nodeW} height={10} rx={8} fill={phase.color} />
-            <Rect x={nx} y={ny + 5} width={nodeW} height={5} fill={phase.color} />
+            <Rect
+              x={nx}
+              y={ny}
+              width={nodeW}
+              height={10}
+              rx={8}
+              fill={phase.color}
+            />
+            <Rect
+              x={nx}
+              y={ny + 5}
+              width={nodeW}
+              height={5}
+              fill={phase.color}
+            />
             {/* Step number badge */}
             <Circle cx={nx + 11} cy={ny + 24} r={8} fill={phase.color} />
             <SvgText
-              x={nx + 11} y={ny + 27}
+              x={nx + 11}
+              y={ny + 27}
               textAnchor="middle"
-              style={{ fontSize: 7.5, fontFamily: "Times-Bold", fill: "#ffffff" }}
+              style={{
+                fontSize: 7.5,
+                fontFamily: "Times-Bold",
+                fill: "#ffffff",
+              }}
             >
               {String(i + 1)}
             </SvgText>
             {/* Labels */}
             <SvgText
-              x={nx + nodeW / 2 + 4} y={ny + 22}
+              x={nx + nodeW / 2 + 4}
+              y={ny + 22}
               textAnchor="middle"
               style={{ fontSize: 8, fontFamily: "Times-Bold", fill: "#0f172a" }}
             >
               {phase.label}
             </SvgText>
             <SvgText
-              x={nx + nodeW / 2 + 4} y={ny + 32}
+              x={nx + nodeW / 2 + 4}
+              y={ny + 32}
               textAnchor="middle"
-              style={{ fontSize: 7, fontFamily: "Times-Italic", fill: "#475569" }}
+              style={{
+                fontSize: 7,
+                fontFamily: "Times-Italic",
+                fill: "#475569",
+              }}
             >
               {phase.sub}
             </SvgText>

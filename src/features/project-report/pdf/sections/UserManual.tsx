@@ -12,7 +12,9 @@ import UserJourneyDiagram from "../diagrams/UserJourneyDiagram";
 export default function UserManual() {
   // Reusable cell styles
   const tableHeader = {
-    backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
+    backgroundColor: "#dbeafe",
+    borderTopLeftRadius: 6,
+    borderTopRightRadius: 6,
     flexDirection: "row" as const,
     borderBottomWidth: 1,
     borderBottomColor: "#93c5fd",
@@ -121,13 +123,14 @@ export default function UserManual() {
       <Text style={styles.h2}>10.2 Dashboard Navigation</Text>
 
       <Text style={styles.paragraphIndent}>
-        After login, users land on the <Text style={styles.bold}>Dashboard</Text>{" "}
-        — the central hub showing overview cards (totals, today&apos;s
-        executions, success rate), a recent-executions table, quick actions
-        (Create Workflow, View Executions, Manage Team), and a sidebar with
-        navigation to Workflows, Executions, Credentials, Schedules, Teams, and
-        Settings. A theme toggle in the header switches between Light and Dark
-        modes; the preference persists across sessions.
+        After login, users land on the{" "}
+        <Text style={styles.bold}>Dashboard</Text> — the central hub showing
+        overview cards (totals, today&apos;s executions, success rate), a
+        recent-executions table, quick actions (Create Workflow, View
+        Executions, Manage Team), and a sidebar with navigation to Workflows,
+        Executions, Credentials, Schedules, Teams, and Settings. A theme toggle
+        in the header switches between Light and Dark modes; the preference
+        persists across sessions.
       </Text>
 
       {/* ── 10.3 Workflow Creation ── */}
@@ -163,7 +166,8 @@ export default function UserManual() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#94a3b8", borderRadius: 6,
+          borderColor: "#94a3b8",
+          borderRadius: 6,
           marginTop: 8,
           marginBottom: 4,
         }}
@@ -222,14 +226,14 @@ export default function UserManual() {
       <Text style={styles.h2}>10.5 Credential Management</Text>
 
       <Text style={styles.paragraphIndent}>
-        Credentials store API keys and OAuth tokens needed by integration and
-        AI nodes. All values are encrypted with AES-256-GCM before being
-        written to the database. Add a credential from{" "}
+        Credentials store API keys and OAuth tokens needed by integration and AI
+        nodes. All values are encrypted with AES-256-GCM before being written to
+        the database. Add a credential from{" "}
         <Text style={styles.bold}>Credentials → + New Credential</Text>: pick
         the type (e.g., OpenAI API Key, Slack Bot Token), fill the masked
-        fields, and save. Within a node config, choose the saved credential
-        from the <Text style={styles.bold}>Credential</Text> dropdown.
-        Credentials are scoped at the user (personal) or team (shared) level.
+        fields, and save. Within a node config, choose the saved credential from
+        the <Text style={styles.bold}>Credential</Text> dropdown. Credentials
+        are scoped at the user (personal) or team (shared) level.
       </Text>
 
       {/* ── 10.6 Execution ── */}
@@ -262,7 +266,8 @@ export default function UserManual() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#94a3b8", borderRadius: 6,
+          borderColor: "#94a3b8",
+          borderRadius: 6,
           marginTop: 8,
           marginBottom: 4,
         }}
@@ -302,18 +307,19 @@ export default function UserManual() {
 
       <Text style={styles.paragraphIndent}>
         Flowgent supports multi-user teams with role-based access control.
-        Create a team from <Text style={styles.bold}>Teams → + Create Team</Text>;
-        the creator is automatically assigned the{" "}
-        <Text style={styles.bold}>Owner</Text> role. Owners and Admins can
-        invite members by email and assign roles; the invited user must accept
-        the invitation to join.
+        Create a team from{" "}
+        <Text style={styles.bold}>Teams → + Create Team</Text>; the creator is
+        automatically assigned the <Text style={styles.bold}>Owner</Text> role.
+        Owners and Admins can invite members by email and assign roles; the
+        invited user must accept the invitation to join.
       </Text>
 
       <View
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#94a3b8", borderRadius: 6,
+          borderColor: "#94a3b8",
+          borderRadius: 6,
           marginTop: 8,
           marginBottom: 4,
         }}
@@ -388,7 +394,8 @@ export default function UserManual() {
         wrap={false}
         style={{
           borderWidth: 1,
-          borderColor: "#94a3b8", borderRadius: 6,
+          borderColor: "#94a3b8",
+          borderRadius: 6,
           marginTop: 8,
           marginBottom: 4,
         }}

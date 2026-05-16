@@ -96,8 +96,8 @@ export default function OutputScreens() {
       <Text style={styles.paragraphIndent}>
         This chapter presents the key screens of the deployed Flowgent 1.0
         platform (<Text style={styles.bold}>https://flowgent.app</Text>). All
-        screens support both Light and Dark themes; screenshots are taken in
-        the Light theme.
+        screens support both Light and Dark themes; screenshots are taken in the
+        Light theme.
       </Text>
 
       {/* ── 11.1 Authentication ── */}
@@ -154,13 +154,7 @@ export default function OutputScreens() {
         title="11.5.1 Executions List"
         url="/executions"
         description="Status summary bar (total / success / failed / running) plus filters (status, workflow) and an hourly timeline with cursor-based pagination. Table columns: Execution ID, Workflow, Status, Mode (Manual / Scheduled / Webhook), Started At, Duration, Actions. The Detail view shows trigger data, per-node input/output, error messages with stack traces, timing breakdown, and retry info."
-      />
-
-      <Screen
-        title="11.5.1 Executions List"
-        url="/executions"
-        description="Status summary bar (total / success / failed / running) plus filters (status, workflow) and an hourly timeline with cursor-based pagination. Table columns: Execution ID, Workflow, Status, Mode (Manual / Scheduled / Webhook), Started At, Duration, Actions. The Detail view shows trigger data, per-node input/output, error messages with stack traces, timing breakdown, and retry info."
-        src="@file:execution_history.png"
+        src="/outputs/execution_history.png"
       />
 
       {/* ── 11.6 Credentials ── */}
@@ -191,28 +185,12 @@ export default function OutputScreens() {
         description="Visual cron builder with presets (Every minute, Every hour, etc.) and a custom expression input with validation. Shows a human-readable description, timezone selector, and a preview of the next 5 run times. The Schedule list provides per-schedule active toggles, last/next run timestamps, and execution counts."
       />
 
-      {/* ── 11.9 Version History ── */}
-      <Text style={styles.h2}>11.9 Version History</Text>
-
-      <Screen
-        title="11.9.1 Version History Panel"
-        description="Slide-in panel listing every workflow version chronologically with version number, timestamp, optional change message, and a Rollback button that restores the workflow's nodes, edges, and settings."
-      />
-
-      {/* ── 11.10 Webhook Docs ── */}
-      <Text style={styles.h2}>11.10 Webhook Documentation</Text>
-
-      <Screen
-        title="11.10.1 Auto-generated Webhook Docs"
-        description="Displays the unique webhook URL, HTTP method badge, copy-to-clipboard cURL example, IP allowlist, secret hash for signature validation, and a call counter."
-      />
-
-      {/* ── 11.11 Summary ── */}
-      <Text style={styles.h2}>11.11 Summary</Text>
+      {/* ── 11.9 Summary ── */}
+      <Text style={styles.h2}>11.9 Summary</Text>
       <Text style={styles.paragraphIndent}>
-        Flowgent 1.0 ships a complete set of UI surfaces covering authentication,
-        dashboard overview, visual workflow design and configuration, execution
-        monitoring, and team management — all live at{" "}
+        Flowgent 1.0 ships a complete set of UI surfaces covering
+        authentication, dashboard overview, visual workflow design and
+        configuration, execution monitoring, and team management — all live at{" "}
         <Text style={styles.bold}>https://flowgent.app</Text> with full
         light/dark theme support.
       </Text>
@@ -223,7 +201,8 @@ export default function OutputScreens() {
           marginTop: 16,
           padding: 12,
           borderWidth: 1,
-          borderColor: "#94a3b8", borderRadius: 6,
+          borderColor: "#94a3b8",
+          borderRadius: 6,
           backgroundColor: "#f8fafc",
         }}
       >
