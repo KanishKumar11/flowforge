@@ -15,6 +15,8 @@ import {
   Shield,
   Activity,
   AlertCircle,
+  Mail,
+  X,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -37,6 +39,7 @@ import {
 } from "@/components/ui/dialog";
 import { BallLoader } from "@/components/ui/ball-loader";
 import { PLANS } from "@/lib/plans";
+import { useHasActiveSubscription } from "@/features/hooks/useSubscription";
 import { cn } from "@/lib/utils";
 
 const springTransition = {
@@ -92,6 +95,7 @@ export default function TeamDetailPage() {
   const trpc = useTRPC();
   const queryClient = useQueryClient();
   const teamId = params.teamId as string;
+  const { hasActiveSubscription } = useHasActiveSubscription();
 
   const [inviteEmail, setInviteEmail] = useState("");
   const [inviteRole, setInviteRole] = useState<"ADMIN" | "MEMBER" | "VIEWER">(
@@ -103,10 +107,12 @@ export default function TeamDetailPage() {
     trpc.teams.get.queryOptions({ id: teamId }),
   );
 
+  const teamQueryKey = trpc.teams.get.queryOptions({ id: teamId }).queryKey;
+
   const inviteMember = useMutation(
     trpc.teams.invite.mutationOptions({
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ["teams", "get"] });
+        queryClient.invalidateQueries({ queryKey: teamQueryKey });
         toast.success("Member invited successfully");
         setIsInviteOpen(false);
         setInviteEmail("");
@@ -120,7 +126,7 @@ export default function TeamDetailPage() {
   const removeMember = useMutation(
     trpc.teams.removeMember.mutationOptions({
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ["teams", "get"] });
+        queryClient.invalidateQueries({ queryKey: teamQueryKey });
         toast.success("Member removed");
       },
     }),
@@ -129,7 +135,7 @@ export default function TeamDetailPage() {
   const updateRole = useMutation(
     trpc.teams.updateMemberRole.mutationOptions({
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ["teams", "get"] });
+        queryClient.invalidateQueries({ queryKey: teamQueryKey });
         toast.success("Role updated");
       },
     }),
@@ -140,6 +146,15 @@ export default function TeamDetailPage() {
       onSuccess: () => {
         toast.success("Team deleted");
         router.push("/teams");
+      },
+    }),
+  );
+
+  const cancelInvitation = useMutation(
+    trpc.teams.cancelInvitation.mutationOptions({
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: teamQueryKey });
+        toast.success("Invitation cancelled");
       },
     }),
   );
@@ -171,7 +186,9 @@ export default function TeamDetailPage() {
   const isOwner = team.currentUserRole === "OWNER";
   const isAdmin = team.currentUserRole === "ADMIN" || isOwner;
 
-  const planKey = (team.plan?.toUpperCase() || "FREE") as keyof typeof PLANS;
+  // Use Polar subscription as ground truth; fall back to DB value
+  const effectivePlan = hasActiveSubscription ? "PRO" : (team.plan?.toUpperCase() || "FREE");
+  const planKey = effectivePlan as keyof typeof PLANS;
   const maxMembers = PLANS[planKey]?.limits?.teamMembers || 1;
   const currentMembersCount = team.members.length;
   const isLimitReached = currentMembersCount >= maxMembers;
@@ -218,7 +235,7 @@ export default function TeamDetailPage() {
               variant="outline"
               className="font-sans uppercase px-4 py-1.5 rounded-full border-foreground/20 bg-background shadow-sm"
             >
-              {team.plan} Plan
+              {effectivePlan.charAt(0) + effectivePlan.slice(1).toLowerCase()} Plan
             </Badge>
           </div>
         </motion.div>
@@ -504,6 +521,61 @@ export default function TeamDetailPage() {
                     </motion.div>
                   ))}
                 </AnimatePresence>
+
+                {/* Pending Invitations */}
+                {team.invitations && team.invitations.length > 0 && (
+                  <div className="mt-8 pt-6 border-t border-border/40">
+                    <h3 className="text-xs font-sans uppercase tracking-widest text-muted-foreground mb-4">
+                      Pending Invitations ({team.invitations.length})
+                    </h3>
+                    <div className="flex flex-col gap-2">
+                      <AnimatePresence mode="popLayout">
+                        {team.invitations.map((inv) => (
+                          <motion.div
+                            layout
+                            layoutId={`inv-${inv.id}`}
+                            key={inv.id}
+                            initial={{ opacity: 0, scale: 0.98 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.95 }}
+                            transition={springTransition}
+                            className="flex items-center justify-between p-4 rounded-2xl border border-dashed border-border/60 bg-muted/20"
+                          >
+                            <div className="flex items-center gap-4">
+                              <div className="w-10 h-10 rounded-full bg-muted/60 border border-border/40 flex items-center justify-center text-muted-foreground">
+                                <Mail className="w-4 h-4 stroke-[1.5]" />
+                              </div>
+                              <div>
+                                <p className="text-sm font-sans font-medium text-foreground">
+                                  {inv.email}
+                                </p>
+                                <p className="text-xs text-muted-foreground font-sans">
+                                  Invited as {inv.role} · expires{" "}
+                                  {new Date(inv.expiresAt).toLocaleDateString()}
+                                </p>
+                              </div>
+                            </div>
+                            {isAdmin && (
+                              <motion.button
+                                whileHover={{ scale: 1.1 }}
+                                whileTap={{ scale: 0.9 }}
+                                className="cursor-pointer w-9 h-9 rounded-full flex items-center justify-center text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-colors"
+                                onClick={() =>
+                                  cancelInvitation.mutate({
+                                    invitationId: inv.id,
+                                    teamId,
+                                  })
+                                }
+                              >
+                                <X className="w-4 h-4 stroke-[2]" />
+                              </motion.button>
+                            )}
+                          </motion.div>
+                        ))}
+                      </AnimatePresence>
+                    </div>
+                  </div>
+                )}
               </div>
             </GlassContainer>
           </div>

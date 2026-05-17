@@ -3,6 +3,7 @@ import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
 import { TRPCError } from "@trpc/server";
 import prisma from "@/lib/db";
 import { PLANS } from "@/lib/plans";
+import { polarClient } from "@/lib/polar";
 import { randomBytes } from "crypto";
 
 export const teamsRouter = createTRPCRouter({
@@ -45,6 +46,11 @@ export const teamsRouter = createTRPCRouter({
                     select: { id: true, name: true, email: true, image: true },
                   },
                 },
+              },
+              invitations: {
+                where: { expiresAt: { gt: new Date() } },
+                select: { id: true, email: true, role: true, createdAt: true, expiresAt: true },
+                orderBy: { createdAt: "desc" },
               },
               _count: { select: { workflows: true } },
             },
@@ -150,9 +156,25 @@ export const teamsRouter = createTRPCRouter({
 
       // Check plan limits
       const team = membership.team;
-      const plan = (team.plan?.toUpperCase() as keyof typeof PLANS) || "FREE";
+      let planKey = (team.plan?.toUpperCase() as keyof typeof PLANS) || "FREE";
+
+      // Lazy sync: if DB says free, verify against Polar
+      if (planKey === "FREE") {
+        try {
+          const customer = await polarClient.customers.getStateExternal({
+            externalId: ctx.user.id,
+          });
+          if (customer.activeSubscriptions && customer.activeSubscriptions.length > 0) {
+            planKey = "PRO";
+            prisma.team.update({ where: { id: team.id }, data: { plan: "pro" } }).catch(() => {});
+          }
+        } catch {
+          // Polar unavailable — use DB value
+        }
+      }
+
       const limit =
-        PLANS[plan]?.limits.teamMembers || PLANS.FREE.limits.teamMembers;
+        PLANS[planKey]?.limits.teamMembers || PLANS.FREE.limits.teamMembers;
 
       const memberCount = await prisma.teamMember.count({
         where: { teamId: input.teamId },
@@ -328,6 +350,20 @@ export const teamsRouter = createTRPCRouter({
 
       await prisma.team.delete({ where: { id: input.id } });
 
+      return { success: true };
+    }),
+
+  // Cancel a pending invitation
+  cancelInvitation: protectedProcedure
+    .input(z.object({ invitationId: z.string(), teamId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const membership = await prisma.teamMember.findUnique({
+        where: { teamId_userId: { teamId: input.teamId, userId: ctx.user.id } },
+      });
+      if (!membership || !["OWNER", "ADMIN"].includes(membership.role)) {
+        throw new TRPCError({ code: "FORBIDDEN", message: "Not authorized" });
+      }
+      await prisma.invitation.delete({ where: { id: input.invitationId } });
       return { success: true };
     }),
 

@@ -4,7 +4,14 @@ import { DashboardHeader } from "@/components/DashboardHeader";
 import { Button } from "@/components/ui/button";
 import { authClient } from "@/lib/auth-client";
 import { useHasActiveSubscription } from "@/features/hooks/useSubscription";
-import { Check, Loader2, Diamond, ShieldCheck, Activity, ExternalLink } from "lucide-react";
+import {
+  Check,
+  Loader2,
+  Diamond,
+  ShieldCheck,
+  Activity,
+  ExternalLink,
+} from "lucide-react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -71,7 +78,7 @@ export default function SubscriptionPage() {
   const handleManage = async () => {
     setIsPortalLoading(true);
     try {
-      const res = await fetch("/api/auth/customer/portal", { method: "POST" });
+      const res = await fetch("/api/auth/customer/portal", { method: "GET" });
       const data = await res.json();
       if (data?.url) {
         window.location.href = data.url;

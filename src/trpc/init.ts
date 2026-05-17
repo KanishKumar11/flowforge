@@ -82,10 +82,32 @@ export const teamProcedure = protectedProcedure.use(async ({ ctx, next }) => {
     });
   }
 
+  let team = membership.team;
+
+  // Lazy plan sync: if DB says free, verify against Polar in real-time.
+  // This recovers from missed/delayed webhooks without blocking Pro users.
+  if (team.plan !== "pro") {
+    try {
+      const customer = await polarClient.customers.getStateExternal({
+        externalId: ctx.user.id,
+      });
+      const hasActiveSub =
+        customer.activeSubscriptions && customer.activeSubscriptions.length > 0;
+      if (hasActiveSub) {
+        team = await prisma.team.update({
+          where: { id: team.id },
+          data: { plan: "pro" },
+        });
+      }
+    } catch {
+      // Polar unavailable — proceed with DB value
+    }
+  }
+
   return next({
     ctx: {
       ...ctx,
-      team: membership.team,
+      team,
       teamRole: membership.role,
     },
   });
