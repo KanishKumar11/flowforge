@@ -30,7 +30,6 @@ const springTransition = {
   damping: 20,
 } as const;
 
-
 function GlassContainer({
   children,
   className,

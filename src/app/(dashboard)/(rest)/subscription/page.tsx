@@ -4,7 +4,8 @@ import { DashboardHeader } from "@/components/DashboardHeader";
 import { Button } from "@/components/ui/button";
 import { authClient } from "@/lib/auth-client";
 import { useHasActiveSubscription } from "@/features/hooks/useSubscription";
-import { Check, Loader2, Diamond, ShieldCheck, Activity } from "lucide-react";
+import { Check, Loader2, Diamond, ShieldCheck, Activity, ExternalLink } from "lucide-react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 
@@ -61,9 +62,25 @@ function GlassContainer({
 
 export default function SubscriptionPage() {
   const { hasActiveSubscription, isLoading } = useHasActiveSubscription();
+  const [isPortalLoading, setIsPortalLoading] = useState(false);
 
   const handleUpgrade = () => {
     authClient.checkout({ slug: "pro" });
+  };
+
+  const handleManage = async () => {
+    setIsPortalLoading(true);
+    try {
+      const res = await fetch("/api/auth/customer/portal", { method: "POST" });
+      const data = await res.json();
+      if (data?.url) {
+        window.location.href = data.url;
+      }
+    } catch {
+      // fall through
+    } finally {
+      setIsPortalLoading(false);
+    }
   };
 
   return (
@@ -142,10 +159,10 @@ export default function SubscriptionPage() {
 
               <Button
                 variant="outline"
-                className="w-full h-12 rounded-xl font-mono uppercase tracking-widest text-xs cursor-pointer shadow-sm"
-                disabled={true}
+                className="w-full h-12 rounded-xl font-mono uppercase tracking-widest text-xs shadow-sm"
+                disabled
               >
-                Current Plan
+                {hasActiveSubscription ? "Free Tier" : "Current Plan"}
               </Button>
             </GlassContainer>
 
@@ -155,9 +172,17 @@ export default function SubscriptionPage() {
               className="flex flex-col h-full hover:-translate-y-[2px] hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.12)]"
             >
               <div className="mb-8">
-                <h3 className="text-2xl font-bold tracking-tight font-sans text-primary">
-                  Pro
-                </h3>
+                <div className="flex items-center gap-3">
+                  <h3 className="text-2xl font-bold tracking-tight font-sans text-primary">
+                    Pro
+                  </h3>
+                  {hasActiveSubscription && !isLoading && (
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-widest bg-primary/10 text-primary border border-primary/20">
+                      <Check className="w-3 h-3 stroke-[2.5]" />
+                      Active
+                    </span>
+                  )}
+                </div>
                 <p className="text-sm tracking-wide text-muted-foreground mt-1">
                   For professionals and growing teams
                 </p>
@@ -215,16 +240,33 @@ export default function SubscriptionPage() {
                 </div>
               </div>
 
-              <motion.button
-                whileHover={{ scale: 0.98 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={handleUpgrade}
-                disabled={isLoading}
-                className="w-full h-12 rounded-xl font-mono uppercase tracking-widest text-xs font-semibold bg-primary text-primary-foreground hover:bg-primary/90 transition-colors shadow-sm flex items-center justify-center gap-2 cursor-pointer"
-              >
-                {isLoading && <Loader2 className="w-4 h-4 animate-spin" />}
-                Upgrade to Pro
-              </motion.button>
+              {hasActiveSubscription ? (
+                <motion.button
+                  whileHover={{ scale: 0.98 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={handleManage}
+                  disabled={isPortalLoading}
+                  className="w-full h-12 rounded-xl font-mono uppercase tracking-widest text-xs font-semibold bg-primary text-primary-foreground hover:bg-primary/90 transition-colors shadow-sm flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
+                >
+                  {isPortalLoading ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <ExternalLink className="w-4 h-4" />
+                  )}
+                  Manage Subscription
+                </motion.button>
+              ) : (
+                <motion.button
+                  whileHover={{ scale: 0.98 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={handleUpgrade}
+                  disabled={isLoading}
+                  className="w-full h-12 rounded-xl font-mono uppercase tracking-widest text-xs font-semibold bg-primary text-primary-foreground hover:bg-primary/90 transition-colors shadow-sm flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
+                >
+                  {isLoading && <Loader2 className="w-4 h-4 animate-spin" />}
+                  Upgrade to Pro
+                </motion.button>
+              )}
             </GlassContainer>
           </div>
 
