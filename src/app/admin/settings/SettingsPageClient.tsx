@@ -34,7 +34,11 @@ function SettingRow({
       ? setting.value
       : JSON.stringify(setting.value),
   );
-  const dirty = val !== (typeof setting.value === "string" ? setting.value : JSON.stringify(setting.value));
+  const dirty =
+    val !==
+    (typeof setting.value === "string"
+      ? setting.value
+      : JSON.stringify(setting.value));
 
   return (
     <div className="flex items-center gap-3">
@@ -73,14 +77,21 @@ export default function SettingsPageClient() {
         qc.invalidateQueries(trpc.admin.settings.list.pathFilter());
         setSavingKey(null);
       },
-      onError: (e) => { toast.error(e.message); setSavingKey(null); },
+      onError: (e) => {
+        toast.error(e.message);
+        setSavingKey(null);
+      },
     }),
   );
 
   const handleSave = (key: string, rawVal: string) => {
     setSavingKey(key);
     let value: unknown = rawVal;
-    try { value = JSON.parse(rawVal); } catch { /* keep as string */ }
+    try {
+      value = JSON.parse(rawVal);
+    } catch {
+      /* keep as string */
+    }
     setMutation.mutate({ key, value });
   };
 
@@ -96,12 +107,16 @@ export default function SettingsPageClient() {
     <div className="space-y-5">
       <div className="rounded-xl border border-border/50 bg-card px-5 py-4">
         <h1 className="text-xl font-bold tracking-tight">Settings</h1>
-        <p className="mt-0.5 text-sm text-muted-foreground">Platform-wide configuration</p>
+        <p className="mt-0.5 text-sm text-muted-foreground">
+          Platform-wide configuration
+        </p>
       </div>
 
       {isLoading ? (
         <div className="space-y-4">
-          {Array.from({ length: 3 }).map((_, i) => <Skeleton key={i} className="h-32 w-full rounded-xl" />)}
+          {Array.from({ length: 3 }).map((_, i) => (
+            <Skeleton key={i} className="h-32 w-full rounded-xl" />
+          ))}
         </div>
       ) : Object.keys(grouped).length === 0 ? (
         <div className="py-12 text-center">
@@ -115,8 +130,12 @@ export default function SettingsPageClient() {
           <Card key={category} className="border-border/50">
             <CardHeader className="pb-3">
               <div className="flex items-center gap-2">
-                <CardTitle className="text-sm font-semibold capitalize">{category}</CardTitle>
-                <Badge variant="outline" className="text-[10px]">{settings.length}</Badge>
+                <CardTitle className="text-sm font-semibold capitalize">
+                  {category}
+                </CardTitle>
+                <Badge variant="outline" className="text-[10px]">
+                  {settings.length}
+                </Badge>
               </div>
             </CardHeader>
             <CardContent>

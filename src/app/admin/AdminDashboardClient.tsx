@@ -30,7 +30,13 @@ import {
   Cell,
   Legend,
 } from "recharts";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
@@ -108,7 +114,9 @@ export default function AdminDashboardClient() {
           </div>
           <div className="flex items-center gap-2 rounded-full border border-border/50 bg-background/80 px-3 py-1.5">
             <div className="h-2 w-2 animate-pulse rounded-full bg-emerald-500" />
-            <span className="text-xs font-medium text-muted-foreground">Live</span>
+            <span className="text-xs font-medium text-muted-foreground">
+              Live
+            </span>
           </div>
         </div>
       </div>
@@ -120,7 +128,12 @@ export default function AdminDashboardClient() {
           value={overview?.users.total ?? 0}
           change={
             overview
-              ? ((overview.users.newLast7d / Math.max(overview.users.total - overview.users.newLast7d, 1)) * 100)
+              ? (overview.users.newLast7d /
+                  Math.max(
+                    overview.users.total - overview.users.newLast7d,
+                    1,
+                  )) *
+                100
               : undefined
           }
           icon={Users}
@@ -195,8 +208,12 @@ export default function AdminDashboardClient() {
         {/* User Growth */}
         <Card className="col-span-2 border-border/50">
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-semibold">User Growth (30d)</CardTitle>
-            <CardDescription className="text-xs">Daily new signups</CardDescription>
+            <CardTitle className="text-sm font-semibold">
+              User Growth (30d)
+            </CardTitle>
+            <CardDescription className="text-xs">
+              Daily new signups
+            </CardDescription>
           </CardHeader>
           <CardContent>
             {growthLoading ? (
@@ -206,20 +223,34 @@ export default function AdminDashboardClient() {
                 <AreaChart data={userGrowth ?? []}>
                   <defs>
                     <linearGradient id="userGrad" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#10b981" stopOpacity={0.25} />
+                      <stop
+                        offset="5%"
+                        stopColor="#10b981"
+                        stopOpacity={0.25}
+                      />
                       <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
                     </linearGradient>
                   </defs>
-                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.4} />
+                  <CartesianGrid
+                    strokeDasharray="3 3"
+                    stroke="hsl(var(--border))"
+                    opacity={0.4}
+                  />
                   <XAxis
                     dataKey="date"
-                    tick={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }}
+                    tick={{
+                      fontSize: 10,
+                      fill: "hsl(var(--muted-foreground))",
+                    }}
                     tickLine={false}
                     axisLine={false}
                     tickFormatter={(v) => v.slice(5)}
                   />
                   <YAxis
-                    tick={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }}
+                    tick={{
+                      fontSize: 10,
+                      fill: "hsl(var(--muted-foreground))",
+                    }}
                     tickLine={false}
                     axisLine={false}
                   />
@@ -247,8 +278,12 @@ export default function AdminDashboardClient() {
         {/* System Status */}
         <Card className="border-border/50">
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-semibold">System Status</CardTitle>
-            <CardDescription className="text-xs">Last 5 minutes</CardDescription>
+            <CardTitle className="text-sm font-semibold">
+              System Status
+            </CardTitle>
+            <CardDescription className="text-xs">
+              Last 5 minutes
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             {systemStatus ? (
@@ -294,12 +329,17 @@ export default function AdminDashboardClient() {
                       color: "text-amber-500",
                     },
                   ].map((item) => (
-                    <div key={item.label} className="flex items-center justify-between">
+                    <div
+                      key={item.label}
+                      className="flex items-center justify-between"
+                    >
                       <div className="flex items-center gap-2 text-xs text-muted-foreground">
                         <item.icon className={cn("h-3.5 w-3.5", item.color)} />
                         {item.label}
                       </div>
-                      <span className="text-sm font-semibold">{item.value}</span>
+                      <span className="text-sm font-semibold">
+                        {item.value}
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -309,13 +349,31 @@ export default function AdminDashboardClient() {
                 {/* Support tickets quick view */}
                 {supportStats && (
                   <div className="space-y-2">
-                    <p className="text-xs font-semibold text-muted-foreground">Support Queue</p>
+                    <p className="text-xs font-semibold text-muted-foreground">
+                      Support Queue
+                    </p>
                     <div className="grid grid-cols-2 gap-2">
                       {[
-                        { label: "Open", value: supportStats.open, color: "bg-amber-500/15 text-amber-700" },
-                        { label: "Critical", value: supportStats.critical, color: "bg-red-500/15 text-red-700" },
-                        { label: "In Progress", value: supportStats.inProgress, color: "bg-blue-500/15 text-blue-700" },
-                        { label: "Resolved", value: supportStats.resolved, color: "bg-emerald-500/15 text-emerald-700" },
+                        {
+                          label: "Open",
+                          value: supportStats.open,
+                          color: "bg-amber-500/15 text-amber-700",
+                        },
+                        {
+                          label: "Critical",
+                          value: supportStats.critical,
+                          color: "bg-red-500/15 text-red-700",
+                        },
+                        {
+                          label: "In Progress",
+                          value: supportStats.inProgress,
+                          color: "bg-blue-500/15 text-blue-700",
+                        },
+                        {
+                          label: "Resolved",
+                          value: supportStats.resolved,
+                          color: "bg-emerald-500/15 text-emerald-700",
+                        },
                       ].map((s) => (
                         <div
                           key={s.label}
@@ -345,8 +403,12 @@ export default function AdminDashboardClient() {
         {/* Execution trend */}
         <Card className="border-border/50">
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-semibold">Workflow Executions (30d)</CardTitle>
-            <CardDescription className="text-xs">Success vs failures per day</CardDescription>
+            <CardTitle className="text-sm font-semibold">
+              Workflow Executions (30d)
+            </CardTitle>
+            <CardDescription className="text-xs">
+              Success vs failures per day
+            </CardDescription>
           </CardHeader>
           <CardContent>
             {execLoading ? (
@@ -354,16 +416,26 @@ export default function AdminDashboardClient() {
             ) : (
               <ResponsiveContainer width="100%" height={192}>
                 <BarChart data={execTrend ?? []}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.4} />
+                  <CartesianGrid
+                    strokeDasharray="3 3"
+                    stroke="hsl(var(--border))"
+                    opacity={0.4}
+                  />
                   <XAxis
                     dataKey="date"
-                    tick={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }}
+                    tick={{
+                      fontSize: 10,
+                      fill: "hsl(var(--muted-foreground))",
+                    }}
                     tickLine={false}
                     axisLine={false}
                     tickFormatter={(v) => v.slice(5)}
                   />
                   <YAxis
-                    tick={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }}
+                    tick={{
+                      fontSize: 10,
+                      fill: "hsl(var(--muted-foreground))",
+                    }}
                     tickLine={false}
                     axisLine={false}
                   />
@@ -375,8 +447,18 @@ export default function AdminDashboardClient() {
                       fontSize: 12,
                     }}
                   />
-                  <Bar dataKey="success" stackId="a" fill="#10b981" radius={[0, 0, 0, 0]} />
-                  <Bar dataKey="error" stackId="a" fill="#ef4444" radius={[3, 3, 0, 0]} />
+                  <Bar
+                    dataKey="success"
+                    stackId="a"
+                    fill="#10b981"
+                    radius={[0, 0, 0, 0]}
+                  />
+                  <Bar
+                    dataKey="error"
+                    stackId="a"
+                    fill="#ef4444"
+                    radius={[3, 3, 0, 0]}
+                  />
                   <Legend wrapperStyle={{ fontSize: 11 }} />
                 </BarChart>
               </ResponsiveContainer>
@@ -387,8 +469,12 @@ export default function AdminDashboardClient() {
         {/* AI Usage trend */}
         <Card className="border-border/50">
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-semibold">AI Token Usage (30d)</CardTitle>
-            <CardDescription className="text-xs">Daily token consumption</CardDescription>
+            <CardTitle className="text-sm font-semibold">
+              AI Token Usage (30d)
+            </CardTitle>
+            <CardDescription className="text-xs">
+              Daily token consumption
+            </CardDescription>
           </CardHeader>
           <CardContent>
             {aiLoading ? (
@@ -398,24 +484,42 @@ export default function AdminDashboardClient() {
                 <AreaChart data={aiTrend ?? []}>
                   <defs>
                     <linearGradient id="aiGrad" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.25} />
+                      <stop
+                        offset="5%"
+                        stopColor="#8b5cf6"
+                        stopOpacity={0.25}
+                      />
                       <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0} />
                     </linearGradient>
                   </defs>
-                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.4} />
+                  <CartesianGrid
+                    strokeDasharray="3 3"
+                    stroke="hsl(var(--border))"
+                    opacity={0.4}
+                  />
                   <XAxis
                     dataKey="date"
-                    tick={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }}
+                    tick={{
+                      fontSize: 10,
+                      fill: "hsl(var(--muted-foreground))",
+                    }}
                     tickLine={false}
                     axisLine={false}
                     tickFormatter={(v) => v.slice(5)}
                   />
                   <YAxis
-                    tick={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }}
+                    tick={{
+                      fontSize: 10,
+                      fill: "hsl(var(--muted-foreground))",
+                    }}
                     tickLine={false}
                     axisLine={false}
                     tickFormatter={(v) =>
-                      v >= 1_000_000 ? `${(v / 1_000_000).toFixed(1)}M` : v >= 1000 ? `${(v / 1000).toFixed(0)}K` : String(v)
+                      v >= 1_000_000
+                        ? `${(v / 1_000_000).toFixed(1)}M`
+                        : v >= 1000
+                          ? `${(v / 1000).toFixed(0)}K`
+                          : String(v)
                     }
                   />
                   <Tooltip
@@ -446,7 +550,9 @@ export default function AdminDashboardClient() {
         {/* Recent signups */}
         <Card className="border-border/50">
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-semibold">Recent Signups</CardTitle>
+            <CardTitle className="text-sm font-semibold">
+              Recent Signups
+            </CardTitle>
           </CardHeader>
           <CardContent>
             {signupsLoading ? (
@@ -474,7 +580,8 @@ export default function AdminDashboardClient() {
                     <Avatar className="h-8 w-8">
                       <AvatarImage src={user.image ?? undefined} />
                       <AvatarFallback className="text-xs">
-                        {user.name?.charAt(0) ?? user.email.charAt(0).toUpperCase()}
+                        {user.name?.charAt(0) ??
+                          user.email.charAt(0).toUpperCase()}
                       </AvatarFallback>
                     </Avatar>
                     <div className="flex-1 overflow-hidden">
@@ -487,12 +594,16 @@ export default function AdminDashboardClient() {
                     </div>
                     <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                       <Clock className="h-3 w-3" />
-                      {formatDistanceToNow(new Date(user.createdAt), { addSuffix: true })}
+                      {formatDistanceToNow(new Date(user.createdAt), {
+                        addSuffix: true,
+                      })}
                     </div>
                   </motion.div>
                 ))}
                 {!recentSignups?.length && (
-                  <p className="text-sm text-muted-foreground">No recent signups.</p>
+                  <p className="text-sm text-muted-foreground">
+                    No recent signups.
+                  </p>
                 )}
               </div>
             )}
@@ -502,7 +613,9 @@ export default function AdminDashboardClient() {
         {/* Top Workflows */}
         <Card className="border-border/50">
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-semibold">Most Executed Workflows</CardTitle>
+            <CardTitle className="text-sm font-semibold">
+              Most Executed Workflows
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
@@ -523,7 +636,9 @@ export default function AdminDashboardClient() {
                 </div>
               ))}
               {!topWorkflows?.length && (
-                <p className="text-sm text-muted-foreground">No workflow data yet.</p>
+                <p className="text-sm text-muted-foreground">
+                  No workflow data yet.
+                </p>
               )}
             </div>
           </CardContent>

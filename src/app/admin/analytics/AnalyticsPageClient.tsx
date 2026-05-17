@@ -5,10 +5,24 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { StatsCard } from "@/features/admin/components/StatsCard";
 import {
-  AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip,
-  ResponsiveContainer, BarChart, Bar, Legend,
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  Legend,
 } from "recharts";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { Activity, Bot, TrendingUp, Users, Workflow } from "lucide-react";
@@ -78,7 +92,9 @@ export default function AnalyticsPageClient() {
       <div className="flex items-center justify-between rounded-xl border border-border/50 bg-card px-5 py-4">
         <div>
           <h1 className="text-xl font-bold tracking-tight">Analytics</h1>
-          <p className="mt-0.5 text-sm text-muted-foreground">Platform-wide usage metrics</p>
+          <p className="mt-0.5 text-sm text-muted-foreground">
+            Platform-wide usage metrics
+          </p>
         </div>
         <RangePicker value={days} onChange={setDays} />
       </div>
@@ -124,10 +140,14 @@ export default function AnalyticsPageClient() {
       <Card className="border-border/50">
         <CardHeader>
           <CardTitle className="text-sm font-semibold">User Growth</CardTitle>
-          <CardDescription className="text-xs">Daily new registrations over {days} days</CardDescription>
+          <CardDescription className="text-xs">
+            Daily new registrations over {days} days
+          </CardDescription>
         </CardHeader>
         <CardContent>
-          {ugLoading ? <Skeleton className="h-64 w-full" /> : (
+          {ugLoading ? (
+            <Skeleton className="h-64 w-full" />
+          ) : (
             <ResponsiveContainer width="100%" height={256}>
               <AreaChart data={userGrowth ?? []}>
                 <defs>
@@ -136,11 +156,31 @@ export default function AnalyticsPageClient() {
                     <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.4} />
-                <XAxis dataKey="date" tick={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }} tickLine={false} axisLine={false} tickFormatter={(v) => v.slice(5)} />
-                <YAxis tick={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }} tickLine={false} axisLine={false} />
+                <CartesianGrid
+                  strokeDasharray="3 3"
+                  stroke="hsl(var(--border))"
+                  opacity={0.4}
+                />
+                <XAxis
+                  dataKey="date"
+                  tick={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }}
+                  tickLine={false}
+                  axisLine={false}
+                  tickFormatter={(v) => v.slice(5)}
+                />
+                <YAxis
+                  tick={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }}
+                  tickLine={false}
+                  axisLine={false}
+                />
                 <Tooltip {...chartStyle} />
-                <Area type="monotone" dataKey="users" stroke="#10b981" strokeWidth={2} fill="url(#ug)" />
+                <Area
+                  type="monotone"
+                  dataKey="users"
+                  stroke="#10b981"
+                  strokeWidth={2}
+                  fill="url(#ug)"
+                />
               </AreaChart>
             </ResponsiveContainer>
           )}
@@ -151,20 +191,51 @@ export default function AnalyticsPageClient() {
         {/* Executions */}
         <Card className="border-border/50">
           <CardHeader>
-            <CardTitle className="text-sm font-semibold">Execution Trend</CardTitle>
-            <CardDescription className="text-xs">Success vs failures</CardDescription>
+            <CardTitle className="text-sm font-semibold">
+              Execution Trend
+            </CardTitle>
+            <CardDescription className="text-xs">
+              Success vs failures
+            </CardDescription>
           </CardHeader>
           <CardContent>
-            {etLoading ? <Skeleton className="h-52 w-full" /> : (
+            {etLoading ? (
+              <Skeleton className="h-52 w-full" />
+            ) : (
               <ResponsiveContainer width="100%" height={208}>
                 <BarChart data={execTrend ?? []}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.4} />
-                  <XAxis dataKey="date" tick={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }} tickLine={false} axisLine={false} tickFormatter={(v) => v.slice(5)} />
-                  <YAxis tick={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }} tickLine={false} axisLine={false} />
+                  <CartesianGrid
+                    strokeDasharray="3 3"
+                    stroke="hsl(var(--border))"
+                    opacity={0.4}
+                  />
+                  <XAxis
+                    dataKey="date"
+                    tick={{
+                      fontSize: 10,
+                      fill: "hsl(var(--muted-foreground))",
+                    }}
+                    tickLine={false}
+                    axisLine={false}
+                    tickFormatter={(v) => v.slice(5)}
+                  />
+                  <YAxis
+                    tick={{
+                      fontSize: 10,
+                      fill: "hsl(var(--muted-foreground))",
+                    }}
+                    tickLine={false}
+                    axisLine={false}
+                  />
                   <Tooltip {...chartStyle} />
                   <Legend wrapperStyle={{ fontSize: 11 }} />
                   <Bar dataKey="success" stackId="a" fill="#10b981" />
-                  <Bar dataKey="error" stackId="a" fill="#ef4444" radius={[3, 3, 0, 0]} />
+                  <Bar
+                    dataKey="error"
+                    stackId="a"
+                    fill="#ef4444"
+                    radius={[3, 3, 0, 0]}
+                  />
                 </BarChart>
               </ResponsiveContainer>
             )}
@@ -174,24 +245,64 @@ export default function AnalyticsPageClient() {
         {/* AI spend */}
         <Card className="border-border/50">
           <CardHeader>
-            <CardTitle className="text-sm font-semibold">AI Spend ($)</CardTitle>
-            <CardDescription className="text-xs">Daily AI cost in USD</CardDescription>
+            <CardTitle className="text-sm font-semibold">
+              AI Spend ($)
+            </CardTitle>
+            <CardDescription className="text-xs">
+              Daily AI cost in USD
+            </CardDescription>
           </CardHeader>
           <CardContent>
-            {aiLoading ? <Skeleton className="h-52 w-full" /> : (
+            {aiLoading ? (
+              <Skeleton className="h-52 w-full" />
+            ) : (
               <ResponsiveContainer width="100%" height={208}>
                 <AreaChart data={aiTrend ?? []}>
                   <defs>
                     <linearGradient id="ais" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#f59e0b" stopOpacity={0.25} />
+                      <stop
+                        offset="5%"
+                        stopColor="#f59e0b"
+                        stopOpacity={0.25}
+                      />
                       <stop offset="95%" stopColor="#f59e0b" stopOpacity={0} />
                     </linearGradient>
                   </defs>
-                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.4} />
-                  <XAxis dataKey="date" tick={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }} tickLine={false} axisLine={false} tickFormatter={(v) => v.slice(5)} />
-                  <YAxis tick={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }} tickLine={false} axisLine={false} tickFormatter={(v) => `$${v.toFixed(2)}`} />
-                  <Tooltip {...chartStyle} formatter={(v: number) => [`$${v.toFixed(4)}`, "Cost"]} />
-                  <Area type="monotone" dataKey="cost" stroke="#f59e0b" strokeWidth={2} fill="url(#ais)" />
+                  <CartesianGrid
+                    strokeDasharray="3 3"
+                    stroke="hsl(var(--border))"
+                    opacity={0.4}
+                  />
+                  <XAxis
+                    dataKey="date"
+                    tick={{
+                      fontSize: 10,
+                      fill: "hsl(var(--muted-foreground))",
+                    }}
+                    tickLine={false}
+                    axisLine={false}
+                    tickFormatter={(v) => v.slice(5)}
+                  />
+                  <YAxis
+                    tick={{
+                      fontSize: 10,
+                      fill: "hsl(var(--muted-foreground))",
+                    }}
+                    tickLine={false}
+                    axisLine={false}
+                    tickFormatter={(v) => `$${v.toFixed(2)}`}
+                  />
+                  <Tooltip
+                    {...chartStyle}
+                    formatter={(v: number) => [`$${v.toFixed(4)}`, "Cost"]}
+                  />
+                  <Area
+                    type="monotone"
+                    dataKey="cost"
+                    stroke="#f59e0b"
+                    strokeWidth={2}
+                    fill="url(#ais)"
+                  />
                 </AreaChart>
               </ResponsiveContainer>
             )}

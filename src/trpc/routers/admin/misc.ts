@@ -1,4 +1,8 @@
-import { adminProcedure, createTRPCRouter, superAdminProcedure } from "@/trpc/init";
+import {
+  adminProcedure,
+  createTRPCRouter,
+  superAdminProcedure,
+} from "@/trpc/init";
 import prisma from "@/lib/db";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
@@ -13,7 +17,12 @@ export const adminFeatureFlagsRouter = createTRPCRouter({
     .input(
       z.object({
         id: z.string().optional(),
-        key: z.string().regex(/^[a-z0-9_]+$/, "Lowercase letters, numbers, underscores only"),
+        key: z
+          .string()
+          .regex(
+            /^[a-z0-9_]+$/,
+            "Lowercase letters, numbers, underscores only",
+          ),
         name: z.string().min(1),
         description: z.string().optional(),
         enabled: z.boolean().default(false),
@@ -24,7 +33,9 @@ export const adminFeatureFlagsRouter = createTRPCRouter({
     )
     .mutation(async ({ input, ctx }) => {
       const { id, ...data } = input;
-      const prismaData = data as Parameters<typeof prisma.featureFlag.create>[0]["data"];
+      const prismaData = data as Parameters<
+        typeof prisma.featureFlag.create
+      >[0]["data"];
       const flag = id
         ? await prisma.featureFlag.update({ where: { id }, data: prismaData })
         : await prisma.featureFlag.create({ data: prismaData });
@@ -98,7 +109,9 @@ export const adminAnnouncementsRouter = createTRPCRouter({
       z.object({
         title: z.string().min(1),
         message: z.string().min(1),
-        type: z.enum(["INFO", "WARNING", "SUCCESS", "MAINTENANCE"]).default("INFO"),
+        type: z
+          .enum(["INFO", "WARNING", "SUCCESS", "MAINTENANCE"])
+          .default("INFO"),
         targetAudience: z.string().default("all"),
         scheduledAt: z.string().datetime().optional(),
         expiresAt: z.string().datetime().optional(),
@@ -111,7 +124,9 @@ export const adminAnnouncementsRouter = createTRPCRouter({
       const item = await prisma.announcement.create({
         data: {
           ...input,
-          scheduledAt: input.scheduledAt ? new Date(input.scheduledAt) : undefined,
+          scheduledAt: input.scheduledAt
+            ? new Date(input.scheduledAt)
+            : undefined,
           expiresAt: input.expiresAt ? new Date(input.expiresAt) : undefined,
         },
       });
@@ -218,7 +233,13 @@ export const adminSupportRouter = createTRPCRouter({
         page: z.number().default(1),
         limit: z.number().default(20),
         status: z
-          .enum(["OPEN", "IN_PROGRESS", "WAITING_FOR_USER", "RESOLVED", "CLOSED"])
+          .enum([
+            "OPEN",
+            "IN_PROGRESS",
+            "WAITING_FOR_USER",
+            "RESOLVED",
+            "CLOSED",
+          ])
           .optional(),
         priority: z.enum(["LOW", "MEDIUM", "HIGH", "CRITICAL"]).optional(),
         search: z.string().optional(),
@@ -242,7 +263,9 @@ export const adminSupportRouter = createTRPCRouter({
           take: input.limit,
           orderBy: [{ priority: "desc" }, { createdAt: "desc" }],
           include: {
-            user: { select: { id: true, name: true, email: true, image: true } },
+            user: {
+              select: { id: true, name: true, email: true, image: true },
+            },
             _count: { select: { messages: true } },
           },
         }),
@@ -293,7 +316,13 @@ export const adminSupportRouter = createTRPCRouter({
       z.object({
         ticketId: z.string(),
         status: z
-          .enum(["OPEN", "IN_PROGRESS", "WAITING_FOR_USER", "RESOLVED", "CLOSED"])
+          .enum([
+            "OPEN",
+            "IN_PROGRESS",
+            "WAITING_FOR_USER",
+            "RESOLVED",
+            "CLOSED",
+          ])
           .optional(),
         priority: z.enum(["LOW", "MEDIUM", "HIGH", "CRITICAL"]).optional(),
         assignedTo: z.string().nullable().optional(),
@@ -365,7 +394,9 @@ export const adminLogsRouter = createTRPCRouter({
           orderBy: { createdAt: "desc" },
           include: {
             adminUser: {
-              include: { user: { select: { name: true, email: true, image: true } } },
+              include: {
+                user: { select: { name: true, email: true, image: true } },
+              },
             },
           },
         }),
@@ -401,7 +432,9 @@ export const adminLogsRouter = createTRPCRouter({
           skip,
           take: input.limit,
           orderBy: { createdAt: "desc" },
-          include: { user: { select: { name: true, email: true, image: true } } },
+          include: {
+            user: { select: { name: true, email: true, image: true } },
+          },
         }),
         prisma.auditLog.count({ where }),
       ]);

@@ -12,16 +12,29 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import {
-  Sheet, SheetContent, SheetHeader, SheetTitle,
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
 } from "@/components/ui/sheet";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
 import {
-  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import {
-  AlertCircle, CheckCircle2, Clock, Headphones, MessageSquare, Send, User,
+  AlertCircle,
+  CheckCircle2,
+  Clock,
+  Headphones,
+  MessageSquare,
+  Send,
+  User,
 } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { toast } from "sonner";
@@ -41,8 +54,10 @@ type Ticket = {
 const STATUS_COLORS: Record<string, string> = {
   OPEN: "bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-400",
   IN_PROGRESS: "bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-400",
-  WAITING_FOR_USER: "bg-violet-100 text-violet-700 dark:bg-violet-950 dark:text-violet-400",
-  RESOLVED: "bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400",
+  WAITING_FOR_USER:
+    "bg-violet-100 text-violet-700 dark:bg-violet-950 dark:text-violet-400",
+  RESOLVED:
+    "bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400",
   CLOSED: "bg-muted text-muted-foreground",
 };
 
@@ -61,10 +76,20 @@ export default function SupportPageClient() {
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [replyText, setReplyText] = useState("");
 
-  const { data: stats } = useQuery(trpc.admin.support.ticketStats.queryOptions());
+  const { data: stats } = useQuery(
+    trpc.admin.support.ticketStats.queryOptions(),
+  );
   const { data: tickets, isLoading } = useQuery(
     trpc.admin.support.listTickets.queryOptions({
-      status: statusFilter !== "all" ? (statusFilter as "OPEN" | "IN_PROGRESS" | "RESOLVED" | "CLOSED" | "WAITING_FOR_USER") : undefined,
+      status:
+        statusFilter !== "all"
+          ? (statusFilter as
+              | "OPEN"
+              | "IN_PROGRESS"
+              | "RESOLVED"
+              | "CLOSED"
+              | "WAITING_FOR_USER")
+          : undefined,
     }),
   );
   const { data: ticketDetail } = useQuery(
@@ -100,15 +125,41 @@ export default function SupportPageClient() {
     <div className="space-y-5">
       <div className="rounded-xl border border-border/50 bg-card px-5 py-4">
         <h1 className="text-xl font-bold tracking-tight">Support Tickets</h1>
-        <p className="mt-0.5 text-sm text-muted-foreground">Manage user support requests</p>
+        <p className="mt-0.5 text-sm text-muted-foreground">
+          Manage user support requests
+        </p>
       </div>
 
       {stats && (
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          <StatsCard title="Open" value={stats.open} icon={AlertCircle} iconColor="text-amber-600" index={0} />
-          <StatsCard title="In Progress" value={stats.inProgress} icon={Clock} iconColor="text-blue-600" index={1} />
-          <StatsCard title="Critical" value={stats.critical} icon={AlertCircle} iconColor="text-red-600" index={2} />
-          <StatsCard title="Resolved" value={stats.resolved} icon={CheckCircle2} iconColor="text-emerald-600" index={3} />
+          <StatsCard
+            title="Open"
+            value={stats.open}
+            icon={AlertCircle}
+            iconColor="text-amber-600"
+            index={0}
+          />
+          <StatsCard
+            title="In Progress"
+            value={stats.inProgress}
+            icon={Clock}
+            iconColor="text-blue-600"
+            index={1}
+          />
+          <StatsCard
+            title="Critical"
+            value={stats.critical}
+            icon={AlertCircle}
+            iconColor="text-red-600"
+            index={2}
+          />
+          <StatsCard
+            title="Resolved"
+            value={stats.resolved}
+            icon={CheckCircle2}
+            iconColor="text-emerald-600"
+            index={3}
+          />
         </div>
       )}
 
@@ -132,7 +183,9 @@ export default function SupportPageClient() {
         <CardContent className="p-0">
           {isLoading ? (
             <div className="space-y-1 p-3">
-              {Array.from({ length: 5 }).map((_, i) => <Skeleton key={i} className="h-16 w-full rounded-lg" />)}
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Skeleton key={i} className="h-16 w-full rounded-lg" />
+              ))}
             </div>
           ) : (tickets ?? []).length === 0 ? (
             <div className="py-12 text-center">
@@ -152,23 +205,37 @@ export default function SupportPageClient() {
                       <Avatar className="h-7 w-7 shrink-0">
                         <AvatarImage src={t.user?.image ?? undefined} />
                         <AvatarFallback className="text-xs">
-                          {(t.user?.name ?? t.user?.email ?? "?").charAt(0).toUpperCase()}
+                          {(t.user?.name ?? t.user?.email ?? "?")
+                            .charAt(0)
+                            .toUpperCase()}
                         </AvatarFallback>
                       </Avatar>
                       <div>
                         <p className="text-sm font-medium">{t.subject}</p>
-                        <p className="text-xs text-muted-foreground">{t.user?.email} · #{t.ticketNumber}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {t.user?.email} · #{t.ticketNumber}
+                        </p>
                       </div>
                     </div>
                     <div className="flex items-center gap-2 shrink-0">
-                      <Badge variant="outline" className={cn("text-[10px]", PRIORITY_COLORS[t.priority])}>
+                      <Badge
+                        variant="outline"
+                        className={cn(
+                          "text-[10px]",
+                          PRIORITY_COLORS[t.priority],
+                        )}
+                      >
                         {t.priority}
                       </Badge>
-                      <Badge className={cn("text-[10px]", STATUS_COLORS[t.status])}>
+                      <Badge
+                        className={cn("text-[10px]", STATUS_COLORS[t.status])}
+                      >
                         {t.status.replace(/_/g, " ")}
                       </Badge>
                       <span className="text-xs text-muted-foreground">
-                        {formatDistanceToNow(new Date(t.createdAt), { addSuffix: true })}
+                        {formatDistanceToNow(new Date(t.createdAt), {
+                          addSuffix: true,
+                        })}
                       </span>
                     </div>
                   </div>
@@ -180,17 +247,30 @@ export default function SupportPageClient() {
       </Card>
 
       {/* Ticket detail sheet */}
-      <Sheet open={!!selectedId} onOpenChange={(o) => !o && setSelectedId(null)}>
+      <Sheet
+        open={!!selectedId}
+        onOpenChange={(o) => !o && setSelectedId(null)}
+      >
         <SheetContent className="w-full max-w-lg p-0 sm:max-w-xl">
           {ticketDetail ? (
             <div className="flex h-full flex-col">
               <SheetHeader className="border-b px-6 py-4">
                 <div className="flex items-center justify-between">
-                  <SheetTitle className="text-base">{ticketDetail.subject}</SheetTitle>
+                  <SheetTitle className="text-base">
+                    {ticketDetail.subject}
+                  </SheetTitle>
                   <Select
                     value={ticketDetail.status}
                     onValueChange={(v) =>
-                      updateMutation.mutate({ ticketId: ticketDetail.id, status: v as "OPEN" | "IN_PROGRESS" | "RESOLVED" | "CLOSED" | "WAITING_FOR_USER" })
+                      updateMutation.mutate({
+                        ticketId: ticketDetail.id,
+                        status: v as
+                          | "OPEN"
+                          | "IN_PROGRESS"
+                          | "RESOLVED"
+                          | "CLOSED"
+                          | "WAITING_FOR_USER",
+                      })
                     }
                   >
                     <SelectTrigger className="h-7 w-36 text-xs">
@@ -217,19 +297,25 @@ export default function SupportPageClient() {
                       key={m.id}
                       className={cn(
                         "rounded-lg p-3 text-sm",
-                        m.isAdmin
-                          ? "ml-6 bg-primary/10"
-                          : "mr-6 bg-muted/50",
+                        m.isAdmin ? "ml-6 bg-primary/10" : "mr-6 bg-muted/50",
                       )}
                     >
                       <div className="mb-1 flex items-center gap-1.5 text-xs text-muted-foreground">
                         {m.isAdmin ? (
-                          <><Headphones className="h-3 w-3 text-primary" /> Support</>
+                          <>
+                            <Headphones className="h-3 w-3 text-primary" />{" "}
+                            Support
+                          </>
                         ) : (
-                          <><User className="h-3 w-3" /> {ticketDetail.user?.name ?? "User"}</>
+                          <>
+                            <User className="h-3 w-3" />{" "}
+                            {ticketDetail.user?.name ?? "User"}
+                          </>
                         )}
                         <span className="ml-auto">
-                          {formatDistanceToNow(new Date(m.createdAt), { addSuffix: true })}
+                          {formatDistanceToNow(new Date(m.createdAt), {
+                            addSuffix: true,
+                          })}
                         </span>
                       </div>
                       <p className="whitespace-pre-wrap">{m.content}</p>
@@ -251,7 +337,10 @@ export default function SupportPageClient() {
                     className="gap-1.5"
                     disabled={!replyText.trim() || replyMutation.isPending}
                     onClick={() =>
-                      replyMutation.mutate({ ticketId: ticketDetail.id, content: replyText })
+                      replyMutation.mutate({
+                        ticketId: ticketDetail.id,
+                        content: replyText,
+                      })
                     }
                   >
                     <Send className="h-3.5 w-3.5" />
@@ -264,7 +353,9 @@ export default function SupportPageClient() {
             <div className="p-6">
               <Skeleton className="h-8 w-48" />
               <div className="mt-4 space-y-3">
-                {Array.from({ length: 3 }).map((_, i) => <Skeleton key={i} className="h-20 w-full" />)}
+                {Array.from({ length: 3 }).map((_, i) => (
+                  <Skeleton key={i} className="h-20 w-full" />
+                ))}
               </div>
             </div>
           )}

@@ -9,8 +9,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 interface StatsCardProps {
   title: string;
   value: string | number;
-  change?: number;       // percentage change, positive = growth
-  changeLabel?: string;  // e.g. "vs last 30 days"
+  change?: number; // percentage change, positive = growth
+  changeLabel?: string; // e.g. "vs last 30 days"
   icon: LucideIcon;
   iconColor?: string;
   description?: string;
@@ -48,7 +48,12 @@ export function StatsCard({
 
   if (loading) {
     return (
-      <div className={cn("rounded-xl border border-border/50 bg-card p-5", className)}>
+      <div
+        className={cn(
+          "rounded-xl border border-border/50 bg-card p-5",
+          className,
+        )}
+      >
         <div className="flex items-start justify-between">
           <Skeleton className="h-4 w-24" />
           <Skeleton className="h-9 w-9 rounded-lg" />
@@ -100,10 +105,13 @@ export function StatsCard({
             <span
               className={cn(
                 "text-xs font-semibold",
-                isPositive ? "text-emerald-600 dark:text-emerald-400" : "text-red-600 dark:text-red-400",
+                isPositive
+                  ? "text-emerald-600 dark:text-emerald-400"
+                  : "text-red-600 dark:text-red-400",
               )}
             >
-              {isPositive ? "+" : ""}{change.toFixed(1)}%
+              {isPositive ? "+" : ""}
+              {change.toFixed(1)}%
             </span>
             <span className="text-xs text-muted-foreground">{changeLabel}</span>
           </div>

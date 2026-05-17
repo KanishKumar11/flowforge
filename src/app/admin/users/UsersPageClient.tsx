@@ -59,7 +59,9 @@ export default function UsersPageClient() {
 
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
-  const [sortBy, setSortBy] = useState<"createdAt" | "email" | "name" | "executionCount">("createdAt");
+  const [sortBy, setSortBy] = useState<
+    "createdAt" | "email" | "name" | "executionCount"
+  >("createdAt");
   const [deleteTarget, setDeleteTarget] = useState<User | null>(null);
   const [banTarget, setBanTarget] = useState<User | null>(null);
 
@@ -161,7 +163,9 @@ export default function UsersPageClient() {
       header: "Joined",
       cell: ({ row }) => (
         <span className="text-muted-foreground">
-          {formatDistanceToNow(new Date(row.original.createdAt), { addSuffix: true })}
+          {formatDistanceToNow(new Date(row.original.createdAt), {
+            addSuffix: true,
+          })}
         </span>
       ),
     },
@@ -181,7 +185,9 @@ export default function UsersPageClient() {
               <DropdownMenuLabel className="text-xs text-muted-foreground">
                 Actions
               </DropdownMenuLabel>
-              <DropdownMenuItem onClick={() => router.push(`/admin/users/${u.id}`)}>
+              <DropdownMenuItem
+                onClick={() => router.push(`/admin/users/${u.id}`)}
+              >
                 <Eye className="mr-2 h-3.5 w-3.5" />
                 View profile
               </DropdownMenuItem>
@@ -248,7 +254,9 @@ export default function UsersPageClient() {
             <Select
               value={sortBy}
               onValueChange={(v) =>
-                setSortBy(v as "createdAt" | "email" | "name" | "executionCount")
+                setSortBy(
+                  v as "createdAt" | "email" | "name" | "executionCount",
+                )
               }
             >
               <SelectTrigger className="h-8 w-40 text-xs">

@@ -6,44 +6,50 @@ export const adminAIUsageRouter = createTRPCRouter({
   overview: adminProcedure.query(async () => {
     const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
 
-    const [totalStats, last30dStats, byProvider, byModel, recentFailures] = await Promise.all([
-      prisma.aIUsageLog.aggregate({
-        _sum: { totalTokens: true, inputTokens: true, outputTokens: true, costUsd: true },
-        _count: true,
-        _avg: { latencyMs: true },
-      }),
-      prisma.aIUsageLog.aggregate({
-        where: { createdAt: { gte: thirtyDaysAgo } },
-        _sum: { totalTokens: true, costUsd: true },
-        _count: true,
-      }),
-      prisma.aIUsageLog.groupBy({
-        by: ["provider"],
-        _sum: { totalTokens: true, costUsd: true },
-        _count: true,
-        orderBy: { _count: { provider: "desc" } },
-      }),
-      prisma.aIUsageLog.groupBy({
-        by: ["model"],
-        _sum: { totalTokens: true, costUsd: true },
-        _count: true,
-        orderBy: { _sum: { totalTokens: "desc" } },
-        take: 10,
-      }),
-      prisma.aIUsageLog.findMany({
-        where: { success: false, createdAt: { gte: thirtyDaysAgo } },
-        orderBy: { createdAt: "desc" },
-        take: 10,
-        select: {
-          id: true,
-          provider: true,
-          model: true,
-          error: true,
-          createdAt: true,
-          user: { select: { email: true } },
-        },
-      }),
-    ]);
+    const [totalStats, last30dStats, byProvider, byModel, recentFailures] =
+      await Promise.all([
+        prisma.aIUsageLog.aggregate({
+          _sum: {
+            totalTokens: true,
+            inputTokens: true,
+            outputTokens: true,
+            costUsd: true,
+          },
+          _count: true,
+          _avg: { latencyMs: true },
+        }),
+        prisma.aIUsageLog.aggregate({
+          where: { createdAt: { gte: thirtyDaysAgo } },
+          _sum: { totalTokens: true, costUsd: true },
+          _count: true,
+        }),
+        prisma.aIUsageLog.groupBy({
+          by: ["provider"],
+          _sum: { totalTokens: true, costUsd: true },
+          _count: true,
+          orderBy: { _count: { provider: "desc" } },
+        }),
+        prisma.aIUsageLog.groupBy({
+          by: ["model"],
+          _sum: { totalTokens: true, costUsd: true },
+          _count: true,
+          orderBy: { _sum: { totalTokens: "desc" } },
+          take: 10,
+        }),
+        prisma.aIUsageLog.findMany({
+          where: { success: false, createdAt: { gte: thirtyDaysAgo } },
+          orderBy: { createdAt: "desc" },
+          take: 10,
+          select: {
+            id: true,
+            provider: true,
+            model: true,
+            error: true,
+            createdAt: true,
+            user: { select: { email: true } },
+          },
+        }),
+      ]);
 
     return {
       aggregate: {
@@ -84,7 +90,13 @@ export const adminAIUsageRouter = createTRPCRouter({
     .query(async ({ input }) => {
       const from = new Date(Date.now() - input.days * 24 * 60 * 60 * 1000);
       const rows = await prisma.$queryRaw<
-        { date: Date; tokens: bigint; cost: number; requests: bigint; errors: bigint }[]
+        {
+          date: Date;
+          tokens: bigint;
+          cost: number;
+          requests: bigint;
+          errors: bigint;
+        }[]
       >`
         SELECT
           DATE_TRUNC('day', "createdAt") as date,

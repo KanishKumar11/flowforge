@@ -15,7 +15,14 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { AlertCircle, CheckCircle2, MoreHorizontal, Trash2, Workflow, Zap } from "lucide-react";
+import {
+  AlertCircle,
+  CheckCircle2,
+  MoreHorizontal,
+  Trash2,
+  Workflow,
+  Zap,
+} from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -68,7 +75,9 @@ export default function WorkflowsPageClient() {
       cell: ({ row }) => (
         <div>
           <p className="font-medium">{row.original.name}</p>
-          <p className="text-xs text-muted-foreground">{row.original.user?.email ?? "—"}</p>
+          <p className="text-xs text-muted-foreground">
+            {row.original.user?.email ?? "—"}
+          </p>
         </div>
       ),
     },
@@ -107,7 +116,9 @@ export default function WorkflowsPageClient() {
       header: "Created",
       cell: ({ row }) => (
         <span className="text-xs text-muted-foreground">
-          {formatDistanceToNow(new Date(row.original.createdAt), { addSuffix: true })}
+          {formatDistanceToNow(new Date(row.original.createdAt), {
+            addSuffix: true,
+          })}
         </span>
       ),
     },
@@ -142,7 +153,9 @@ export default function WorkflowsPageClient() {
       <div className="flex items-center justify-between rounded-xl border border-border/50 bg-card px-5 py-4">
         <div>
           <h1 className="text-xl font-bold tracking-tight">Workflows</h1>
-          <p className="mt-0.5 text-sm text-muted-foreground">Manage all {data?.total ?? "…"} workflows</p>
+          <p className="mt-0.5 text-sm text-muted-foreground">
+            Manage all {data?.total ?? "…"} workflows
+          </p>
         </div>
       </div>
 
@@ -157,14 +170,18 @@ export default function WorkflowsPageClient() {
           />
           <StatsCard
             title="Successful"
-            value={stats.byStatus.find((s) => s.status === "SUCCESS")?._count ?? 0}
+            value={
+              stats.byStatus.find((s) => s.status === "SUCCESS")?._count ?? 0
+            }
             icon={CheckCircle2}
             iconColor="text-emerald-600"
             index={1}
           />
           <StatsCard
             title="Failed"
-            value={stats.byStatus.find((s) => s.status === "ERROR")?._count ?? 0}
+            value={
+              stats.byStatus.find((s) => s.status === "ERROR")?._count ?? 0
+            }
             icon={AlertCircle}
             iconColor="text-red-600"
             index={2}
@@ -188,7 +205,10 @@ export default function WorkflowsPageClient() {
             placeholder="Search workflows..."
             className="h-8 w-52 text-sm"
             value={search}
-            onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              setPage(1);
+            }}
           />
         }
         emptyState={
@@ -207,7 +227,9 @@ export default function WorkflowsPageClient() {
         confirmLabel="Delete"
         variant="destructive"
         loading={deleteMutation.isPending}
-        onConfirm={() => deleteMutation.mutate({ workflowId: deleteTarget!.id })}
+        onConfirm={() =>
+          deleteMutation.mutate({ workflowId: deleteTarget!.id })
+        }
       />
     </div>
   );
