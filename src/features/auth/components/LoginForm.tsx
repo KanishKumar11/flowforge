@@ -16,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Loader2, Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
+import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
@@ -31,6 +32,7 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 
 export function LoginForm() {
   const router = useRouter();
+  const { theme, setTheme } = useTheme();
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -69,12 +71,36 @@ export function LoginForm() {
   return (
     <div className="w-full max-w-md space-y-8 tech-panel p-8 rounded-none transition-colors duration-500">
       <div className="space-y-2">
-        <h1 className="text-2xl font-bold font-heading tracking-tight text-(--arch-fg) uppercase transition-colors duration-500">
-          Access_Control
-        </h1>
-        <p className="text-(--arch-muted) text-xs font-mono transition-colors duration-500">
-          AUTHENTICATE TO PROCEED //
-        </p>
+        <div className="flex items-center justify-between gap-3">
+          <div>
+            <h1 className="text-2xl font-bold font-heading tracking-tight text-(--arch-fg) uppercase transition-colors duration-500">
+              Access_Control
+            </h1>
+            <p className="text-(--arch-muted) text-xs font-mono transition-colors duration-500">
+              AUTHENTICATE TO PROCEED //
+            </p>
+          </div>
+
+          <div className="flex items-center gap-1 rounded-sm border border-(--arch-border) bg-(--arch-bg-secondary) p-1">
+            {[
+              { id: "light", label: "LGT" },
+              { id: "dark", label: "DRK" },
+            ].map((mode) => (
+              <button
+                key={mode.id}
+                type="button"
+                onClick={() => setTheme(mode.id)}
+                className={`h-8 min-w-[2.5rem] rounded-sm text-[10px] uppercase tracking-widest transition-all ${
+                  theme === mode.id
+                    ? "bg-(--arch-fg) text-(--arch-bg)"
+                    : "text-(--arch-muted) hover:bg-[rgba(var(--arch-fg-rgb)/0.08)] hover:text-(--arch-fg)"
+                }`}
+              >
+                {mode.label}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
 
       <SocialAuthButtons />

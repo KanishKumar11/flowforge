@@ -35,7 +35,6 @@ import {
   LogOut,
   Settings,
   Sparkles,
-  User,
   Users,
   Workflow,
   Zap,
@@ -283,15 +282,6 @@ export function AppSidebar() {
                   </>
                 )}
 
-                <DropdownMenuItem
-                  asChild
-                  className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs uppercase"
-                >
-                  <Link href="/settings">
-                    <User className="mr-2 h-3 w-3" />
-                    ID_CARD
-                  </Link>
-                </DropdownMenuItem>
                 <DropdownMenuItem
                   asChild
                   className="focus:bg-(--arch-fg) focus:text-(--arch-bg) cursor-pointer text-xs uppercase"
