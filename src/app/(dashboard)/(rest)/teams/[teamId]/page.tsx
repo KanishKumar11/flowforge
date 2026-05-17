@@ -58,7 +58,15 @@ const itemVariants = {
   visible: { opacity: 1, y: 0, transition: springTransition },
 };
 
-function GlassContainer({ children, className, onClick }: { children: React.ReactNode, className?: string, onClick?: () => void }) {
+function GlassContainer({
+  children,
+  className,
+  onClick,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  onClick?: () => void;
+}) {
   return (
     <motion.div
       variants={itemVariants}
@@ -68,8 +76,9 @@ function GlassContainer({ children, className, onClick }: { children: React.Reac
         "bg-background border border-border/50",
         "shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]",
         "before:absolute before:inset-0 before:rounded-[2rem] before:border before:border-white/10 before:shadow-[inset_0_1px_0_rgba(255,255,255,0.1)] before:pointer-events-none",
-        onClick && "cursor-pointer hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.08)] hover:-translate-y-[2px]",
-        className
+        onClick &&
+          "cursor-pointer hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.08)] hover:-translate-y-[2px]",
+        className,
       )}
     >
       {children}
@@ -85,7 +94,9 @@ export default function TeamDetailPage() {
   const teamId = params.teamId as string;
 
   const [inviteEmail, setInviteEmail] = useState("");
-  const [inviteRole, setInviteRole] = useState<"ADMIN" | "MEMBER" | "VIEWER">("MEMBER");
+  const [inviteRole, setInviteRole] = useState<"ADMIN" | "MEMBER" | "VIEWER">(
+    "MEMBER",
+  );
   const [isInviteOpen, setIsInviteOpen] = useState(false);
 
   const { data: team, isLoading } = useQuery(
@@ -144,8 +155,13 @@ export default function TeamDetailPage() {
   if (!team) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[100dvh] space-y-4">
-        <p className="text-muted-foreground font-mono">Team not found</p>
-        <Button asChild variant="outline" className="rounded-xl font-mono uppercase text-xs">
+        <p className="text-muted-foreground font-sans">Team not found</p>
+        <Button
+          className="cursor-pointer cursor-pointer"
+          asChild
+          variant="outline"
+          className="rounded-xl font-sans uppercase text-xs"
+        >
           <Link href="/teams">Back to Teams</Link>
         </Button>
       </div>
@@ -161,7 +177,7 @@ export default function TeamDetailPage() {
   const isLimitReached = currentMembersCount >= maxMembers;
 
   return (
-    <div className="min-h-[100dvh] bg-[#f9fafb] dark:bg-zinc-950 p-6 md:p-12 overflow-x-hidden selection:bg-foreground selection:text-background">
+    <div className="min-h-[100dvh] bg-background p-6 md:p-12 overflow-x-hidden selection:bg-foreground selection:text-background">
       <motion.div
         variants={containerVariants}
         initial="hidden"
@@ -169,26 +185,39 @@ export default function TeamDetailPage() {
         className="max-w-[1400px] mx-auto space-y-8"
       >
         {/* Navigation & Header */}
-        <motion.div variants={itemVariants} className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <motion.div
+          variants={itemVariants}
+          className="flex flex-col md:flex-row md:items-end justify-between gap-6"
+        >
           <div className="space-y-4">
-            <Button variant="ghost" size="sm" asChild className="mb-4 -ml-2 text-muted-foreground hover:text-foreground">
+            <Button
+              className="cursor-pointer cursor-pointer"
+              variant="ghost"
+              size="sm"
+              asChild
+              className="mb-4 -ml-2 text-muted-foreground hover:text-foreground"
+            >
               <Link href="/teams">
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back to Teams
               </Link>
             </Button>
             <div>
-              <h1 className="text-4xl md:text-6xl font-medium tracking-tighter text-foreground mb-2 font-mono">
+              <h1 className="text-4xl md:text-6xl font-medium tracking-tighter text-foreground mb-2 font-sans">
                 {team.name}
               </h1>
-              <p className="text-muted-foreground text-sm font-mono max-w-2xl">
-                {team.description || "Manage your team operations, workflows, and access controls."}
+              <p className="text-muted-foreground text-sm font-sans max-w-2xl">
+                {team.description ||
+                  "Manage your team operations, workflows, and access controls."}
               </p>
             </div>
           </div>
 
           <div className="flex items-center gap-3">
-            <Badge variant="outline" className="font-mono uppercase px-4 py-1.5 rounded-full border-foreground/20 bg-background shadow-sm">
+            <Badge
+              variant="outline"
+              className="font-sans uppercase px-4 py-1.5 rounded-full border-foreground/20 bg-background shadow-sm"
+            >
               {team.plan} Plan
             </Badge>
           </div>
@@ -196,43 +225,59 @@ export default function TeamDetailPage() {
 
         {/* Bento Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-8">
-          
           {/* Left Column (Stats & Danger Zone) */}
           <div className="lg:col-span-4 space-y-8">
-            <GlassContainer className="flex flex-col gap-8 bg-zinc-900 text-zinc-50 dark:bg-white dark:text-zinc-950 border-none">
+            <GlassContainer className="flex flex-col gap-8 bg-primary text-primary-foreground border-none">
               <div>
-                <motion.div 
+                <motion.div
                   className="w-12 h-12 rounded-2xl bg-white/10 dark:bg-black/10 flex items-center justify-center mb-6"
                   animate={{ rotate: 360 }}
-                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                  transition={{
+                    duration: 20,
+                    repeat: Infinity,
+                    ease: "linear",
+                  }}
                 >
                   <Activity className="w-6 h-6 stroke-[1.5]" />
                 </motion.div>
-                <h3 className="text-sm font-mono uppercase tracking-widest opacity-70 mb-2">Total Executions</h3>
-                <p className="text-5xl tracking-tighter font-mono">0</p>
+                <h3 className="text-sm font-sans uppercase tracking-widest opacity-70 mb-2">
+                  Total Executions
+                </h3>
+                <p className="text-5xl tracking-tighter font-sans">0</p>
               </div>
               <div className="h-px bg-white/10 dark:bg-black/10 w-full" />
               <div>
-                <h3 className="text-sm font-mono uppercase tracking-widest opacity-70 mb-2">Workflows</h3>
-                <p className="text-4xl tracking-tighter font-mono">{team._count.workflows}</p>
+                <h3 className="text-sm font-sans uppercase tracking-widest opacity-70 mb-2">
+                  Workflows
+                </h3>
+                <p className="text-4xl tracking-tighter font-sans">
+                  {team._count.workflows}
+                </p>
               </div>
             </GlassContainer>
 
             {isOwner && (
-              <GlassContainer className="border-red-500/20 bg-red-50/50 dark:bg-red-950/10">
+              <GlassContainer className="border-destructive/20 bg-destructive/5 text-destructive">
                 <div className="space-y-4">
-                  <div className="flex items-center gap-3 text-red-600 dark:text-red-400">
+                  <div className="flex items-center gap-3 text-destructive">
                     <AlertCircle className="w-5 h-5 stroke-[1.5]" />
-                    <h3 className="font-mono uppercase tracking-widest text-sm font-semibold">Danger Zone</h3>
+                    <h3 className="font-sans uppercase tracking-widest text-sm font-semibold">
+                      Danger Zone
+                    </h3>
                   </div>
                   <p className="text-sm text-foreground/60 leading-relaxed">
-                    Permanently delete this team and all of its associated data, workflows, and credentials.
+                    Permanently delete this team and all of its associated data,
+                    workflows, and credentials.
                   </p>
                   <Button
                     variant="destructive"
-                    className="w-full rounded-2xl font-mono uppercase text-xs h-12 shadow-sm"
+                    className="cursor-pointer w-full rounded-2xl font-sans uppercase text-xs h-12 shadow-sm"
                     onClick={() => {
-                      if (confirm("Are you incredibly certain? This is completely irreversible.")) {
+                      if (
+                        confirm(
+                          "Are you incredibly certain? This is completely irreversible.",
+                        )
+                      ) {
                         deleteTeam.mutate({ id: teamId });
                       }
                     }}
@@ -249,26 +294,35 @@ export default function TeamDetailPage() {
             <GlassContainer className="h-full flex flex-col">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-10 gap-4">
                 <div>
-                  <h2 className="text-2xl font-medium tracking-tight font-mono mb-1">Access Control</h2>
-                  <p className="text-sm text-muted-foreground font-mono opacity-80">
-                    {team.members.length} active {team.members.length === 1 ? 'member' : 'members'}
+                  <h2 className="text-2xl font-medium tracking-tight font-sans mb-1">
+                    Access Control
+                  </h2>
+                  <p className="text-sm text-muted-foreground font-sans opacity-80">
+                    {team.members.length} active{" "}
+                    {team.members.length === 1 ? "member" : "members"}
                   </p>
                 </div>
 
                 {isAdmin && (
                   <div>
                     {isLimitReached ? (
-                      <Badge variant="destructive" className="font-mono text-[10px] uppercase px-3 py-1.5 rounded-full flex items-center gap-1.5">
+                      <Badge
+                        variant="destructive"
+                        className="font-sans text-[10px] uppercase px-3 py-1.5 rounded-full flex items-center gap-1.5"
+                      >
                         <AlertCircle className="w-3 h-3" />
                         Plan Limit ({maxMembers}/{maxMembers})
                       </Badge>
                     ) : (
-                      <Dialog open={isInviteOpen} onOpenChange={setIsInviteOpen}>
+                      <Dialog
+                        open={isInviteOpen}
+                        onOpenChange={setIsInviteOpen}
+                      >
                         <DialogTrigger asChild>
                           <motion.button
                             whileHover={{ scale: 0.98 }}
                             whileTap={{ scale: 0.95 }}
-                            className="bg-foreground text-background px-6 h-12 rounded-2xl font-mono uppercase text-xs font-semibold flex items-center gap-2 shadow-sm hover:opacity-90 transition-opacity"
+                            className="cursor-pointer bg-foreground text-background px-6 h-12 rounded-2xl font-sans uppercase text-xs font-semibold flex items-center gap-2 shadow-sm hover:opacity-90 transition-opacity"
                           >
                             <UserPlus className="w-4 h-4 stroke-[2]" />
                             Invite Member
@@ -276,40 +330,70 @@ export default function TeamDetailPage() {
                         </DialogTrigger>
                         <DialogContent className="sm:max-w-md rounded-[2rem] p-8 border-border/50 bg-background/95 backdrop-blur-xl shadow-2xl">
                           <DialogHeader className="mb-6">
-                            <DialogTitle className="text-2xl font-mono tracking-tight text-foreground">
+                            <DialogTitle className="text-2xl font-sans tracking-tight text-foreground">
                               Add Team Member
                             </DialogTitle>
                           </DialogHeader>
                           <div className="space-y-6">
                             <div className="space-y-3">
-                              <Label className="font-mono text-xs uppercase tracking-wider text-muted-foreground">Email Address</Label>
+                              <Label className="font-sans text-xs uppercase tracking-wider text-muted-foreground">
+                                Email Address
+                              </Label>
                               <Input
                                 type="email"
                                 placeholder="name@company.com"
                                 value={inviteEmail}
                                 onChange={(e) => setInviteEmail(e.target.value)}
-                                className="h-12 rounded-xl border-border/50 bg-muted/50 font-mono text-sm focus-visible:ring-1 focus-visible:ring-foreground"
+                                className="h-12 rounded-xl border-border/50 bg-muted/50 font-sans text-sm focus-visible:ring-1 focus-visible:ring-foreground"
                               />
                             </div>
                             <div className="space-y-3">
-                              <Label className="font-mono text-xs uppercase tracking-wider text-muted-foreground">Access Role</Label>
-                              <Select value={inviteRole} onValueChange={(v) => setInviteRole(v as any)}>
-                                <SelectTrigger className="h-12 rounded-xl border-border/50 bg-muted/50 font-mono text-sm focus:ring-1 focus:ring-foreground">
+                              <Label className="font-sans text-xs uppercase tracking-wider text-muted-foreground">
+                                Access Role
+                              </Label>
+                              <Select
+                                value={inviteRole}
+                                onValueChange={(v) => setInviteRole(v as any)}
+                              >
+                                <SelectTrigger className="h-12 rounded-xl border-border/50 bg-muted/50 font-sans text-sm focus:ring-1 focus:ring-foreground">
                                   <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent className="rounded-xl border-border bg-background shadow-xl">
-                                  <SelectItem value="ADMIN" className="font-mono text-xs cursor-pointer">ADMIN</SelectItem>
-                                  <SelectItem value="MEMBER" className="font-mono text-xs cursor-pointer">MEMBER</SelectItem>
-                                  <SelectItem value="VIEWER" className="font-mono text-xs cursor-pointer">VIEWER</SelectItem>
+                                  <SelectItem
+                                    value="ADMIN"
+                                    className="font-sans text-xs cursor-pointer"
+                                  >
+                                    ADMIN
+                                  </SelectItem>
+                                  <SelectItem
+                                    value="MEMBER"
+                                    className="font-sans text-xs cursor-pointer"
+                                  >
+                                    MEMBER
+                                  </SelectItem>
+                                  <SelectItem
+                                    value="VIEWER"
+                                    className="font-sans text-xs cursor-pointer"
+                                  >
+                                    VIEWER
+                                  </SelectItem>
                                 </SelectContent>
                               </Select>
                             </div>
                             <Button
-                              className="w-full h-12 rounded-xl font-mono uppercase tracking-widest text-xs bg-foreground text-background hover:bg-foreground/90 transition-colors"
-                              onClick={() => inviteMember.mutate({ teamId, email: inviteEmail, role: inviteRole })}
+                              className="cursor-pointer w-full h-12 rounded-xl font-sans uppercase tracking-widest text-xs bg-foreground text-background hover:bg-foreground/90 transition-colors"
+                              onClick={() =>
+                                inviteMember.mutate({
+                                  teamId,
+                                  email: inviteEmail,
+                                  role: inviteRole,
+                                })
+                              }
                               disabled={!inviteEmail || inviteMember.isPending}
                             >
-                              {inviteMember.isPending ? "Configuring..." : "Send Invitation"}
+                              {inviteMember.isPending
+                                ? "Configuring..."
+                                : "Send Invitation"}
                             </Button>
                           </div>
                         </DialogContent>
@@ -335,15 +419,16 @@ export default function TeamDetailPage() {
                       <div className="flex items-center gap-4">
                         <Avatar className="h-12 w-12 rounded-full border border-border/50 shadow-sm">
                           <AvatarImage src={member.user.image || undefined} />
-                          <AvatarFallback className="bg-foreground text-background font-mono text-sm">
-                            {member.user.name?.[0] || member.user.email[0].toUpperCase()}
+                          <AvatarFallback className="bg-foreground text-background font-sans text-sm">
+                            {member.user.name?.[0] ||
+                              member.user.email[0].toUpperCase()}
                           </AvatarFallback>
                         </Avatar>
                         <div className="flex flex-col">
-                          <span className="font-mono tracking-tight font-semibold text-foreground text-sm">
+                          <span className="font-sans tracking-tight font-semibold text-foreground text-sm">
                             {member.user.name || "Pending User"}
                           </span>
-                          <span className="font-mono text-xs text-muted-foreground opacity-80 decoration-muted-foreground decoration-1 underline-offset-4 group-hover:underline">
+                          <span className="font-sans text-xs text-muted-foreground opacity-80 decoration-muted-foreground decoration-1 underline-offset-4 group-hover:underline">
                             {member.user.email}
                           </span>
                         </div>
@@ -354,36 +439,61 @@ export default function TeamDetailPage() {
                           <Select
                             value={member.role}
                             onValueChange={(role) =>
-                              updateRole.mutate({ teamId, userId: member.user.id, role: role as any })
+                              updateRole.mutate({
+                                teamId,
+                                userId: member.user.id,
+                                role: role as any,
+                              })
                             }
                           >
-                            <SelectTrigger className="w-28 h-9 border-none bg-muted/50 hover:bg-muted transition-colors rounded-full font-mono text-xs focus:ring-0 shadow-none text-foreground text-center flex justify-center py-0">
+                            <SelectTrigger className="w-28 h-9 border-none bg-muted/50 hover:bg-muted transition-colors rounded-full font-sans text-xs focus:ring-0 shadow-none text-foreground text-center flex justify-center py-0">
                               <SelectValue />
                             </SelectTrigger>
-                            <SelectContent className="rounded-xl font-mono border-border bg-background shadow-xl">
-                              <SelectItem value="ADMIN" className="text-xs cursor-pointer">ADMIN</SelectItem>
-                              <SelectItem value="MEMBER" className="text-xs cursor-pointer">MEMBER</SelectItem>
-                              <SelectItem value="VIEWER" className="text-xs cursor-pointer">VIEWER</SelectItem>
+                            <SelectContent className="rounded-xl font-sans border-border bg-background shadow-xl">
+                              <SelectItem
+                                value="ADMIN"
+                                className="text-xs cursor-pointer"
+                              >
+                                ADMIN
+                              </SelectItem>
+                              <SelectItem
+                                value="MEMBER"
+                                className="text-xs cursor-pointer"
+                              >
+                                MEMBER
+                              </SelectItem>
+                              <SelectItem
+                                value="VIEWER"
+                                className="text-xs cursor-pointer"
+                              >
+                                VIEWER
+                              </SelectItem>
                             </SelectContent>
                           </Select>
                         ) : (
-                          <div className="flex items-center justify-center px-4 h-9 rounded-full bg-muted/30 border border-border/30 text-foreground font-mono text-xs tracking-widest uppercase">
+                          <div className="flex items-center justify-center px-4 h-9 rounded-full bg-muted/30 border border-border/30 text-foreground font-sans text-xs tracking-widest uppercase">
                             {member.role === "OWNER" ? (
-                              <span className="flex items-center gap-1.5 relative"><Shield className="w-3 h-3 text-emerald-500" /> OWNER</span>
+                              <span className="flex items-center gap-1.5 relative">
+                                <Shield className="w-3 h-3 text-emerald-500" />{" "}
+                                OWNER
+                              </span>
                             ) : (
                               member.role
                             )}
                           </div>
                         )}
-                        
+
                         {isAdmin && member.role !== "OWNER" && (
                           <motion.button
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.9 }}
-                            className="w-9 h-9 rounded-full flex items-center justify-center text-muted-foreground hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-500/10 transition-colors"
+                            className="cursor-pointer w-9 h-9 rounded-full flex items-center justify-center text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-colors"
                             onClick={() => {
                               if (confirm("Remove user from team?")) {
-                                removeMember.mutate({ teamId, userId: member.user.id });
+                                removeMember.mutate({
+                                  teamId,
+                                  userId: member.user.id,
+                                });
                               }
                             }}
                           >
