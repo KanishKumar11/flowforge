@@ -152,7 +152,14 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps -- setNodes/setEdges are stable
   }, [workflow]);
 
-  // Push to history on changes (debounced)
+  // Push to history on changes (debounced).
+  // historyIndex is intentionally read via a ref to avoid re-registering the
+  // timer on every cursor movement — but we must capture the latest value.
+  const historyIndexRef = useRef(historyIndex);
+  useEffect(() => {
+    historyIndexRef.current = historyIndex;
+  }, [historyIndex]);
+
   useEffect(() => {
     if (isUndoRedo.current) {
       isUndoRedo.current = false;
@@ -160,8 +167,9 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
     }
     const timer = setTimeout(() => {
       if (nodes.length > 0 || edges.length > 0) {
+        const currentIndex = historyIndexRef.current;
         setHistory((prev) => {
-          const newHistory = prev.slice(0, historyIndex + 1);
+          const newHistory = prev.slice(0, currentIndex + 1);
           return [...newHistory, { nodes: [...nodes], edges: [...edges] }];
         });
         setHistoryIndex((prev) => prev + 1);
@@ -236,7 +244,7 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [handleUndo, handleRedo, selectedNode, setNodes, setEdges]);
+  }, [handleUndo, handleRedo, handleSave, selectedNode, setNodes, setEdges]);
 
   const onConnect = useCallback(
     (params: Connection) => setEdges((eds) => addEdge(params, eds)),
@@ -290,7 +298,7 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
     [screenToFlowPosition, handleAddNode],
   );
 
-  const handleSave = () => {
+  const handleSave = useCallback(() => {
     setIsSaving(true);
     updateWorkflow.mutate({
       id: workflowId,
@@ -298,7 +306,7 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
       edges,
       viewport: getViewport(),
     });
-  };
+  }, [workflowId, nodes, edges, getViewport, updateWorkflow]);
 
   const handleExecute = () => {
     // Check if the workflow has a webhook trigger — if so, prompt for test body data

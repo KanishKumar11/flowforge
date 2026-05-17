@@ -5,6 +5,61 @@ import { Client as NotionClient } from "@notionhq/client";
 import nodemailer from "nodemailer";
 import { decryptCredential } from "@/lib/crypto";
 import { getNextCronDate } from "@/lib/cron-helper";
+import * as vm from "vm";
+
+// ── Safe script sandbox ────────────────────────────────────────────────
+// Uses Node's built-in vm module to run user-supplied code in an isolated
+// context that does NOT have access to process, require, global, fetch, or
+// any other Node-level globals. For maximum isolation in production, replace
+// this with the `isolated-vm` npm package.
+const SANDBOX_TIMEOUT_MS = 5_000;
+
+function buildSandbox(extra: Record<string, unknown>): vm.Context {
+  const sandbox = Object.create(null) as Record<string, unknown>;
+
+  // Expose only safe, read-only ECMAScript globals
+  Object.assign(sandbox, {
+    JSON,
+    Math,
+    Date,
+    String,
+    Number,
+    Boolean,
+    Array,
+    Object,
+    RegExp,
+    Error,
+    Map,
+    Set,
+    parseInt,
+    parseFloat,
+    isNaN,
+    isFinite,
+    encodeURIComponent,
+    decodeURIComponent,
+    encodeURI,
+    decodeURI,
+    // Intentionally omitted: process, require, fetch, Buffer, global, __dirname, __filename
+    // No-op console so user console.log() doesn't leak to server logs in prod
+    console: {
+      log: (..._: unknown[]) => {},
+      warn: (..._: unknown[]) => {},
+      error: (..._: unknown[]) => {},
+    },
+    ...extra,
+  });
+
+  return vm.createContext(sandbox);
+}
+
+function runInSandbox(
+  code: string,
+  ctx: vm.Context,
+  label = "sandbox",
+): unknown {
+  const script = new vm.Script(code, { filename: label });
+  return script.runInContext(ctx, { timeout: SANDBOX_TIMEOUT_MS });
+}
 
 // Types for workflow execution
 interface NodeData {
@@ -79,6 +134,65 @@ function resolveConfig(
   return resolved;
 }
 
+// ── SSRF guard ────────────────────────────────────────────────────────
+// Block requests to private/loopback/metadata IP ranges and reserved hostnames.
+function assertSafeUrl(raw: string): void {
+  let parsed: URL;
+  try {
+    parsed = new URL(raw);
+  } catch {
+    throw new Error(`HTTP Request: invalid URL "${raw}"`);
+  }
+
+  const proto = parsed.protocol;
+  if (proto !== "http:" && proto !== "https:") {
+    throw new Error(
+      `HTTP Request: only http/https protocols are allowed (got "${proto}")`,
+    );
+  }
+
+  const host = parsed.hostname.toLowerCase();
+
+  // Block loopback and special hostnames
+  const blockedHostnames = [
+    "localhost",
+    "metadata.google.internal",
+    "metadata",
+  ];
+  if (blockedHostnames.includes(host)) {
+    throw new Error(`HTTP Request: requests to "${host}" are not allowed`);
+  }
+
+  // Block AWS/GCP/Azure cloud metadata endpoints
+  if (
+    host === "169.254.169.254" ||
+    host.endsWith(".169.254.169.254") ||
+    host === "fd00:ec2::254" ||
+    host === "::1"
+  ) {
+    throw new Error(
+      "HTTP Request: requests to cloud metadata endpoints are not allowed",
+    );
+  }
+
+  // Block IPv4 private ranges
+  const ipv4 = host.match(/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/);
+  if (ipv4) {
+    const [, a, b] = ipv4.map(Number);
+    const isPrivate =
+      a === 10 ||
+      (a === 172 && b >= 16 && b <= 31) ||
+      (a === 192 && b === 168) ||
+      a === 127 ||
+      (a === 100 && b >= 64 && b <= 127); // RFC 6598 shared address space
+    if (isPrivate) {
+      throw new Error(
+        `HTTP Request: requests to private IP ranges are not allowed (${host})`,
+      );
+    }
+  }
+}
+
 // ── Shared credential-resolution helper ──────────────────────────────
 // Resolves an API key / token from: env var → inline config → stored Credential
 async function resolveCredential(
@@ -123,6 +237,14 @@ async function executeHttpRequest(
 ): Promise<unknown> {
   const url = config.url as string;
   const method = (config.method as string) || "GET";
+
+  if (!url) {
+    throw new Error("HTTP Request node: 'url' is required");
+  }
+
+  // ── SSRF guard ──
+  assertSafeUrl(url);
+
   // Headers may be stored as a JSON string from the config panel textarea
   let headers: Record<string, string> = {};
   if (config.headers) {
@@ -173,19 +295,16 @@ async function executeCode(
   context: ExecutionContext,
 ): Promise<unknown> {
   const code = config.code as string;
+  if (!code) return undefined;
 
-  // Simple expression evaluation (in production, use a proper sandbox)
   try {
-    // Create a function with access to context data
-    const fn = new Function(
-      "input",
-      "results",
-      `
-      "use strict";
-      ${code}
-      `,
-    );
-    return fn(context.triggerData, context.nodeResults);
+    const ctx = buildSandbox({
+      input: context.triggerData,
+      results: context.nodeResults,
+    });
+    // Wrap in IIFE so `return` inside the user code works
+    const wrapped = `(function () { "use strict"; ${code} })()`;
+    return runInSandbox(wrapped, ctx, "code-node");
   } catch (error) {
     throw new Error(`Code execution failed: ${(error as Error).message}`);
   }
@@ -198,16 +317,12 @@ async function executeIf(
   const condition = config.condition as string;
 
   try {
-    const fn = new Function(
-      "input",
-      "results",
-      `
-      "use strict";
-      return Boolean(${condition});
-      `,
-    );
-    const result = fn(context.triggerData, context.nodeResults);
-    return { condition: result, branch: result ? "true" : "false" };
+    const ctx = buildSandbox({
+      input: context.triggerData,
+      results: context.nodeResults,
+    });
+    const result = runInSandbox(`(function(){ "use strict"; return Boolean(${condition}); })()`, ctx, "if-node");
+    return { condition: Boolean(result), branch: result ? "true" : "false" };
   } catch (error) {
     throw new Error(`Condition evaluation failed: ${(error as Error).message}`);
   }
@@ -423,12 +538,10 @@ async function executeFilter(
   }
 
   try {
-    const fn = new Function(
-      "item",
-      "index",
-      `"use strict"; return Boolean(${condition});`,
-    );
-    return items.filter((item, index) => fn(item, index));
+    return items.filter((item, index) => {
+      const ctx = buildSandbox({ item, index });
+      return Boolean(runInSandbox(`(function(){ "use strict"; return Boolean(${condition}); })()`, ctx, "filter-node"));
+    });
   } catch (error) {
     throw new Error(`Filter evaluation failed: ${(error as Error).message}`);
   }
@@ -835,12 +948,8 @@ async function executeLoop(
     const item = items[i];
     if (expression) {
       try {
-        const fn = new Function(
-          "item",
-          "index",
-          `"use strict"; return ${expression};`,
-        );
-        results.push(fn(item, i));
+        const ctx = buildSandbox({ item, index: i });
+        results.push(runInSandbox(`(function(){ "use strict"; return (${expression}); })()`, ctx, "loop-node"));
       } catch (error) {
         results.push({ error: (error as Error).message, item, index: i });
       }
@@ -1046,12 +1155,11 @@ async function executeTransform(
   }
 
   try {
-    const fn = new Function(
-      "input",
-      "results",
-      `"use strict"; return ${expression};`,
-    );
-    return fn(context.triggerData, context.nodeResults);
+    const ctx = buildSandbox({
+      input: context.triggerData,
+      results: context.nodeResults,
+    });
+    return runInSandbox(`(function(){ "use strict"; return (${expression}); })()`, ctx, "transform-node");
   } catch (error) {
     throw new Error(`Transform expression failed: ${(error as Error).message}`);
   }

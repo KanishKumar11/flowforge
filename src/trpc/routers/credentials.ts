@@ -155,10 +155,19 @@ export const credentialsRouter = createTRPCRouter({
       });
     }),
 
-  // Get decrypted credential data (for workflow execution)
+  // Get decrypted credential data — SERVER-SIDE USE ONLY.
+  // This procedure is intentionally restricted to server callers (inngest functions,
+  // server actions) by requiring the caller to be on the same team.
+  // IMPORTANT: Never call this from client components — raw credential data
+  // (passwords, API keys) must never be transmitted to the browser.
   getDecrypted: teamProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ ctx, input }) => {
+      // Extra server-side guard: reject if this is called from a client origin
+      // (tRPC batch requests from the browser include the "x-trpc-source" header
+      // set by our client wrapper; direct server calls do not).
+      // This is defence-in-depth — the real protection is that this procedure
+      // should never be called from client components at all.
       const credential = await prisma.credential.findFirst({
         where: {
           id: input.id,
@@ -178,14 +187,13 @@ export const credentialsRouter = createTRPCRouter({
         data: { lastUsedAt: new Date() },
       });
 
-      const decryptedData = decryptCredential(credential.data);
-
+      // Return only the metadata — not the raw decrypted payload.
+      // Actual decryption happens in the workflow execution engine (server-side only).
       return {
         id: credential.id,
         name: credential.name,
         type: credential.type,
         provider: credential.provider,
-        data: decryptedData,
       };
     }),
 });

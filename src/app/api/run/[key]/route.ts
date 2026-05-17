@@ -3,6 +3,7 @@ import { executeWorkflowDirect } from "@/inngest/functions";
 import { inngest } from "@/inngest/client";
 import { NextRequest, NextResponse } from "next/server";
 import { createHash } from "crypto";
+import { PLANS } from "@/lib/plans";
 
 interface RunParams {
   params: Promise<{ key: string }>;
@@ -85,6 +86,32 @@ export async function POST(request: NextRequest, { params }: RunParams) {
     );
   }
 
+  // ── Monthly execution limit check ──
+  const plan = (apiKey.team.plan?.toUpperCase() as keyof typeof PLANS) || "FREE";
+  const execLimit =
+    PLANS[plan]?.limits.executionsPerMonth ??
+    PLANS.FREE.limits.executionsPerMonth;
+
+  const startOfMonth = new Date();
+  startOfMonth.setDate(1);
+  startOfMonth.setHours(0, 0, 0, 0);
+
+  const monthlyCount = await prisma.execution.count({
+    where: {
+      workflow: { teamId: apiKey.teamId },
+      startedAt: { gte: startOfMonth },
+    },
+  });
+
+  if (monthlyCount >= execLimit) {
+    return NextResponse.json(
+      {
+        error: `Monthly execution limit reached (${execLimit}). Upgrade your plan for more capacity.`,
+      },
+      { status: 429 },
+    );
+  }
+
   // Use the body we already parsed — exclude workflowId from the input payload
   const { workflowId: _wid, ...inputData } = bodyJson;
 
@@ -121,7 +148,19 @@ export async function POST(request: NextRequest, { params }: RunParams) {
     });
   } else {
     executeWorkflowDirect(workflow.id, execution.id, triggerData).catch(
-      () => {},
+      async (err) => {
+        console.error("[api/run] executeWorkflowDirect failed:", err);
+        await prisma.execution
+          .update({
+            where: { id: execution.id },
+            data: {
+              status: "ERROR",
+              finishedAt: new Date(),
+              error: (err as Error).message,
+            },
+          })
+          .catch(() => {});
+      },
     );
   }
 

@@ -4,9 +4,31 @@ import prisma from "@/lib/db";
 import { after } from "next/server";
 import { NextRequest, NextResponse } from "next/server";
 import * as Sentry from "@sentry/nextjs";
+import { createHmac, timingSafeEqual } from "crypto";
 
 interface WebhookParams {
   params: Promise<{ path: string }>;
+}
+
+/**
+ * Verify an HMAC-SHA256 webhook signature.
+ * The signature header must be in the form "sha256=<hex-digest>".
+ */
+function verifyHmacSignature(
+  rawBody: string,
+  secretHash: string,
+  signatureHeader: string | null,
+): boolean {
+  if (!signatureHeader) return false;
+  const expected = `sha256=${createHmac("sha256", secretHash).update(rawBody).digest("hex")}`;
+  try {
+    return timingSafeEqual(
+      Buffer.from(signatureHeader, "utf8"),
+      Buffer.from(expected, "utf8"),
+    );
+  } catch {
+    return false;
+  }
 }
 
 export async function GET(request: NextRequest, { params }: WebhookParams) {
@@ -53,30 +75,49 @@ async function handleWebhook(request: NextRequest, { path }: { path: string }) {
       );
     }
 
-    // Parse request data
+    // Parse request data — read raw body text FIRST so we can verify signatures
     const method = request.method;
+    const contentType = request.headers.get("content-type") || "";
+
+    let rawBody = "";
+    let body: unknown = null;
+
+    if (method !== "GET" && method !== "HEAD") {
+      rawBody = await request.text();
+
+      if (contentType.includes("application/json")) {
+        try {
+          body = JSON.parse(rawBody);
+        } catch {
+          body = rawBody;
+        }
+      } else if (contentType.includes("application/x-www-form-urlencoded")) {
+        const params = new URLSearchParams(rawBody);
+        body = Object.fromEntries(params.entries());
+      } else {
+        body = rawBody;
+      }
+    }
+
+    // ── HMAC signature verification ──────────────────────────────────
+    // If the endpoint has a secretHash set, verify the request signature.
+    // Callers must send the signature as: X-Webhook-Signature: sha256=<hex>
+    if (webhook.secretHash) {
+      const signature =
+        request.headers.get("x-webhook-signature") ??
+        request.headers.get("x-hub-signature-256");
+      if (!verifyHmacSignature(rawBody, webhook.secretHash, signature)) {
+        return NextResponse.json(
+          { error: "Invalid webhook signature" },
+          { status: 401 },
+        );
+      }
+    }
+
     const headers: Record<string, string> = {};
     request.headers.forEach((value, key) => {
       headers[key] = value;
     });
-
-    let body: unknown = null;
-    const contentType = request.headers.get("content-type") || "";
-
-    if (method !== "GET" && method !== "HEAD") {
-      if (contentType.includes("application/json")) {
-        try {
-          body = await request.json();
-        } catch {
-          body = await request.text();
-        }
-      } else if (contentType.includes("application/x-www-form-urlencoded")) {
-        const formData = await request.formData();
-        body = Object.fromEntries(formData.entries());
-      } else {
-        body = await request.text();
-      }
-    }
 
     const queryParams = Object.fromEntries(
       request.nextUrl.searchParams.entries(),

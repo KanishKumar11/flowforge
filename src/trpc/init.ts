@@ -33,11 +33,8 @@ export const adminProcedure = protectedProcedure.use(async ({ ctx, next }) => {
   if (!adminUser || !adminUser.isActive) {
     throw new TRPCError({ code: "FORBIDDEN", message: "Admin access required" });
   }
-  // Update last login
-  await prisma.adminUser.update({
-    where: { id: adminUser.id },
-    data: { lastLogin: new Date() },
-  });
+  // Note: lastLogin is updated only on the explicit admin login action,
+  // not on every API call, to avoid unnecessary write amplification.
   return next({ ctx: { ...ctx, adminUser } });
 });
 
