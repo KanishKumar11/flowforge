@@ -31,11 +31,6 @@ function buildBreadcrumbs(pathname: string): Breadcrumb[] {
     subscriptions: "Subscriptions",
     payments: "Payments",
     logs: "Logs",
-    "feature-flags": "Feature Flags",
-    announcements: "Announcements",
-    support: "Support",
-    settings: "Settings",
-    templates: "Templates",
     activity: "Activity",
   };
 

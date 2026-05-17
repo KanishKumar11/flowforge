@@ -87,6 +87,7 @@ interface ExecutionContext {
   workflowId: string;
   executionId: string;
   teamId: string | null;
+  userId: string | null;
   triggerData: Record<string, unknown>;
   nodeResults: Record<string, unknown>;
 }
@@ -1030,6 +1031,7 @@ async function executeOpenAI(
     }
 
     try {
+      const t0 = Date.now();
       const response = await fetch("https://api.anthropic.com/v1/messages", {
         method: "POST",
         headers: {
@@ -1047,10 +1049,17 @@ async function executeOpenAI(
 
       if (!response.ok) {
         const error = await response.text();
+        await prisma.aIUsageLog.create({ data: { userId: context.userId, workflowId: context.workflowId, executionId: context.executionId, provider: "anthropic", model, inputTokens: 0, outputTokens: 0, totalTokens: 0, costUsd: 0, latencyMs: Date.now() - t0, success: false, error } }).catch(() => {});
         throw new Error(`Anthropic API error: ${error}`);
       }
       const data = await response.json();
       const text = data.content?.[0]?.text || "";
+      const inputTokens: number = data.usage?.input_tokens ?? 0;
+      const outputTokens: number = data.usage?.output_tokens ?? 0;
+      const totalTokens = inputTokens + outputTokens;
+      // Anthropic pricing approximation: $3/M input, $15/M output (Sonnet)
+      const costUsd = (inputTokens * 3 + outputTokens * 15) / 1_000_000;
+      await prisma.aIUsageLog.create({ data: { userId: context.userId, workflowId: context.workflowId, executionId: context.executionId, provider: "anthropic", model, inputTokens, outputTokens, totalTokens, costUsd, latencyMs: Date.now() - t0, success: true } }).catch(() => {});
       return {
         message: text,
         result: text,
@@ -1077,6 +1086,7 @@ async function executeOpenAI(
 
     try {
       // Simple Gemini GenerateContent API
+      const t0 = Date.now();
       const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
       const response = await fetch(url, {
         method: "POST",
@@ -1098,10 +1108,17 @@ async function executeOpenAI(
 
       if (!response.ok) {
         const error = await response.text();
+        await prisma.aIUsageLog.create({ data: { userId: context.userId, workflowId: context.workflowId, executionId: context.executionId, provider: "google", model, inputTokens: 0, outputTokens: 0, totalTokens: 0, costUsd: 0, latencyMs: Date.now() - t0, success: false, error } }).catch(() => {});
         throw new Error(`Gemini API error: ${error}`);
       }
       const data = await response.json();
       const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
+      const inputTokens: number = data.usageMetadata?.promptTokenCount ?? 0;
+      const outputTokens: number = data.usageMetadata?.candidatesTokenCount ?? 0;
+      const totalTokens = inputTokens + outputTokens;
+      // Gemini 1.5 Flash pricing approximation: $0.075/M input, $0.30/M output
+      const costUsd = (inputTokens * 0.075 + outputTokens * 0.30) / 1_000_000;
+      await prisma.aIUsageLog.create({ data: { userId: context.userId, workflowId: context.workflowId, executionId: context.executionId, provider: "google", model, inputTokens, outputTokens, totalTokens, costUsd, latencyMs: Date.now() - t0, success: true } }).catch(() => {});
       return {
         message: text,
         result: text,
@@ -1126,6 +1143,7 @@ async function executeOpenAI(
   }
 
   try {
+    const t0 = Date.now();
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -1143,11 +1161,18 @@ async function executeOpenAI(
 
     if (!response.ok) {
       const error = await response.text();
+      await prisma.aIUsageLog.create({ data: { userId: context.userId, workflowId: context.workflowId, executionId: context.executionId, provider: "openai", model, inputTokens: 0, outputTokens: 0, totalTokens: 0, costUsd: 0, latencyMs: Date.now() - t0, success: false, error } }).catch(() => {});
       throw new Error(`OpenAI API error: ${error}`);
     }
 
     const data = await response.json();
     const text = data.choices?.[0]?.message?.content || "";
+    const inputTokens: number = data.usage?.prompt_tokens ?? 0;
+    const outputTokens: number = data.usage?.completion_tokens ?? 0;
+    const totalTokens: number = data.usage?.total_tokens ?? (inputTokens + outputTokens);
+    // GPT-4o pricing approximation: $2.50/M input, $10/M output
+    const costUsd = (inputTokens * 2.5 + outputTokens * 10) / 1_000_000;
+    await prisma.aIUsageLog.create({ data: { userId: context.userId, workflowId: context.workflowId, executionId: context.executionId, provider: "openai", model, inputTokens, outputTokens, totalTokens, costUsd, latencyMs: Date.now() - t0, success: true } }).catch(() => {});
     return {
       message: text,
       result: text,
@@ -1597,6 +1622,7 @@ export async function executeWorkflowDirect(
         workflowId,
         executionId,
         teamId: workflow.teamId,
+        userId: workflow.userId ?? null,
         triggerData,
         nodeResults: {},
       };
@@ -1794,6 +1820,7 @@ export const executeWorkflow = inngest.createFunction(
         workflowId,
         executionId,
         teamId: workflow.teamId,
+        userId: workflow.userId ?? null,
         triggerData,
         nodeResults: {},
       };

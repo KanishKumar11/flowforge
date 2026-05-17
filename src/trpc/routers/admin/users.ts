@@ -60,6 +60,11 @@ export const adminUsersRouter = createTRPCRouter({
             emailVerified: true,
             createdAt: true,
             updatedAt: true,
+            teamMembers: {
+              where: { role: "OWNER" },
+              select: { team: { select: { plan: true } } },
+              take: 1,
+            },
             adminUser: { select: { role: true, isActive: true } },
             _count: {
               select: {

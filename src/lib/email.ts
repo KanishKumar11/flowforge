@@ -24,7 +24,9 @@ export async function sendResetPasswordEmail(email: string, url: string) {
 
   const port = parseInt(process.env.SMTP_PORT || "587");
   const secure = process.env.SMTP_SECURE === "true" || port === 465;
-  console.log(`[email] Connecting to ${process.env.SMTP_HOST || "smtp.gmail.com"}:${port} secure=${secure}`);
+  console.log(
+    `[email] Connecting to ${process.env.SMTP_HOST || "smtp.gmail.com"}:${port} secure=${secure}`,
+  );
 
   const transporter = createTransporter();
   try {

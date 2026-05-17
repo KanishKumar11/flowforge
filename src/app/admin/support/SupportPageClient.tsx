@@ -79,7 +79,7 @@ export default function SupportPageClient() {
   const { data: stats } = useQuery(
     trpc.admin.support.ticketStats.queryOptions(),
   );
-  const { data: tickets, isLoading } = useQuery(
+  const { data: ticketsData, isLoading } = useQuery(
     trpc.admin.support.listTickets.queryOptions({
       status:
         statusFilter !== "all"
@@ -92,6 +92,7 @@ export default function SupportPageClient() {
           : undefined,
     }),
   );
+  const tickets = ticketsData?.tickets;
   const { data: ticketDetail } = useQuery(
     trpc.admin.support.getTicket.queryOptions(
       { ticketId: selectedId! },

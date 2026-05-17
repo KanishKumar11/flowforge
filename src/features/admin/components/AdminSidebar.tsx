@@ -3,25 +3,19 @@
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import {
-  Activity,
   BarChart3,
-  Bell,
   Bot,
   ChevronDown,
   ChevronRight,
   CreditCard,
-  Flag,
-  HeadphonesIcon,
   LayoutDashboard,
   LogOut,
   Menu,
-  Settings,
   Shield,
   Terminal,
   Users,
   Workflow,
   X,
-  Zap,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -52,7 +46,6 @@ const NAV_SECTIONS = [
     items: [
       { href: "/admin/users", label: "Users", icon: Users },
       { href: "/admin/workflows", label: "Workflows", icon: Workflow },
-      { href: "/admin/templates", label: "Templates", icon: Zap },
       { href: "/admin/subscriptions", label: "Subscriptions", icon: CreditCard },
     ],
   },
@@ -61,20 +54,6 @@ const NAV_SECTIONS = [
     items: [
       { href: "/admin/ai-usage", label: "AI Usage", icon: Bot },
       { href: "/admin/logs", label: "Logs", icon: Terminal },
-      { href: "/admin/activity", label: "Activity", icon: Activity },
-    ],
-  },
-  {
-    label: "Platform",
-    items: [
-      { href: "/admin/support", label: "Support", icon: HeadphonesIcon },
-      {
-        href: "/admin/announcements",
-        label: "Announcements",
-        icon: Bell,
-      },
-      { href: "/admin/feature-flags", label: "Feature Flags", icon: Flag },
-      { href: "/admin/settings", label: "Settings", icon: Settings },
     ],
   },
 ];

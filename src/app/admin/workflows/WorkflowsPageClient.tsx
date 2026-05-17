@@ -228,7 +228,7 @@ export default function WorkflowsPageClient() {
         variant="destructive"
         loading={deleteMutation.isPending}
         onConfirm={() =>
-          deleteMutation.mutate({ workflowId: deleteTarget!.id })
+          deleteTarget && deleteMutation.mutate({ workflowId: deleteTarget.id })
         }
       />
     </div>

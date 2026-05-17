@@ -69,11 +69,14 @@ export default function SubscriptionsPageClient() {
                     </p>
                   </div>
                   <div className="flex items-center gap-2 shrink-0">
-                    <Badge
-                      className={cn("text-xs capitalize", PLAN_COLORS["free"])}
-                    >
-                      <CreditCard className="mr-1 h-3 w-3" /> Free
-                    </Badge>
+                    {(() => {
+                      const plan = (u as unknown as { teamMembers: { team: { plan: string } }[] }).teamMembers?.[0]?.team?.plan ?? "free";
+                      return (
+                        <Badge className={cn("text-xs capitalize", PLAN_COLORS[plan] ?? PLAN_COLORS["free"])}>
+                          <CreditCard className="mr-1 h-3 w-3" /> {plan}
+                        </Badge>
+                      );
+                    })()}
                     <span className="text-xs text-muted-foreground">
                       {formatDistanceToNow(new Date(u.createdAt), {
                         addSuffix: true,

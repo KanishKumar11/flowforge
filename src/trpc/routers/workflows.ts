@@ -138,7 +138,7 @@ export const workflowsRouter = createTRPCRouter({
         });
       }
 
-      return prisma.workflow.create({
+      const newWorkflow = await prisma.workflow.create({
         data: {
           name: input.name,
           description: input.description,
@@ -148,6 +148,8 @@ export const workflowsRouter = createTRPCRouter({
           edges: [],
         },
       });
+      after(() => prisma.auditLog.create({ data: { action: "CREATE", entity: "workflow", entityId: newWorkflow.id, userId: ctx.user.id, details: { name: newWorkflow.name } } }).catch(() => {}));
+      return newWorkflow;
     }),
 
   // Update a workflow
@@ -305,6 +307,7 @@ export const workflowsRouter = createTRPCRouter({
         });
       }
 
+      after(() => prisma.auditLog.create({ data: { action: "DELETE", entity: "workflow", entityId: input.id, userId: ctx.user.id, details: { name: workflow.name } } }).catch(() => {}));
       return prisma.workflow.delete({
         where: { id: input.id },
       });
@@ -414,6 +417,7 @@ export const workflowsRouter = createTRPCRouter({
           userId: ctx.user.id,
         },
       });
+      after(() => prisma.auditLog.create({ data: { action: "EXECUTE", entity: "workflow", entityId: workflow.id, userId: ctx.user.id, details: { executionId: execution.id, name: workflow.name } } }).catch(() => {}));
 
       const triggerData: Record<string, unknown> = {
         triggeredBy: ctx.user.id,

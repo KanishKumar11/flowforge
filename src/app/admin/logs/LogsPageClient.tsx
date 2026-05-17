@@ -46,23 +46,23 @@ export default function LogsPageClient() {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
 
-  const adminLogs = useQuery(
-    trpc.admin.logs.list.queryOptions({
+  const adminLogs = useQuery({
+    ...trpc.admin.logs.list.queryOptions({
       page,
       limit: 30,
       search: search || undefined,
     }),
-    { enabled: tab === "admin" },
-  );
+    enabled: tab === "admin",
+  });
 
-  const systemLogs = useQuery(
-    trpc.admin.logs.systemLogs.queryOptions({
+  const systemLogs = useQuery({
+    ...trpc.admin.logs.systemLogs.queryOptions({
       page,
       limit: 30,
       search: search || undefined,
     }),
-    { enabled: tab === "system" },
-  );
+    enabled: tab === "system",
+  });
 
   const active = tab === "admin" ? adminLogs : systemLogs;
   const logs = active.data as

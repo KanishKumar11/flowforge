@@ -47,6 +47,7 @@ type User = {
   name: string | null;
   image: string | null;
   emailVerified: boolean;
+  teamMembers: { team: { plan: string } }[];
   createdAt: Date;
   adminUser: { role: string; isActive: boolean } | null;
   _count: { workflows: number; executions: number; teamMembers: number };
@@ -123,7 +124,7 @@ export default function UsersPageClient() {
       id: "status",
       header: "Status",
       cell: ({ row }) => (
-        <div className="flex gap-1.5">
+        <div className="flex flex-wrap gap-1.5">
           <Badge
             variant={row.original.emailVerified ? "default" : "outline"}
             className={cn(
@@ -134,6 +135,16 @@ export default function UsersPageClient() {
             )}
           >
             {row.original.emailVerified ? "Verified" : "Unverified"}
+          </Badge>
+          <Badge
+            className={cn(
+              "text-xs",
+              row.original.teamMembers[0]?.team?.plan === "pro"
+                ? "bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-400"
+                : "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400",
+            )}
+          >
+            {(row.original.teamMembers[0]?.team?.plan ?? "free").toUpperCase()}
           </Badge>
           {row.original.adminUser && (
             <Badge className="bg-violet-100 text-xs text-violet-700 dark:bg-violet-950 dark:text-violet-400">
@@ -312,7 +323,7 @@ export default function UsersPageClient() {
         confirmLabel="Delete user"
         variant="destructive"
         loading={deleteMutation.isPending}
-        onConfirm={() => deleteMutation.mutate({ userId: deleteTarget!.id })}
+        onConfirm={() => deleteTarget && deleteMutation.mutate({ userId: deleteTarget.id })}
       />
       <ConfirmDialog
         open={!!banTarget}
@@ -322,7 +333,7 @@ export default function UsersPageClient() {
         confirmLabel="Revoke sessions"
         variant="destructive"
         loading={banMutation.isPending}
-        onConfirm={() => banMutation.mutate({ userId: banTarget!.id })}
+        onConfirm={() => banTarget && banMutation.mutate({ userId: banTarget.id })}
       />
     </div>
   );
