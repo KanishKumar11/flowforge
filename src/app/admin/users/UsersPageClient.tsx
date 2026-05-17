@@ -323,9 +323,11 @@ export default function UsersPageClient() {
         confirmLabel="Delete user"
         variant="destructive"
         loading={deleteMutation.isPending}
-        onConfirm={() =>
-          deleteTarget && deleteMutation.mutate({ userId: deleteTarget.id })
-        }
+        onConfirm={() => {
+          if (deleteTarget) {
+            deleteMutation.mutate({ userId: deleteTarget.id });
+          }
+        }}
       />
       <ConfirmDialog
         open={!!banTarget}
@@ -335,9 +337,11 @@ export default function UsersPageClient() {
         confirmLabel="Revoke sessions"
         variant="destructive"
         loading={banMutation.isPending}
-        onConfirm={() =>
-          banTarget && banMutation.mutate({ userId: banTarget.id })
-        }
+        onConfirm={() => {
+          if (banTarget) {
+            banMutation.mutate({ userId: banTarget.id });
+          }
+        }}
       />
     </div>
   );
