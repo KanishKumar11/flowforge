@@ -1,14 +1,19 @@
 import nodemailer from "nodemailer";
 
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST || "smtp.gmail.com",
-  port: parseInt(process.env.SMTP_PORT || "587"),
-  secure: process.env.SMTP_SECURE === "true",
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
-  },
-});
+function createTransporter() {
+  const port = parseInt(process.env.SMTP_PORT || "587");
+  // port 465 = implicit SSL (secure: true), port 587/25 = STARTTLS (secure: false)
+  const secure = process.env.SMTP_SECURE === "true" || port === 465;
+  return nodemailer.createTransport({
+    host: process.env.SMTP_HOST || "smtp.gmail.com",
+    port,
+    secure,
+    auth: {
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASS,
+    },
+  });
+}
 
 export async function sendResetPasswordEmail(email: string, url: string) {
   if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
@@ -17,6 +22,11 @@ export async function sendResetPasswordEmail(email: string, url: string) {
     return;
   }
 
+  const port = parseInt(process.env.SMTP_PORT || "587");
+  const secure = process.env.SMTP_SECURE === "true" || port === 465;
+  console.log(`[email] Connecting to ${process.env.SMTP_HOST || "smtp.gmail.com"}:${port} secure=${secure}`);
+
+  const transporter = createTransporter();
   try {
     await transporter.sendMail({
       from: process.env.SMTP_FROM || '"FlowGent" <noreply@flowforge.com>',
@@ -53,6 +63,7 @@ export async function sendInvitationEmail(
     return;
   }
 
+  const transporter = createTransporter();
   await transporter.sendMail({
     from: process.env.SMTP_FROM || '"FlowGent" <noreply@flowforge.com>',
     to: email,
