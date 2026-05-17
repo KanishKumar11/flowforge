@@ -7,6 +7,17 @@ import { webhooksRouter } from "./webhooks";
 import { teamsRouter } from "./teams";
 import { auditRouter } from "./audit";
 import { apiKeysRouter } from "./apiKeys";
+import {
+  adminUsersRouter,
+  adminAnalyticsRouter,
+  adminFeatureFlagsRouter,
+  adminAnnouncementsRouter,
+  adminSettingsRouter,
+  adminSupportRouter,
+  adminLogsRouter,
+  adminAIUsageRouter,
+  adminWorkflowsRouter,
+} from "./admin";
 
 export const appRouter = createTRPCRouter({
   workflows: workflowsRouter,
@@ -17,6 +28,18 @@ export const appRouter = createTRPCRouter({
   teams: teamsRouter,
   audit: auditRouter,
   apiKeys: apiKeysRouter,
+  // Admin routers
+  admin: createTRPCRouter({
+    users: adminUsersRouter,
+    analytics: adminAnalyticsRouter,
+    featureFlags: adminFeatureFlagsRouter,
+    announcements: adminAnnouncementsRouter,
+    settings: adminSettingsRouter,
+    support: adminSupportRouter,
+    logs: adminLogsRouter,
+    aiUsage: adminAIUsageRouter,
+    workflows: adminWorkflowsRouter,
+  }),
 });
 
 export type AppRouter = typeof appRouter;

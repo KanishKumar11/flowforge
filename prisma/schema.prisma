@@ -36,6 +36,11 @@ model User {
   auditLogs        AuditLog[]
   apiKeys          ApiKey[]
 
+  // Admin relations
+  adminUser    AdminUser?
+  supportTickets SupportTicket[]
+  aiUsageLogs  AIUsageLog[]
+
   @@map("user")
 }
 
@@ -301,8 +306,179 @@ model ApiKey {
 }
 
 // ============================================
+// ADMIN SYSTEM
+// ============================================
+
+enum AdminRole {
+  SUPER_ADMIN
+  ADMIN
+  MODERATOR
+  SUPPORT_AGENT
+}
+
+model AdminUser {
+  id        String    @id @default(cuid())
+  userId    String    @unique
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role      AdminRole @default(SUPPORT_AGENT)
+  isActive  Boolean   @default(true)
+  lastLogin DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  auditLogs AdminAuditLog[]
+
+  @@map("admin_user")
+}
+
+model AdminAuditLog {
+  id          String    @id @default(cuid())
+  adminUserId String
+  adminUser   AdminUser @relation(fields: [adminUserId], references: [id], onDelete: Cascade)
+  action      String    // e.g. "BAN_USER", "DELETE_WORKFLOW", "UPDATE_FEATURE_FLAG"
+  targetType  String?   // e.g. "user", "workflow", "feature_flag"
+  targetId    String?
+  details     Json?
+  ipAddress   String?
+  userAgent   String?
+  createdAt   DateTime  @default(now())
+
+  @@index([adminUserId])
+  @@index([action])
+  @@index([createdAt])
+  @@map("admin_audit_log")
+}
+
+model FeatureFlag {
+  id           String   @id @default(cuid())
+  key          String   @unique
+  name         String
+  description  String?
+  enabled      Boolean  @default(false)
+  rolloutPct   Int      @default(0)   // 0-100 percent rollout
+  targetUsers  String[] @default([])  // specific user IDs
+  metadata     Json?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("feature_flag")
+}
+
+model Announcement {
+  id          String             @id @default(cuid())
+  title       String
+  message     String
+  type        AnnouncementType   @default(INFO)
+  targetAudience String          @default("all") // "all", "premium", "free"
+  scheduledAt DateTime?
+  expiresAt   DateTime?
+  isActive    Boolean            @default(true)
+  isDismissable Boolean          @default(true)
+  ctaText     String?
+  ctaUrl      String?
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+
+  @@map("announcement")
+}
+
+model SupportTicket {
+  id          String              @id @default(cuid())
+  ticketNumber String             @unique @default(cuid())
+  subject     String
+  status      SupportTicketStatus @default(OPEN)
+  priority    SupportPriority     @default(MEDIUM)
+  userId      String
+  user        User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  assignedTo  String?             // Admin user ID
+  tags        String[]            @default([])
+  metadata    Json?               // e.g. browser info, workflow ID
+  resolvedAt  DateTime?
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+
+  messages SupportTicketMessage[]
+
+  @@index([userId])
+  @@index([status])
+  @@index([priority])
+  @@map("support_ticket")
+}
+
+model SupportTicketMessage {
+  id        String        @id @default(cuid())
+  ticketId  String
+  ticket    SupportTicket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  authorId  String        // user ID or admin user ID
+  isAdmin   Boolean       @default(false)
+  content   String
+  createdAt DateTime      @default(now())
+
+  @@index([ticketId])
+  @@map("support_ticket_message")
+}
+
+model AIUsageLog {
+  id           String   @id @default(cuid())
+  userId       String?
+  user         User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  workflowId   String?
+  executionId  String?
+  provider     String   // "openai", "anthropic", "google"
+  model        String   // e.g. "gpt-4o", "claude-3-5-sonnet", "gemini-pro"
+  inputTokens  Int      @default(0)
+  outputTokens Int      @default(0)
+  totalTokens  Int      @default(0)
+  costUsd      Float    @default(0)
+  latencyMs    Int?
+  success      Boolean  @default(true)
+  error        String?
+  createdAt    DateTime @default(now())
+
+  @@index([userId])
+  @@index([provider])
+  @@index([model])
+  @@index([createdAt])
+  @@map("ai_usage_log")
+}
+
+model SystemSetting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     Json
+  category  String   @default("general")
+  isPublic  Boolean  @default(false)
+  updatedAt DateTime @updatedAt
+
+  @@index([category])
+  @@map("system_setting")
+}
+
+// ============================================
 // ENUMS
 // ============================================
+
+enum AnnouncementType {
+  INFO
+  WARNING
+  SUCCESS
+  MAINTENANCE
+}
+
+enum SupportTicketStatus {
+  OPEN
+  IN_PROGRESS
+  WAITING_FOR_USER
+  RESOLVED
+  CLOSED
+}
+
+enum SupportPriority {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
 
 enum ExecutionStatus {
   PENDING

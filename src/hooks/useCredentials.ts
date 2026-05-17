@@ -27,7 +27,7 @@ export function useCredentials(provider?: string) {
     ? (credentials ?? []).filter(
         (c) => (c as { provider: string }).provider === provider,
       )
-    : credentials ?? [];
+    : (credentials ?? []);
 
   const createCredential = useMutation({
     mutationFn: (data: {
@@ -41,7 +41,9 @@ export function useCredentials(provider?: string) {
       toast.success("Credential created");
     },
     onError: (error: Error) => {
-      toast.error("Failed to create credential", { description: error.message });
+      toast.error("Failed to create credential", {
+        description: error.message,
+      });
     },
   });
 
@@ -56,7 +58,9 @@ export function useCredentials(provider?: string) {
       toast.success("Credential updated");
     },
     onError: (error: Error) => {
-      toast.error("Failed to update credential", { description: error.message });
+      toast.error("Failed to update credential", {
+        description: error.message,
+      });
     },
   });
 
@@ -68,7 +72,9 @@ export function useCredentials(provider?: string) {
       toast.success("Credential deleted");
     },
     onError: (error: Error) => {
-      toast.error("Failed to delete credential", { description: error.message });
+      toast.error("Failed to delete credential", {
+        description: error.message,
+      });
     },
   });
 
@@ -76,7 +82,9 @@ export function useCredentials(provider?: string) {
     mutationFn: (data: { id: string }) =>
       client.credentials.getDecrypted.query(data),
     onError: (error: Error) => {
-      toast.error("Failed to decrypt credential", { description: error.message });
+      toast.error("Failed to decrypt credential", {
+        description: error.message,
+      });
     },
   });
 

@@ -23,6 +23,35 @@ export const protectedProcedure = baseProcedure.use(async ({ ctx, next }) => {
 });
 
 /**
+ * adminProcedure — verifies the caller is an active admin in AdminUser table.
+ * Adds `adminUser` to ctx with role info.
+ */
+export const adminProcedure = protectedProcedure.use(async ({ ctx, next }) => {
+  const adminUser = await prisma.adminUser.findUnique({
+    where: { userId: ctx.user.id },
+  });
+  if (!adminUser || !adminUser.isActive) {
+    throw new TRPCError({ code: "FORBIDDEN", message: "Admin access required" });
+  }
+  // Update last login
+  await prisma.adminUser.update({
+    where: { id: adminUser.id },
+    data: { lastLogin: new Date() },
+  });
+  return next({ ctx: { ...ctx, adminUser } });
+});
+
+/**
+ * superAdminProcedure — only SUPER_ADMIN can call this.
+ */
+export const superAdminProcedure = adminProcedure.use(async ({ ctx, next }) => {
+  if (ctx.adminUser.role !== "SUPER_ADMIN") {
+    throw new TRPCError({ code: "FORBIDDEN", message: "Super admin access required" });
+  }
+  return next({ ctx });
+});
+
+/**
  * teamProcedure — resolves the active team from the `x-team-id` request header
  * and verifies the caller is a member of that team. Adds `team` and `teamRole`
  * to the tRPC context for downstream authorization checks.

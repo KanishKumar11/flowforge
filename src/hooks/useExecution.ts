@@ -33,7 +33,7 @@ export function useExecution(workflowId?: string) {
     }),
   );
 
-  const executions = executionsData?.items ?? [];
+  const executions = (executionsData?.items ?? []) as { id: string; status: ExecutionStatus; [key: string]: unknown }[];
 
   // Aggregate execution stats (last 7 days by default)
   const { data: stats, isLoading: isLoadingStats } = useQuery(
@@ -41,8 +41,7 @@ export function useExecution(workflowId?: string) {
   );
 
   const cancelExecution = useMutation({
-    mutationFn: (data: { id: string }) =>
-      client.executions.cancel.mutate(data),
+    mutationFn: (data: { id: string }) => client.executions.cancel.mutate(data),
     onSuccess: () => {
       refetch();
       toast.success("Execution cancelled");
@@ -53,8 +52,7 @@ export function useExecution(workflowId?: string) {
   });
 
   const retryExecution = useMutation({
-    mutationFn: (data: { id: string }) =>
-      client.executions.retry.mutate(data),
+    mutationFn: (data: { id: string }) => client.executions.retry.mutate(data),
     onSuccess: () => {
       refetch();
       toast.success("Execution queued for retry");
@@ -65,8 +63,7 @@ export function useExecution(workflowId?: string) {
   });
 
   const deleteExecution = useMutation({
-    mutationFn: (data: { id: string }) =>
-      client.executions.delete.mutate(data),
+    mutationFn: (data: { id: string }) => client.executions.delete.mutate(data),
     onSuccess: () => {
       refetch();
       toast.success("Execution deleted");
@@ -84,7 +81,7 @@ export function useExecution(workflowId?: string) {
     useQuery(trpc.executions.timeline.queryOptions({ workflowId: id }));
 
   const filterByStatus = (status: ExecutionStatus) =>
-    executions.filter((e) => (e as { status: ExecutionStatus }).status === status);
+    executions.filter((e) => e.status === status);
 
   const invalidate = () => {
     queryClient.invalidateQueries({ queryKey: ["executions"] });
