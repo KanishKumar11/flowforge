@@ -215,11 +215,13 @@ export default function UsersPageClient() {
 
   return (
     <div className="space-y-5">
-      <div>
-        <h1 className="text-xl font-bold tracking-tight">Users</h1>
-        <p className="text-sm text-muted-foreground">
-          Manage all {data?.total ?? "…"} registered users
-        </p>
+      <div className="flex items-center justify-between rounded-xl border border-border/50 bg-card px-5 py-4">
+        <div>
+          <h1 className="text-xl font-bold tracking-tight">Users</h1>
+          <p className="mt-0.5 text-sm text-muted-foreground">
+            Manage all {data?.total ?? "…"} registered users
+          </p>
+        </div>
       </div>
 
       <AdminDataTable

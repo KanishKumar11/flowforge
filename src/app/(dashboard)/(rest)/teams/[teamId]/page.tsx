@@ -17,6 +17,7 @@ import {
   AlertCircle,
   Mail,
   X,
+  RefreshCw,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -159,6 +160,18 @@ export default function TeamDetailPage() {
     }),
   );
 
+  const resendInvitation = useMutation(
+    trpc.teams.resendInvitation.mutationOptions({
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: teamQueryKey });
+        toast.success("Invitation resent");
+      },
+      onError: (error) => {
+        toast.error(error.message);
+      },
+    }),
+  );
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[100dvh]">
@@ -187,7 +200,9 @@ export default function TeamDetailPage() {
   const isAdmin = team.currentUserRole === "ADMIN" || isOwner;
 
   // Use Polar subscription as ground truth; fall back to DB value
-  const effectivePlan = hasActiveSubscription ? "PRO" : (team.plan?.toUpperCase() || "FREE");
+  const effectivePlan = hasActiveSubscription
+    ? "PRO"
+    : team.plan?.toUpperCase() || "FREE";
   const planKey = effectivePlan as keyof typeof PLANS;
   const maxMembers = PLANS[planKey]?.limits?.teamMembers || 1;
   const currentMembersCount = team.members.length;
@@ -235,7 +250,8 @@ export default function TeamDetailPage() {
               variant="outline"
               className="font-sans uppercase px-4 py-1.5 rounded-full border-foreground/20 bg-background shadow-sm"
             >
-              {effectivePlan.charAt(0) + effectivePlan.slice(1).toLowerCase()} Plan
+              {effectivePlan.charAt(0) + effectivePlan.slice(1).toLowerCase()}{" "}
+              Plan
             </Badge>
           </div>
         </motion.div>
@@ -556,19 +572,36 @@ export default function TeamDetailPage() {
                               </div>
                             </div>
                             {isAdmin && (
-                              <motion.button
-                                whileHover={{ scale: 1.1 }}
-                                whileTap={{ scale: 0.9 }}
-                                className="cursor-pointer w-9 h-9 rounded-full flex items-center justify-center text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-colors"
-                                onClick={() =>
-                                  cancelInvitation.mutate({
-                                    invitationId: inv.id,
-                                    teamId,
-                                  })
-                                }
-                              >
-                                <X className="w-4 h-4 stroke-[2]" />
-                              </motion.button>
+                              <div className="flex items-center gap-1">
+                                <motion.button
+                                  whileHover={{ scale: 1.1 }}
+                                  whileTap={{ scale: 0.9 }}
+                                  title="Resend invitation"
+                                  className="cursor-pointer w-9 h-9 rounded-full flex items-center justify-center text-muted-foreground hover:bg-primary/10 hover:text-primary transition-colors"
+                                  onClick={() =>
+                                    resendInvitation.mutate({
+                                      invitationId: inv.id,
+                                      teamId,
+                                    })
+                                  }
+                                >
+                                  <RefreshCw className="w-4 h-4 stroke-[1.5]" />
+                                </motion.button>
+                                <motion.button
+                                  whileHover={{ scale: 1.1 }}
+                                  whileTap={{ scale: 0.9 }}
+                                  title="Cancel invitation"
+                                  className="cursor-pointer w-9 h-9 rounded-full flex items-center justify-center text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-colors"
+                                  onClick={() =>
+                                    cancelInvitation.mutate({
+                                      invitationId: inv.id,
+                                      teamId,
+                                    })
+                                  }
+                                >
+                                  <X className="w-4 h-4 stroke-2" />
+                                </motion.button>
+                              </div>
                             )}
                           </motion.div>
                         ))}

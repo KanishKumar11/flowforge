@@ -75,10 +75,10 @@ export default function AnalyticsPageClient() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between rounded-xl border border-border/50 bg-card px-5 py-4">
         <div>
           <h1 className="text-xl font-bold tracking-tight">Analytics</h1>
-          <p className="text-sm text-muted-foreground">Platform-wide usage metrics</p>
+          <p className="mt-0.5 text-sm text-muted-foreground">Platform-wide usage metrics</p>
         </div>
         <RangePicker value={days} onChange={setDays} />
       </div>

@@ -49,7 +49,13 @@ export const teamsRouter = createTRPCRouter({
               },
               invitations: {
                 where: { expiresAt: { gt: new Date() } },
-                select: { id: true, email: true, role: true, createdAt: true, expiresAt: true },
+                select: {
+                  id: true,
+                  email: true,
+                  role: true,
+                  createdAt: true,
+                  expiresAt: true,
+                },
                 orderBy: { createdAt: "desc" },
               },
               _count: { select: { workflows: true } },
@@ -164,9 +170,14 @@ export const teamsRouter = createTRPCRouter({
           const customer = await polarClient.customers.getStateExternal({
             externalId: ctx.user.id,
           });
-          if (customer.activeSubscriptions && customer.activeSubscriptions.length > 0) {
+          if (
+            customer.activeSubscriptions &&
+            customer.activeSubscriptions.length > 0
+          ) {
             planKey = "PRO";
-            prisma.team.update({ where: { id: team.id }, data: { plan: "pro" } }).catch(() => {});
+            prisma.team
+              .update({ where: { id: team.id }, data: { plan: "pro" } })
+              .catch(() => {});
           }
         } catch {
           // Polar unavailable — use DB value
@@ -349,6 +360,42 @@ export const teamsRouter = createTRPCRouter({
       }
 
       await prisma.team.delete({ where: { id: input.id } });
+
+      return { success: true };
+    }),
+
+  // Resend a pending invitation email (also resets expiry)
+  resendInvitation: protectedProcedure
+    .input(z.object({ invitationId: z.string(), teamId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const membership = await prisma.teamMember.findUnique({
+        where: { teamId_userId: { teamId: input.teamId, userId: ctx.user.id } },
+      });
+      if (!membership || !["OWNER", "ADMIN"].includes(membership.role)) {
+        throw new TRPCError({ code: "FORBIDDEN", message: "Not authorized" });
+      }
+
+      const expiresAt = new Date();
+      expiresAt.setDate(expiresAt.getDate() + 7);
+
+      const invitation = await prisma.invitation.update({
+        where: { id: input.invitationId },
+        data: { expiresAt },
+        include: { team: true },
+      });
+
+      const inviter = await prisma.user.findUnique({
+        where: { id: ctx.user.id },
+      });
+      const link = `${process.env.NEXT_PUBLIC_APP_URL}/join/${invitation.token}`;
+
+      const { sendInvitationEmail } = await import("@/lib/email");
+      await sendInvitationEmail(
+        invitation.email,
+        invitation.team.name,
+        link,
+        inviter?.name || "A team member",
+      );
 
       return { success: true };
     }),

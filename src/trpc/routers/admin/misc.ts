@@ -337,6 +337,7 @@ export const adminLogsRouter = createTRPCRouter({
       z.object({
         page: z.number().default(1),
         limit: z.number().default(50),
+        search: z.string().optional(),
         action: z.string().optional(),
         adminUserId: z.string().optional(),
         dateFrom: z.string().datetime().optional(),
@@ -346,8 +347,9 @@ export const adminLogsRouter = createTRPCRouter({
     .query(async ({ input }) => {
       const skip = (input.page - 1) * input.limit;
       const where: Record<string, unknown> = {};
-      if (input.action)
-        where.action = { contains: input.action, mode: "insensitive" };
+      const searchTerm = input.search ?? input.action;
+      if (searchTerm)
+        where.action = { contains: searchTerm, mode: "insensitive" };
       if (input.adminUserId) where.adminUserId = input.adminUserId;
       if (input.dateFrom || input.dateTo) {
         where.createdAt = {
@@ -363,13 +365,13 @@ export const adminLogsRouter = createTRPCRouter({
           orderBy: { createdAt: "desc" },
           include: {
             adminUser: {
-              include: { user: { select: { name: true, email: true } } },
+              include: { user: { select: { name: true, email: true, image: true } } },
             },
           },
         }),
         prisma.adminAuditLog.count({ where }),
       ]);
-      return { logs, total };
+      return { logs, total, pages: Math.ceil(total / input.limit) };
     }),
 
   systemLogs: adminProcedure
@@ -377,6 +379,7 @@ export const adminLogsRouter = createTRPCRouter({
       z.object({
         page: z.number().default(1),
         limit: z.number().default(50),
+        search: z.string().optional(),
         entity: z.string().optional(),
         userId: z.string().optional(),
       }),
@@ -384,7 +387,12 @@ export const adminLogsRouter = createTRPCRouter({
     .query(async ({ input }) => {
       const skip = (input.page - 1) * input.limit;
       const where: Record<string, unknown> = {};
-      if (input.entity) where.entity = input.entity;
+      const searchTerm = input.search ?? input.entity;
+      if (searchTerm)
+        where.OR = [
+          { action: { contains: searchTerm, mode: "insensitive" } },
+          { entity: { contains: searchTerm, mode: "insensitive" } },
+        ];
       if (input.userId) where.userId = input.userId;
 
       const [logs, total] = await Promise.all([
@@ -393,10 +401,10 @@ export const adminLogsRouter = createTRPCRouter({
           skip,
           take: input.limit,
           orderBy: { createdAt: "desc" },
-          include: { user: { select: { name: true, email: true } } },
+          include: { user: { select: { name: true, email: true, image: true } } },
         }),
         prisma.auditLog.count({ where }),
       ]);
-      return { logs, total };
+      return { logs, total, pages: Math.ceil(total / input.limit) };
     }),
 });

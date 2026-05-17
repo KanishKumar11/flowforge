@@ -52,9 +52,9 @@ export default function LogsPageClient() {
 
   return (
     <div className="space-y-5">
-      <div>
+      <div className="rounded-xl border border-border/50 bg-card px-5 py-4">
         <h1 className="text-xl font-bold tracking-tight">Audit Logs</h1>
-        <p className="text-sm text-muted-foreground">Track all admin and user actions</p>
+        <p className="mt-0.5 text-sm text-muted-foreground">Track all admin and user actions</p>
       </div>
 
       <div className="flex items-center gap-2">

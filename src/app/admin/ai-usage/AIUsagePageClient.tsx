@@ -46,10 +46,10 @@ export default function AIUsagePageClient() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between rounded-xl border border-border/50 bg-card px-5 py-4">
         <div>
           <h1 className="text-xl font-bold tracking-tight">AI Usage</h1>
-          <p className="text-sm text-muted-foreground">Monitor AI token consumption and cost</p>
+          <p className="mt-0.5 text-sm text-muted-foreground">Monitor AI token consumption and cost</p>
         </div>
         <div className="flex gap-1 rounded-lg border bg-muted/30 p-0.5">
           {RANGE_OPTIONS.map((d) => (

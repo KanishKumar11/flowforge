@@ -45,7 +45,33 @@ export const adminAIUsageRouter = createTRPCRouter({
       }),
     ]);
 
-    return { totalStats, last30dStats, byProvider, byModel, recentFailures };
+    return {
+      aggregate: {
+        totalTokens: totalStats._sum.totalTokens ?? 0,
+        totalCost: totalStats._sum.costUsd ?? 0,
+        totalRequests: totalStats._count,
+        failedRequests: recentFailures.length,
+        avgLatencyMs: totalStats._avg.latencyMs ?? 0,
+      },
+      last30d: {
+        tokens: last30dStats._sum.totalTokens ?? 0,
+        cost: last30dStats._sum.costUsd ?? 0,
+        requests: last30dStats._count,
+      },
+      byProvider: byProvider.map((p) => ({
+        provider: p.provider,
+        tokens: p._sum.totalTokens ?? 0,
+        cost: p._sum.costUsd ?? 0,
+        requests: p._count,
+      })),
+      byModel: byModel.map((m) => ({
+        model: m.model,
+        tokens: m._sum.totalTokens ?? 0,
+        cost: m._sum.costUsd ?? 0,
+        requests: m._count,
+      })),
+      recentFailures,
+    };
   }),
 
   trend: adminProcedure
@@ -103,7 +129,7 @@ export const adminAIUsageRouter = createTRPCRouter({
         userId: r.userId,
         user: r.userId ? userMap[r.userId] : null,
         totalTokens: r._sum.totalTokens ?? 0,
-        costUsd: r._sum.costUsd ?? 0,
+        totalCost: r._sum.costUsd ?? 0,
         requests: r._count,
       }));
     }),

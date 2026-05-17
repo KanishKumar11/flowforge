@@ -139,9 +139,11 @@ export default function WorkflowsPageClient() {
 
   return (
     <div className="space-y-5">
-      <div>
-        <h1 className="text-xl font-bold tracking-tight">Workflows</h1>
-        <p className="text-sm text-muted-foreground">Manage all {data?.total ?? "…"} workflows</p>
+      <div className="flex items-center justify-between rounded-xl border border-border/50 bg-card px-5 py-4">
+        <div>
+          <h1 className="text-xl font-bold tracking-tight">Workflows</h1>
+          <p className="mt-0.5 text-sm text-muted-foreground">Manage all {data?.total ?? "…"} workflows</p>
+        </div>
       </div>
 
       {stats && (

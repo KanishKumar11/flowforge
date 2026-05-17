@@ -27,7 +27,7 @@ export default async function AdminLayout({
 
   return (
     <TooltipProvider delayDuration={200}>
-      <div className="flex h-screen overflow-hidden bg-background">
+      <div className="flex h-screen overflow-hidden bg-muted/30 dark:bg-background">
         <AdminSidebar user={session.user} adminRole={adminUser.role} />
         <div className="flex flex-1 flex-col overflow-hidden">
           <AdminHeader />

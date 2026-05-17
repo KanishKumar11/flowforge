@@ -96,12 +96,21 @@ export default function AdminDashboardClient() {
 
   return (
     <div className="space-y-6">
-      {/* Page title */}
-      <div>
-        <h1 className="text-xl font-bold tracking-tight">Dashboard</h1>
-        <p className="text-sm text-muted-foreground">
-          Platform overview and real-time metrics
-        </p>
+      {/* Page header */}
+      <div className="relative overflow-hidden rounded-xl border border-border/50 bg-gradient-to-br from-card via-card to-primary/5 p-5">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_hsl(var(--primary)/0.08)_0%,transparent_70%)] pointer-events-none" />
+        <div className="relative flex items-center justify-between">
+          <div>
+            <h1 className="text-xl font-bold tracking-tight">Dashboard</h1>
+            <p className="mt-0.5 text-sm text-muted-foreground">
+              Platform overview and real-time metrics
+            </p>
+          </div>
+          <div className="flex items-center gap-2 rounded-full border border-border/50 bg-background/80 px-3 py-1.5">
+            <div className="h-2 w-2 animate-pulse rounded-full bg-emerald-500" />
+            <span className="text-xs font-medium text-muted-foreground">Live</span>
+          </div>
+        </div>
       </div>
 
       {/* Stats Grid */}

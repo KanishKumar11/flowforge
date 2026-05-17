@@ -19,6 +19,18 @@ interface StatsCardProps {
   index?: number;
 }
 
+const ICON_BG_MAP: Record<string, string> = {
+  "text-blue-600": "bg-blue-50 dark:bg-blue-950/60",
+  "text-violet-600": "bg-violet-50 dark:bg-violet-950/60",
+  "text-emerald-600": "bg-emerald-50 dark:bg-emerald-950/60",
+  "text-red-600": "bg-red-50 dark:bg-red-950/60",
+  "text-amber-600": "bg-amber-50 dark:bg-amber-950/60",
+  "text-cyan-600": "bg-cyan-50 dark:bg-cyan-950/60",
+  "text-pink-600": "bg-pink-50 dark:bg-pink-950/60",
+  "text-indigo-600": "bg-indigo-50 dark:bg-indigo-950/60",
+  "text-orange-600": "bg-orange-50 dark:bg-orange-950/60",
+};
+
 export function StatsCard({
   title,
   value,
@@ -32,6 +44,7 @@ export function StatsCard({
   index = 0,
 }: StatsCardProps) {
   const isPositive = change !== undefined && change >= 0;
+  const iconBg = ICON_BG_MAP[iconColor] ?? "bg-muted/60";
 
   if (loading) {
     return (
@@ -63,7 +76,8 @@ export function StatsCard({
         <p className="text-xs font-medium text-muted-foreground">{title}</p>
         <div
           className={cn(
-            "flex h-9 w-9 items-center justify-center rounded-lg bg-muted/60",
+            "flex h-9 w-9 items-center justify-center rounded-lg",
+            iconBg,
             iconColor,
           )}
         >

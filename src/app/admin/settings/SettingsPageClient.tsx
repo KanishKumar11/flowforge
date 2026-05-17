@@ -94,9 +94,9 @@ export default function SettingsPageClient() {
 
   return (
     <div className="space-y-5">
-      <div>
+      <div className="rounded-xl border border-border/50 bg-card px-5 py-4">
         <h1 className="text-xl font-bold tracking-tight">Settings</h1>
-        <p className="text-sm text-muted-foreground">Platform-wide configuration</p>
+        <p className="mt-0.5 text-sm text-muted-foreground">Platform-wide configuration</p>
       </div>
 
       {isLoading ? (

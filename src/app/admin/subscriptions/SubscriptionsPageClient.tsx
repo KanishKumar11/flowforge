@@ -24,9 +24,9 @@ export default function SubscriptionsPageClient() {
 
   return (
     <div className="space-y-5">
-      <div>
+      <div className="rounded-xl border border-border/50 bg-card px-5 py-4">
         <h1 className="text-xl font-bold tracking-tight">Subscriptions</h1>
-        <p className="text-sm text-muted-foreground">
+        <p className="mt-0.5 text-sm text-muted-foreground">
           View user plans · Subscription management is handled by{" "}
           <a href="https://polar.sh" target="_blank" rel="noreferrer" className="underline">
             Polar.sh

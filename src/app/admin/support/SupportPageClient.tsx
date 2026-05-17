@@ -98,9 +98,9 @@ export default function SupportPageClient() {
 
   return (
     <div className="space-y-5">
-      <div>
+      <div className="rounded-xl border border-border/50 bg-card px-5 py-4">
         <h1 className="text-xl font-bold tracking-tight">Support Tickets</h1>
-        <p className="text-sm text-muted-foreground">Manage user support requests</p>
+        <p className="mt-0.5 text-sm text-muted-foreground">Manage user support requests</p>
       </div>
 
       {stats && (

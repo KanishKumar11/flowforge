@@ -135,10 +135,10 @@ export default function FeatureFlagsPageClient() {
 
   return (
     <div className="space-y-5">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between rounded-xl border border-border/50 bg-card px-5 py-4">
         <div>
           <h1 className="text-xl font-bold tracking-tight">Feature Flags</h1>
-          <p className="text-sm text-muted-foreground">Control feature rollouts platform-wide</p>
+          <p className="mt-0.5 text-sm text-muted-foreground">Control feature rollouts platform-wide</p>
         </div>
         <Button size="sm" className="h-8 gap-1.5" onClick={() => setNewOpen(true)}>
           <Plus className="h-3.5 w-3.5" /> New flag
