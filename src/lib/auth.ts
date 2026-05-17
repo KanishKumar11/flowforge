@@ -18,6 +18,10 @@ console.log(
     ? configuredProviders
     : "NONE — check GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET env vars",
 );
+console.log(
+  "[auth] baseURL resolved to:",
+  process.env.BETTER_AUTH_URL ?? process.env.NEXT_PUBLIC_APP_URL ?? "(undefined — will fall back to request host)",
+);
 
 export const auth = betterAuth({
   baseURL: process.env.BETTER_AUTH_URL ?? process.env.NEXT_PUBLIC_APP_URL,
