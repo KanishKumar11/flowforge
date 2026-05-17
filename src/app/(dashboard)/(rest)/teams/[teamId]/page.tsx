@@ -30,12 +30,14 @@ import {
   Shield,
   Users,
   Workflow,
+  AlertCircle
 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
 import { DashboardHeader } from "@/components/DashboardHeader";
 import { BallLoader } from "@/components/ui/ball-loader";
+import { PLANS } from "@/lib/plans";
 
 export default function TeamDetailPage() {
   const params = useParams();
@@ -117,6 +119,11 @@ export default function TeamDetailPage() {
   const isOwner = team.currentUserRole === "OWNER";
   const isAdmin = team.currentUserRole === "ADMIN" || isOwner;
 
+  const planKey = (team.plan?.toUpperCase() || "FREE") as keyof typeof PLANS;
+  const maxMembers = PLANS[planKey]?.limits?.teamMembers || 1;
+  const currentMembersCount = team.members.length;
+  const isLimitReached = currentMembersCount >= maxMembers;
+
   return (
     <div className="flex flex-col h-full">
       <DashboardHeader
@@ -195,86 +202,105 @@ export default function TeamDetailPage() {
               </p>
             </div>
             {isAdmin && (
-              <Dialog open={isInviteOpen} onOpenChange={setIsInviteOpen}>
-                <DialogTrigger asChild>
-                  <Button
-                    size="sm"
-                    className="shadow-none bg-foreground text-background hover:bg-[rgba(var(--foreground)/0.9)] rounded-xl font-mono uppercase text-xs h-8 border border-foreground"
-                  >
-                    <UserPlus className="h-4 w-4 mr-2" />
-                    Invite Member
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="bg-background border-border rounded-xl sm:max-w-[425px]">
-                  <DialogHeader>
-                    <DialogTitle className="font-mono uppercase text-foreground">
-                      Invite Team Member
-                    </DialogTitle>
-                  </DialogHeader>
-                  <div className="space-y-4 pt-4">
-                    <div className="space-y-2">
-                      <Label className="text-foreground font-mono uppercase text-xs">
-                        Email Address
-                      </Label>
-                      <Input
-                        type="email"
-                        placeholder="member@example.com"
-                        value={inviteEmail}
-                        onChange={(e) => setInviteEmail(e.target.value)}
-                        className="bg-background border-border focus:border-foreground text-foreground font-mono rounded-xl placeholder:text-muted-foreground text-xs"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label className="text-foreground font-mono uppercase text-xs">
-                        Role
-                      </Label>
-                      <Select
-                        value={inviteRole}
-                        onValueChange={(v) =>
-                          setInviteRole(v as typeof inviteRole)
-                        }
-                      >
-                        <SelectTrigger className="bg-background border-border focus:border-foreground text-foreground font-mono rounded-xl text-xs">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent className="bg-background border-border rounded-xl">
-                          <SelectItem
-                            value="ADMIN"
-                            className="font-mono text-xs focus:bg-foreground focus:text-background"
-                          >
-                            ADMIN
-                          </SelectItem>
-                          <SelectItem
-                            value="MEMBER"
-                            className="font-mono text-xs focus:bg-foreground focus:text-background"
-                          >
-                            MEMBER
-                          </SelectItem>
-                          <SelectItem
-                            value="VIEWER"
-                            className="font-mono text-xs focus:bg-foreground focus:text-background"
-                          >
-                            VIEWER
-                          </SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
+              <div className="flex flex-col items-end gap-2">
+                {isLimitReached ? (
+                  <div className="flex items-center gap-2">
+                    <Badge variant="destructive" className="font-mono text-xs uppercase px-2 py-0.5 rounded-full flex items-center gap-1">
+                      <AlertCircle className="w-3 h-3" />
+                      Plan Limit Reached ({maxMembers}/{maxMembers})
+                    </Badge>
                     <Button
-                      className="w-full bg-foreground text-background hover:bg-[rgba(var(--foreground)/0.9)] rounded-xl font-mono uppercase text-xs"
-                      onClick={() =>
-                        inviteMember.mutate({
-                          teamId,
-                          email: inviteEmail,
-                          role: inviteRole,
-                        })
-                      }
-                      disabled={!inviteEmail || inviteMember.isPending}
+                      size="sm"
+                      disabled
+                      className="shadow-none bg-secondary text-muted-foreground rounded-xl font-mono uppercase text-xs h-8 border border-border opacity-50 cursor-not-allowed"
                     >
-                      {inviteMember.isPending ? "Inviting..." : "Send Invite"}
+                      <UserPlus className="h-4 w-4 mr-2" />
+                      Invite Member
                     </Button>
                   </div>
-                </DialogContent>
-              </Dialog>
+                ) : (
+                  <Dialog open={isInviteOpen} onOpenChange={setIsInviteOpen}>
+                    <DialogTrigger asChild>
+                      <Button
+                        size="sm"
+                        className="shadow-none bg-foreground text-background hover:bg-foreground hover:text-background hover:opacity-90 transition-opacity rounded-xl font-mono uppercase text-xs h-8 border border-foreground"
+                      >
+                        <UserPlus className="h-4 w-4 mr-2" />
+                        Invite Member
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="bg-background border-border rounded-xl sm:max-w-[425px]">
+                      <DialogHeader>
+                        <DialogTitle className="font-mono uppercase text-foreground">
+                          Invite Team Member
+                        </DialogTitle>
+                      </DialogHeader>
+                      <div className="space-y-4 pt-4">
+                        <div className="space-y-2">
+                          <Label className="text-foreground font-mono uppercase text-xs">
+                            Email Address
+                          </Label>
+                          <Input
+                            type="email"
+                            placeholder="member@example.com"
+                            value={inviteEmail}
+                            onChange={(e) => setInviteEmail(e.target.value)}
+                            className="bg-background border-border focus:border-foreground text-foreground font-mono rounded-xl placeholder:text-muted-foreground text-xs"
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label className="text-foreground font-mono uppercase text-xs">
+                            Role
+                          </Label>
+                          <Select
+                            value={inviteRole}
+                            onValueChange={(v) =>
+                              setInviteRole(v as typeof inviteRole)
+                            }
+                          >
+                            <SelectTrigger className="bg-background border-border focus:border-foreground text-foreground font-mono rounded-xl text-xs">
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent className="bg-background border-border rounded-xl">
+                              <SelectItem
+                                value="ADMIN"
+                                className="font-mono text-xs focus:bg-foreground focus:text-background"
+                              >
+                                ADMIN
+                              </SelectItem>
+                              <SelectItem
+                                value="MEMBER"
+                                className="font-mono text-xs focus:bg-foreground focus:text-background"
+                              >
+                                MEMBER
+                              </SelectItem>
+                              <SelectItem
+                                value="VIEWER"
+                                className="font-mono text-xs focus:bg-foreground focus:text-background"
+                              >
+                                VIEWER
+                              </SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <Button
+                          className="w-full bg-foreground text-background hover:bg-foreground hover:text-background hover:opacity-90 transition-opacity rounded-xl font-mono uppercase text-xs"
+                          onClick={() =>
+                            inviteMember.mutate({
+                              teamId,
+                              email: inviteEmail,
+                              role: inviteRole,
+                            })
+                          }
+                          disabled={!inviteEmail || inviteMember.isPending}
+                        >
+                          {inviteMember.isPending ? "Inviting..." : "Send Invite"}
+                        </Button>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+                )}
+              </div>
             )}
           </CardHeader>
           <CardContent className="pt-6">

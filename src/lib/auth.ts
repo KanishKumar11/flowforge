@@ -31,6 +31,10 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     autoSignIn: true,
+    sendResetPassword: async ({ user, url }) => {
+      const { sendResetPasswordEmail } = await import("./email");
+      await sendResetPasswordEmail(user.email, url);
+    },
   },
   socialProviders: {
     github: {

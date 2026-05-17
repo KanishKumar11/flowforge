@@ -10,6 +10,30 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+export async function sendResetPasswordEmail(email: string, url: string) {
+  if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
+    return;
+  }
+
+  await transporter.sendMail({
+    from: process.env.SMTP_FROM || '"FlowGent" <noreply@flowforge.com>',
+    to: email,
+    subject: "Reset your FlowGent password",
+    html: `
+      <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
+        <h2>Password Reset</h2>
+        <p>We received a request to reset your password. Click the button below to choose a new one. This link expires in 1 hour.</p>
+        <a href="${url}" style="display: inline-block; padding: 12px 24px; background-color: #000; color: #fff; text-decoration: none; border-radius: 6px; font-weight: bold;">Reset Password</a>
+        <p style="margin-top: 24px; font-size: 14px; color: #666;">
+          If you didn't request this, you can safely ignore this email.<br><br>
+          Or copy and paste this link into your browser:<br>
+          <a href="${url}" style="color: #666;">${url}</a>
+        </p>
+      </div>
+    `,
+  });
+}
+
 export async function sendInvitationEmail(
   email: string,
   teamName: string,
