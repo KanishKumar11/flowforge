@@ -33,7 +33,7 @@ export function useExecution(workflowId?: string) {
     }),
   );
 
-  const executions = (executionsData?.items ?? []) as { id: string; status: ExecutionStatus; [key: string]: unknown }[];
+  const executions = ((executionsData?.items ?? []) as unknown[]) as { id: string; status: ExecutionStatus; [key: string]: unknown }[];
 
   // Aggregate execution stats (last 7 days by default)
   const { data: stats, isLoading: isLoadingStats } = useQuery(

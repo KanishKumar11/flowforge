@@ -43,7 +43,7 @@ import { formatDistanceToNow, format } from "date-fns";
 import { useState } from "react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
-import { ADMIN_ROLE_COLORS, ADMIN_ROLE_LABELS } from "@/lib/admin-utils";
+import { ADMIN_ROLE_COLORS, ADMIN_ROLE_LABELS } from "@/lib/admin-constants";
 
 function StatPill({
   icon: Icon,

@@ -4,6 +4,9 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   output: "standalone",
+  // Treat pg and Prisma as Node.js-only external packages — prevents the bundler
+  // from trying to resolve Node.js built-ins (dns, fs, net, tls) in edge/browser bundles.
+  serverExternalPackages: ["pg", "pg-native", "@prisma/client", "prisma"],
   async redirects() {
     return [
       {
