@@ -122,12 +122,8 @@ export default function SDLCOverview() {
         wrap={false}
         style={{
           borderWidth: 1,
-<<<<<<< HEAD
           borderColor: "#94a3b8",
           borderRadius: 6,
-=======
-          borderColor: "#94a3b8", borderRadius: 6,
->>>>>>> 7ee487ff45e6c74e190c28b867faabef13249665
           marginTop: 16,
           marginBottom: 8,
         }}
@@ -135,13 +131,9 @@ export default function SDLCOverview() {
         <View
           style={{
             flexDirection: "row",
-<<<<<<< HEAD
             backgroundColor: "#dbeafe",
             borderTopLeftRadius: 6,
             borderTopRightRadius: 6,
-=======
-            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
->>>>>>> 7ee487ff45e6c74e190c28b867faabef13249665
             borderBottomWidth: 1,
             borderBottomColor: "#93c5fd",
           }}
@@ -577,12 +569,8 @@ export default function SDLCOverview() {
         wrap={false}
         style={{
           borderWidth: 1,
-<<<<<<< HEAD
           borderColor: "#94a3b8",
           borderRadius: 6,
-=======
-          borderColor: "#94a3b8", borderRadius: 6,
->>>>>>> 7ee487ff45e6c74e190c28b867faabef13249665
           marginTop: 12,
           marginBottom: 8,
         }}
@@ -590,13 +578,9 @@ export default function SDLCOverview() {
         <View
           style={{
             flexDirection: "row",
-<<<<<<< HEAD
             backgroundColor: "#dbeafe",
             borderTopLeftRadius: 6,
             borderTopRightRadius: 6,
-=======
-            backgroundColor: "#dbeafe", borderTopLeftRadius: 6, borderTopRightRadius: 6,
->>>>>>> 7ee487ff45e6c74e190c28b867faabef13249665
             borderBottomWidth: 1,
             borderBottomColor: "#93c5fd",
           }}

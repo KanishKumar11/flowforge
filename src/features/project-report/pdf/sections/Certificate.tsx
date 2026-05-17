@@ -34,7 +34,6 @@ export default function Certificate({ pageNumber }: CertificateProps) {
         {/* Certificate Text */}
         <View>
           <Text style={styles.paragraph}>
-<<<<<<< HEAD
             This is to certify that the project entitled{" "}
             <Text style={styles.bold}>
               “FLOWGENT 1.0 – Visual Workflow Automation Platform”
@@ -59,13 +58,6 @@ export default function Certificate({ pageNumber }: CertificateProps) {
             and the student is solely responsible for the content and any
             project plagiarism.
           </Text>
-=======
-            This is to certify that the project entitled <Text style={styles.bold}>“FLOWGENT 1.0 – Visual Workflow Automation Platform”</Text> submitted to <Text style={styles.bold}>PG Department of Computer Science and Application, Hindu College, Amritsar</Text>, for the partial fulfillment of the requirements of the degree <Text style={styles.bold}>Bachelor of Computer Applications (BCA)</Text> 6th semester, is a bonafide work carried out by <Text style={styles.bold}>Kanish Kumar</Text> (Roll No: <Text style={styles.bold}>11792312331</Text>) under our supervision and guidance.
-          </Text>
-
-
-          <Text style={[styles.paragraph, { marginTop: 16 }]}>The work has been completed by the candidate under our supervision, and the student is solely responsible for the content and any project plagiarism.</Text>
->>>>>>> 7ee487ff45e6c74e190c28b867faabef13249665
         </View>
 
         {/* Signatures - Row 1 */}

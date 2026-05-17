@@ -5,8 +5,12 @@ import ProjectReportDocument from "../src/features/project-report/pdf/ProjectRep
 
 async function main() {
   const doc = pdf(<ProjectReportDocument />);
-  const bytes = await doc.toBuffer();
-  const pdfDoc = await PDFDocument.load(bytes);
+  const stream = await doc.toBuffer();
+  const chunks: Buffer[] = [];
+  for await (const chunk of stream) {
+    chunks.push(Buffer.from(chunk as Uint8Array));
+  }
+  const pdfDoc = await PDFDocument.load(Buffer.concat(chunks));
   console.log("pages", pdfDoc.getPageCount());
   process.exit(0);
 }

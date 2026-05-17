@@ -31,7 +31,6 @@ export default function ContextDFD() {
     fill: string;
     stroke: string;
   }[] = [
-<<<<<<< HEAD
     {
       label: "User / Admin",
       x: 22,
@@ -79,13 +78,6 @@ export default function ContextDFD() {
       fill: "#fff1f2",
       stroke: "#f43f5e",
     },
-=======
-    { label: "User / Admin",     x: 22,  y: 52,  w: 120, h: 40, fill: "#eff6ff", stroke: "#3b82f6" },
-    { label: "AI Providers",     x: 353, y: 52,  w: 120, h: 40, fill: "#fef3c7", stroke: "#f59e0b" },
-    { label: "Third-Party APIs", x: 368, y: 193, w: 118, h: 38, fill: "#f0fdf4", stroke: "#22c55e" },
-    { label: "Database", sublabel: "(PostgreSQL)", x: 325, y: 342, w: 130, h: 44, fill: "#faf5ff", stroke: "#8b5cf6" },
-    { label: "Notification", sublabel: "Services",   x: 28,  y: 342, w: 130, h: 44, fill: "#fff1f2", stroke: "#f43f5e" },
->>>>>>> 7ee487ff45e6c74e190c28b867faabef13249665
   ];
 
   // Explicit label positions prevent all overlaps.
@@ -102,7 +94,6 @@ export default function ContextDFD() {
     labelY: number;
     labelW: number;
   }[] = [
-<<<<<<< HEAD
     {
       from: 0,
       to: -1,
@@ -183,16 +174,6 @@ export default function ContextDFD() {
       labelY: 293,
       labelW: 60,
     },
-=======
-    { from: 0,  to: -1, line1: "Workflow definitions,", line2: "Commands",      arrowOffset: -7, labelX: 182, labelY: 108, labelW: 88 },
-    { from: -1, to: 0,  line1: "Dashboard data,",       line2: "Results",       arrowOffset:  7, labelX: 138, labelY: 150, labelW: 74 },
-    { from: -1, to: 1,  line1: "AI prompts,",           line2: "Parameters",    arrowOffset: -7, labelX: 313, labelY: 108, labelW: 66 },
-    { from: 1,  to: -1, line1: "AI responses,",         line2: "Completions",   arrowOffset:  7, labelX: 358, labelY: 150, labelW: 74 },
-    { from: -1, to: 2,  line1: "Integration",           line2: "requests",      arrowOffset:  0, labelX: 330, labelY: 181, labelW: 62 },
-    { from: -1, to: 3,  line1: "CRUD operations,",      line2: "Logs",          arrowOffset: -7, labelX: 365, labelY: 281, labelW: 82 },
-    { from: 3,  to: -1, line1: "Stored data,",          line2: "Query results", arrowOffset:  7, labelX: 290, labelY: 309, labelW: 74 },
-    { from: -1, to: 4,  line1: "Email,",                line2: "Slack alerts",  arrowOffset:  0, labelX: 118, labelY: 293, labelW: 60 },
->>>>>>> 7ee487ff45e6c74e190c28b867faabef13249665
   ];
 
   function getEntityCenter(idx: number) {
@@ -206,33 +187,22 @@ export default function ContextDFD() {
       <Rect x={0} y={0} width={width} height={height} fill="white" />
 
       {/* Title */}
-<<<<<<< HEAD
       <SvgText
         x={cx}
         y={18}
         textAnchor="middle"
         style={{ fontSize: 10, fontFamily: "Times-Bold", fill: "#1e293b" }}
       >
-=======
-      <SvgText x={cx} y={18} textAnchor="middle"
-        style={{ fontSize: 10, fontFamily: "Times-Bold", fill: "#1e293b" }}>
->>>>>>> 7ee487ff45e6c74e190c28b867faabef13249665
         Context Diagram (Level 0 DFD) — Flowgent System
       </SvgText>
 
       {/* ── 1. Flow arrows (drawn first so entities cover endpoints cleanly) ── */}
       {flows.map((flow, i) => {
-<<<<<<< HEAD
         const fromPt =
           flow.from === -1 ? { x: cx, y: cy } : getEntityCenter(flow.from);
         const toPt =
           flow.to === -1 ? { x: cx, y: cy } : getEntityCenter(flow.to);
         const angle = Math.atan2(toPt.y - fromPt.y, toPt.x - fromPt.x);
-=======
-        const fromPt = flow.from === -1 ? { x: cx, y: cy } : getEntityCenter(flow.from);
-        const toPt   = flow.to   === -1 ? { x: cx, y: cy } : getEntityCenter(flow.to);
-        const angle  = Math.atan2(toPt.y - fromPt.y, toPt.x - fromPt.x);
->>>>>>> 7ee487ff45e6c74e190c28b867faabef13249665
 
         let startX: number, startY: number, endX: number, endY: number;
         if (flow.from === -1) {
@@ -252,13 +222,8 @@ export default function ContextDFD() {
         const perpAngle = angle + Math.PI / 2;
         startX += Math.cos(perpAngle) * flow.arrowOffset;
         startY += Math.sin(perpAngle) * flow.arrowOffset;
-<<<<<<< HEAD
         endX += Math.cos(perpAngle) * flow.arrowOffset;
         endY += Math.sin(perpAngle) * flow.arrowOffset;
-=======
-        endX   += Math.cos(perpAngle) * flow.arrowOffset;
-        endY   += Math.sin(perpAngle) * flow.arrowOffset;
->>>>>>> 7ee487ff45e6c74e190c28b867faabef13249665
 
         const as = 5;
         const aAngle = Math.atan2(endY - startY, endX - startX);
@@ -269,7 +234,6 @@ export default function ContextDFD() {
 
         return (
           <G key={`flow-${i}`}>
-<<<<<<< HEAD
             <Line
               x1={startX}
               y1={startY}
@@ -282,12 +246,6 @@ export default function ContextDFD() {
               points={`${endX},${endY} ${ax1},${ay1} ${ax2},${ay2}`}
               fill="#64748b"
             />
-=======
-            <Line x1={startX} y1={startY} x2={endX} y2={endY}
-              stroke="#64748b" strokeWidth={1.2} />
-            <Polygon points={`${endX},${endY} ${ax1},${ay1} ${ax2},${ay2}`}
-              fill="#64748b" />
->>>>>>> 7ee487ff45e6c74e190c28b867faabef13249665
           </G>
         );
       })}
@@ -297,18 +255,28 @@ export default function ContextDFD() {
         <G key={`entity-${i}`}>
           {/* Outer double-border (DFD convention) */}
           <Rect
-            x={entity.x - 3} y={entity.y - 3}
-            width={entity.w + 6} height={entity.h + 6}
-            rx={4} fill="none" stroke={entity.stroke} strokeWidth={0.8} opacity={0.5}
+            x={entity.x - 3}
+            y={entity.y - 3}
+            width={entity.w + 6}
+            height={entity.h + 6}
+            rx={4}
+            fill="none"
+            stroke={entity.stroke}
+            strokeWidth={0.8}
+            opacity={0.5}
           />
           {/* Main box */}
           <Rect
-            x={entity.x} y={entity.y}
-            width={entity.w} height={entity.h}
-            rx={3} fill={entity.fill} stroke={entity.stroke} strokeWidth={1.5}
+            x={entity.x}
+            y={entity.y}
+            width={entity.w}
+            height={entity.h}
+            rx={3}
+            fill={entity.fill}
+            stroke={entity.stroke}
+            strokeWidth={1.5}
           />
           {/* Color accent bar */}
-<<<<<<< HEAD
           <Rect
             x={entity.x}
             y={entity.y}
@@ -323,13 +291,6 @@ export default function ContextDFD() {
             y={
               entity.y + (entity.sublabel ? entity.h / 2 + 2 : entity.h / 2 + 5)
             }
-=======
-          <Rect x={entity.x} y={entity.y} width={entity.w} height={4} rx={3} fill={entity.stroke} />
-          {/* Primary label */}
-          <SvgText
-            x={entity.x + entity.w / 2}
-            y={entity.y + (entity.sublabel ? entity.h / 2 + 2 : entity.h / 2 + 5)}
->>>>>>> 7ee487ff45e6c74e190c28b867faabef13249665
             textAnchor="middle"
             style={{ fontSize: 8.5, fontFamily: "Times-Bold", fill: "#1f2937" }}
           >
@@ -354,7 +315,6 @@ export default function ContextDFD() {
       ))}
 
       {/* ── 3. Central process — drawn after entities so it sits on top ── */}
-<<<<<<< HEAD
       <Ellipse
         cx={cx}
         cy={cy}
@@ -387,18 +347,6 @@ export default function ContextDFD() {
         textAnchor="middle"
         style={{ fontSize: 9, fontFamily: "Times-Roman", fill: "#dbeafe" }}
       >
-=======
-      <Ellipse cx={cx} cy={cy} rx={processRx + 4} ry={processRy + 4}
-        fill="none" stroke="#1e40af" strokeWidth={0.8} />
-      <Ellipse cx={cx} cy={cy} rx={processRx} ry={processRy}
-        fill="#2563eb" stroke="#1d4ed8" strokeWidth={2} />
-      <SvgText x={cx} y={cy - 4} textAnchor="middle"
-        style={{ fontSize: 11, fontFamily: "Times-Bold", fill: "white" }}>
-        Flowgent
-      </SvgText>
-      <SvgText x={cx} y={cy + 11} textAnchor="middle"
-        style={{ fontSize: 9, fontFamily: "Times-Roman", fill: "#dbeafe" }}>
->>>>>>> 7ee487ff45e6c74e190c28b867faabef13249665
         System
       </SvgText>
 
@@ -415,7 +363,6 @@ export default function ContextDFD() {
             fill="white"
             opacity={0.92}
           />
-<<<<<<< HEAD
           <SvgText
             x={flow.labelX}
             y={flow.labelY}
@@ -438,31 +385,18 @@ export default function ContextDFD() {
               fill: "#475569",
             }}
           >
-=======
-          <SvgText x={flow.labelX} y={flow.labelY} textAnchor="middle"
-            style={{ fontSize: 6.5, fontFamily: "Times-Italic", fill: "#475569" }}>
-            {flow.line1}
-          </SvgText>
-          <SvgText x={flow.labelX} y={flow.labelY + 10} textAnchor="middle"
-            style={{ fontSize: 6.5, fontFamily: "Times-Italic", fill: "#475569" }}>
->>>>>>> 7ee487ff45e6c74e190c28b867faabef13249665
             {flow.line2}
           </SvgText>
         </G>
       ))}
 
       {/* Bottom caption */}
-<<<<<<< HEAD
       <SvgText
         x={cx}
         y={height - 10}
         textAnchor="middle"
         style={{ fontSize: 10, fontFamily: "Times-Bold", fill: "#333" }}
       >
-=======
-      <SvgText x={cx} y={height - 10} textAnchor="middle"
-        style={{ fontSize: 10, fontFamily: "Times-Bold", fill: "#333" }}>
->>>>>>> 7ee487ff45e6c74e190c28b867faabef13249665
         Figure: Context Diagram (Level 0 DFD) — Flowgent System
       </SvgText>
     </Svg>

@@ -74,7 +74,7 @@ export function useCredentials(provider?: string) {
 
   const decryptCredential = useMutation({
     mutationFn: (data: { id: string }) =>
-      client.credentials.decrypt.mutate(data),
+      client.credentials.getDecrypted.query(data),
     onError: (error: Error) => {
       toast.error("Failed to decrypt credential", { description: error.message });
     },

@@ -329,7 +329,6 @@ export default function Level2DFD() {
       </SvgText>
 
       {/* D4 → 3.3 (creds) — routes along right margin, avoids all center crossings */}
-<<<<<<< HEAD
       <Line
         x1={100}
         y1={251}
@@ -357,11 +356,6 @@ export default function Level2DFD() {
         strokeWidth={1}
         strokeDasharray="3,2"
       />
-=======
-      <Line x1={100} y1={251} x2={463} y2={251} stroke="#666" strokeWidth={1} strokeDasharray="3,2" />
-      <Line x1={463} y1={251} x2={463} y2={165} stroke="#666" strokeWidth={1} strokeDasharray="3,2" />
-      <Line x1={463} y1={165} x2={438} y2={165} stroke="#666" strokeWidth={1} strokeDasharray="3,2" />
->>>>>>> 7ee487ff45e6c74e190c28b867faabef13249665
       <Polygon points="438,165 444,161 444,169" fill="#666" />
       <SvgText
         x={282}

@@ -81,7 +81,7 @@ export function useExecution(workflowId?: string) {
     useQuery(trpc.executions.get.queryOptions({ id }));
 
   const getTimeline = (id: string) =>
-    useQuery(trpc.executions.timeline.queryOptions({ id }));
+    useQuery(trpc.executions.timeline.queryOptions({ workflowId: id }));
 
   const filterByStatus = (status: ExecutionStatus) =>
     executions.filter((e) => (e as { status: ExecutionStatus }).status === status);
