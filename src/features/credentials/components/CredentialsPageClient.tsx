@@ -260,54 +260,6 @@ export function CredentialsPageClient() {
     });
     setEditingCredentialId(cred.id);
     setShowCreateModal(true);
-
-    // Fetch decrypted data and pre-populate fields
-    try {
-      const decrypted = await client.credentials.getDecrypted.query({
-        id: cred.id,
-      });
-      const d = decrypted.data as Record<string, unknown>;
-
-      if (cred.provider === "smtp") {
-        setNewCredential((prev) => ({
-          ...prev,
-          smtpHost: (d.host as string) || "",
-          smtpPort: String(d.port || "587"),
-          smtpSecure: d.secure === true || d.secure === "true",
-          smtpUser: (d.user as string) || "",
-          smtpPass: (d.pass as string) || "",
-          smtpFrom: (d.from as string) || "",
-        }));
-      } else if (cred.provider === "twilio") {
-        setNewCredential((prev) => ({
-          ...prev,
-          twilioAccountSid: (d.accountSid as string) || "",
-          twilioAuthToken: (d.authToken as string) || "",
-          twilioPhoneNumber: (d.phoneNumber as string) || "",
-        }));
-      } else if (cred.provider === "imap") {
-        setNewCredential((prev) => ({
-          ...prev,
-          imapHost: (d.host as string) || "",
-          imapPort: String(d.port || "993"),
-          imapSecure: d.secure !== false,
-          imapUser: (d.user as string) || "",
-          imapPass: (d.pass as string) || "",
-        }));
-      } else {
-        setNewCredential((prev) => ({
-          ...prev,
-          apiKey:
-            (d.apiKey as string) ||
-            (d.accessToken as string) ||
-            (d.access_token as string) ||
-            (d.token as string) ||
-            "",
-        }));
-      }
-    } catch {
-      // If fetch fails the user can still type new values
-    }
   };
 
   const handleCreateOrUpdate = async () => {

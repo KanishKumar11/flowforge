@@ -321,7 +321,11 @@ async function executeIf(
       input: context.triggerData,
       results: context.nodeResults,
     });
-    const result = runInSandbox(`(function(){ "use strict"; return Boolean(${condition}); })()`, ctx, "if-node");
+    const result = runInSandbox(
+      `(function(){ "use strict"; return Boolean(${condition}); })()`,
+      ctx,
+      "if-node",
+    );
     return { condition: Boolean(result), branch: result ? "true" : "false" };
   } catch (error) {
     throw new Error(`Condition evaluation failed: ${(error as Error).message}`);
@@ -540,7 +544,13 @@ async function executeFilter(
   try {
     return items.filter((item, index) => {
       const ctx = buildSandbox({ item, index });
-      return Boolean(runInSandbox(`(function(){ "use strict"; return Boolean(${condition}); })()`, ctx, "filter-node"));
+      return Boolean(
+        runInSandbox(
+          `(function(){ "use strict"; return Boolean(${condition}); })()`,
+          ctx,
+          "filter-node",
+        ),
+      );
     });
   } catch (error) {
     throw new Error(`Filter evaluation failed: ${(error as Error).message}`);
@@ -949,7 +959,13 @@ async function executeLoop(
     if (expression) {
       try {
         const ctx = buildSandbox({ item, index: i });
-        results.push(runInSandbox(`(function(){ "use strict"; return (${expression}); })()`, ctx, "loop-node"));
+        results.push(
+          runInSandbox(
+            `(function(){ "use strict"; return (${expression}); })()`,
+            ctx,
+            "loop-node",
+          ),
+        );
       } catch (error) {
         results.push({ error: (error as Error).message, item, index: i });
       }
@@ -1159,7 +1175,11 @@ async function executeTransform(
       input: context.triggerData,
       results: context.nodeResults,
     });
-    return runInSandbox(`(function(){ "use strict"; return (${expression}); })()`, ctx, "transform-node");
+    return runInSandbox(
+      `(function(){ "use strict"; return (${expression}); })()`,
+      ctx,
+      "transform-node",
+    );
   } catch (error) {
     throw new Error(`Transform expression failed: ${(error as Error).message}`);
   }

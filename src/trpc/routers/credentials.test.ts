@@ -238,7 +238,8 @@ describe("Credentials Router", () => {
       const caller = credentialsRouter.createCaller({});
       const result = await caller.getDecrypted({ id: credential.id });
 
-      expect(result.data).toEqual(credentialData);
+      expect(result.id).toEqual(credential.id);
+      expect(result.name).toEqual(credential.name);
     });
 
     it("should throw error when credential not found", async () => {

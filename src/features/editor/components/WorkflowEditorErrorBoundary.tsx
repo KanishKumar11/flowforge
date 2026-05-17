@@ -23,7 +23,11 @@ export class WorkflowEditorErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, info: { componentStack: string }) {
-    console.error("[WorkflowEditor] uncaught error:", error, info.componentStack);
+    console.error(
+      "[WorkflowEditor] uncaught error:",
+      error,
+      info.componentStack,
+    );
   }
 
   render() {

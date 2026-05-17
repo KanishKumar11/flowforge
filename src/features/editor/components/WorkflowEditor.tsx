@@ -199,6 +199,16 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
     setHistoryIndex(historyIndex + 1);
   }, [canRedo, history, historyIndex, setNodes, setEdges]);
 
+  const handleSave = useCallback(() => {
+    setIsSaving(true);
+    updateWorkflow.mutate({
+      id: workflowId,
+      nodes,
+      edges,
+      viewport: getViewport(),
+    });
+  }, [workflowId, nodes, edges, getViewport, updateWorkflow]);
+
   // Keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -297,16 +307,6 @@ function WorkflowEditorInner({ workflowId }: WorkflowEditorProps) {
     },
     [screenToFlowPosition, handleAddNode],
   );
-
-  const handleSave = useCallback(() => {
-    setIsSaving(true);
-    updateWorkflow.mutate({
-      id: workflowId,
-      nodes,
-      edges,
-      viewport: getViewport(),
-    });
-  }, [workflowId, nodes, edges, getViewport, updateWorkflow]);
 
   const handleExecute = () => {
     // Check if the workflow has a webhook trigger — if so, prompt for test body data

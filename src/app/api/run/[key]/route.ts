@@ -87,7 +87,8 @@ export async function POST(request: NextRequest, { params }: RunParams) {
   }
 
   // ── Monthly execution limit check ──
-  const plan = (apiKey.team.plan?.toUpperCase() as keyof typeof PLANS) || "FREE";
+  const plan =
+    (apiKey.team.plan?.toUpperCase() as keyof typeof PLANS) || "FREE";
   const execLimit =
     PLANS[plan]?.limits.executionsPerMonth ??
     PLANS.FREE.limits.executionsPerMonth;

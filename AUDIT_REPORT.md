@@ -3,14 +3,14 @@
 **Date:** 2025  
 **Scope:** Full-stack SaaS application (Next.js App Router, BetterAuth, tRPC, Prisma, Inngest, ReactFlow)  
 **Methodology:** Static analysis + code review of all major subsystems  
-**Outcome:** 10 issues found; all fixed directly in the codebase  
+**Outcome:** 10 issues found; all fixed directly in the codebase
 
 ---
 
 ## Severity Summary
 
-| Severity | Count | Status |
-|----------|-------|--------|
+| Severity | Count | Status   |
+| -------- | ----- | -------- |
 | CRITICAL | 2     | ✅ Fixed |
 | HIGH     | 2     | ✅ Fixed |
 | MEDIUM   | 4     | ✅ Fixed |
@@ -37,11 +37,26 @@ Replaced all 5 occurrences with `vm.runInNewContext(code, sandbox)` using a care
 function buildSandbox(input: unknown) {
   return {
     input,
-    JSON, Math, Date, String, Number, Boolean,
-    Array, Object, RegExp, Error, Map, Set,
-    parseInt, parseFloat, isNaN, isFinite,
-    encodeURIComponent, decodeURIComponent,
-    encodeURI, decodeURI,
+    JSON,
+    Math,
+    Date,
+    String,
+    Number,
+    Boolean,
+    Array,
+    Object,
+    RegExp,
+    Error,
+    Map,
+    Set,
+    parseInt,
+    parseFloat,
+    isNaN,
+    isFinite,
+    encodeURIComponent,
+    decodeURIComponent,
+    encodeURI,
+    decodeURI,
     console: { log: () => {}, warn: () => {}, error: () => {} },
     // blocked: process, require, fetch, Buffer, global, __dirname, __filename
   };
@@ -60,6 +75,7 @@ The sandbox contains no reference to `process`, `require`, `fetch`, `Buffer`, or
 
 **Root cause:**  
 The HTTP request node accepted any URL and made outbound `fetch()` calls without any validation. An attacker could configure a workflow to call:
+
 - `http://169.254.169.254/latest/meta-data/` (AWS Instance Metadata)
 - `http://metadata.google.internal/computeMetadata/v1/` (GCP metadata)
 - `http://localhost:5432` (internal Postgres)
@@ -89,6 +105,7 @@ function assertSafeUrl(rawUrl: string): void {
 
 **Fix applied:**  
 Added `verifyHmacSignature()` using Node's `crypto.createHmac` and `timingSafeEqual` to prevent timing attacks. The middleware now:
+
 1. Reads the raw request body as text (before JSON parsing) so the signature can be verified against the exact bytes that were sent.
 2. Checks `x-webhook-signature` or `x-hub-signature-256` headers.
 3. Returns HTTP 401 if the signature is missing or invalid.
@@ -100,10 +117,7 @@ function verifyHmacSignature(
   signatureHeader: string,
 ): boolean {
   const expected = Buffer.from(storedHashHex, "hex");
-  const incoming = Buffer.from(
-    signatureHeader.replace(/^sha256=/, ""),
-    "hex",
-  );
+  const incoming = Buffer.from(signatureHeader.replace(/^sha256=/, ""), "hex");
   if (expected.length !== incoming.length) return false;
   const computedHmac = createHmac("sha256", storedHashHex)
     .update(rawBody)
@@ -144,7 +158,10 @@ const monthlyCount = await prisma.execution.count({
   },
 });
 if (monthlyCount >= execLimit) {
-  return NextResponse.json({ error: "Monthly execution limit reached..." }, { status: 429 });
+  return NextResponse.json(
+    { error: "Monthly execution limit reached..." },
+    { status: 429 },
+  );
 }
 ```
 
@@ -154,14 +171,17 @@ if (monthlyCount >= execLimit) {
 
 **File:** `src/app/api/run/[key]/route.ts`
 
-**Root cause:**  
+**Root cause:**
+
 ```typescript
 executeWorkflowDirect(...).catch(() => {});
 ```
+
 Execution failures were silently discarded. The execution record in the database would remain with `status: "PENDING"` indefinitely, making it impossible to debug or alert on failures.
 
 **Fix applied:**  
 The `.catch()` handler now:
+
 1. Logs the error with `console.error`.
 2. Updates the execution record to `status: "ERROR"` with `finishedAt` and `error` message.
 
@@ -179,12 +199,14 @@ Introduced `historyIndexRef` (a `useRef`) that is kept in sync with the `history
 
 ```typescript
 const historyIndexRef = useRef(historyIndex);
-useEffect(() => { historyIndexRef.current = historyIndex; }, [historyIndex]);
+useEffect(() => {
+  historyIndexRef.current = historyIndex;
+}, [historyIndex]);
 
 useEffect(() => {
   // ...
   const currentIndex = historyIndexRef.current; // always fresh
-  setHistory(prev => {
+  setHistory((prev) => {
     const newHistory = prev.slice(0, currentIndex + 1);
     return [...newHistory, { nodes: [...nodes], edges: [...edges] }];
   });
@@ -200,7 +222,8 @@ useEffect(() => {
 **Root cause:**  
 `handleSave` was defined as a plain function (not `useCallback`) that closed over `nodes`, `edges`, `workflowId`. The keyboard-event `useEffect` captured `handleSave` in its closure but `handleSave` was not in the effect's dependency array. This meant Ctrl+S always called the version of `handleSave` from the component's first render — saving empty arrays before the workflow loaded.
 
-**Fix applied:**  
+**Fix applied:**
+
 1. Wrapped `handleSave` in `useCallback` with correct dependencies `[workflowId, nodes, edges, getViewport, updateWorkflow]`.
 2. Added `handleSave` to the keyboard event `useEffect`'s dependency array.
 
@@ -212,9 +235,11 @@ useEffect(() => {
 
 **Root cause:**  
 `adminProcedure` (the middleware layer applied to all admin tRPC routes) included:
+
 ```typescript
 await prisma.adminUser.update({ data: { lastLogin: new Date() } });
 ```
+
 This runs a write query on every admin API call — including paginated table loads, search queries, and polling. In a busy admin panel this generates constant unnecessary write load.
 
 **Fix applied:**  
@@ -231,6 +256,7 @@ The `WorkflowEditor` (ReactFlow canvas) had no error boundary. Any uncaught rend
 
 **Fix applied:**  
 Created `src/features/editor/components/WorkflowEditorErrorBoundary.tsx` — a class component error boundary that:
+
 - Renders a user-friendly "Editor crashed" message with the error text.
 - Offers a "Try again" button to reset the boundary and re-mount the editor.
 - Offers a "Back to workflows" escape hatch.
@@ -242,26 +268,26 @@ The boundary wraps `WorkflowEditor` in the page's client component.
 
 ## Out-of-Scope / Future Recommendations
 
-| Issue | Severity | Note |
-|-------|----------|------|
-| `vm.runInNewContext` is not fully process-isolated | MEDIUM | Node's `vm` module shares the same V8 heap. For stronger isolation use `isolated-vm` or `worker_threads` with a message-passing interface. |
-| `premiumProcedure` calls Polar API on every request | LOW | No caching. Add a short-lived in-memory or Redis cache for subscription status. |
-| Credential `@@unique([userId, name])` scoped per-user, not team | LOW | Two team members can create same-named credentials independently, potentially causing confusion. Consider changing to `@@unique([teamId, name])`. |
-| No rate limiting on `/api/run/[key]` | MEDIUM | The endpoint only checks monthly totals, not per-second burst rate. Add an edge rate-limit (e.g., Upstash Redis limiter in middleware). |
-| No Content-Security-Policy header | MEDIUM | Add CSP via `next.config.js` headers to mitigate XSS impact. |
-| `BETTER_AUTH_SECRET` used as AES key derivation seed | LOW | Using SHA-256 of the auth secret is acceptable but consider a dedicated `ENCRYPTION_SECRET` env var to isolate key material. |
+| Issue                                                           | Severity | Note                                                                                                                                              |
+| --------------------------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `vm.runInNewContext` is not fully process-isolated              | MEDIUM   | Node's `vm` module shares the same V8 heap. For stronger isolation use `isolated-vm` or `worker_threads` with a message-passing interface.        |
+| `premiumProcedure` calls Polar API on every request             | LOW      | No caching. Add a short-lived in-memory or Redis cache for subscription status.                                                                   |
+| Credential `@@unique([userId, name])` scoped per-user, not team | LOW      | Two team members can create same-named credentials independently, potentially causing confusion. Consider changing to `@@unique([teamId, name])`. |
+| No rate limiting on `/api/run/[key]`                            | MEDIUM   | The endpoint only checks monthly totals, not per-second burst rate. Add an edge rate-limit (e.g., Upstash Redis limiter in middleware).           |
+| No Content-Security-Policy header                               | MEDIUM   | Add CSP via `next.config.js` headers to mitigate XSS impact.                                                                                      |
+| `BETTER_AUTH_SECRET` used as AES key derivation seed            | LOW      | Using SHA-256 of the auth secret is acceptable but consider a dedicated `ENCRYPTION_SECRET` env var to isolate key material.                      |
 
 ---
 
 ## Files Modified
 
-| File | Changes |
-|------|---------|
-| `src/inngest/functions.ts` | Added `vm` import, `buildSandbox()`, `runInSandbox()`, `assertSafeUrl()`. Replaced 5× `new Function()` with sandbox. Added SSRF guard in `executeHttpRequest`. |
-| `src/app/api/webhooks/[path]/route.ts` | Added `verifyHmacSignature()` with timing-safe compare. Reads raw body before JSON parse. |
-| `src/trpc/routers/credentials.ts` | `getDecrypted` now returns only metadata; no plaintext credential data. |
-| `src/app/api/run/[key]/route.ts` | Added monthly execution limit check; fixed silent error swallowing in fire-and-forget. |
-| `src/features/editor/components/WorkflowEditor.tsx` | Fixed undo/redo stale closure via `historyIndexRef`; wrapped `handleSave` in `useCallback`; added it to keyboard effect deps. |
-| `src/trpc/init.ts` | Removed `lastLogin` DB write from `adminProcedure`. |
-| `src/features/editor/components/WorkflowEditorErrorBoundary.tsx` | **New file** — React error boundary for the workflow canvas. |
-| `src/app/(dashboard)/(editor)/workflows/[workflowId]/client.tsx` | Wrapped `WorkflowEditor` in `WorkflowEditorErrorBoundary`. |
+| File                                                             | Changes                                                                                                                                                        |
+| ---------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `src/inngest/functions.ts`                                       | Added `vm` import, `buildSandbox()`, `runInSandbox()`, `assertSafeUrl()`. Replaced 5× `new Function()` with sandbox. Added SSRF guard in `executeHttpRequest`. |
+| `src/app/api/webhooks/[path]/route.ts`                           | Added `verifyHmacSignature()` with timing-safe compare. Reads raw body before JSON parse.                                                                      |
+| `src/trpc/routers/credentials.ts`                                | `getDecrypted` now returns only metadata; no plaintext credential data.                                                                                        |
+| `src/app/api/run/[key]/route.ts`                                 | Added monthly execution limit check; fixed silent error swallowing in fire-and-forget.                                                                         |
+| `src/features/editor/components/WorkflowEditor.tsx`              | Fixed undo/redo stale closure via `historyIndexRef`; wrapped `handleSave` in `useCallback`; added it to keyboard effect deps.                                  |
+| `src/trpc/init.ts`                                               | Removed `lastLogin` DB write from `adminProcedure`.                                                                                                            |
+| `src/features/editor/components/WorkflowEditorErrorBoundary.tsx` | **New file** — React error boundary for the workflow canvas.                                                                                                   |
+| `src/app/(dashboard)/(editor)/workflows/[workflowId]/client.tsx` | Wrapped `WorkflowEditor` in `WorkflowEditorErrorBoundary`.                                                                                                     |

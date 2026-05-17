@@ -31,7 +31,10 @@ export const adminProcedure = protectedProcedure.use(async ({ ctx, next }) => {
     where: { userId: ctx.user.id },
   });
   if (!adminUser || !adminUser.isActive) {
-    throw new TRPCError({ code: "FORBIDDEN", message: "Admin access required" });
+    throw new TRPCError({
+      code: "FORBIDDEN",
+      message: "Admin access required",
+    });
   }
   // Note: lastLogin is updated only on the explicit admin login action,
   // not on every API call, to avoid unnecessary write amplification.
@@ -43,7 +46,10 @@ export const adminProcedure = protectedProcedure.use(async ({ ctx, next }) => {
  */
 export const superAdminProcedure = adminProcedure.use(async ({ ctx, next }) => {
   if (ctx.adminUser.role !== "SUPER_ADMIN") {
-    throw new TRPCError({ code: "FORBIDDEN", message: "Super admin access required" });
+    throw new TRPCError({
+      code: "FORBIDDEN",
+      message: "Super admin access required",
+    });
   }
   return next({ ctx });
 });
