@@ -70,9 +70,19 @@ export default function SubscriptionsPageClient() {
                   </div>
                   <div className="flex items-center gap-2 shrink-0">
                     {(() => {
-                      const plan = (u as unknown as { teamMembers: { team: { plan: string } }[] }).teamMembers?.[0]?.team?.plan ?? "free";
+                      const plan =
+                        (
+                          u as unknown as {
+                            teamMembers: { team: { plan: string } }[];
+                          }
+                        ).teamMembers?.[0]?.team?.plan ?? "free";
                       return (
-                        <Badge className={cn("text-xs capitalize", PLAN_COLORS[plan] ?? PLAN_COLORS["free"])}>
+                        <Badge
+                          className={cn(
+                            "text-xs capitalize",
+                            PLAN_COLORS[plan] ?? PLAN_COLORS["free"],
+                          )}
+                        >
                           <CreditCard className="mr-1 h-3 w-3" /> {plan}
                         </Badge>
                       );

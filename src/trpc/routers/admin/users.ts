@@ -167,7 +167,9 @@ export const adminUsersRouter = createTRPCRouter({
     .input(
       z.object({
         userId: z.string(),
-        role: z.enum(["SUPER_ADMIN", "ADMIN", "MODERATOR", "SUPPORT_AGENT"]).nullable(),
+        role: z
+          .enum(["SUPER_ADMIN", "ADMIN", "MODERATOR", "SUPPORT_AGENT"])
+          .nullable(),
       }),
     )
     .mutation(async ({ input, ctx }) => {
@@ -180,9 +182,15 @@ export const adminUsersRouter = createTRPCRouter({
           update: { role: input.role, isActive: true },
         });
       }
-      await logAdminAction(ctx.adminUser.id, "UPDATE_ADMIN_ROLE", "user", input.userId, {
-        role: input.role,
-      });
+      await logAdminAction(
+        ctx.adminUser.id,
+        "UPDATE_ADMIN_ROLE",
+        "user",
+        input.userId,
+        {
+          role: input.role,
+        },
+      );
     }),
 
   banUser: adminProcedure
@@ -200,7 +208,12 @@ export const adminUsersRouter = createTRPCRouter({
     .input(z.object({ userId: z.string() }))
     .mutation(async ({ input, ctx }) => {
       await prisma.user.delete({ where: { id: input.userId } });
-      await logAdminAction(ctx.adminUser.id, "DELETE_USER", "user", input.userId);
+      await logAdminAction(
+        ctx.adminUser.id,
+        "DELETE_USER",
+        "user",
+        input.userId,
+      );
       return { success: true };
     }),
 
@@ -222,7 +235,12 @@ export const adminUsersRouter = createTRPCRouter({
           type: "INFO",
         },
       });
-      await logAdminAction(ctx.adminUser.id, "SEND_NOTIFICATION", "user", input.userId);
+      await logAdminAction(
+        ctx.adminUser.id,
+        "SEND_NOTIFICATION",
+        "user",
+        input.userId,
+      );
       return { success: true };
     }),
 
@@ -239,9 +257,7 @@ export const adminUsersRouter = createTRPCRouter({
     ]);
 
     // Growth by day for the last 30 days
-    const growth = await prisma.$queryRaw<
-      { date: Date; count: bigint }[]
-    >`
+    const growth = await prisma.$queryRaw<{ date: Date; count: bigint }[]>`
       SELECT DATE_TRUNC('day', "createdAt") as date, COUNT(*) as count
       FROM "user"
       WHERE "createdAt" >= ${thirtyDaysAgo}

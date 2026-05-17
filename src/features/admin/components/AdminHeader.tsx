@@ -49,10 +49,18 @@ export function AdminHeader() {
 
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center border-b border-border/40 bg-background/80 px-4 backdrop-blur-xl lg:px-6">
-      <nav aria-label="Breadcrumb" className="flex flex-1 items-center gap-1 text-sm">
+      <nav
+        aria-label="Breadcrumb"
+        className="flex flex-1 items-center gap-1 text-sm"
+      >
         {crumbs.map((crumb, i) => (
-          <span key={crumb.href ?? crumb.label} className="flex items-center gap-1">
-            {i > 0 && <ChevronRight className="h-3.5 w-3.5 text-muted-foreground/50" />}
+          <span
+            key={crumb.href ?? crumb.label}
+            className="flex items-center gap-1"
+          >
+            {i > 0 && (
+              <ChevronRight className="h-3.5 w-3.5 text-muted-foreground/50" />
+            )}
             {crumb.href && i < crumbs.length - 1 ? (
               <Link
                 href={crumb.href}
@@ -61,7 +69,13 @@ export function AdminHeader() {
                 {crumb.label}
               </Link>
             ) : (
-              <span className={cn(i === crumbs.length - 1 ? "font-semibold text-foreground" : "text-muted-foreground")}>
+              <span
+                className={cn(
+                  i === crumbs.length - 1
+                    ? "font-semibold text-foreground"
+                    : "text-muted-foreground",
+                )}
+              >
                 {crumb.label}
               </span>
             )}
@@ -102,7 +116,12 @@ export function AdminHeader() {
 
         <ThemeToggle />
 
-        <Button variant="ghost" size="sm" className="h-8 gap-1.5 text-xs" asChild>
+        <Button
+          variant="ghost"
+          size="sm"
+          className="h-8 gap-1.5 text-xs"
+          asChild
+        >
           <Link href="/dashboard" target="_blank">
             <ExternalLink className="h-3.5 w-3.5" />
             <span className="hidden md:inline">App</span>

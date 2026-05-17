@@ -23,7 +23,11 @@ import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import type { User } from "better-auth";
@@ -46,7 +50,11 @@ const NAV_SECTIONS = [
     items: [
       { href: "/admin/users", label: "Users", icon: Users },
       { href: "/admin/workflows", label: "Workflows", icon: Workflow },
-      { href: "/admin/subscriptions", label: "Subscriptions", icon: CreditCard },
+      {
+        href: "/admin/subscriptions",
+        label: "Subscriptions",
+        icon: CreditCard,
+      },
     ],
   },
   {
@@ -97,7 +105,9 @@ export function AdminSidebar({ user, adminRole }: AdminSidebarProps) {
             <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary">
               <Shield className="h-4 w-4 text-primary-foreground" />
             </div>
-            <span className="text-sm font-semibold tracking-tight">Admin Panel</span>
+            <span className="text-sm font-semibold tracking-tight">
+              Admin Panel
+            </span>
           </motion.div>
         )}
         {collapsed && (
@@ -128,7 +138,10 @@ export function AdminSidebar({ user, adminRole }: AdminSidebarProps) {
             )}
             <div className="space-y-0.5">
               {section.items.map((item) => {
-                const active = isActive(item.href, "exact" in item ? item.exact : false);
+                const active = isActive(
+                  item.href,
+                  "exact" in item ? item.exact : false,
+                );
                 const Icon = item.icon;
                 const link = (
                   <Link
@@ -146,10 +159,14 @@ export function AdminSidebar({ user, adminRole }: AdminSidebarProps) {
                     <Icon
                       className={cn(
                         "h-4 w-4 shrink-0",
-                        active ? "text-primary-foreground" : "text-muted-foreground group-hover:text-foreground",
+                        active
+                          ? "text-primary-foreground"
+                          : "text-muted-foreground group-hover:text-foreground",
                       )}
                     />
-                    {!collapsed && <span className="truncate">{item.label}</span>}
+                    {!collapsed && (
+                      <span className="truncate">{item.label}</span>
+                    )}
                   </Link>
                 );
                 if (collapsed) {
@@ -179,7 +196,10 @@ export function AdminSidebar({ user, adminRole }: AdminSidebarProps) {
             </Avatar>
             <div className="flex-1 overflow-hidden">
               <p className="truncate text-xs font-semibold">{user.name}</p>
-              <Badge variant="outline" className="mt-0.5 h-4 rounded px-1 text-[9px]">
+              <Badge
+                variant="outline"
+                className="mt-0.5 h-4 rounded px-1 text-[9px]"
+              >
                 {adminRole.replace("_", " ")}
               </Badge>
             </div>

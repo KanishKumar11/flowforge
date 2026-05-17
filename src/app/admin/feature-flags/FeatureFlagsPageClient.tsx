@@ -254,7 +254,9 @@ export default function FeatureFlagsPageClient() {
         confirmLabel="Delete"
         variant="destructive"
         loading={deleteMutation.isPending}
-        onConfirm={() => deleteTarget && deleteMutation.mutate({ key: deleteTarget.key })}
+        onConfirm={() =>
+          deleteTarget && deleteMutation.mutate({ key: deleteTarget.key })
+        }
       />
     </div>
   );

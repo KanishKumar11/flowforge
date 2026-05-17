@@ -13,12 +13,20 @@ async function main() {
         select: { team: { select: { plan: true } } },
         take: 1,
       },
-      _count: { select: { workflows: true, executions: true, teamMembers: true } },
+      _count: {
+        select: { workflows: true, executions: true, teamMembers: true },
+      },
     },
   });
 
   for (const u of users) {
-    console.log(u.email, "-> plan:", u.teamMembers[0]?.team?.plan ?? "no-team", "| teamMembers:", JSON.stringify(u.teamMembers));
+    console.log(
+      u.email,
+      "-> plan:",
+      u.teamMembers[0]?.team?.plan ?? "no-team",
+      "| teamMembers:",
+      JSON.stringify(u.teamMembers),
+    );
   }
 
   await prisma.$disconnect();

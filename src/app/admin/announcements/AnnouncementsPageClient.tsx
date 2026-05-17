@@ -335,7 +335,9 @@ export default function AnnouncementsPageClient() {
         confirmLabel="Delete"
         variant="destructive"
         loading={deleteMutation.isPending}
-        onConfirm={() => deleteTarget && deleteMutation.mutate({ id: deleteTarget.id })}
+        onConfirm={() =>
+          deleteTarget && deleteMutation.mutate({ id: deleteTarget.id })
+        }
       />
     </div>
   );
