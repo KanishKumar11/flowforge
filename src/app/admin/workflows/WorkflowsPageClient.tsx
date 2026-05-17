@@ -221,15 +221,21 @@ export default function WorkflowsPageClient() {
 
       <ConfirmDialog
         open={!!deleteTarget}
-        onOpenChange={(o) => !o && setDeleteTarget(null)}
+        onOpenChange={(o) => {
+          if (!o) {
+            setDeleteTarget(null);
+          }
+        }}
         title="Delete workflow?"
         description={`Delete "${deleteTarget?.name}" and all execution history. This cannot be undone.`}
         confirmLabel="Delete"
         variant="destructive"
         loading={deleteMutation.isPending}
-        onConfirm={() =>
-          deleteTarget && deleteMutation.mutate({ workflowId: deleteTarget.id })
-        }
+        onConfirm={() => {
+          if (deleteTarget) {
+            deleteMutation.mutate({ workflowId: deleteTarget.id });
+          }
+        }}
       />
     </div>
   );
